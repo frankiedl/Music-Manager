@@ -1,0 +1,9 @@
+{
+  "id": "masterizado",
+  "nombre": "Masterización",
+  "descripcion": "Pestaña «Masterización» en cada álbum: mide la sonoridad (LUFS), iguala el volumen, limita picos, recorta y pone fundidos, escribe etiquetas y carátula, y exporta los WAV en un ZIP o los guarda en la carpeta master de cada canción.",
+  "js": ["modulo.js"],
+  "css": ["modulo.css"],
+  "py": "servidor.py",
+  "distribuir": true
+}

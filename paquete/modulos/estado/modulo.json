@@ -1,0 +1,9 @@
+{
+  "id": "estado",
+  "nombre": "Estado",
+  "descripcion": "Panel del estado de tu música (letra, versión, stems, máster, portada, publicada) e informes de plataformas importados desde CSV, todo en tu equipo.",
+  "js": ["csv.js", "modulo.js", "informes.js", "importar.js", "conexiones.js"],
+  "css": ["modulo.css"],
+  "py": "servidor.py",
+  "distribuir": true
+}

@@ -1,0 +1,9 @@
+{
+  "id": "ajustes",
+  "nombre": "Ajustes",
+  "descripcion": "Dónde está tu música y cómo te llamas.",
+  "js": ["modulo.js"],
+  "css": [],
+  "py": "servidor.py",
+  "distribuir": true
+}

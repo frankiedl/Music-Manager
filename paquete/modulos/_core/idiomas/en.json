@@ -1,0 +1,2421 @@
+{
+"exactas": {
+"% igual": "% same",
+"0 dB · sin techo": "0 dB · no ceiling",
+"1 · ¿Dónde está tu música?": "1 · Where is your music?",
+"1,0 dB · recomendado para distribuir": "1.0 dB · recommended for distribution",
+"12 LUFS · Más fuerte": "12 LUFS · Louder",
+"128 kbps (ligero)": "128 kbps (light)",
+"16 LUFS · Más suave (podcast)": "16 LUFS · Softer (podcast)",
+"16 bits": "16 bits",
+"192 kbps": "192 kbps",
+"2 · Buscando tus canciones": "2 · Searching for your songs",
+"2 · Qué columna es qué": "2 · Which column is which",
+"23 LUFS · Radio y TV (EBU R128)": "23 LUFS · Radio and TV (EBU R128)",
+"24 bits": "24 bits",
+"3 · Revisa la propuesta": "3 · Review the proposal",
+"32 flotante": "32 float",
+"320 kbps (máxima)": "320 kbps (maximum)",
+"4 · Copiando y comprobando": "4 · Copying and checking",
+"4 · Preparando la copia": "4 · Preparing the copy",
+"9 LUFS · Lo más fuerte posible": "9 LUFS · As loud as possible",
+"? Se borran sus versiones MP3 de trabajo. Tu música original y los ZIP que ya hayas creado no se tocan": "? Its working MP3 versions are deleted. Your original music and any ZIPs you already created are not touched",
+"ARTE": "ART",
+"Abre Ajustes en el menú": "Open Settings in the menu",
+"Abrir aparte": "Open separately",
+"Abrir canción": "Open song",
+"Abrir en Spotify": "Open in Spotify",
+"Abrir en el Explorador": "Open in Explorer",
+"Abrir la canción": "Open the song",
+"Abrir su carpeta": "Open its folder",
+"Abrir su carpeta de arte": "Open its art folder",
+"Abrir su carpeta en el Explorador": "Open its folder in Explorer",
+"Abrir todas": "Open all",
+"Activar / saltar este efecto": "Enable / bypass this effect",
+"Activar la conexión": "Enable the connection",
+"Actividad: archivos de audio por mes": "Activity: audio files per month",
+"Actualizando el catálogo con lo nuevo": "Updating the catalog with what's new",
+"Actualizando la biblioteca": "Updating the library",
+"Actualizando… puede tardar medio minuto": "Updating… this may take half a minute",
+"Actualizar": "Refresh",
+"Acústico": "Acoustic",
+"Ahora se usa una portada automática; confirma la buena": "An automatic cover is used now; confirm the right one",
+"Ajusta lo que quieras y ciérrala (o pulsa el botón). Se guardará lo que hayas dejado. Si no aparece en unos segundos, mira detrás de otras ventanas": "Adjust what you like and close it (or press the button). What you leave will be saved. If it doesn't appear in a few seconds, look behind other windows",
+"Ajustes": "Settings",
+"Al quitar una canción solo se borra su versión MP3 creada para este mixtape": "Removing a song only deletes its MP3 version created for this mixtape",
+"Alemán": "German",
+"Algunos no se pudieron copiar": "Some could not be copied",
+"Algunos plugins comerciales solo funcionan dentro de su propio programa (licencias iLok, activación, interfaces propias). Es un límite de esos plugins, no un fallo del gestor; el gestor sigue funcionando": "Some commercial plugins only work inside their own program (iLok licenses, activation, their own interfaces). This is a limit of those plugins, not a fault of the manager; the manager keeps working",
+"Amazon Music": "Amazon Music",
+"Anterior": "Previous",
+"Aplica compresores, ecualizadores, limitadores y tus propios plugins (VST3) a una canción, escucha el antes y el después y, si te gusta, guárdalo como una versión nueva": "Apply compressors, equalizers, limiters and your own plugins (VST3) to a song, listen to the before and after and, if you like it, save it as a new version",
+"Aplicando efectos": "Applying effects",
+"Aplicar efectos": "Apply effects",
+"Apple Music": "Apple Music",
+"Apple Music for Artists permite descargar un CSV del catálogo (Música → Ver todo). Columnas sin verificar": "Apple Music for Artists lets you download a CSV of the catalog (Music → See All). Columns not verified",
+"Archivo de origen": "Source file",
+"Archivo movido ✓": "File moved ✓",
+"Archivos de trabajo": "Working files",
+"Arrastra aquí": "Drag here",
+"Arrastra aquí canciones desde la lista de la izquierda para añadirlas a este mixtape": "Drag songs here from the list on the left to add them to this mixtape",
+"Arrastra aquí canciones desde la lista de la izquierda · suéltalas entre dos para ordenarlas": "Drag songs here from the list on the left · drop them between two to reorder",
+"Arrastra aquí canciones para marcarlas como boceto": "Drag songs here to mark them as sketches",
+"Arrastra aquí imágenes (jpg, png, psd…) o vídeos (mp4, mov…), o elígelos": "Drag images (jpg, png, psd…) or videos (mp4, mov…) here, or choose them",
+"Arrastra aquí la": "Drag the",
+"Arrastra el recuadro para moverlo y usa «Tamaño» para acercarte. Se guardan archivos nuevos en el arte; el original no se toca": "Drag the box to move it and use «Size» to zoom in. New files are saved in the art; the original is not touched",
+"Arrastra las marcas de los extremos para recortar · haz clic en la onda para ir a ese punto": "Drag the marks at the ends to trim · click the waveform to jump to that point",
+"Arrastra una carpeta o archivos aquí, o pulsa para elegirlos": "Drag a folder or files here, or click to choose them",
+"Arte y vídeo": "Art and video",
+"Artista de esta canción (si es distinto)": "Artist of this song (if different)",
+"Artista del álbum": "Album artist",
+"Asegúrate de tener sitio (arriba verás el espacio": "Make sure you have room (you'll see the space above",
+"Avanzar 5 s": "Forward 5 s",
+"Avisos": "Warnings",
+"Añade ambiente, como si sonara en una sala": "Adds ambience, as if it were playing in a room",
+"Añade «calor» y armónicos; con valores altos suena sucio": "Adds «warmth» and harmonics; high values sound dirty",
+"Añadida a «": "Added to «",
+"Añadiendo «": "Adding «",
+"Añadir": "Add",
+"Añadir a todas": "Add to all",
+"Añadir a una colección": "Add to a collection",
+"Añadir al mixtape": "Add to mixtape",
+"Añadir arte o vídeo": "Add art or video",
+"Añadir canciones": "Add songs",
+"Añadir canciones a «": "Add songs to «",
+"Añadir dither (solo en 16 bits)": "Add dither (16 bits only)",
+"Añadir «": "Add «",
+"Año": "Year",
+"Aún no has importado ningún informe": "You haven't imported any report yet",
+"Aún no hay bocetos. Arrastra aquí una canción para empezar": "No sketches yet. Drag a song here to start",
+"Aún no hay fechas de archivos para dibujar la actividad": "There are no file dates yet to draw the activity",
+"Aún no hay imágenes ni vídeos aquí. Ábrela desde la canción o el álbum y usa «Añadir arte o vídeo», o suelta los archivos en su carpeta ARTE": "There are no images or videos here yet. Open it from the song or the album and use «Add art or video», or drop the files into its ART folder",
+"Aún no hay álbumes, singles ni proyectos": "There are no albums, singles or projects yet",
+"Aún sin publicar": "Not yet published",
+"Aún sin publicar. Cuando tengas clara la versión buena, pulsa «★ Hacer final» en ella": "Not yet published. When you're sure which version is the good one, press «★ Make final» on it",
+"Bajar": "Move down",
+"Bajar en el mixtape": "Move down in the mixtape",
+"Banda sonora": "Soundtrack",
+"Biblioteca cambiada ✓": "Library changed ✓",
+"Bocetos": "Sketches",
+"Borrar": "Delete",
+"Borrar búsqueda": "Clear search",
+"Borrar preset": "Delete preset",
+"Bossa nova": "Bossa nova",
+"Busca tus canciones en Spotify y guarda": "Search your songs on Spotify and save",
+"Buscando plugins": "Searching for plugins",
+"Buscar plugins": "Search for plugins",
+"Buscar por título": "Search by title",
+"Buscar por título, letra o temática": "Search by title, lyrics or theme",
+"Buscar un mando": "Search for a control",
+"Buscar una canción de tu biblioteca": "Search for a song in your library",
+"Búsqueda cancelada": "Search cancelled",
+"Cada archivo se copia, se vuelve a leer y se compara con el original antes de darlo por bueno. No cierres el gestor mientras tanto": "Each file is copied, read again and compared with the original before it is accepted. Don't close the manager meanwhile",
+"Cada canción al mismo volumen": "Every song at the same volume",
+"Cada canción se mide en LUFS y se sube o baja hasta el objetivo; un limitador evita que los picos pasen del techo. El limitador vigila el pico de las muestras y deja 0,3 dB extra de margen para el pico real entre muestras": "Each song is measured in LUFS and raised or lowered to the target; a limiter keeps the peaks from passing the ceiling. The limiter watches the sample peak and leaves 0.3 dB of extra margin for the true peak between samples",
+"Cada plataforma exporta sus columnas a su manera y casi ninguna publica el formato exacto, así que no doy por bueno ningún formato concreto: en el siguiente paso eliges tú «qué columna es qué» y se guarda como perfil para la próxima vez. Si tu plataforma solo ofrece Excel (.xlsx), ábrelo y usa «Guardar como… CSV»": "Each platform exports its columns in its own way and almost none publishes the exact format, so I don't assume any specific format: in the next step you choose «which column is which» and it is saved as a profile for next time. If your platform only offers Excel (.xlsx), open it and use «Save as… CSV»",
+"Cadena de efectos": "Effects chain",
+"Cadena propia para esta pista": "Custom chain for this track",
+"Calculando el espacio necesario": "Calculating the space needed",
+"Calidad": "Quality",
+"Calidad (bits)": "Quality (bits)",
+"Cambia el título que ves en el gestor. No toca tus archivos ni carpetas. Déjalo vacío para volver al título original («": "Changes the title you see in the manager. It doesn't touch your files or folders. Leave it empty to go back to the original title («",
+"Cambiar categoría de los marcados": "Change category of the marked ones",
+"Cambiar el nombre de la canción": "Rename the song",
+"Cambiar la carpeta de la música": "Change the music folder",
+"Cambiar la carpeta de mi música": "Change my music folder",
+"Cambiar portada": "Change cover",
+"Cambiaste la cadena: vuelve a preparar la vista previa": "You changed the chain: prepare the preview again",
+"Cancelar": "Cancel",
+"Cancelar (lo ya copiado se queda y se puede deshacer)": "Cancel (what is already copied stays and can be undone)",
+"Canciones": "Songs",
+"Canciones creadas en tu biblioteca": "Songs created in your library",
+"Canciones que están en fase de escritura": "Songs in the writing phase",
+"Canción": "Song",
+"Canción anterior": "Previous song",
+"Canción nueva": "New song",
+"Canción siguiente": "Next song",
+"Cargando": "Loading",
+"Cargando mandos": "Loading controls",
+"Cargar": "Load",
+"Carpeta": "Folder",
+"Carpeta añadida ✓": "Folder added ✓",
+"Carpeta con plugins VST3": "Folder with VST3 plugins",
+"Carpeta de la canción no válida": "Invalid song folder",
+"Carpeta quitada": "Folder removed",
+"Carpetas donde se buscan plugins (solo se leen)": "Folders where plugins are searched (read only)",
+"Carpetas extra donde buscar": "Extra folders to search",
+"Carátula": "Cover art",
+"Casado con tus canciones": "Matched with your songs",
+"Casados por parecido: ¿están bien?": "Matched by similarity: are they right?",
+"Casi listas para publicar": "Almost ready to publish",
+"Catalogando": "Cataloguing",
+"Catalán": "Catalan",
+"Cerrar": "Close",
+"Cerrar todas": "Close all",
+"Chino (mandarín)": "Chinese (Mandarin)",
+"Clave secreta": "Secret key",
+"Clip final": "Final clip",
+"Clásica": "Classical",
+"Colecciones": "Collections",
+"Colocando": "Placing",
+"Columna de canciones filtrada": "Songs column filtered",
+"Comprimiendo el ZIP": "Compressing the ZIP",
+"Comprobando el soporte de plugins": "Checking plugin support",
+"Con algo pendiente": "With something pending",
+"Con borde punteado: detectadas solas leyendo la letra. En rosa: las pones tú": "Dotted border: detected automatically by reading the lyrics. In pink: the ones you set",
+"Con efectos": "With effects",
+"Con letra": "With lyrics",
+"Con muchos archivos puede tardar unos minutos; verás el avance": "With many files it may take a few minutes; you'll see the progress",
+"Con música y sin letra": "With music and no lyrics",
+"Con stems pero sin máster": "With stems but no master",
+"Con stems, sin máster": "With stems, no master",
+"Con un perfil guardado, la próxima vez que importes un archivo con las mismas columnas se hace solo": "With a saved profile, the next time you import a file with the same columns it happens by itself",
+"Conexión": "Connection",
+"Consultando Spotify… puede tardar un minuto": "Querying Spotify… this may take a minute",
+"Contiene": "Contains",
+"Convirtiendo a MP3": "Converting to MP3",
+"Copiar el proyecto (es una sola «carpeta-archivo»; sin ella la sesión no abre)": "Copy the project (it is a single «folder-file»; without it the session won't open)",
+"Copiar ruta": "Copy path",
+"Copiar también": "Also copy",
+"Corta los picos más altos de golpe (más agresivo que un limitador)": "Cuts the highest peaks abruptly (more aggressive than a limiter)",
+"Crea primero un mixtape y vuelve a arrastrarlas": "Create a mixtape first and drag them again",
+"Crea un WAV nuevo en la carpeta «versiones» de la canción. No sobrescribe nada": "Creates a new WAV in the song's «versions» folder. It doesn't overwrite anything",
+"Crea un mixtape con su nombre, su calidad y su aviso de copyright. Después arrastra canciones encima, o usa «Añadir a un mixtape…» (＋) en cualquier canción. Al crear el ZIP se convierten a MP3 con su letra y su portada de casete": "Create a mixtape with its name, its quality and its copyright notice. Then drag songs onto it, or use «Add to a mixtape…» (＋) on any song. When the ZIP is created they are converted to MP3 with their lyrics and their cassette cover",
+"Creando las versiones MP3 a": "Creating the MP3 versions at",
+"Crear": "Create",
+"Crear y añadir": "Create and add",
+"Crear álbum": "Create album",
+"Cuando tengan una versión de audio en su carpeta, pulsa «Actualizar» en el gestor": "When they have an audio version in their folder, press «Refresh» in the manager",
+"Cuántas de tus": "How many of your",
+"Cómo igualar el volumen": "How to even out the volume",
+"Cómo me llamo": "What I'm called",
+"Danés": "Danish",
+"Datos no válidos": "Invalid data",
+"De esta canción": "From this song",
+"Decimales": "Decimals",
+"Del álbum o carpeta": "From the album or folder",
+"Del álbum o proyecto": "From the album or project",
+"Demasiados efectos (máximo": "Too many effects (maximum",
+"Desactiva todos los filtros y la búsqueda": "Turn off all filters and the search",
+"Descarga el informe (CSV) que ofrece tu plataforma o tu distribuidora, impórtalo aquí y verás tus reproducciones e ingresos por canción, por álbum y por mes. El archivo se lee en tu equipo y no sale de él": "Download the report (CSV) offered by your platform or distributor, import it here and you'll see your plays and income per song, per album and per month. The file is read on your computer and never leaves it",
+"Descargando el audio": "Downloading the audio",
+"Descartadas": "Discarded",
+"Descartar esta versión": "Discard this version",
+"Desde": "From",
+"Desde 2026 se pueden registrar apps nuevas, pero exige la suscripción de pago Artist Pro. Sin verificar qué estadísticas da": "Since 2026 new apps can be registered, but it requires the paid Artist Pro subscription. Which statistics it provides is unverified",
+"Después de importar podrás asignarlos a mano": "After importing you can assign them by hand",
+"Después podrás elegir «Usar en este mixtape» para que sus MP3 salgan de estos másters": "Then you can choose «Use in this mixtape» so its MP3s come from these masters",
+"Detalle por carpeta": "Detail per folder",
+"Detalles": "Details",
+"Detectada automáticamente · clic para ver canciones parecidas": "Detected automatically · click to see similar songs",
+"Detecté: codificación": "Detected: encoding",
+"Devolver a «sin clasificar»": "Return to «unclassified»",
+"Discos y unidades": "Disks and drives",
+"Drum and Bass": "Drum and Bass",
+"Duración": "Duration",
+"Dónde": "Where",
+"Dónde está publicada": "Where it is published",
+"Dónde está tu música, cómo te llamas y dónde buscar los plugins de efectos": "Where your music is, what you're called and where to look for effect plugins",
+"Editar la cadena de": "Edit the chain of",
+"Editar: recorte, fundidos, etiquetas": "Edit: trim, fades, tags",
+"Efecto desconocido": "Unknown effect",
+"Efecto no válido": "Invalid effect",
+"Efectos": "Effects",
+"Efectos activos": "Active effects",
+"Efectos quitados": "Effects removed",
+"Efectos · antes del limitador": "Effects · before the limiter",
+"Ej. Compositor": "E.g. Composer",
+"El ZIP supera los 4 GB; guarda los másters en la biblioteca en su lugar": "The ZIP exceeds 4 GB; save the masters in the library instead",
+"El archivo no contiene ningún plugin": "The file contains no plugin",
+"El archivo recibido no es un WAV válido (tamaño)": "The received file is not a valid WAV (size)",
+"El archivo subido ya no está. Súbelo otra vez": "The uploaded file is gone. Upload it again",
+"El aviso queda en la etiqueta del MP3, al final de cada letra y en un archivo COPYRIGHT.txt dentro del ZIP. La portada del casete va en el ZIP y dentro de cada MP3. Revisa el año de cada canción abajo": "The notice goes in the MP3 tag, at the end of each lyric and in a COPYRIGHT.txt file inside the ZIP. The cassette cover goes in the ZIP and inside each MP3. Check each song's year below",
+"El estado guardado del plugin no es válido": "The saved state of the plugin is not valid",
+"El gestor ha reconocido": "The manager recognized",
+"El informe es demasiado grande": "The report is too large",
+"El mixtape está vacío": "The mixtape is empty",
+"El mixtape todavía usa las versiones originales": "The mixtape still uses the original versions",
+"El mixtape usa ahora los másters": "The mixtape now uses the masters",
+"El mixtape vuelve a sus versiones originales": "The mixtape goes back to its original versions",
+"El mixtape ya los usa": "The mixtape already uses them",
+"El módulo de efectos no está instalado en este gestor. La masterización funciona igual, sin efectos": "The effects module is not installed in this manager. Mastering works the same, without effects",
+"El original no se modifica y, si ya existiera un archivo con ese nombre, se añade « (2)». Puede tardar un poco": "The original is not modified and, if a file with that name already exists, « (2)» is added. It may take a little while",
+"El plugin «": "The plugin «",
+"El servidor no respondió. ¿Sigue abierto el gestor?": "The server did not respond. Is the manager still open?",
+"El soporte de plugins usa «pedalboard», una librería libre de Spotify con licencia GPL-3.0. No viene incluida en este gestor: se descarga de internet (pypi.org) e instala solo si tú lo pides, y se queda en tu equipo. Para uso personal no tiene ninguna consecuencia. Si algún día compartieras o vendieras un programa que la incluya, las condiciones de la GPL se aplicarían a ese programa": "Plugin support uses «pedalboard», a free library from Spotify under the GPL-3.0 license. It is not included in this manager: it is downloaded from the internet (pypi.org) and installed only if you ask for it, and it stays on your computer. For personal use it has no consequences. If someday you shared or sold a program that includes it, the GPL terms would apply to that program",
+"Electrónica": "Electronic",
+"Elegir archivo": "Choose file",
+"Elegir archivos": "Choose files",
+"Elegir carpeta": "Choose folder",
+"Elegir esta carpeta": "Choose this folder",
+"Elegir portada": "Choose cover",
+"Elegir una carpeta": "Choose a folder",
+"Elige a qué canción tuya corresponde cada título del informe. Lo que dejes en «ignorar» no se contará (por ejemplo, canciones de otra persona o que no tienes en el gestor). Se recuerda para los próximos informes": "Choose which of your songs each title in the report corresponds to. What you leave on «ignore» won't be counted (for example, someone else's songs or ones you don't have in the manager). It is remembered for future reports",
+"Elige la carpeta de tu música": "Choose your music folder",
+"Elige primero un preset": "Choose a preset first",
+"Elige primero una canción": "Choose a song first",
+"Elige una canción, escucha un fragmento con y sin efectos y, si te gusta, guárdalo como versión nueva": "Choose a song, listen to a fragment with and without effects and, if you like it, save it as a new version",
+"Elige una imagen": "Choose an image",
+"Elige una imagen para «": "Choose an image for «",
+"Elimina los agudos por encima de una frecuencia": "Removes the highs above a frequency",
+"Elimina los graves por debajo de una frecuencia (rumores, golpes de micro)": "Removes the lows below a frequency (rumble, mic bumps)",
+"Eliminar este mixtape": "Delete this mixtape",
+"Eliminar este álbum": "Delete this album",
+"Eliminar mixtape": "Delete mixtape",
+"Eliminar álbum": "Delete album",
+"Empezando": "Starting",
+"Empezar aquí": "Start here",
+"Empezar en el segundo": "Start at second",
+"En esta instalación la carpeta de la música es fija": "In this installation the music folder is fixed",
+"En este equipo no hay pantalla donde abrir la ventana del plugin": "There is no screen on this computer to open the plugin window",
+"En preparación": "In preparation",
+"En qué punto está tu música y cómo le va en las plataformas. Todo se calcula en tu equipo": "Where your music stands and how it's doing on the platforms. Everything is calculated on your computer",
+"Encontradas en Spotify": "Found on Spotify",
+"Encontrados": "Found",
+"Encontré": "I found",
+"Ensancha y «dobla» el sonido con una ligera variación": "Widens and «doubles» the sound with a slight variation",
+"Entendido": "Got it",
+"Entradas de catálogo sin ningún archivo de audio": "Catalog entries without any audio file",
+"Entradas del catálogo sin archivo de música": "Catalog entries without a music file",
+"Entradas distintas con la misma letra: casi seguro son la misma canción. Revísalas y fusiónalas": "Different entries with the same lyrics: almost surely the same song. Review them and merge them",
+"Error al buscar": "Error while searching",
+"Error subiendo": "Error uploading",
+"Es esta": "It's this one",
+"Es esta canción": "It's this song",
+"Es esta canción… (buscar)": "It's this song… (search)",
+"Es lo más simple, no necesita claves ni cuentas de desarrollador, y todo se queda en tu equipo. Las conexiones por API solo existen donde la plataforma las ofrece de forma legítima, y casi siempre no dan lo que más interesa (tus reproducciones). Nunca hago «scraping» (leer webs saltándome sus normas)": "It's the simplest, needs no keys or developer accounts, and everything stays on your computer. API connections only exist where the platform offers them legitimately, and almost always they don't give what matters most (your plays). I never do «scraping» (reading websites by getting around their rules)",
+"Es un boceto · quitar marca": "It's a sketch · remove mark",
+"Esa canción no tiene carpeta propia donde guardar versiones": "That song has no folder of its own to save versions in",
+"Esa carpeta está dentro de tu propia biblioteca. Elige la carpeta donde tienes la música SIN organizar": "That folder is inside your own library. Choose the folder where you have the UNORGANIZED music",
+"Esa carpeta no existe o no se puede abrir": "That folder doesn't exist or can't be opened",
+"Esa carpeta todavía no existe (aún no hay nada ahí)": "That folder doesn't exist yet (there is nothing there yet)",
+"Esa ruta no está dentro de la biblioteca": "That path is not inside the library",
+"Escribe aquí lo que quieras recordar de esta canción": "Write here whatever you want to remember about this song",
+"Escribe el nombre de la etiqueta (por ejemplo Compositor)": "Type the tag name (for example Composer)",
+"Escribe o pega aquí la letra de «": "Write or paste the lyrics of «",
+"Escribe o pega la letra para no perderla": "Write or paste the lyrics so you don't lose them",
+"Escribe o pega la ruta de la carpeta, o búscala con el explorador. Puede estar en un disco externo o en Dropbox": "Type or paste the folder path, or find it with the browser. It can be on an external drive or in Dropbox",
+"Escribe parte del título o una frase de la letra": "Type part of the title or a line from the lyrics",
+"Escribe un nombre para el preset": "Type a name for the preset",
+"Escucha las versiones y pulsa «★ Hacer final» en la que se publicó": "Listen to the versions and press «★ Make final» on the one that was published",
+"Escuchar": "Listen",
+"Escuchar para comprobar": "Listen to check",
+"Ese archivo de Python no existe": "That Python file doesn't exist",
+"Español": "Spanish",
+"Espera a que termine lo que se está haciendo": "Wait for what is being done to finish",
+"Esta canción está publicada, pero no sé cuál de estas versiones es la que salió": "This song is published, but I don't know which of these versions is the one that came out",
+"Esta canción no tiene audio": "This song has no audio",
+"Esta canción no tiene audio en tus carpetas": "This song has no audio in your folders",
+"Esta canción no tiene audio: no entra en el máster": "This song has no audio: it's not included in the master",
+"Esta canción no tiene imágenes ni vídeos todavía": "This song has no images or videos yet",
+"Esta canción no tiene stems, tracks sueltos ni otros archivos de trabajo": "This song has no stems, loose tracks or other working files",
+"Esta canción todavía no tiene letra. Pulsa «Escribir o pegar la letra» y guárdala aquí mismo": "This song doesn't have lyrics yet. Press «Write or paste the lyrics» and save them right here",
+"Esta carpeta no está asociada a una canción": "This folder isn't linked to a song",
+"Esta carpeta no tiene subcarpetas": "This folder has no subfolders",
+"Esta entrada está oculta del gestor": "This entry is hidden from the manager",
+"Esta entrada no tiene música ni letra": "This entry has no music or lyrics",
+"Esta letra no tiene música asociada": "These lyrics have no music linked",
+"Esta versión es de otra canción": "This version belongs to another song",
+"Estado": "Status",
+"Estado de tu música": "Status of your music",
+"Estado del catálogo": "Catalog status",
+"Estado del álbum": "Album status",
+"Estas entradas tienen la misma letra. Se queda la": "These entries have the same lyrics. The one that stays is the",
+"Este archivo no pertenece a ninguna canción del catálogo": "This file doesn't belong to any song in the catalog",
+"Este efecto no tiene ventana propia (usa sus mandos)": "This effect has no window of its own (use its controls)",
+"Este equipo": "This computer",
+"Este es el estado de tu catálogo": "This is the state of your catalog",
+"Este mismo archivo ya lo importaste (": "You already imported this same file (",
+"Este módulo ha fallado": "This module has failed",
+"Este álbum no tiene canciones todavía. Añade canciones al álbum o arrastra aquí archivos WAV": "This album has no songs yet. Add songs to the album or drag WAV files here",
+"Este álbum no tiene carátula elegida": "This album has no cover art chosen",
+"Estos títulos se parecen a una canción tuya (por ejemplo, con «Remastered» o «Radio Edit» detrás). Confirma o corrige": "These titles resemble a song of yours (for example, with «Remastered» or «Radio Edit» after it). Confirm or correct",
+"Estoy leyendo": "I'm reading",
+"Está marcada como boceto: no se comparte": "Marked as a sketch: it isn't shared",
+"Está suelto, sin carpeta propia: solo puedo copiar este archivo": "It's a loose file with no folder of its own: I can only copy this file",
+"Etiqueta": "Tag",
+"Etiqueta para todas las canciones": "Tag for all songs",
+"Etiqueta «": "Tag «",
+"Etiquetas": "Tags",
+"Evolución": "Trend",
+"Exportación": "Export",
+"Falta el soporte de plugins (se instala desde la masterización)": "Plugin support is missing (it is installed from mastering)",
+"Falta instalar el soporte de plugins": "Plugin support needs to be installed",
+"Falta un componente para usar plugins": "A component is missing to use plugins",
+"Faltan las claves de Spotify": "The Spotify keys are missing",
+"Fecha o mes": "Date or month",
+"Fecha prevista de lanzamiento (opcional)": "Planned release date (optional)",
+"Fila de títulos de columna": "Row with column titles",
+"Filtrar por nombre": "Filter by name",
+"Filtros desactivados": "Filters turned off",
+"Finés": "Finnish",
+"Formato WAV no compatible": "Unsupported WAV format",
+"Formato no admitido. Usa WAV, FLAC, MP3, OGG o AIFF": "Format not supported. Use WAV, FLAC, MP3, OGG or AIFF",
+"Forzar UTF-8": "Force UTF-8",
+"Forzar Windows (ANSI)": "Force Windows (ANSI)",
+"Francés": "French",
+"Fundido de entrada": "Fade in",
+"Fundido de salida": "Fade out",
+"Fundir": "Combine",
+"Fusionadas antes del error": "Merged before the error",
+"Fusionando": "Merging",
+"Fusionar": "Merge",
+"Fusionar canciones": "Merge songs",
+"Fusionar con otra canción": "Merge with another song",
+"GB. Pulsa una imagen para verla grande; los vídeos se reproducen aquí mismo": "GB. Click an image to see it large; videos play right here",
+"Gestor de música · Masterización": "Music Manager · Mastering",
+"Guardados": "Saved",
+"Guardando": "Saving",
+"Guardar": "Save",
+"Guardar cadena como preset": "Save chain as preset",
+"Guardar como versión nueva": "Save as new version",
+"Guardar esta forma de leer como perfil": "Save this way of reading as a profile",
+"Guardar este recorte": "Save this trim",
+"Guardar letra": "Save lyrics",
+"Guardar los 5 formatos": "Save all 5 formats",
+"Guardar másters": "Save masters",
+"Guardar másters del mixtape": "Save the mixtape masters",
+"Guardar másters en la biblioteca": "Save masters in the library",
+"Guardar versión": "Save version",
+"Guardar y usar como portada": "Save and use as cover",
+"Género": "Genre",
+"Hace el sonido más parejo: baja lo que suena muy fuerte": "Makes the sound more even: lowers what is very loud",
+"Hace falta confirmar": "Confirmation needed",
+"Hace falta confirmar la instalación": "The installation needs to be confirmed",
+"Hacer final": "Make final",
+"Hasta": "Until",
+"Hay": "There are",
+"Hay cambios en tus carpetas": "There are changes in your folders",
+"Hay cambios sin aplicar": "There are unapplied changes",
+"Hay otra tarea en marcha. Espera a que termine": "Another task is running. Wait for it to finish",
+"Haz clic en el que quieras": "Click the one you want",
+"Haz clic en la imagen que debe ser la portada": "Click the image that should be the cover",
+"Haz clic en un álbum para ver sus canciones. Para elegir la portada, abre una canción del álbum → Arte y vídeo → botón derecho en la imagen": "Click an album to see its songs. To choose the cover, open a song of the album → Art and video → right-click the image",
+"Haz copia de seguridad de esa carpeta y de tu música": "Back up that folder and your music",
+"Haz doble clic en una canción": "Double-click a song",
+"Haz doble clic en una canción para escucharla": "Double-click a song to listen to it",
+"Hecho: sin más repetidas": "Done: no more duplicates",
+"Hip Hop": "Hip Hop",
+"Hola": "Hello",
+"Húngaro": "Hungarian",
+"ID de cliente": "Client ID",
+"ISRC (si viene)": "ISRC (if present)",
+"Identificador no válido": "Invalid identifier",
+"Idioma": "Language",
+"Idioma de la interfaz. Se recuerda en este navegador": "Interface language. It is remembered in this browser",
+"Igualar el volumen": "Even out the volume",
+"Importaciones anteriores": "Previous imports",
+"Importar": "Import",
+"Importar música": "Import music",
+"Importar otra carpeta": "Import another folder",
+"Imágenes": "Images",
+"Incluir aviso de copyright": "Include copyright notice",
+"Incluir las letras": "Include the lyrics",
+"Incrustar la carátula en los WAV": "Embed the cover art in the WAVs",
+"Indica el nombre de tu artista en Spotify": "Enter your artist name on Spotify",
+"Indica qué columna es la canción": "Indicate which column is the song",
+"Indica qué columna son las reproducciones o los ingresos": "Indicate which column is the plays or the income",
+"Informe": "Report",
+"Informe importado": "Report imported",
+"Informe no válido": "Invalid report",
+"Informe quitado": "Report removed",
+"Informes importados": "Imported reports",
+"Inglés": "English",
+"Ingresos": "Income",
+"Inicio": "Home",
+"Instalar soporte de plugins": "Install plugin support",
+"Instrumental (sin letra)": "Instrumental (no lyrics)",
+"Ir a la canción": "Go to the song",
+"Japonés": "Japanese",
+"La API de Apple es de catálogo, exige el programa de pago de Apple Developer y no da analítica de artista. No se ofrece conexión": "Apple's API is a catalog API, requires Apple's paid Developer program and gives no artist analytics. No connection is offered",
+"La API pública NO da reproducciones por canción de tu música. Sirve para datos públicos de catálogo (ver abajo)": "The public API does NOT give plays per song of your music. It is useful for public catalog data (see below)",
+"La cadena de efectos está vacía": "The effects chain is empty",
+"La cadena de efectos no es válida": "The effects chain is not valid",
+"La cadena está vacía": "The chain is empty",
+"La cadena está vacía. Añade un efecto con el menú de arriba": "The chain is empty. Add an effect with the menu above",
+"La cadena está vacía: añade algún efecto": "The chain is empty: add some effect",
+"La canción no se mueve de su carpeta: solo aparecerá también en esa colección": "The song doesn't move from its folder: it will just also appear in that collection",
+"La canción original nunca se toca": "The original song is never touched",
+"La conexión con Spotify está desactivada": "The connection with Spotify is turned off",
+"La detecté yo por la carpeta master. Si no es esta, pulsa «★ Hacer final» en la correcta": "I detected it from the master folder. If it isn't this one, press «★ Make final» on the right one",
+"La letra de «": "The lyrics of «",
+"La letra está vacía": "The lyrics are empty",
+"La propuesta ya no está en memoria. Vuelve a escanear la carpeta": "The proposal is no longer in memory. Scan the folder again",
+"La ventana de «": "The window of «",
+"Las claves funcionan: Spotify ha dado permiso de lectura del catálogo público": "The keys work: Spotify has granted read access to the public catalog",
+"Las fechas tipo 03/04/2025 son": "Dates like 03/04/2025 are",
+"Las liquidaciones se descargan desde la Sede Electrónica. Formato y columnas no verificados": "Settlements are downloaded from the Electronic Office. Format and columns not verified",
+"Latín": "Latin",
+"Letra": "Lyrics",
+"Letra guardada automáticamente ✓": "Lyrics saved automatically ✓",
+"Letra guardada ✓": "Lyrics saved ✓",
+"Letra que vas a asignar": "Lyrics you are going to assign",
+"Letras": "Lyrics",
+"Letras en boceto": "Sketch lyrics",
+"Letras y canciones que todavía no son para publicar ni compartir": "Lyrics and songs that aren't meant to be published or shared yet",
+"Leyendo": "Reading",
+"Leyendo audio": "Reading audio",
+"Leyendo la carpeta": "Reading the folder",
+"Listo para distribuir": "Ready to distribute",
+"Lo que falta": "What's missing",
+"Lo que falta por resolver en tu catálogo. Haz clic en una tarjeta para ver las canciones afectadas": "What's still unresolved in your catalog. Click a card to see the affected songs",
+"Lo que hay ahora": "What's there now",
+"Lo que ya se copió se queda en tu biblioteca (podrás deshacerlo). El archivo que se esté copiando ahora se descarta": "What has already been copied stays in your library (you will be able to undo it). The file being copied right now is discarded",
+"Los archivos": "The files",
+"Los archivos internos de los proyectos (samples, audio dentro de la sesión…) no se listan uno a uno: viajan con «la sesión completa» si la marcas": "The internal files of projects (samples, audio inside the session…) are not listed one by one: they travel with «the full session» if you check it",
+"Los efectos se aplican de arriba abajo, en orden. Prueba, por ejemplo: ecualizador → compresor → limitador": "Effects are applied from top to bottom, in order. Try, for example: equalizer → compressor → limiter",
+"Los efectos se aplican en el equipo (no en el navegador) a cada canción antes de medir el volumen; después sigue el mismo proceso. Tus originales no se tocan": "Effects are applied on the computer (not in the browser) to each song before measuring the volume; then the same process continues. Your originals are not touched",
+"Los puntos son, por orden": "The points are, in order",
+"MB · se está descargando": "MB · downloading",
+"MIXTAPES/_masters": "MIXTAPES/_masters",
+"Marca archivos para moverlos a otra canción": "Check files to move them to another song",
+"Marca primero los archivos con su casilla": "First check the files with their checkbox",
+"Marca quitada": "Mark removed",
+"Marcada como boceto · no se comparte": "Marked as a sketch · not shared",
+"Marcar (para mover varios a la vez)": "Check (to move several at once)",
+"Marcar como alternativa": "Mark as alternate",
+"Marcar como boceto": "Mark as sketch",
+"Marcar como borrador": "Mark as draft",
+"Marcar como candidata a publicar": "Mark as release candidate",
+"Marcar para fundir con otras": "Mark to combine with others",
+"Marcar todos": "Check all",
+"Marcar «para redes»": "Mark «for social media»",
+"Masterización": "Mastering",
+"Masterización de «": "Mastering of «",
+"Masterización de «{a}»": "Mastering of «{a}»",
+"Medición terminada": "Measurement finished",
+"Mencionar «Registrado en Safe Creative»": "Mention «Registered with Safe Creative»",
+"Mes de todo el archivo": "Month for the whole file",
+"Mi mixtape": "My mixtape",
+"Mi música": "My music",
+"Mi nuevo álbum": "My new album",
+"Mide la sonoridad de cada canción, iguala el volumen entre ellas y deja los picos controlados. Tus originales": "Measures the loudness of each song, evens out the volume between them and keeps the peaks under control. Your originals",
+"Midiendo": "Measuring",
+"Midiendo antes de exportar": "Measuring before exporting",
+"Midiendo la sonoridad de cada canción (LUFS)": "Measuring the loudness of each song (LUFS)",
+"Mientras no lo instales, el resto del gestor funciona igual": "As long as you don't install it, the rest of the manager works the same",
+"Mis presets": "My presets",
+"Mixtape": "Mixtape",
+"Mixtape eliminado": "Mixtape deleted",
+"Mixtapes": "Mixtapes",
+"Moneda": "Currency",
+"Moneda de los ingresos": "Currency of the income",
+"Mostrar los": "Show the",
+"Motor «pedalboard»": "«pedalboard» engine",
+"Mover a otra canción": "Move to another song",
+"Mover archivo": "Move file",
+"Mover los": "Move the",
+"Más detalle, condiciones y fuentes (con fecha de consulta) en": "More detail, conditions and sources (with consultation date) in",
+"Más opciones": "More options",
+"Máster": "Master",
+"Máster de": "Master of",
+"Másters del mixtape guardados": "Mixtape masters saved",
+"Música del mundo": "World music",
+"Nada sonando": "Nothing playing",
+"Neerlandés": "Dutch",
+"Ninguna": "None",
+"Ninguna imagen de portada para estas canciones": "No cover image for these songs",
+"Ninguno coincide": "None match",
+"No copiar la sesión": "Don't copy the session",
+"No copiaré": "I won't copy",
+"No encontré nada que añadir": "I found nothing to add",
+"No encuentro el audio de la canción": "I can't find the song's audio",
+"No encuentro esa carpeta. Compruébala o elígela con el explorador": "I can't find that folder. Check it or choose it with the browser",
+"No encuentro esa tarea (¿se reinició el gestor?)": "I can't find that task (did the manager restart?)",
+"No encuentro ese audio en la biblioteca": "I can't find that audio in the library",
+"No encuentro ffmpeg en este equipo": "I can't find ffmpeg on this computer",
+"No encuentro ffmpeg en este equipo. Instálalo (ver LEEME) y vuelve a intentarlo": "I can't find ffmpeg on this computer. Install it (see README) and try again",
+"No encuentro la carpeta de destino en la biblioteca": "I can't find the destination folder in the library",
+"No encuentro ninguna": "I can't find any",
+"No es relevante · ocultar": "Not relevant · hide",
+"No es un WAV": "It's not a WAV",
+"No existe ese preset": "That preset doesn't exist",
+"No hay API pública conocida": "No known public API",
+"No hay canciones con ese filtro": "No songs with that filter",
+"No hay canciones con ese nombre": "No songs with that name",
+"No hay canciones que coincidan": "No matching songs",
+"No hay canciones repetidas por la letra ✓": "No duplicate songs by lyrics ✓",
+"No hay columna de fecha: elige el mes al que corresponde todo el archivo": "There is no date column: choose the month the whole file corresponds to",
+"No hay espacio suficiente: hacen falta": "There isn't enough space: you need",
+"No hay filas con ese filtro": "No rows with that filter",
+"No hay letras con ese filtro": "No lyrics with that filter",
+"No hay más versiones": "There are no more versions",
+"No hay nada que importar: marca alguna canción": "There is nothing to import: check some song",
+"No hay otras imágenes guardadas. Usa «Reemplazar portada» para subir una": "There are no other saved images. Use «Replace cover» to upload one",
+"No hay subcarpetas aquí": "There are no subfolders here",
+"No hay ventana abierta": "No window is open",
+"No he conseguido leer ninguna fila con esos ajustes. Revisa la fila de títulos, la fecha y el separador": "I couldn't read any row with those settings. Check the titles row, the date and the separator",
+"No incluir en el máster": "Don't include in the master",
+"No pude consultar las carpetas": "I couldn't query the folders",
+"No pude dibujar esta vista": "I couldn't draw this view",
+"No pude hablar con el gestor": "I couldn't talk to the manager",
+"No pude leer el archivo": "I couldn't read the file",
+"No pude leer la carpeta": "I couldn't read the folder",
+"No pude recibir la propuesta": "I couldn't receive the proposal",
+"No puedo abrir esa carpeta": "I can't open that folder",
+"No se borra ni se sobrescribe nada": "Nothing is deleted or overwritten",
+"No se ha encontrado API pública verificada para artistas": "No verified public API for artists was found",
+"No se indicó plataforma": "No platform was specified",
+"No se pudieron leer los ajustes": "The settings could not be read",
+"No se pudieron leer los datos": "The data could not be read",
+"No se pudo": "Could not",
+"No se pudo abrir": "Could not open",
+"No se pudo actualizar": "Could not update",
+"No se pudo cambiar": "Could not change",
+"No se pudo consultar el estado": "Could not check the status",
+"No se pudo contactar con Spotify": "Could not contact Spotify",
+"No se pudo crear el mixtape": "Could not create the mixtape",
+"No se pudo crear la carpeta del álbum": "Could not create the album folder",
+"No se pudo descargar el audio procesado": "Could not download the processed audio",
+"No se pudo deshacer": "Could not undo",
+"No se pudo empezar": "Could not start",
+"No se pudo escanear": "Could not scan",
+"No se pudo guardar": "Could not save",
+"No se pudo guardar la letra": "Could not save the lyrics",
+"No se pudo hablar con el gestor": "Could not talk to the manager",
+"No se pudo leer": "Could not read",
+"No se pudo leer la letra": "Could not read the lyrics",
+"No se pudo mover": "Could not move",
+"No se pudo procesar": "Could not process",
+"No se pudo quitar": "Could not remove",
+"No se pudo reproducir «": "Could not play «",
+"No se pudo subir": "Could not upload",
+"No se pudo unir": "Could not join",
+"No se pudo usar la ventana del plugin": "Could not use the plugin window",
+"No se sobrescribe nada y tus carpetas originales no se tocan": "Nothing is overwritten and your original folders are not touched",
+"No se toca ninguna carpeta master de tus canciones": "No master folder of your songs is touched",
+"No son la misma": "They are not the same",
+"No son relevantes · ocultar": "Not relevant · hide",
+"No sé cuál de sus versiones es la que salió": "I don't know which of its versions is the one that came out",
+"No sé cuál de sus versiones es la que salió publicada: indícamela": "I don't know which of its versions is the one that was published: tell me",
+"No tengo permiso para abrir esa carpeta": "I don't have permission to open that folder",
+"No tiene archivos de audio que mover": "It has no audio files to move",
+"No tiene audio, no se puede añadir": "It has no audio, so it can't be added",
+"No trae reproducciones": "It brings no plays",
+"Nombre": "Name",
+"Nombre artístico": "Artist name",
+"Nombre de tu artista en Spotify": "Your artist name on Spotify",
+"Nombre del artista": "Artist name",
+"Nombre del álbum": "Album name",
+"Nombre en el ©": "Name in the ©",
+"Nombre que aparecerá en ©": "Name that will appear in ©",
+"Nombre, p. ej. Master suave": "Name, e.g. Soft master",
+"Notas": "Notes",
+"Nuevo mixtape": "New mixtape",
+"Nuevo álbum": "New album",
+"Ocultar": "Hide",
+"Ocultar del gestor": "Hide from the manager",
+"Ocultas (no relevantes)": "Hidden (not relevant)",
+"Olvidar claves y datos": "Forget keys and data",
+"Omitir carpetas Freeze, Backup y cachés (ahorra": "Skip Freeze, Backup and cache folders (saves",
+"Original": "Original",
+"Otras versiones": "Other versions",
+"Oír con el volumen igualado": "Listen with the volume evened out",
+"Oír esta canción ya igualada al volumen objetivo": "Listen to this song already evened out to the target volume",
+"Oír igualada": "Listen evened out",
+"Oír todas las canciones ya igualadas al volumen objetivo": "Listen to all the songs already evened out to the target volume",
+"Para añadir otras carpetas, ve a": "To add other folders, go to",
+"Para cargar plugins hace falta instalar una pequeña librería llamada «pedalboard». No viene incluida: se descarga de internet solo si tú quieres": "To load plugins you need to install a small library called «pedalboard». It is not included: it is downloaded from the internet only if you want",
+"Para guardar como versión, elige una canción de tu biblioteca (no un archivo subido)": "To save as a version, choose a song from your library (not an uploaded file)",
+"Para la letra, un archivo": "For the lyrics, a file",
+"Para redes": "For social media",
+"Para usar efectos hay que instalar el soporte de plugins (abajo). La masterización funciona igual sin ellos": "To use effects you need to install plugin support (below). Mastering works the same without them",
+"País": "Country",
+"País (2 letras, opcional)": "Country (2 letters, optional)",
+"Pendientes": "Pending",
+"Perdí la conexión con el gestor": "I lost the connection with the manager",
+"Perfiles no válidos": "Invalid profiles",
+"Pico más alto": "Highest peak",
+"Plataforma": "Platform",
+"Plataformas": "Platforms",
+"Plugin VST3": "VST3 plugin",
+"Plugins de efectos (VST3)": "Effect plugins (VST3)",
+"Plugins que no se han podido abrir": "Plugins that could not be opened",
+"Pone un techo: el sonido no pasa de ese nivel": "Sets a ceiling: the sound doesn't go past that level",
+"Ponla en «Cambiar portada» y se incrustará aquí": "Put it in «Change cover» and it will be embedded here",
+"Ponle un nombre al álbum": "Give the album a name",
+"Pop rock": "Pop rock",
+"Pop, Rock": "Pop, Rock",
+"Por canción": "By song",
+"Por ejemplo si en realidad son los stems o una versión de otra canción. Se unirá a la que elijas y sus archivos se moverán a su carpeta": "For example if they are actually the stems or a version of another song. It will be joined to the one you choose and its files will move to its folder",
+"Por país": "By country",
+"Por plataforma": "By platform",
+"Por qué esta canción": "Why this song",
+"Por álbum": "By album",
+"Por álbum, single o proyecto": "By album, single or project",
+"Portada": "Cover",
+"Portada del mixtape": "Mixtape cover",
+"Portada oficial": "Official cover",
+"Portadas y arte": "Covers and art",
+"Portugués": "Portuguese",
+"Posibles canciones repetidas": "Possible duplicate songs",
+"Posición": "Position",
+"Pre-released": "Pre-released",
+"Preparando": "Preparing",
+"Preparando el ZIP": "Preparing the ZIP",
+"Preset guardado ✓": "Preset saved ✓",
+"Primero carga una portada": "First load a cover",
+"Primero instala el soporte de plugins": "First install plugin support",
+"Primero pulsa «Actualizar la biblioteca»": "First press «Refresh the library»",
+"Primero solo": "Solo first",
+"Probando": "Testing",
+"Probar las claves": "Test the keys",
+"Probar y guardar": "Test and save",
+"Procesado en": "Processed in",
+"Procesando": "Processing",
+"Profundidad no compatible": "Unsupported bit depth",
+"Proyecto en preparación": "Project in preparation",
+"Proyectos": "Projects",
+"Publicada": "Published",
+"Publicadas sin letra": "Published without lyrics",
+"Publicadas sin máster identificado": "Published without an identified master",
+"Publicadas sin portada": "Published without cover",
+"Publicadas sin versión identificada": "Published without an identified version",
+"Puede tardar unos minutos; puedes seguir viendo la página mientras tanto": "It may take a few minutes; you can keep looking at the page meanwhile",
+"Puedes cambiar el nombre de la canción": "You can change the song's name",
+"Puedes deshacerlo con el diario": "You can undo it with the journal",
+"Pulsa": "Press",
+"Pulsa en una canción de la lista para abrirla": "Click a song in the list to open it",
+"Pulsa para ver o quitar alguno": "Click to see or remove any",
+"Pulsa «Actualizar la biblioteca» para que el gestor lea las carpetas nuevas": "Press «Refresh the library» so the manager reads the new folders",
+"Punto y coma ( ; )": "Semicolon ( ; )",
+"Python": "Python",
+"Python que se usa": "Python in use",
+"Que se quede la otra": "Keep the other one",
+"Quitada de «": "Removed from «",
+"Quitada del álbum «": "Removed from the album «",
+"Quitada la marca de boceto a": "Sketch mark removed from",
+"Quitar": "Remove",
+"Quitar canciones": "Remove songs",
+"Quitar de bocetos": "Remove from sketches",
+"Quitar del mixtape": "Remove from the mixtape",
+"Quitar del álbum (la canción no se borra)": "Remove from the album (the song is not deleted)",
+"Quitar efectos": "Remove effects",
+"Quitar etiqueta": "Remove tag",
+"Quitar la selección": "Clear the selection",
+"Quitar los marcados": "Remove the checked ones",
+"Quitar marca": "Remove mark",
+"Quitar recorte": "Remove trim",
+"Quitar seleccionadas": "Remove selected",
+"Quitar «versión final»": "Remove «final version»",
+"Quitaste todas las canciones del máster. Pulsa «Recuperar las quitadas» para volver a verlas": "You removed all the songs from the master. Press «Restore the removed ones» to see them again",
+"Quité las marcas de sección ([Verse], [Chorus]…)": "I removed the section marks ([Verse], [Chorus]…)",
+"Qué sale de tu equipo si lo activas": "What leaves your computer if you turn it on",
+"Recomendación: empieza por los CSV": "Recommendation: start with the CSVs",
+"Recortar portada": "Crop cover",
+"Recorte": "Trim",
+"Renombrar canción": "Rename song",
+"Reparto por estado": "Breakdown by status",
+"Repite el sonido unos instantes después": "Repeats the sound a moment later",
+"Reproducciones": "Plays",
+"Reproducir": "Play",
+"Reproducir / pausa": "Play / pause",
+"Requisitos de Spotify (2026)": "Spotify requirements (2026)",
+"Resolver los no casados": "Resolve the unmatched ones",
+"Respetar las diferencias": "Respect the differences",
+"Retroceder 5 s": "Back 5 s",
+"Revisa el texto y pulsa «Guardar letra»": "Check the text and press «Save lyrics»",
+"Revisa los nombres (puedes cambiarlos). Cada una se crea con su carpeta y sus archivos clasificados": "Check the names (you can change them). Each one is created with its folder and its sorted files",
+"Ruta copiada": "Path copied",
+"Safe Creative": "Safe Creative",
+"Se": "Will be",
+"Se borra «": "« will be deleted",
+"Se borran tus claves y los datos traídos, solo de este módulo": "Your keys and the data fetched are deleted, for this module only",
+"Se copiarán": "Will be copied",
+"Se crearán": "Will be created",
+"Se detuvo la fusión": "The merge stopped",
+"Se enviará a Spotify el título de cada canción tuya (hasta 120) junto con el nombre de artista «": "The title of each of your songs (up to 120) will be sent to Spotify together with the artist name «",
+"Se grabaron y se separaron, pero falta sacar el máster": "They were recorded and separated, but the master hasn't been made yet",
+"Se guarda como letra.txt junto a la canción. La anterior queda de copia": "It is saved as letra.txt next to the song. The previous one is kept as a copy",
+"Se guarda con todos sus ajustes para volver a usarla en otras canciones": "It is saved with all its settings so you can reuse it on other songs",
+"Se guardaron": "Were saved",
+"Se instala solo para este Python; no modifica tu música ni tus plugins": "It is installed only for this Python; it doesn't modify your music or your plugins",
+"Se lee en tu equipo. No se sube a ningún sitio. Funciona con coma o punto y coma, con tildes, y con decimales con coma (12,5) o con punto (12.5)": "It is read on your computer. It isn't uploaded anywhere. It works with comma or semicolon, with accents, and with decimals using a comma (12,5) or a point (12.5)",
+"Se mantiene la frecuencia de muestreo del archivo (sin remuestrear). El WAV lleva solo formato, etiquetas (ID3 + RIFF) y audio. Las canciones que no son WAV se decodifican a 44,1 kHz": "The file's sample rate is kept (no resampling). The WAV carries only format, tags (ID3 + RIFF) and audio. Songs that aren't WAV are decoded at 44.1 kHz",
+"Se marcará como boceto en el gestor al terminar": "It will be marked as a sketch in the manager when finished",
+"Se quitarán de tu biblioteca": "They will be removed from your library",
+"Se quitarán todas las canciones de la lista y se borrarán sus versiones MP3 creadas para este mixtape. Tu música original no se toca": "All the songs in the list will be removed and their MP3 versions created for this mixtape will be deleted. Your original music is not touched",
+"Se sube todo el álbum lo mismo, de modo que la canción más fuerte llega al objetivo y las demás conservan su diferencia (recomendado para discos con canciones suaves y fuertes a propósito)": "The whole album is raised by the same amount, so the loudest song reaches the target and the others keep their difference (recommended for albums with deliberately soft and loud songs)",
+"Se unirán": "Will be joined",
+"Se usará «": "« will be used",
+"Se va a ejecutar": "It is going to run",
+"Se va a procesar": "It is going to be processed",
+"Se vuelve a leer todo. Tu música no se mueve ni se copia: se usa donde está": "Everything is read again. Your music isn't moved or copied: it's used where it is",
+"Según la fecha de cada archivo de versión. Último movimiento": "According to the date of each version file. Last move",
+"Según su ayuda, Insights no exporta datos (consulta en resumen de búsqueda; no verificado)": "According to its help, Insights doesn't export data (from a search summary; not verified)",
+"Según su carpeta": "According to its folder",
+"Seleccionar": "Select",
+"Seleccionar todas": "Select all",
+"Separador": "Separator",
+"Sesiones y proyectos": "Sessions and projects",
+"Si algún archivo no está donde debería, ábrelo con «⋯» o botón derecho y muévelo": "If any file isn't where it should be, open it with «⋯» or right-click and move it",
+"Si en realidad es una canción que ya existe con otro título, búscala y asígnala. Si es una canción solo con letra, déjala así. Si no es una canción (una nota, un apunte), ocúltala": "If it is actually a song that already exists under another title, search for it and assign it. If it is a song with only lyrics, leave it like that. If it isn't a song (a note, a scribble), hide it",
+"Si no te interesa, déjalo sin activar": "If you're not interested, leave it turned off",
+"Si tienes bocetos, versiones, tracks sueltos, grabaciones en directo y proyectos de tu programa de música repartidos por tus carpetas, aquí los ordenamos juntos": "If you have sketches, versions, loose tracks, live recordings and music-program projects scattered across your folders, here we sort them out together",
+"Siguiente": "Next",
+"Silencia lo que suena muy bajito (ruido de fondo) entre las notas": "Silences what plays very quietly (background noise) between the notes",
+"Silencio al final (s)": "Silence at the end (s)",
+"Silencio al principio (s)": "Silence at the start (s)",
+"Sin asignar": "Unassigned",
+"Sin audio": "No audio",
+"Sin carpeta": "No folder",
+"Sin carátula": "No cover",
+"Sin casar": "Unmatched",
+"Sin clip final": "No final clip",
+"Sin datos casados con álbumes": "No data matched with albums",
+"Sin datos para este filtro": "No data for this filter",
+"Sin efectos (el audio pasa tal cual)": "No effects (the audio passes through as is)",
+"Sin letra": "No lyrics",
+"Sin letra todavía": "No lyrics yet",
+"Sin máster": "No master",
+"Sin música": "No music",
+"Sin ningún audio": "No audio at all",
+"Sin plataformas": "No platforms",
+"Sin portada": "No cover",
+"Sin portada elegida": "No cover chosen",
+"Sin portada oficial": "No official cover",
+"Sin publicar": "Unpublished",
+"Sin publicar (sueltas)": "Unpublished (loose)",
+"Sin riesgo para tu música": "No risk to your music",
+"Sin título": "Untitled",
+"Singles publicados": "Published singles",
+"Sitios habituales": "Usual places",
+"Sobre el gestor": "About the manager",
+"Sobre los formatos": "About the formats",
+"Solo el archivo del proyecto (ligero)": "Only the project file (light)",
+"Solo existe su título o su letra": "Only its title or its lyrics exist",
+"Solo letra: aún sin música": "Lyrics only: no music yet",
+"Solo miro nombres, tamaños y cabeceras; no cambio nada": "I only look at names, sizes and headers; I change nothing",
+"Solo puedes añadir canciones a los álbumes que tú creas": "You can only add songs to the albums that you create",
+"Solo se pueden añadir archivos WAV a mano": "Only WAV files can be added by hand",
+"Son muchas canciones: ábrelas de una en una": "That's a lot of songs: open them one at a time",
+"Soporte de plugins instalado": "Plugin support installed",
+"Soporte de plugins instalado ✓": "Plugin support installed ✓",
+"Spotify Premium": "Spotify Premium",
+"Spotify for Artists permite descargar algunas estadísticas en CSV (streams por canción, audiencia, tablas de canciones y listas). No he podido verificar sus columnas: usa el asistente": "Spotify for Artists lets you download some statistics as CSV (streams per song, audience, song and playlist tables). I haven't been able to verify its columns: use the assistant",
+"Spotify respondió": "Spotify responded",
+"Spotify, YouTube, Mi distribuidora": "Spotify, YouTube, My distributor",
+"Spotify: datos públicos del catálogo": "Spotify: public catalog data",
+"Su letra pasará a ser la de «": "Its lyrics will become those of «",
+"Sube o baja el volumen de todo por igual": "Raises or lowers the volume of everything equally",
+"Sube o baja todos los agudos por encima de una frecuencia": "Raises or lowers all the highs above a frequency",
+"Sube o baja todos los graves por debajo de una frecuencia": "Raises or lowers all the lows below a frequency",
+"Sube o baja una zona concreta de graves, medios o agudos": "Raises or lowers a specific zone of lows, mids or highs",
+"Subiendo": "Uploading",
+"Subir": "Move up",
+"Subir en el mixtape": "Move up in the mixtape",
+"Subir un nivel": "Go up one level",
+"Suelta aquí carpetas o archivos": "Drop folders or files here",
+"Suelta aquí el archivo CSV": "Drop the CSV file here",
+"Sus": "Their",
+"Suéltalas sobre el mixtape que quieras": "Drop them onto the mixtape you want",
+"Sí, acepto lo que sale del equipo (arriba)": "Yes, I accept what leaves the computer (above)",
+"Sí, cancelar": "Yes, cancel",
+"Sí, deshacer": "Yes, undo",
+"Tamaño": "Size",
+"Techo de picos": "Peak ceiling",
+"Temática y palabras clave": "Themes and keywords",
+"Terminar aquí": "Finish here",
+"Texto": "Text",
+"Texto de la cinta": "Tape text",
+"Tiene licencia GPL-3.0 (libre). Para tu uso personal no cambia nada": "It has the GPL-3.0 license (free). For your personal use nothing changes",
+"Tienen audio pero no su letra guardada (publicadas o no). Si es un instrumental, ocúltala o márcala como boceto": "They have audio but no saved lyrics (published or not). If it's an instrumental, hide it or mark it as a sketch",
+"Tienen la carpeta de stems pero nunca sacaste el máster: están a medias. Ábrelas para masterizar o descartar": "They have the stems folder but you never made the master: they are half done. Open them to master or discard them",
+"Tienen letra, versión, máster y portada: solo falta publicarlas": "They have lyrics, version, master and cover: they only need publishing",
+"Tienen música pero no su letra": "They have music but no lyrics",
+"Tienen versión y aún no tienen máster elegido": "They have a version and no master chosen yet",
+"Tienes": "You have",
+"Tipo de efecto desconocido": "Unknown effect type",
+"Titular": "Holder",
+"Titular del copyright": "Copyright holder",
+"Titular del copyright (para los mixtapes y los másters)": "Copyright holder (for mixtapes and masters)",
+"Todas": "All",
+"Todas las canciones quedan con el mismo volumen (recomendado para singles y listas)": "All the songs end up at the same volume (recommended for singles and playlists)",
+"Todas las colecciones": "All collections",
+"Todas las pistas": "All tracks",
+"Todas las temáticas": "All themes",
+"Todas ofrecen informes de ingresos descargables. Solo las columnas de Amuse están publicadas (en Excel). El resto: formato no verificado, usa el asistente": "All of them offer downloadable income reports. Only Amuse's columns are published (in Excel). The rest: format not verified, use the assistant",
+"Todas tus letras, tengan música o no. Busca por palabra o frase dentro de las letras, o filtra por temática. Haz clic en una letra para leerla y escucharla a la derecha": "All your lyrics, with or without music. Search by word or phrase inside the lyrics, or filter by theme. Click a lyric to read it and listen to it on the right",
+"Todavía no has buscado plugins. Es opcional: sin ellos puedes usar los efectos incluidos (paso 2)": "You haven't searched for plugins yet. It's optional: without them you can use the included effects (step 2)",
+"Todavía no hay canciones": "There are no songs yet",
+"Todavía no hay canciones en el gestor. Cuando las haya, aquí verás en qué punto está cada una": "There are no songs in the manager yet. When there are, here you'll see where each one stands",
+"Todavía no hay canciones. Arrástralas aquí o usa «Añadir a un mixtape…» en cualquier canción": "There are no songs yet. Drag them here or use «Add to a mixtape…» on any song",
+"Todavía no hay otras imágenes guardadas para elegir. Sube una nueva": "There are no other saved images to choose from yet. Upload a new one",
+"Todavía no tienes ningún mixtape. Pulsa «Nuevo mixtape» para crear el primero": "You don't have any mixtape yet. Press «New mixtape» to create the first one",
+"Todavía sin imágenes ni vídeos": "No images or videos yet",
+"Todavía sin versión final elegida": "No final version chosen yet",
+"Todo el arte y el vídeo está en la carpeta": "All the art and video is in the folder",
+"Todo está al día 🎉": "Everything is up to date 🎉",
+"Todos": "All",
+"Todos los archivos y sesiones se juntarán. ¿Qué nombre llevará?": "All the files and sessions will be gathered together. What will it be called?",
+"Traer datos de mis canciones": "Fetch data for my songs",
+"Trip Hop": "Trip Hop",
+"Tu biblioteca está vacía": "Your library is empty",
+"Tu nombre artístico": "Your artist name",
+"Tus archivos originales no se tocan": "Your original files are not touched",
+"Tus carpetas de origen no se han tocado": "Your source folders have not been touched",
+"Tus datos (estrellas, notas, ajustes…) están en": "Your data (stars, notes, settings…) is in",
+"Tus plugins": "Your plugins",
+"Título": "Title",
+"Título de la canción": "Song title",
+"Título original restaurado": "Original title restored",
+"Título que se escribirá en el WAV": "Title that will be written into the WAV",
+"Títulos que no he podido casar": "Titles I couldn't match",
+"Una canción no tiene": "A song doesn't have",
+"Una canción puede estar en varias colecciones (por ejemplo una serie) sin moverla de su carpeta": "A song can be in several collections (for example a series) without moving it from its folder",
+"Unir": "Join",
+"Unir canciones": "Join songs",
+"Unir con otra canción": "Join with another song",
+"Usar en este mixtape": "Use in this mixtape",
+"Usar estos ISRC para casar mis informes": "Use these ISRCs to match my reports",
+"VERSIÓN FINAL": "FINAL VERSION",
+"VERSIÓN PUBLICADA": "PUBLISHED VERSION",
+"VST2 (plugins antiguos .dll) no se admite. Audio Units solo existe en Mac": "VST2 (old .dll plugins) is not supported. Audio Units only exist on Mac",
+"Vaciar mixtape": "Empty mixtape",
+"Valor": "Value",
+"Ver": "View",
+"Ver MP3 y letras": "View MP3s and lyrics",
+"Ver el detalle": "View the detail",
+"Ver grande": "View large",
+"Ver las canciones": "View the songs",
+"Ver los datos": "View the data",
+"Ver sus canciones": "View its songs",
+"Verificación": "Verification",
+"Versión": "Version",
+"Versión / mezcla": "Version / mix",
+"Versión a usar": "Version to use",
+"Versión descartada": "Discarded version",
+"Versión final": "Final version",
+"Versión guardada ✓": "Version saved ✓",
+"Versión publicada": "Published version",
+"Volumen": "Volume",
+"Volumen medio": "Average volume",
+"Volumen objetivo (sonoridad)": "Target volume (loudness)",
+"Volver a buscar": "Search again",
+"Volver a las versiones originales": "Go back to the original versions",
+"Volver a mostrar": "Show again",
+"Volver a mostrarla": "Show it again",
+"Volver todo a por defecto": "Reset everything to default",
+"Voy a copiar": "I'm going to copy",
+"Vuelve a escanear la carpeta": "Scan the folder again",
+"Vuelve a leer tus carpetas: audio nuevo, canciones nuevas, arte y vídeo": "Reads your folders again: new audio, new songs, art and video",
+"Vuelve a mostrarse": "It is shown again",
+"Vídeo": "Video",
+"Vídeo y clips": "Video and clips",
+"Vídeos": "Videos",
+"WAV nuevo": "New WAV",
+"Ya aparecen como versiones de cada canción": "They already appear as versions of each song",
+"Ya estaba en «": "It was already in «",
+"Ya estaban en el álbum": "They were already in the album",
+"Ya está, cerrar la ventana": "That's it, close the window",
+"Ya existe": "Already exists",
+"Ya existe un álbum con ese nombre": "An album with that name already exists",
+"Ya existe «": "« already exists",
+"Ya hay un preset con ese nombre": "There is already a preset with that name",
+"Ya hay un preset con ese nombre. ¿Quieres reemplazarlo?": "There is already a preset with that name. Do you want to replace it?",
+"Ya hay una importación en marcha": "An import is already running",
+"Ya hay una ventana de plugin abierta. Ciérrala primero": "A plugin window is already open. Close it first",
+"Ya he probado a adivinarlo por el nombre de las columnas; corrige lo que no sea. Solo la canción y un número (reproducciones o ingresos) son imprescindibles": "I've already tried guessing from the column names; correct whatever is wrong. Only the song and a number (plays or income) are essential",
+"Ya no es un boceto": "It's no longer a sketch",
+"Ya se buscan en las carpetas habituales de tu sistema": "They are already searched in the usual folders of your system",
+"Ya se está buscando": "It is already being searched",
+"Yo creo la canción, clasifico cada archivo (versiones, máster, stems, sesiones, letra…) y lo catalogo": "I create the song, sort each file (versions, master, stems, sessions, lyrics…) and catalog it",
+"YouTube Analytics API existe y usa OAuth con tu propio proyecto de Google Cloud. Es viable pero complejo para quien no es técnico: queda como diseño (ver LEEME.md)": "The YouTube Analytics API exists and uses OAuth with your own Google Cloud project. It is feasible but complex for non-technical people: it remains as a design (see LEEME.md)",
+"YouTube Studio → Analytics → modo avanzado → «Exportar vista actual» (máximo 500 filas). Columnas sin verificar": "YouTube Studio → Analytics → advanced mode → «Export current view» (maximum 500 rows). Columns not verified",
+"a tu biblioteca y compruebo que cada copia es idéntica. Tus archivos originales se quedan donde están, y si algo no te gusta puedes deshacer la importación": "to your library and I check that each copy is identical. Your original files stay where they are, and if you don't like something you can undo the import",
+"a un mixtape": "to a mixtape",
+"actualizado": "updated",
+"ajustado en la ventana del plugin": "adjusted in the plugin window",
+"antes": "before",
+"archivo": "file",
+"archivo subido": "uploaded file",
+"archivo(s": "file(s",
+"archivo(s) añadidos a mano. Ojo: estos no se recuerdan al recargar la página": "file(s) added by hand. Note: these are not remembered when the page is reloaded",
+"archivo(s) de caché o copia de seguridad no se copian": "cache or backup file(s) are not copied",
+"archivo(s) en esas carpetas": "file(s) in those folders",
+"archivos": "files",
+"archivos WAV": "WAV files",
+"archivos colocados": "files placed",
+"archivos comparados": "files compared",
+"archivos copiados y verificados": "files copied and verified",
+"archivos de audio se moverán a la carpeta de esa canción": "audio files will be moved to that song's folder",
+"archivos de música y papeles": "music files and papers",
+"archivos de otro tipo": "files of another type",
+"archivos en": "files in",
+"archivos enormes (más de": "huge files (more than",
+"archivos estaban bloqueados": "files were locked",
+"archivos no se pudieron abrir": "files could not be opened",
+"archivos no se pudieron copiar": "files could not be copied",
+"archivos sueltos": "loose files",
+"archivos temporales o de caché": "temporary or cache files",
+"archivos vistos": "files seen",
+"audio": "audio",
+"avance medio de las canciones (sin bocetos)": "average progress of the songs (without sketches)",
+"añadida": "added",
+"añadidas": "added",
+"boceto": "sketch",
+"bocetos": "sketches",
+"byte a byte (huella SHA-256 completa)": "byte by byte (full SHA-256 fingerprint)",
+"cada canción al mismo volumen": "every song at the same volume",
+"cada uno en la carpeta": "each one in the folder",
+"canciones": "songs",
+"canciones (con letra y música). Un clic abre la canción, un doble clic (o ▶) la reproduce": "songs (with lyrics and music). One click opens the song, a double click (or ▶) plays it",
+"canciones (las demás no tienen audio ni letra que catalogar": "songs (the others have no audio or lyrics to catalog",
+"canciones (sin bocetos) han llegado a cada paso": "songs (without sketches) have reached each step",
+"canciones (son la misma": "songs (they are the same",
+"canciones añadidas": "songs added",
+"canciones con audio": "songs with audio",
+"canciones con datos": "songs with data",
+"canciones en total": "songs in total",
+"canciones en una": "songs into one",
+"canciones no se borran ni se mueven: solo dejan de estar en este álbum": "songs are not deleted or moved: they just stop being in this album",
+"canciones no válidas": "invalid songs",
+"canciones nuevas": "new songs",
+"canciones nuevas dentro de": "new songs inside",
+"canciones se importarán": "songs will be imported",
+"canciones sin": "songs without",
+"canciones y letras": "songs and lyrics",
+"canciones. Son": "songs. They are",
+"canción": "song",
+"canción añadida": "song added",
+"canción o archivo no válidos": "invalid song or file",
+"canción(es": "song(s",
+"canción(es)": "song(s)",
+"carpeta de una canción": "a song's folder",
+"carpetas": "folders",
+"carpetas vistas": "folders seen",
+"casado": "matched",
+"como boceto": "as a sketch",
+"como boceto (no compartir": "as a sketch (don't share",
+"comparados por": "compared by",
+"completa": "full",
+"con coma (12,5)": "with a comma (12,5)",
+"con efectos": "with effects",
+"con el Python del gestor": "with the manager's Python",
+"con el nombre de la canción (o": "with the song's name (or",
+"con error": "with error",
+"con letra": "with lyrics",
+"con máster": "with master",
+"con música y sin letra": "with music and no lyrics",
+"con punto (12.5)": "with a point (12.5)",
+"con stems pero sin máster": "with stems but no master",
+"con sus audios, samples": "with its audio, samples",
+"conservados porque habían cambiado": "kept because they had changed",
+"copiados": "copied",
+"copio": "I copy",
+"cosas pendientes": "pending things",
+"de cada canción)": "of each song)",
+"de contenido": "of content",
+"de este mixtape": "of this mixtape",
+"de programa de música": "of music program",
+"de su canción (se crea si no existe)": "of its song (created if it doesn't exist)",
+"de trabajo": "working",
+"debajo de cada cosa te digo por qué. Cambia lo que quieras: nombre, categoría, a qué canción va, o quítalo": "under each item I tell you why. Change whatever you want: name, category, which song it goes to, or remove it",
+"decimales con": "decimals with",
+"del mixtape": "of the mixtape",
+"descarga de internet": "download from the internet",
+"desde «": "from «",
+"detectada": "detected",
+"detectado": "detected",
+"déjalo vacío para conservarlo": "leave it empty to keep it",
+"día/mes/año": "day/month/year",
+"efecto(s) y se guardará un": "effect(s) and a ... will be saved",
+"el anterior para no contar dos veces": "the previous one so as not to count twice",
+"el archivo cambió mientras se copiaba (¿lo está usando otro programa?)": "the file changed while it was being copied (is another program using it?)",
+"el archivo está fuera de la carpeta de origen o es un enlace: no se copia": "the file is outside the source folder or is a link: it isn't copied",
+"el archivo recibido no es un WAV": "the received file is not a WAV",
+"el destino ya existe": "the destination already exists",
+"el final": "the end",
+"el gestor no pudo darme el archivo": "the manager couldn't give me the file",
+"el módulo de efectos no está disponible": "the effects module isn't available",
+"el principio": "the beginning",
+"el punto de inicio está después del final de la canción": "the start point is after the end of the song",
+"el resultado son archivos nuevos (un ZIP o la carpeta": "the result is new files (a ZIP or the folder",
+"el servidor no respondió": "the server didn't respond",
+"el tamaño de la copia no coincide": "the size of the copy doesn't match",
+"en cola para crear el MP3": "queued to create the MP3",
+"en curso": "in progress",
+"en la carpeta": "in the folder",
+"en la carpeta «": "in the folder «",
+"encontradas": "found",
+"enlace, ISRC, álbum y fecha de salida. El ISRC ayuda a casar los informes con tus canciones": "link, ISRC, album and release date. The ISRC helps match the reports to your songs",
+"enlaces/accesos directos se han saltado (no los sigo": "links/shortcuts were skipped (I don't follow them",
+"entradas en una sola. Los archivos de audio de las demás pasan a la carpeta de la que se queda, y sus letras se conservan si la que se queda no tiene. Puedes deshacerlo con el diario de movimientos": "entries into one. The audio files of the others go to the folder of the one that stays, and their lyrics are kept if the one that stays has none. You can undo it with the move journal",
+"entradas ocultas · las recuperas en el filtro «Ocultas»": "hidden entries · you get them back in the «Hidden» filter",
+"es un boceto": "is a sketch",
+"esa carpeta no existe": "that folder doesn't exist",
+"escaneo no terminado": "scan not finished",
+"ese audio ya no está (se borran a las pocas horas)": "that audio is gone (they are deleted after a few hours)",
+"esta canción no pertenece a un álbum": "this song doesn't belong to an album",
+"esta canción no tiene audio": "this song has no audio",
+"esta entrada no tiene música": "this entry has no music",
+"este efecto no tiene ventana propia": "this effect has no window of its own",
+"estéreo": "stereo",
+"falta la canción o el texto": "the song or the text is missing",
+"ffmpeg falló": "ffmpeg failed",
+"ffmpeg falló con «": "ffmpeg failed with «",
+"ffmpeg falló con «{a}»: {b}": "ffmpeg failed with «{a}»: {b}",
+"ffmpeg no pudo leer ese audio": "ffmpeg couldn't read that audio",
+"filas": "rows",
+"filas casadas con claridad · 🔎": "rows clearly matched · 🔎",
+"filas de datos": "data rows",
+"filas de «Total» se han saltado": "«Total» rows were skipped",
+"filas guardadas en tu equipo": "rows saved on your computer",
+"filas que no se han podido unir a ninguna canción": "rows that could not be matched to any song",
+"filas sin fecha válida se han descartado": "rows without a valid date were discarded",
+"filas sin título se han saltado": "rows without a title were skipped",
+"filas útiles (de": "useful rows (of",
+"formato no verificado · usa el asistente de columnas": "format not verified · use the column assistant",
+"fuera del máster": "outside the master",
+"fundida con «": "combined with «",
+"guardada — déjalo vacío para conservarla": "saved — leave it empty to keep it",
+"guardado": "saved",
+"hacen falta": "you need",
+"he reconocido tu perfil «": "I recognized your profile «",
+"ignoradas por ti": "ignored by you",
+"importar": "import",
+"imágenes": "images",
+"incluir": "include",
+"ingresos": "income",
+"instrumentos (no sirven como efecto": "instruments (not usable as an effect",
+"la canción «": "the song «",
+"la carpeta que elijas (no abro ni cambio nada). Luego te enseño cómo la ordenaría y tú decides. Al final": "the folder you choose (I don't open or change anything). Then I show you how I would organize it and you decide. At the end",
+"la creaste tú": "you created it",
+"la mejor versión": "the best version",
+"la otra se funde en ella (sus archivos pasan a su carpeta y su letra se conserva). Se puede deshacer con el diario de movimientos": "the other one merges into it (its files go to its folder and its lyrics are kept). It can be undone with the move journal",
+"la separaste tú de «": "you split it off from «",
+"la sesión completa del programa": "the full session of the program",
+"la verificación falló: la copia no es idéntica": "verification failed: the copy is not identical",
+"la versión final": "the final version",
+"las": "the",
+"letra y música": "lyrics and music",
+"letras": "lyrics",
+"letras marcadas como boceto · no se comparten": "lyrics marked as sketch · not shared",
+"leídas": "read",
+"libre en tu biblioteca": "free in your library",
+"libres en el disco de la biblioteca": "free on the library's disk",
+"los archivos se añadirán a esa canción": "the files will be added to that song",
+"los he agrupado en": "I grouped them into",
+"mandos": "controls",
+"mandos. Para ajustar de verdad, lo más cómodo es «🪟 Abrir ventana»": "controls. To really adjust, the easiest is «🪟 Open window»",
+"marcada": "marked",
+"marcadas en una": "marked into one",
+"marcados a": "marked as",
+"masterizado: carátula": "mastered: cover art",
+"mes/día/año": "month/day/year",
+"meses": "months",
+"miro": "I look at",
+"muestreo": "sampling",
+"más": "more",
+"más. Ábrelos desde el Explorador": "more. Open them from the file explorer",
+"máster": "master",
+"másters del mixtape": "mixtape masters",
+"másters en la biblioteca": "masters in the library",
+"másters en la carpeta master de sus canciones": "masters in the master folder of their songs",
+"másters; hubo un problema con el siguiente": "masters; there was a problem with the next one",
+"módulos": "modules",
+"necesitan ffmpeg y no está instalado. Usa un WAV, FLAC o MP3": "need ffmpeg and it isn't installed. Use a WAV, FLAC or MP3",
+"ni se sobrescribe nada (si un nombre coincide, el nuevo lleva « (2)»)": "nor is anything overwritten (if a name matches, the new one gets « (2)»)",
+"no encuentro el audio de la canción": "I can't find the song's audio",
+"no existe": "doesn't exist",
+"no se han podido abrir": "could not be opened",
+"no se pudo": "could not",
+"no se pudo crear": "could not create",
+"no se tocan": "are not touched",
+"no sé dónde guardarlo": "I don't know where to save it",
+"nombre de la cancion": "song name",
+"nuevo": "new",
+"número de disco": "disc number",
+"o escribe el nombre de una colección nueva": "or type the name of a new collection",
+"o usa un arte que ya tienes": "or use art you already have",
+"o, si ninguna lo está, la que tiene": "or, if none is, the one that has",
+"omitidos": "skipped",
+"omitidos / avisos": "skipped / warnings",
+"opcional · desactivado por defecto": "optional · off by default",
+"organizado por álbum, single y proyecto. Haz clic en uno para ver sus imágenes y vídeos aquí mismo, sin salir del gestor": "organized by album, single and project. Click one to see its images and videos right here, without leaving the manager",
+"p. ej. Mi distribuidora": "e.g. My distributor",
+"parece copia exacta de «": "looks like an exact copy of «",
+"paso(s) en la cadena general": "step(s) in the main chain",
+"pedalboard no está instalado en este Python": "pedalboard is not installed in this Python",
+"periodo": "period",
+"petición no válida": "invalid request",
+"pico": "peak",
+"pista(s) añadidas a mano no se guardan aquí (no son de ninguna canción": "track(s) added by hand are not saved here (they don't belong to any song",
+"pista(s) con cadena propia": "track(s) with their own chain",
+"plataforma sin indicar": "platform not specified",
+"plugin no encontrado: vuelve a buscar plugins": "plugin not found: search for plugins again",
+"plugin sin ruta": "plugin without a path",
+"plugins": "plugins",
+"plugins admitidos": "supported plugins",
+"plugins de efectos encontrados": "effect plugins found",
+"por mes": "per month",
+"por parecido": "by similarity",
+"por parecido del título (sin «Remastered», «Radio Edit»…) · ⚠": "by title similarity (without «Remastered», «Radio Edit»…) · ⚠",
+"proyecto": "project",
+"proyectos": "projects",
+"publicada": "published",
+"publicadas": "published",
+"publicadas sin versión identificada": "published without an identified version",
+"pégala aquí": "paste it here",
+"pégalo aquí": "paste it here",
+"que no tienen nada todavía": "that have nothing yet",
+"repro": "plays",
+"reproducciones": "plays",
+"reproducciones) que no se han podido unir a ninguna canción y por eso no aparecen en «Por canción». Pulsa «resolver» arriba para asignarlos": "plays) that could not be matched to any song and so don't appear in «By song». Press «resolve» above to assign them",
+"restantes": "remaining",
+"ruta no válida": "invalid path",
+"saltada(s) porque ya habían cambiado": "skipped because they had already changed",
+"se queda": "stays",
+"seleccionadas · botón derecho para fusionarlas": "selected · right-click to merge them",
+"separador": "separator",
+"si algún nombre coincide, el nuevo llevará « (2)» al final": "if any name matches, the new one gets « (2)» at the end",
+"sin ISRC": "no ISRC",
+"sin audio": "no audio",
+"sin carpeta": "no folder",
+"sin casar": "unmatched",
+"sin casar · resolver": "unmatched · resolve",
+"sin conexión": "offline",
+"sin conexión con el gestor": "no connection with the manager",
+"sin letra": "no lyrics",
+"sin música": "no music",
+"sin portada elegida a mano": "no cover chosen by hand",
+"sin publicar": "unpublished",
+"sin respuesta del servidor": "no response from the server",
+"sin vista previa": "no preview",
+"singles": "singles",
+"solo datos públicos": "public data only",
+"solo letra": "lyrics only",
+"solo los archivos que esta importación copió": "only the files that this import copied",
+"subidos": "uploaded",
+"sugerencias": "suggestions",
+"sustituirá": "will replace",
+"sí": "yes",
+"tiempo restante aprox": "approx. time remaining",
+"tipo de archivo no admitido": "file type not supported",
+"titulo de la cancion": "song name",
+"titulo del video": "video title",
+"toda": "whole",
+"tus claves de desarrollador (solo hacia Spotify, para pedir un permiso temporal de lectura) y, por cada canción, su título y el nombre de artista que escribas abajo. Nada más. Las claves se guardan solo en la carpeta de datos de este módulo en tu equipo (no en el código ni en tu estado compartido)": "your developer keys (only to Spotify, to request a temporary read permission) and, for each song, its title and the artist name you type below. Nothing else. The keys are saved only in this module's data folder on your computer (not in the code or in your shared state)",
+"técnico": "technical",
+"título": "title",
+"una o varias canciones (desde la lista de la izquierda o desde cualquier pantalla), o usa el botón derecho → «Marcar letra como boceto». Nada de lo que está aquí entra en mixtapes ni en lo que compartas": "one or more songs (from the list on the left or from any screen), or use right-click → «Mark lyrics as sketch». Nothing in here goes into mixtapes or into what you share",
+"verlas": "see them",
+"versiones": "versions",
+"versiones de audio": "audio versions",
+"versión publicada/final": "published/final version",
+"versión(es": "version(s",
+"versión(es)": "version(s)",
+"vídeo": "video",
+"vídeos": "videos",
+"y no entrará en el máster": "and it won't go into the master",
+"y pulsar «Actualizar»": "and press «Refresh»",
+"y quedan": "and there remain",
+"y solo si siguen idénticos a como se copiaron (si has cambiado alguno, se queda). Las carpetas se quitan solo si quedan vacías": "and only if they are still identical to how they were copied (if you changed any, it stays). Folders are removed only if they end up empty",
+"y su lista de": "and its list of",
+"ya existía uno con ese nombre: se añadió « (n)»": "one with that name already existed: « (n)» was added",
+"ya hay": "there are already",
+"ya no estaban": "were no longer there",
+"{f} canciones · {g} kbps": "{f} songs · {g} kbps",
+"» (lo pediste tú": "» (you asked for it",
+"» (mismo nombre y tamaño), la dejo sin marcar": "» (same name and size), I leave it unchecked",
+"» a una colección": "» to a collection",
+"» añadido a la cadena (paso 2": "» added to the chain (step 2",
+"» como tu biblioteca y se volverá a leer todo. No se mueve ni se borra nada": "» as your library and everything will be read again. Nothing is moved or deleted",
+"» con tu cadena de": "» with your chain of",
+"» creado": "» created",
+"» está oculta del gestor": "» is hidden from the manager",
+"» oculta. La recuperas en el filtro «Ocultas»": "» hidden. You get it back in the «Hidden» filter",
+"» pasará a ser parte de «": "» will become part of «",
+"» puesta en": "» put in",
+"» se conserva (ya tenía una": "» is kept (it already had one",
+"» se está abriendo en tu ordenador": "» is opening on your computer",
+"» se moverá a la carpeta de «": "» will be moved to the folder of «",
+"» solo de este módulo. El archivo CSV original no se toca": "» only from this module. The original CSV file is not touched",
+"» ya no está en las carpetas de plugins. Vuelve a buscar plugins": "» is no longer in the plugin folders. Search for plugins again",
+"». Esto es lo que hice": "». This is what I did",
+"». Puedes deshacerlo después con el diario de movimientos": "». You can undo it later with the move journal",
+"». ¿Continuar?": "». Continue?",
+"»? (Tu música no se toca": "»? (Your music is not touched",
+"»? Solo se borra la versión MP3 creada para este mixtape; tu música original no se toca": "»? Only the MP3 version created for this mixtape is deleted; your original music is not touched",
+"»? Sus": "»? Its",
+"¿A qué canción pertenece este archivo?": "Which song does this file belong to?",
+"¿A qué canción pertenece «": "Which song does « belong to",
+"¿Borrar el preset «": "Delete the preset «",
+"¿Cancelar la copia?": "Cancel the copy?",
+"¿Consultar Spotify?": "Query Spotify?",
+"¿Copiar a tu biblioteca?": "Copy to your library?",
+"¿Cuál se queda (con su nombre y su carpeta)?": "Which one stays (with its name and its folder)?",
+"¿Deshacer esta importación?": "Undo this import?",
+"¿Eliminar el álbum «": "Delete the album «",
+"¿Eliminar «": "Delete «",
+"¿Esta canción está mal puesta o es parte de otra?": "Is this song misplaced or part of another?",
+"¿Hay conexión a Internet?": "Is there an Internet connection?",
+"¿No sabes de dónde sacarlo? Mira la pestaña «Conexiones»: allí explico qué ofrece cada plataforma": "Don't know where to get it? Look at the «Connections» tab: there I explain what each platform offers",
+"¿Olvidar Spotify?": "Forget Spotify?",
+"¿Por dónde va el proceso?": "How far along is the process?",
+"¿Quieres continuar?": "Do you want to continue?",
+"¿Quitar": "Remove",
+"¿Quitar este informe?": "Remove this report?",
+"¿Qué columna es qué?": "Which column is which?",
+"¿Qué nombre debe quedar?": "What name should it keep?",
+"¿por qué?": "why?",
+"Álbum": "Album",
+"Álbum eliminado": "Album deleted",
+"Álbum «": "Album «",
+"Álbumes": "Albums",
+"Álbumes en preparación": "Albums in preparation",
+"Álbumes publicados": "Published albums",
+"Ánimo": "Keep going",
+"Árabe": "Arabic",
+"Últimos 3 meses": "Last 3 months",
+"álbumes": "albums",
+"álbumes en preparación": "albums in preparation",
+"última búsqueda": "last search",
+"últimos 3 meses frente a los 3 anteriores": "last 3 months versus the previous 3",
+"24 bits) en su carpeta": "24 bits) in its folder",
+"A esta canción": "To this song",
+"Abrir la carpeta ARTE": "Open the ART folder",
+"Abrir ventana": "Open window",
+"Actualizar la biblioteca": "Refresh the library",
+"Ajustes recogidos de la ventana del plugin": "Settings collected from the plugin window",
+"Al álbum / proyecto": "To the album / project",
+"Archivo de trabajo": "Working file",
+"Atrás": "Back",
+"Añadir WAV a mano": "Add WAV by hand",
+"Añadir a un mixtape": "Add to a mixtape",
+"Añadir archivos": "Add files",
+"Añadir carpeta de plugins": "Add plugin folder",
+"Añadir etiqueta": "Add tag",
+"Añadir temática": "Add theme",
+"Añadir un efecto": "Add an effect",
+"BOCETO · no se comparte": "SKETCH · not shared",
+"Biblioteca actualizada": "Library updated",
+"Borrar filtros": "Clear filters",
+"Buscar canciones en esta carpeta": "Search songs in this folder",
+"Buscar canción o archivo": "Search song or file",
+"Buscar carpeta": "Search folder",
+"Cambiar columnas": "Change columns",
+"Canción vacía": "Empty song",
+"Cargar desde un archivo .txt": "Load from a .txt file",
+"Cargar portada": "Load cover",
+"Carpetas donde busco": "Folders where I search",
+"Con máster": "With master",
+"Configurar": "Configure",
+"Copiar a mi biblioteca": "Copy to my library",
+"Creando el MP3 a": "Creating the MP3 at",
+"Descargar ZIP": "Download ZIP",
+"Descargar otra vez": "Download again",
+"Deshacer": "Undo",
+"Deshacer esta importación": "Undo this import",
+"Editar letra": "Edit lyrics",
+"Elegir otra carpeta": "Choose another folder",
+"Elige idioma —": "Choose language —",
+"En este equipo no se pueden abrir las ventanas de los plugins (no hay pantalla)": "On this computer plugin windows can't be opened (there is no screen)",
+"En un mixtape": "In a mixtape",
+"Enviar: crear el ZIP y descargarlo": "Send: create the ZIP and download it",
+"Equipo": "Computer",
+"Escribir o pegar la letra": "Write or paste the lyrics",
+"Escuchar «": "Listen to «",
+"Esta sesión pesa": "This session weighs",
+"Guardado": "Saved",
+"Guardar toda la canción con estos efectos como versión nueva": "Save the whole song with these effects as a new version",
+"Hacer versión final": "Make final version",
+"Ignorar (no es mía / no está en el gestor)": "Ignore (not mine / not in the manager)",
+"Importación cancelada": "Import cancelled",
+"Importación terminada": "Import finished",
+"Importar música de otras carpetas (proyectos de tu DAW, bocetos, directos…)": "Import music from other folders (DAW projects, sketches, live recordings…)",
+"Importar otro informe": "Import another report",
+"Importar un informe CSV": "Import a CSV report",
+"Informes de plataformas": "Platform reports",
+"La importación se detuvo": "The import stopped",
+"Listo": "Done",
+"Marcar": "Mark",
+"Marcar letra como boceto (no compartir)": "Mark lyrics as sketch (don't share)",
+"Medir volumen": "Measure volume",
+"Mostrar el ZIP": "Show the ZIP",
+"No cabe: quita sesiones completas o libera espacio": "It doesn't fit: remove full sessions or free up space",
+"No copio cachés de Audition (.pkf) ni sus copias de seguridad. Tus originales no se tocan: se copian": "I don't copy Audition caches (.pkf) or their backups. Your originals are not touched: they are copied",
+"No falta nada de lo que puedo comprobar": "Nothing is missing that I can check",
+"No queda nada por resolver": "Nothing is left to resolve",
+"No se pudo crear el ZIP": "Could not create the ZIP",
+"Ocultar mandos": "Hide controls",
+"Otra cinta": "Another tape",
+"Portada cambiada": "Cover changed",
+"Preparar vista previa": "Prepare preview",
+"Proyecto de": "Project of",
+"Publicadas": "Published",
+"Quitar marca de boceto": "Remove sketch mark",
+"Quitar marca de boceto a": "Remove sketch mark from",
+"Quitar temática": "Remove theme",
+"Recortar": "Trim",
+"Recuperar las quitadas": "Restore the removed ones",
+"Renombrar": "Rename",
+"Revisar": "Review",
+"Se detuvo tras guardar": "It stopped after saving",
+"Si sigues, se": "If you continue,",
+"Siguiente: comprobar": "Next: check",
+"Soporte de plugins activado": "Plugin support enabled",
+"Spotify no las da por API) ni entra en tu cuenta": "Spotify doesn't give them via API) nor does it log in to your account",
+"Subir un archivo": "Upload a file",
+"Subir una imagen nueva": "Upload a new image",
+"Suelta aquí para marcarlas como boceto": "Drop here to mark them as sketches",
+"Todo al día: no hay nada pendiente": "Everything is up to date: nothing is pending",
+"Una canción nueva": "A new song",
+"Usar como clip final": "Use as final clip",
+"Usar como portada oficial": "Use as official cover",
+"Ver arte y vídeo": "View art and video",
+"Ver las canciones nuevas": "View the new songs",
+"Versión final elegida": "Final version chosen",
+"Volver a escanear plugins": "Scan plugins again",
+"Volver a los informes": "Back to the reports",
+"Volver al inicio": "Back to home",
+"arriba, a la izquierda) y arrastra una carpeta con una canción y su letra, varias carpetas o archivos sueltos: yo la creo, clasifico cada archivo y la catalogo. También puedes copiar tus carpetas dentro de": "top left) and drag a folder with a song and its lyrics, several folders or loose files: I create it, sort each file and catalog it. You can also copy your folders inside",
+"con su música y su letra), varias carpetas, o": "with its music and its lyrics), several folders, or",
+"elegir canción —": "choose song —",
+"ninguna —": "none —",
+"no existe)": "doesn't exist)",
+"no hay columna de fecha)": "there is no date column)",
+"o TSV) de tu plataforma o distribuidora": "or TSV) from your platform or distributor",
+"otro programa los estaba usando) y los dejé sin copiar. Ciérralos y vuelve a importar solo esos": "another program was using them) and I left them uncopied. Close them and import only those again",
+"pypi.org) la librería «pedalboard» (unos 15 MB)": "pypi.org) the «pedalboard» library (about 15 MB)",
+"si el archivo no la dice)": "if the file doesn't say",
+"sin indicar)": "not specified)",
+"tamaño exacto + principio, final y 32 trozos repartidos)": "exact size + start, end and 32 spread-out chunks)",
+"Álbumes y canciones": "Albums and songs",
+"Aviso de copyright": "Copyright notice",
+"Registrado en Safe Creative": "Registered with Safe Creative",
+"Todas las obras de este envío son de su titular. No se permite su uso, copia ni distribución sin su autorización.": "All the works in this shipment belong to their holder. Use, copying or distribution without their authorization is not allowed.",
+"nº": "no.",
+"Artista": "Artist",
+"Buscar": "Search",
+"Conexiones": "Connections",
+"Copiar": "Copy",
+"Esta canción no tiene audio todavía. Arrastra aquí un archivo WAV": "This song has no audio yet. Drag a WAV file here",
+"Este mixtape no tiene canciones todavía. Añade canciones al mixtape o arrastra aquí archivos WAV": "This mixtape has no songs yet. Add songs to the mixtape or drag WAV files here",
+"Guardar máster": "Save master",
+"Guardar másters del álbum": "Save the album masters",
+"Masterizar": "Master",
+"Otros": "Others",
+"Ponla con «Cambiar portada» y se incrustará aquí": "Put it in «Change cover» and it will be embedded here",
+"Publicados": "Published",
+"Resumen": "Summary",
+"Se copian a tu biblioteca; lo original no se toca.": "They are copied to your library; the original is not touched.",
+"Se sube todo": "The whole thing is raised",
+"Sin carátula elegida": "No cover chosen",
+"Todo": "All",
+"Versiones": "Versions",
+"de la canción": "of the song",
+"del álbum": "of the album",
+"el mixtape": "the mixtape",
+"el resultado son archivos nuevos (un ZIP o": "the result is new files (a ZIP or",
+"el álbum": "the album",
+"existe": "exists",
+"la canción": "the song",
+"la carpeta MIXTAPES/_masters de este mixtape": "the MIXTAPES/_masters folder of this mixtape",
+"la carpeta master de cada canción": "the master folder of each song",
+"la carpeta master de la canción": "the master folder of the song",
+"lo mismo, de modo que la canción más fuerte llega al objetivo y las demás conservan su diferencia (recomendado para discos con canciones suaves y fuertes a propósito": "the same amount, so the loudest song reaches the target and the others keep their difference (recommended for albums with deliberately soft and loud songs",
+"masterizado: portada del mixtape": "mastered: mixtape cover",
+"Añadir a «": "Add to “",
+"Cerrar editor": "Close editor",
+"El ZIP lleva un HTML para abrir con doble clic (reproductor y letras), las carpetas de canciones y letras, la portada y el aviso de copyright. «Todo en un solo HTML» mete el audio dentro del HTML: solo para mixtapes pequeños (hasta unos 25 MB)": "The ZIP contains an HTML you open with a double click (player and lyrics), the song and lyrics folders, the cover and the copyright notice. “Everything in one HTML” puts the audio inside the HTML: only for small mixtapes (up to about 25 MB)",
+"El aviso queda en la etiqueta del MP3, al final de cada letra y en un archivo COPYRIGHT.txt dentro del ZIP. La letra también va en la etiqueta del MP3. La portada del casete va en el ZIP y dentro de cada MP3. Revisa el año de cada canción abajo": "The notice goes in the MP3 tag, at the end of each lyric and in a COPYRIGHT.txt file inside the ZIP. The lyrics are also stored in the MP3 tag. The cassette cover goes in the ZIP and inside each MP3. Check the year of each song below",
+"El mixtape al que añaden las canciones con el botón ＋ (y el que se marca en la lista)": "The mixtape that songs are added to with the ＋ button (and the one marked in the list)",
+"Mixtape activo · clic para quitar": "Active mixtape · click to remove",
+"Mixtape: ninguno": "Mixtape: none",
+"Quitar de «": "Remove from “",
+"Todo en un solo HTML": "Everything in one HTML",
+"Usar este mixtape para añadir canciones con el botón ＋": "Use this mixtape to add songs with the ＋ button",
+"Usar para añadir canciones": "Use to add songs",
+"Activo": "Active",
+"El motor de escucha no está en marcha": "The listening engine is not running",
+"El motor de escucha se ha cerrado": "The listening engine has closed",
+"Elegir": "Choose",
+"No se pudo arrancar el motor": "Could not start the engine",
+"Orden desconocida": "Unknown command",
+"Para escuchar con efectos en directo falta «sounddevice». Puedes instalarlo desde aquí; mientras tanto, la escucha comparará «Original» y «Con efectos» procesando la canción antes": "To listen with live effects, “sounddevice” is missing. You can install it from here; meanwhile, listening will compare “Original” and “With effects” by processing the song beforehand",
+"Marcar como": "Mark as",
+"Mostrar": "Show",
+"Máximo": "Maximum",
+"Ninguna imagen de portada para estas": "No cover image for these",
+"No se pudo instalar": "Could not install",
+"Para escuchar con efectos en directo hace falta «sounddevice» (con PortAudio, la librería que habla con tu tarjeta de sonido). Se descarga de internet (pypi.org) y se instala en el Python de este gestor. ¿Instalarlo?": "To listen with live effects, “sounddevice” is needed (with PortAudio, the library that talks to your sound card). It is downloaded from the internet (pypi.org) and installed in this manager’s Python. Install it?",
+"Suelta aquí para marcarlas como": "⬇ Drop here to mark them as",
+"Tienen audio pero no su letra guardada (publicadas o no). Si es un instrumental, ocúltala o márcala como": "They have audio but no saved lyrics (published or not). If it is an instrumental, hide it or mark it as",
+"Álbumes y": "Albums and"
+},
+"patrones": [
+[
+"Avisos ({a})",
+"Warnings ({a})"
+],
+[
+"Añadida a «{a}»",
+"Added to «{a}»"
+],
+[
+"Añadiendo «{a}» · {b} de {c}",
+"Adding «{a}» · {b} of {c}"
+],
+[
+"Añadir ({a})",
+"Add ({a})"
+],
+[
+"Añadir canciones a «{a}»",
+"Add songs to «{a}»"
+],
+[
+"Añadir {a} canción{b}",
+"Add {a} song{b}"
+],
+[
+"Añadir {h} canción{i} · {j} MB",
+"Add {h} song{i} · {j} MB"
+],
+[
+"Añadir «{a}» a una colección",
+"Add «{a}» to a collection"
+],
+[
+"Colocando {a} de {b}",
+"Placing {a} of {b}"
+],
+[
+"Convirtiendo a MP3 · {a} de {b}",
+"Converting to MP3 · {a} of {b}"
+],
+[
+"Descartadas ({a})",
+"Discarded ({a})"
+],
+[
+"Efecto desconocido: {a}",
+"Unknown effect: {a}"
+],
+[
+"Efectos activos: {a} paso(s) en la cadena general{b}",
+"Active effects: {a} step(s) in the main chain{b}"
+],
+[
+"El mixtape usa ahora los másters ({a})",
+"The mixtape now uses the masters ({a})"
+],
+[
+"Elige una imagen para «{b}»",
+"Choose an image for «{b}»"
+],
+[
+"Encontradas en Spotify ({a})",
+"Found on Spotify ({a})"
+],
+[
+"Encontrados {a} plugins ({b} archivos no se pudieron abrir)",
+"Found {a} plugins ({b} files could not be opened)"
+],
+[
+"Añadir {a} canción{b}",
+"Add {a} song{b}"
+],
+[
+"Añadir {h} canción{i} · {j} MB",
+"Add {h} song{i} · {j} MB"
+],
+[
+"Este módulo ha fallado: {a}",
+"This module has failed: {a}"
+],
+[
+"Fundir {a} canciones en una",
+"Combine {a} songs into one"
+],
+[
+"Fusionar {c} marcada{d}",
+"Merge {c} marked"
+],
+[
+"Hay {a} canciones sin",
+"There are {a} songs without"
+],
+[
+"Hola{a}",
+"Hello{a}"
+],
+[
+"Ingresos{b}",
+"Income{b}"
+],
+[
+"Letra que vas a asignar{a}",
+"Lyrics you are going to assign{a}"
+],
+[
+"Letra{j}",
+"Lyrics{j}"
+],
+[
+"Mostrar los {a} mandos",
+"Show the {a} controls"
+],
+[
+"Motor «pedalboard» {a} · {b} · Python {c} · plugins admitidos: {d}",
+"«pedalboard» engine {a} · {b} · Python {c} · supported plugins: {d}"
+],
+[
+"No copiaré {a} archivos de otro tipo ({b}…). {c}",
+"I won't copy {a} files of another type ({b}…). {c}"
+],
+[
+"No encuentro el audio de la canción {a}",
+"I can't find the audio of the song {a}"
+],
+[
+"No pude dibujar esta vista: {a}",
+"I couldn't draw this view: {a}"
+],
+[
+"No se pudieron leer los ajustes: {a}",
+"The settings could not be read: {a}"
+],
+[
+"No se pudo consultar el estado: {a}",
+"Could not check the status: {a}"
+],
+[
+"No se pudo contactar con Spotify ({a}). ¿Hay conexión a Internet?",
+"Could not contact Spotify ({a}). Is there an Internet connection?"
+],
+[
+"No se pudo empezar: {a}",
+"Could not start: {a}"
+],
+[
+"No se pudo leer: {a}",
+"Could not read: {a}"
+],
+[
+"Omitir carpetas Freeze, Backup y cachés (ahorra {d})",
+"Skip Freeze, Backup and cache folders (saves {d})"
+],
+[
+"Plugins que no se han podido abrir ({a}) — ¿por qué?",
+"Plugins that could not be opened ({a}) — why?"
+],
+[
+"Probando {a} de",
+"Testing {a} of"
+],
+[
+"Probando {a} de {b} · {c}",
+"Testing {a} of {b} · {c}"
+],
+[
+"Procesando {a} de {b}: {c}",
+"Processing {a} of {b}: {c}"
+],
+[
+"Profundidad no compatible: {a} bits",
+"Unsupported bit depth: {a} bits"
+],
+[
+"Quitada de «{a}»",
+"Removed from «{a}»"
+],
+[
+"Quitada del álbum «{a}»",
+"Removed from the album «{a}»"
+],
+[
+"Quitar seleccionadas ({a})",
+"Remove selected ({a})"
+],
+[
+"Quitar seleccionadas ({c})",
+"Remove selected ({c})"
+],
+[
+"Se copiarán {a} archivos en {b} canciones",
+"{a} files will be copied into {b} songs"
+],
+[
+"Se enviará a Spotify el título de cada canción tuya (hasta 120) junto con el nombre de artista «{a}». ¿Continuar?",
+"The title of each of your songs (up to 120) will be sent to Spotify together with the artist name «{a}». Continue?"
+],
+[
+"Spotify respondió {a}. {b}",
+"Spotify responded {a}. {b}"
+],
+[
+"Subiendo {a} de {b}",
+"Uploading {a} of {b}"
+],
+[
+"Tus datos (estrellas, notas, ajustes…) están en: {j}",
+"Your data (stars, notes, settings…) is in: {j}"
+],
+[
+"Verificación: {g} archivos comparados",
+"Verification: {g} files compared"
+],
+[
+"Ya estaba en «{a}»",
+"It was already in «{a}»"
+],
+[
+"archivos ({b}) en",
+"files ({b}) in"
+],
+[
+"archivos de música y papeles{b}; los he agrupado en",
+"music files and papers{b}; I grouped them into"
+],
+[
+"canción: {a}",
+"song: {a}"
+],
+[
+"de {a} canciones y letras",
+"of {a} songs and lyrics"
+],
+[
+"el gestor no pudo darme el archivo ({a})",
+"the manager couldn't give me the file ({a})"
+],
+[
+"en la carpeta «{b}». {c}",
+"in the folder «{b}». {c}"
+],
+[
+"encontradas, {a} no",
+"found, {a} not"
+],
+[
+"ffmpeg falló: {b}",
+"ffmpeg failed: {b}"
+],
+[
+"filas útiles (de {d} leídas)",
+"useful rows (of {d} read)"
+],
+[
+"fundida con «{a}» (lo pediste tú)",
+"combined with «{a}» (you asked for it)"
+],
+[
+"guardado ({a}) — déjalo vacío para conservarlo",
+"saved ({a}) — leave it empty to keep it"
+],
+[
+"he reconocido tu perfil «{a}»",
+"I recognized your profile «{a}»"
+],
+[
+"la canción «{a}» con tu cadena de {b} efecto(s) y se guardará un",
+"the song «{a}» with your chain of {b} effect(s) and a ... will be saved"
+],
+[
+"la separaste tú de «{a}»",
+"you split it off from «{a}»"
+],
+[
+"letra y música · {a} versiones de audio",
+"lyrics and music · {a} audio versions"
+],
+[
+"meses ({e} → {f})",
+"months ({e} → {f})"
+],
+[
+"parece copia exacta de «{a}» (mismo nombre y tamaño), la dejo sin marcar",
+"looks like an exact copy of «{a}» (same name and size), I leave it unchecked"
+],
+[
+"pico {a} dB",
+"peak {a} dB"
+],
+[
+"proyecto{b} de programa de música",
+"music program project{b}"
+],
+[
+"se queda · {d}",
+"stays · {d}"
+],
+[
+"sin casar{j}",
+"unmatched{j}"
+],
+[
+"sin música · {a} con música y sin letra",
+"no music · {a} with music and no lyrics"
+],
+[
+"título{a} guardado",
+"title{a} saved"
+],
+[
+"y su lista de {a} canciones",
+"and its list of {a} songs"
+],
+[
+"y {a} archivos enormes (más de {b}) comparados por",
+"and {a} huge files (more than {b}) compared by"
+],
+[
+"y {a} más",
+"and {a} more"
+],
+[
+"{a} (sin vista previa)",
+"{a} (no preview)"
+],
+[
+"{a} archivos WAV",
+"{a} WAV files"
+],
+[
+"{a} archivos estaban bloqueados",
+"{a} files were locked"
+],
+[
+"{a} audio",
+"{a} audio"
+],
+[
+"{a} boceto{b}",
+"{a} sketch{b}"
+],
+[
+"{a} canción{b} añadida{c}",
+"{a} song{b} added"
+],
+[
+"{a} cosas pendientes",
+"{a} pending things"
+],
+[
+"{a} de {b} archivos colocados",
+"{a} of {b} files placed"
+],
+[
+"{a} de {b} canciones con audio · {c}",
+"{a} of {b} songs with audio · {c}"
+],
+[
+"{a} de {b} subidos ✓",
+"{a} of {b} uploaded ✓"
+],
+[
+"{a} las {b} que no tienen nada todavía",
+"{a} the {b} that have nothing yet"
+],
+[
+"{a} plugins de efectos encontrados{b}{c} · última búsqueda: {d}",
+"{a} effect plugins found{b}{c} · last search: {d}"
+],
+[
+"{a} · {b} archivos",
+"{a} · {b} files"
+],
+[
+"{a}Con letra",
+"{a}With lyrics"
+],
+[
+"{a}Publicada{b}",
+"{a}Published{b}"
+],
+[
+"{a}Sin letra",
+"{a}No lyrics"
+],
+[
+"{b} filas guardadas en tu equipo.{c}{d}",
+"{b} rows saved on your computer.{c}{d}"
+],
+[
+"{b} · {c} · {d} mandos{e}",
+"{b} · {c} · {d} controls{e}"
+],
+[
+"{b}Este es el estado de tu catálogo. {c}",
+"{b}This is the state of your catalog. {c}"
+],
+[
+"{c} archivos · {d} · {e}",
+"{c} files · {d} · {e}"
+],
+[
+"{c} canciones{d}",
+"{c} songs{d}"
+],
+[
+"{c} repro.{d}{e}",
+"{c} plays{d}{e}"
+],
+[
+"{c} versión(es)",
+"{c} version(s)"
+],
+[
+"{d} archivos",
+"{d} files"
+],
+[
+"{d} carpetas · {e} GB",
+"{d} folders · {e} GB"
+],
+[
+"{d} de {e} archivos colocados.{f}",
+"{d} of {e} files placed.{f}"
+],
+[
+"{g} letras{h}",
+"{g} lyrics{h}"
+],
+[
+"{h} por mes",
+"{h} per month"
+],
+[
+"{j} (detectado)",
+"{j} (detected)"
+],
+[
+"{j} archivos · {j}",
+"{j} files · {j}"
+],
+[
+"{j} de {j} canciones se importarán",
+"{j} of {j} songs will be imported"
+],
+[
+"«{a}» añadido a la cadena (paso 2)",
+"«{a}» added to the chain (step 2)"
+],
+[
+"«{a}» está oculta del gestor",
+"«{a}» is hidden from the manager"
+],
+[
+"¿A qué canción pertenece «{a}»?",
+"Which song does «{a}» belong to?"
+],
+[
+"¿Borrar el preset «{a}»? (Tu música no se toca.)",
+"Delete the preset «{a}»? (Your music is not touched.)"
+],
+[
+"Álbum «{a}» creado",
+"Album «{a}» created"
+],
+[
+"álbumes · {a} singles",
+"albums · {a} singles"
+],
+[
+"álbumes · {g} singles · {h} proyectos",
+"albums · {g} singles · {h} projects"
+],
+[
+"Añadir {a} a un mixtape",
+"Add {a} to a mixtape"
+],
+[
+"Biblioteca actualizada{a}. Pulsa en una canción de la lista para abrirla",
+"Library updated{a}. Click a song in the list to open it"
+],
+[
+"Cambia el título que ves en el gestor. No toca tus archivos ni carpetas. Déjalo vacío para volver al título original («{a}»)",
+"Changes the title you see in the manager. It doesn't touch your files or folders. Leave it empty to go back to the original title («{a}»)"
+],
+[
+"Creando el MP3 a {a} kbps",
+"Creating the MP3 at {a} kbps"
+],
+[
+"Creando las versiones MP3 a {a} kbps",
+"Creating the MP3 versions at {a} kbps"
+],
+[
+"Cuántas de tus {j} canciones (sin bocetos) han llegado a cada paso",
+"How many of your {j} songs (without sketches) have reached each step"
+],
+[
+"Demasiados efectos (máximo {a})",
+"Too many effects (maximum {a})"
+],
+[
+"El gestor ha reconocido {a} de {b} canciones (las demás no tienen audio ni letra que catalogar)",
+"The manager recognized {a} of {b} songs (the others have no audio or lyrics to catalog)"
+],
+[
+"El mixtape ya los usa ({a})",
+"The mixtape already uses them ({a})"
+],
+[
+"El plugin «{a}» ya no está en las carpetas de plugins. Vuelve a buscar plugins",
+"The plugin «{a}» is no longer in the plugin folders. Search for plugins again"
+],
+[
+"En «{c}». Esto es lo que hice",
+"In «{c}». This is what I did"
+],
+[
+"Enviar: crear el ZIP y descargarlo ({j})",
+"Send: create the ZIP and download it ({j})"
+],
+[
+"Escribe o pega aquí la letra de «{a}»",
+"Write or paste the lyrics of «{a}» here"
+],
+[
+"Escuchar {a}",
+"Listen to {a}"
+],
+[
+"Escuchar «{b}»",
+"Listen to «{b}»"
+],
+[
+"Esta sesión pesa {a}. Asegúrate de tener sitio (arriba verás el espacio)",
+"This session weighs {a}. Make sure you have room (you'll see the space above)"
+],
+[
+"Etiqueta «{a}» puesta en {b} canción(es)",
+"Tag «{a}» applied to {b} song(s)"
+],
+[
+"Fundir {i} marcadas en una",
+"Combine {i} marked into one"
+],
+[
+"Fusionando {a} de {b}",
+"Merging {a} of {b}"
+],
+[
+"Fusionar {a} canciones (son la misma)",
+"Merge {a} songs (they are the same)"
+],
+[
+"Guardados {a} másters del mixtape",
+"{a} mixtape masters saved"
+],
+[
+"Guardados {a} másters en la carpeta master de sus canciones",
+"{a} masters saved in the master folder of their songs"
+],
+[
+"Guardando {a} másters del mixtape · {b}",
+"Saving {a} mixtape masters · {b}"
+],
+[
+"Guardando {a} másters en la biblioteca · {b}",
+"Saving {a} masters in the library · {b}"
+],
+[
+"Hay {a} título{b} ({c} reproducciones) que no se han podido unir a ninguna canción y por eso no aparecen en «Por canción». Pulsa «resolver» arriba para asignarlos",
+"There are {a} title{b} ({c} plays) that could not be matched to any song and so don't appear in «By song». Press «resolve» above to assign them"
+],
+[
+"La letra de «{a}» se conserva (ya tenía una)",
+"The lyrics of «{a}» are kept (it already had some)"
+],
+[
+"La ventana de «{a}» se está abriendo en tu ordenador",
+"The window of «{a}» is opening on your computer"
+],
+[
+"Listo: {a} MB · se está descargando",
+"Done: {a} MB · downloading"
+],
+[
+"Los archivos {a} necesitan ffmpeg y no está instalado. Usa un WAV, FLAC o MP3",
+"{a} files need ffmpeg and it isn't installed. Use a WAV, FLAC or MP3"
+],
+[
+"Los puntos son, por orden: {j}",
+"The points are, in order: {j}"
+],
+[
+"Marcar {a} como boceto (no compartir)",
+"Mark {a} as sketch (don't share)"
+],
+[
+"Midiendo {a} de {b}",
+"Measuring {a} of {b}"
+],
+[
+"Mostrar los {b} restantes",
+"Show the {b} remaining"
+],
+[
+"Mover los {a} marcados a",
+"Move the {a} marked to"
+],
+[
+"Másters del mixtape guardados ({a})",
+"Mixtape masters saved ({a})"
+],
+[
+"No hay espacio suficiente: hacen falta {a} y quedan {b} libres en el disco de la biblioteca",
+"There isn't enough space: you need {a} and {b} remain free on the library's disk"
+],
+[
+"No puedo abrir esa carpeta ({a})",
+"I can't open that folder ({a})"
+],
+[
+"No se pudo reproducir «{a}»",
+"Could not play «{a}»"
+],
+[
+"No se pudo subir {a}",
+"Could not upload {a}"
+],
+[
+"No tengo permiso para abrir esa carpeta ({a})",
+"I don't have permission to open that folder ({a})"
+],
+[
+"Pre-released {j}",
+"Pre-released {j}"
+],
+[
+"Preparando el ZIP · {a} canciones · {b}",
+"Preparing the ZIP · {a} songs · {b}"
+],
+[
+"Proyecto de {a}: {b}",
+"Project of {a}: {b}"
+],
+[
+"Publicadas {j}",
+"Published {j}"
+],
+[
+"Recuperar las quitadas ({a})",
+"Restore the removed ones ({a})"
+],
+[
+"Revisar {a} casado{b} por parecido",
+"Review {a} match{b} by similarity"
+],
+[
+"Se borra «{a}» solo de este módulo. El archivo CSV original no se toca",
+"«{a}» is deleted only from this module. The original CSV file is not touched"
+],
+[
+"Se detuvo tras guardar {a} de {b}: {c}",
+"It stopped after saving {a} of {b}: {c}"
+],
+[
+"Se guardaron {a} másters; hubo un problema con el siguiente",
+"{a} masters were saved; there was a problem with the next one"
+],
+[
+"Se unirán {a} entradas en una sola. Los archivos de audio de las demás pasan a la carpeta de la que se queda, y sus letras se conservan si la que se queda no tiene. Puedes deshacerlo con el diario de movimientos",
+"{a} entries will be joined into one. The audio files of the others go to the folder of the one that stays, and their lyrics are kept if the one that stays has none. You can undo it with the move journal"
+],
+[
+"Se usará «{a}» como tu biblioteca y se volverá a leer todo. No se mueve ni se borra nada",
+"«{a}» will be used as your library and everything will be read again. Nothing is moved or deleted"
+],
+[
+"Según la fecha de cada archivo de versión. Último movimiento: {a}",
+"According to the date of each version file. Last move: {a}"
+],
+[
+"Sin casar: {a}{b}. Después de importar podrás asignarlos a mano",
+"Unmatched: {a}{b}. After importing you can assign them by hand"
+],
+[
+"Sin publicar {j}",
+"Unpublished {j}"
+],
+[
+"Su letra pasará a ser la de «{a}»",
+"Its lyrics will become those of «{a}»"
+],
+[
+"Sus {a} archivos de audio se moverán a la carpeta de esa canción",
+"Its {a} audio files will be moved to that song's folder"
+],
+[
+"Y {a} archivos temporales o de caché",
+"And {a} temporary or cache files"
+],
+[
+"Ya existe «{a}» ({b}): los archivos se añadirán a esa canción",
+"«{a}» ({b}) already exists: the files will be added to that song"
+],
+[
+"actualizado {b}",
+"updated {b}"
+],
+[
+"antes {b} dB)",
+"before {b} dB)"
+],
+[
+"con sus audios, samples…) · {f}",
+"with its audio, samples…) · {f}"
+],
+[
+"de «{a}»? Solo se borra la versión MP3 creada para este mixtape; tu música original no se toca",
+"of «{a}»? Only the MP3 version created for this mixtape is deleted; your original music is not touched"
+],
+[
+"desde «{b}»",
+"from «{b}»"
+],
+[
+"o usa un arte que ya tienes ({a}). Haz clic en el que quieras",
+"or use art you already have ({a}). Click the one you want"
+],
+[
+"y no entrará en el máster: {b}. Cuando tengan una versión de audio en su carpeta, pulsa «Actualizar» en el gestor",
+"and it won't go into the master: {b}. When they have an audio version in their folder, press «Refresh» in the manager"
+],
+[
+"y {a} más. Ábrelos desde el Explorador",
+"and {a} more. Open them from the file explorer"
+],
+[
+"ya hay {a} archivo(s) en esas carpetas",
+"there are already {a} file(s) in those folders"
+],
+[
+"{a} archivo(s) añadidos a mano. Ojo: estos no se recuerdan al recargar la página",
+"{a} file(s) added by hand. Note: these are not remembered when the page is reloaded"
+],
+[
+"{a} archivo(s) de caché o copia de seguridad no se copian",
+"{a} cache or backup file(s) are not copied"
+],
+[
+"{a} archivos no se pudieron abrir",
+"{a} files could not be opened"
+],
+[
+"{a} archivos no se pudieron copiar",
+"{a} files could not be copied"
+],
+[
+"{a} archivos · {b} GB · 🎬 {c} · {d} GB",
+"{a} files · {b} GB · 🎬 {c} · {d} GB"
+],
+[
+"{a} canción{b} marcada{c} como boceto",
+"{a} song{b} marked{c} as sketch"
+],
+[
+"{a} conservados porque habían cambiado",
+"{a} kept because they had changed"
+],
+[
+"{a} de trabajo",
+"{a} working"
+],
+[
+"{a} de {b} canciones (con letra y música). Un clic abre la canción, un doble clic (o ▶) la reproduce",
+"{a} of {b} songs (with lyrics and music). One click opens the song, a double click (or ▶) plays it"
+],
+[
+"{a} enlaces/accesos directos se han saltado (no los sigo)",
+"{a} links/shortcuts were skipped (I don't follow them)"
+],
+[
+"{a} filas de «Total» se han saltado",
+"{a} «Total» rows were skipped"
+],
+[
+"{a} filas sin fecha válida se han descartado",
+"{a} rows without a valid date were discarded"
+],
+[
+"{a} filas sin título se han saltado",
+"{a} rows without a title were skipped"
+],
+[
+"{a} fuera del máster",
+"{a} outside the master"
+],
+[
+"{a} ignoradas por ti",
+"{a} ignored by you"
+],
+[
+"{a} instrumentos (no sirven como efecto)",
+"{a} instruments (not usable as an effect)"
+],
+[
+"{a} mandos. Para ajustar de verdad, lo más cómodo es «🪟 Abrir ventana»",
+"{a} controls. To really adjust, the easiest is «🪟 Open window»"
+],
+[
+"{a} no se han podido abrir",
+"{a} could not be opened"
+],
+[
+"{a} pista(s) añadidas a mano no se guardan aquí (no son de ninguna canción)",
+"{a} track(s) added by hand are not saved here (they don't belong to any song)"
+],
+[
+"{a} pista(s) con cadena propia",
+"{a} track(s) with their own chain"
+],
+[
+"{a} saltada(s) porque ya habían cambiado",
+"{a} skipped because they had already changed"
+],
+[
+"{a} título{b} sin casar · resolver",
+"{a} title{b} unmatched · resolve"
+],
+[
+"{a} ya no estaban",
+"{a} were no longer there"
+],
+[
+"{b} archivos",
+"{b} files"
+],
+[
+"{b} imágenes · {c} vídeos · {d} GB. Pulsa una imagen para verla grande; los vídeos se reproducen aquí mismo",
+"{b} images · {c} videos · {d} GB. Click an image to see it large; videos play right here"
+],
+[
+"{b} · {c} · {d} filas{e}",
+"{b} · {c} · {d} rows{e}"
+],
+[
+"{b}) en la carpeta",
+"{b}) in the folder"
+],
+[
+"{b}), cada uno en la carpeta",
+"{b}), each one in the folder"
+],
+[
+"{c}. Contiene {d} archivos ({e}){f}",
+"{c}. It contains {d} files ({e}){f}"
+],
+[
+"{d} · {e} archivo(s){f}",
+"{d} · {e} file(s){f}"
+],
+[
+"{f} filas de datos{g}",
+"{f} data rows{g}"
+],
+[
+"{h} filas casadas con claridad · 🔎 {i} por parecido del título (sin «Remastered», «Radio Edit»…) · ⚠",
+"{h} rows clearly matched · 🔎 {i} by title similarity (without «Remastered», «Radio Edit»…) · ⚠"
+],
+[
+"{h}. Tus carpetas de origen no se han tocado",
+"{h}. Your source folders have not been touched"
+],
+[
+"{i} versión(es){j}",
+"{i} version(s){j}"
+],
+[
+"«{a}» oculta. La recuperas en el filtro «Ocultas»",
+"«{a}» hidden. You get it back in the «Hidden» filter"
+],
+[
+"«{a}» pasará a ser parte de «{b}». {c}{d} Puedes deshacerlo con el diario",
+"«{a}» will become part of «{b}». {c}{d} You can undo it with the journal"
+],
+[
+"«{a}» se moverá a la carpeta de «{b}». Puedes deshacerlo después con el diario de movimientos",
+"«{a}» will be moved to the folder of «{b}». You can undo it later with the move journal"
+],
+[
+"«{e}» · {f} · {g}% igual",
+"«{e}» · {f} · {g}% same"
+],
+[
+"¿Eliminar el álbum «{a}»? Sus {b} canciones no se borran ni se mueven: solo dejan de estar en este álbum",
+"Delete the album «{a}»? Its {b} songs are not deleted or moved: they just stop being in this album"
+],
+[
+"¿Eliminar «{a}»{b}? Se borran sus versiones MP3 de trabajo. Tu música original y los ZIP que ya hayas creado no se tocan",
+"Delete «{a}»{b}? Its working MP3 versions are deleted. Your original music and any ZIPs you already created are not touched"
+],
+[
+"Artista {g}",
+"Artist {g}"
+],
+[
+"Cuántas de tus {a} canciones (sin bocetos) han llegado a cada paso.",
+"How many of your {a} songs (without sketches) have reached each step."
+],
+[
+"Estado {d}",
+"Status {d}"
+],
+[
+"Masterización {a} «{b}»",
+"Mastering {a} «{b}»"
+],
+[
+"Se sube todo {a} lo mismo, de modo que la canción más fuerte llega al objetivo y las demás conservan su diferencia (recomendado para discos con canciones suaves y fuertes a propósito)",
+"The whole {a} is raised by the same amount, so the loudest song reaches the target and the others keep their difference (recommended for albums with deliberately soft and loud songs)"
+],
+[
+"Sin publicar (sueltas) {a}",
+"Unpublished (loose) {a}"
+],
+[
+"el resultado son archivos nuevos (un ZIP o {e})",
+"the result is new files (a ZIP or {e})"
+],
+[
+"{a} de {b} canciones y letras",
+"{a} of {b} songs and lyrics"
+],
+[
+"{a} letras",
+"{a} lyrics"
+],
+[
+"{a} singles",
+"{a} singles"
+],
+[
+"{a} álbumes",
+"{a} albums"
+],
+[
+"{a} álbumes en preparación",
+"{a} albums in preparation"
+],
+[
+"{a} álbumes · {b} singles",
+"{a} albums · {b} singles"
+],
+[
+"Añadir a «{a}»",
+"Add to “{a}”"
+],
+[
+"Quitar de «{a}»",
+"Remove from “{a}”"
+],
+[
+"{j} canciones · {j} kbps",
+"{j} songs · {j} kbps"
+],
+[
+"No se pudo arrancar el motor: {a}",
+"Could not start the engine: {a}"
+],
+[
+"Máximo {a} efectos (FX1…FX{b})",
+"Maximum {a} effects (FX1…FX{b})"
+]
+]
+}

@@ -1,0 +1,30 @@
+name: Construir
+
+on:
+  workflow_dispatch:        # botón «Run workflow» en la pestaña Actions
+  push:
+    tags: ["v*"]            # y al crear una etiqueta, p. ej. v1.0
+
+jobs:
+  construir:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - {nombre: Windows,        os: windows-latest}
+          - {nombre: Mac-Intel,      os: macos-15-intel}
+          - {nombre: Mac-AppleSilicon, os: macos-latest}
+    runs-on: ${{ matrix.os }}
+    name: ${{ matrix.nombre }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - run: python -m pip install pyinstaller==6.22.3 pillow reportlab
+      - run: python construir/construir.py --paquete paquete --salida salida
+      - uses: actions/upload-artifact@v4
+        with:
+          name: GestorMusica-${{ matrix.nombre }}
+          path: salida/*.zip
+          if-no-files-found: error

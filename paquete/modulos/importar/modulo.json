@@ -1,0 +1,9 @@
+{
+  "id": "importar",
+  "nombre": "Importar",
+  "descripcion": "Ayuda a organizar bocetos, versiones, stems, directos y proyectos de tu DAW repartidos por tus carpetas: propone una organización y COPIA a la biblioteca, sin tocar el original.",
+  "js": ["modulo.js"],
+  "css": ["modulo.css"],
+  "py": "servidor.py",
+  "distribuir": true
+}

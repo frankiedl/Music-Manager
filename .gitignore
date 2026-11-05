@@ -1,0 +1,25 @@
+# Nunca subir datos ni configuración personales
+datos/
+config.json
+data.json
+letras.json
+medios.json
+estado.json
+medios_estado.json
+decisiones.csv
+diario_movimientos.jsonl
+ids.json
+agente.json
+thumbs/
+*.wav
+*.mp3
+*.flac
+*.m4a
+# Salidas de construcción
+salida/
+build/
+dist/
+__pycache__/
+*.pyc
+.venv/
+venv/
