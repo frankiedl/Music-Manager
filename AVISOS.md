@@ -1,10 +1,9 @@
-# Avisos de terceros / Third-party notices
+# Third-party notices
 
-Este programa es © Frankie De Leonardis, licencia la licencia de uso incluida (LICENSE): se puede usar, también para trabajo comercial; no se puede vender el programa ni sus partes. Ver `LICENSE`.
-Para uso comercial, contacta con el autor.
+This program is (c) Frankie De Leonardis, under the use license in `LICENSE`: free to use, including for commercial work; you may not sell the program or any part of it.
 
-Componentes de terceros (cada uno con su propia licencia):
-- **ffmpeg** (LGPL/GPL según la compilación, https://ffmpeg.org): se usa como programa externo para convertir audio. Su código fuente está en su web.
-- **Python** (PSF License) y **PyInstaller** (GPL con excepción para el programa empaquetado).
-- **ReportLab** (BSD), solo para generar los manuales PDF.
-- **Imágenes de casetes** de la portada del mixtape: sin derechos de autor según el autor; indicar aquí su origen si se conoce.
+Third-party components (each under its own license):
+- **ffmpeg** (LGPL/GPL depending on the build, https://ffmpeg.org): used as an external program to convert audio. Its source code is available on its website.
+- **Python** (PSF License) and **PyInstaller** (GPL with an exception for the packaged program).
+- **ReportLab** (BSD), only to generate the PDF manuals.
+- **Cassette images** used for the mixtape cover: public domain / no copyright according to the author (add their origin here if known).
