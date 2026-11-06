@@ -4,7 +4,7 @@
    - Registrations with collecting societies: GM.state('derechos').reg[songId] = [{id,soc,cod,fecha,est,au,ed,notas}]
      (est: 'pend' | 'env' | 'reg'; au/ed = author/publisher %). Only the user's own notes: no connection to any society.
    - Editable society list with per-country presets (state.socs, state.pais).
-   - Registration sheet: CSV export (client side) and CSV/.xlsx import with preview (the server only parses the file).
+   - Registration sheet: CSV export (client side) and CSV/.xlsx/.xls import with preview (the server only parses the file).
    Other files may add read-only registrations: DER.ext.push(song => [{soc,cod,est,notas}]). */
 (function(){
 const E=s=>GM.ui.esc(s==null?'':String(s));
@@ -102,7 +102,7 @@ function render(el){
    ${miss.length?`<h2>Publicadas sin registro</h2><div class="der-list">${miss.map(s=>`<button class="chip" data-song="${E(s.id)}">${E(GM.title(s))}</button>`).join('')}</div>`:''}
    <h2>Hoja de registro (Excel / CSV)</h2>
    <div class="panel"><p class="meta">Descarga una hoja con todas tus canciones y una columna para cada dato del registro. Rellénala en Excel (o en cualquier hoja de cálculo) y vuelve a importarla: antes de aplicar verás qué se crea y qué se cambia. Al importar nunca se borra nada.</p>
-    <div class="der-list"><button class="chip pri" data-der="csv">⬇ Descargar la hoja (CSV)</button><label class="chip">⬆ Importar una hoja (CSV o Excel)<input type="file" id="der-file" accept=".csv,.txt,.xlsx" hidden></label></div></div>
+    <div class="der-list"><button class="chip pri" data-der="csv">⬇ Descargar la hoja (CSV)</button><label class="chip">⬆ Importar una hoja (CSV o Excel)<input type="file" id="der-file" accept=".csv,.txt,.xlsx,.xls" hidden></label></div></div>
    <h2>Registros <span class="meta">${rows.length}</span></h2>
    ${rows.length?`<div class="panel der-tab">${rows.map(({s,e})=>`<div class="der-trow" data-song="${E(s.id)}"><span class="der-t">${E(GM.title(s))}</span><b>${E(e.soc)}</b><span class="b ${estCls(e.est)}">${estOf(e.est)[1]}</span><span class="der-cod">${E(e.cod)}</span><span class="meta">${E(e.fecha)}</span></div>`).join('')}</div>`:'<div class="empty">Todavía no hay registros. Ábrelos desde la página de cada canción (sección Derechos) o importa la hoja.</div>'}
    <h2>Sociedades</h2>
