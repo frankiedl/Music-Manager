@@ -6,6 +6,28 @@ A local music-library manager for composers and producers (Windows 10/11 and Mac
 
 Languages: English, Spanish, German, Portuguese.
 
+## Screenshots
+
+All screenshots use invented demo data.
+
+![Home](docs/screenshots/01-home.png)
+*Home: a summary of your catalog.*
+
+![Album](docs/screenshots/02-album.png)
+*An album page with its songs and cover.*
+
+![Song](docs/screenshots/03-song.png)
+*A song page: cover, versions, themes and lyrics.*
+
+![Album mastering](docs/screenshots/04-album-mastering.png)
+*Loudness measurement and normalization for an album.*
+
+![Mixtape](docs/screenshots/05-mixtape.png)
+*A mixtape with its cassette cover, ready to export as a ZIP of tagged MP3s with lyrics.*
+
+![Settings](docs/screenshots/06-settings.png)
+*Settings: library folder, artist name and language.*
+
 ## Get the apps
 
 This repository builds the executables in the cloud (GitHub Actions); it contains nobody's data.
