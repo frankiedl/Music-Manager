@@ -1054,7 +1054,6 @@
 "falta la canción o el texto": "the song or the text is missing",
 "ffmpeg falló": "ffmpeg failed",
 "ffmpeg falló con «": "ffmpeg failed with «",
-"ffmpeg falló con «{a}»: {b}": "ffmpeg failed with «{a}»: {b}",
 "ffmpeg no pudo leer ese audio": "ffmpeg couldn't read that audio",
 "filas": "rows",
 "filas casadas con claridad · 🔎": "rows clearly matched · 🔎",
@@ -1442,7 +1441,176 @@
 "Para escuchar con efectos en directo hace falta «sounddevice» (con PortAudio, la librería que habla con tu tarjeta de sonido). Se descarga de internet (pypi.org) y se instala en el Python de este gestor. ¿Instalarlo?": "To listen with live effects, “sounddevice” is needed (with PortAudio, the library that talks to your sound card). It is downloaded from the internet (pypi.org) and installed in this manager’s Python. Install it?",
 "Suelta aquí para marcarlas como": "⬇ Drop here to mark them as",
 "Tienen audio pero no su letra guardada (publicadas o no). Si es un instrumental, ocúltala o márcala como": "They have audio but no saved lyrics (published or not). If it is an instrumental, hide it or mark it as",
-"Álbumes y": "Albums and"
+"Álbumes y": "Albums and",
+"efectos (FX1…FX": "effects (FX1…FX",
+"Define hasta 5 efectos una sola vez (los mismos plugins y ajustes para todo": "Set up to 5 effects once (the same plugins and settings for",
+"Dónde está tu música y cómo te llamas": "Where your music is and what your name is",
+"Efectos · FX1…FX5, antes del limitador": "Effects · FX1…FX5, before the limiter",
+"El motor de escucha se cerró": "The playback engine stopped",
+"En cada pista, los botones": "On each track, the buttons",
+"Escucha en directo": "Live monitoring",
+"Instalar motor en directo": "Install live engine",
+"La escucha en directo (sin esperas al cambiar efectos) se activa sola al pulsar ▶ cuando hay efectos definidos": "Live monitoring (no waiting when you change effects) turns on automatically when you press ▶ and effects are set up",
+"Medidor de la escucha en directo": "Live monitoring meter",
+"Motor en directo instalado ✓": "Live engine installed ✓",
+"Original: los efectos están saltados (no se oyen ni se exportan)": "Original: effects are bypassed (not heard or exported)",
+"Para usar efectos hay que instalar el soporte de plugins (en la sección «Efectos» del gestor). La masterización funciona igual sin ellos": "To use effects, install plugin support (in the manager's «Effects» section). Mastering works the same without them",
+"Sin efectos definidos (el audio pasa tal cual). Pulsa «Configurar» para añadir hasta 5": "No effects set up (audio passes through unchanged). Press «Configure» to add up to 5",
+"Sin el motor en directo, «Con efectos / Original» compara procesando la canción antes (tarda unos segundos en cada cambio). Para oírlo al instante hace falta «sounddevice»": "Without the live engine, «With effects / Original» compares by processing the song first (it takes a few seconds on each switch). To hear it instantly you need «sounddevice»",
+"Todos los efectos apagados en esta pista": "All effects off on this track",
+"apagado en la cadena)": "off in the chain)",
+"el motor no aceptó la lista": "the engine did not accept the list",
+"eligen cuáles lleva y": "choose which ones it uses and",
+"hueco(s) activos": "slot(s) active",
+"lo de aquí": "everything here",
+"los apaga todos en esa pista. Lo que oyes es lo que se exporta. Tus originales no se tocan": "turns them all off on that track. What you hear is what gets exported. Your originals are never touched",
+"no respondió": "did not respond",
+"no se pudo subir el archivo": "the file could not be uploaded",
+"pista(s": "track(s",
+"pista(s) con ajuste propio": "track(s) with their own setting",
+"Aceptar": "OK",
+"Actualizado": "Updated",
+"Alternativa": "Alternative",
+"Alternativo": "Alternative",
+"Ambient": "Ambient",
+"Aplicando efectos a «": "Applying effects to «",
+"Arte": "Artwork",
+"Asignada a «": "Assigned to «",
+"Barra ( | )": "Pipe ( | )",
+"Blues": "Blues",
+"Borrador": "Draft",
+"Cabe": "Fits",
+"Cambiar": "Change",
+"Cerrando": "Closing",
+"Checo": "Czech",
+"Coma ( , )": "Comma ( , )",
+"Comentario": "Comment",
+"Compositor": "Composer",
+"Confirmar": "Confirm",
+"Consultar": "Look up",
+"Copiando": "Copying",
+"Copyright": "Copyright",
+"Coreano": "Korean",
+"Country": "Country",
+"Dance": "Dance",
+"Deezer": "Deezer",
+"Deshaciendo": "Undoing",
+"Deshecho": "Undone",
+"Directo": "Live",
+"Director": "Conductor",
+"Disco": "Disco",
+"Documento": "Document",
+"Editorial": "Publisher",
+"Efecto": "Effect",
+"Eliminar": "Delete",
+"Euskera": "Basque",
+"Experimental": "Experimental",
+"Flamenco": "Flamenco",
+"Folk": "Folk",
+"Funk": "Funk",
+"Gallego": "Galician",
+"Griego": "Greek",
+"Guardado ✓": "Saved ✓",
+"Hebreo": "Hebrew",
+"Hindi": "Hindi",
+"House": "House",
+"Imagen": "Image",
+"Indie": "Indie",
+"Indonesio": "Indonesian",
+"Ingeniero": "Engineer",
+"Instalar": "Install",
+"Italiano": "Italian",
+"Jazz": "Jazz",
+"LUFS · pico": "LUFS · peak",
+"LUFS · techo": "LUFS · ceiling",
+"Latino": "Latin",
+"Letrista": "Lyricist",
+"Mandos": "Controls",
+"Metal": "Metal",
+"Mezcla": "Mixing",
+"Mezclador": "Mixing engineer",
+"Mixtape «": "Mixtape «",
+"Mover": "Move",
+"Noruego": "Norwegian",
+"Olvidar": "Forget",
+"Otro": "Other",
+"Pausa": "Pause",
+"Pausar": "Pause",
+"Perfil «": "Profile «",
+"Pico: L": "Peak: L",
+"Pista": "Track",
+"Polaco": "Polish",
+"Pop": "Pop",
+"Pre-": "Pre-",
+"Preset «": "Preset «",
+"Productor": "Producer",
+"Proyecto": "Project",
+"Punk": "Punk",
+"Rap": "Rap",
+"Reemplazar": "Replace",
+"Reggae": "Reggae",
+"Reggaeton": "Reggaeton",
+"Remezclador": "Remixer",
+"Renombrada ✓": "Renamed ✓",
+"Rock": "Rock",
+"Rumano": "Romanian",
+"Rumba": "Rumba",
+"Ruso": "Russian",
+"Salsa": "Salsa",
+"Sello": "Label",
+"Singles": "Singles",
+"Soul": "Soul",
+"Suajili": "Swahili",
+"Sueco": "Swedish",
+"Synthpop": "Synthpop",
+"Tabulador": "Tab",
+"Techno": "Techno",
+"Tidal": "Tidal",
+"Toma": "Take",
+"Tonalidad": "Key",
+"Trance": "Trance",
+"Trap": "Trap",
+"Turco": "Turkish",
+"Ucraniano": "Ukrainian",
+"Unidas ✓": "Merged ✓",
+"Vaciar": "Empty",
+"Verificando": "Checking",
+"Vietnamita": "Vietnamese",
+"Web": "Web",
+"ZIP listo": "ZIP ready",
+"archivos quitados": "files removed",
+"audios internos": "internal audio files",
+"columna": "column",
+"conservados": "kept",
+"dB · R": "dB · R",
+"decodificado a": "decoded to",
+"deshecha": "undone",
+"efecto interno desconocido": "unknown built-in effect",
+"entradas": "entries",
+"kbps creado": "kbps created",
+"latencia": "latency",
+"muestras": "samples",
+"objetivo": "target",
+"perfil «": "profile «",
+"unida": "merged",
+"» cargado": "» loaded",
+"» guardado": "» saved",
+"adelantos": "pre-releases",
+"1 · Archivo": "1 · File",
+"3 · Comprobar": "3 · Check",
+"4 · Hecho": "4 · Done",
+"letra · versión · stems · máster · portada · publicada": "lyrics · version · stems · master · cover · published",
+"el archivo es demasiado grande": "the file is too large",
+"etiqueta ID3v2.3 no encontrada": "ID3v2.3 tag not found",
+"1 canción": "1 song",
+"crear una app en su panel de desarrolladores; el modo de desarrollo exige que la cuenta propietaria tenga": "create an app in its developer dashboard; development mode requires the owner account to have",
+"Hay muchas carpetas; muestro las primeras 3000": "There are many folders; showing the first 3000",
+"Se copian a tu biblioteca; lo original no se toca": "They are copied into your library; the originals are not touched",
+"ms. El reproductor del navegador queda en silencio mientras suena; los botones FX se oyen al instante": "ms. The browser player stays silent while it plays; the FX buttons are heard instantly",
+"muestras · latencia ≈": "samples · latency ≈",
+"salida «": "output «",
+"» · bloques de": "» · blocks of",
+"Por ejemplo: D:\\Mis proyectos de música · /Users/yo/Música": "For example: D:\\My music projects · /Users/me/Music"
 },
 "patrones": [
 [
@@ -1688,6 +1856,10 @@
 [
 "encontradas, {a} no",
 "found, {a} not"
+],
+[
+"ffmpeg falló con «{a}»: {b}",
+"ffmpeg failed with «{a}»: {b}"
 ],
 [
 "ffmpeg falló: {b}",
@@ -2416,6 +2588,178 @@
 [
 "Máximo {a} efectos (FX1…FX{b})",
 "Maximum {a} effects (FX1…FX{b})"
+],
+[
+"Aplicando efectos {a} de {b}: {c}",
+"Applying effects {a} of {b}: {c}"
+],
+[
+"Con efectos: {a} de {b} hueco(s) activos{c}",
+"With effects: {a} of {b} slot(s) active{c}"
+],
+[
+"Define hasta 5 efectos una sola vez (los mismos plugins y ajustes para todo {j}). En cada pista, los botones",
+"Set up to 5 effects once (the same plugins and settings for {j}). On each track, the buttons"
+],
+[
+"Efectos {a} en {b} pista(s)",
+"Effects {a} on {b} track(s)"
+],
+[
+"Tus datos (estrellas, notas, ajustes…) están en: {g}",
+"Your data (stars, notes, settings…) is stored in: {g}"
+],
+[
+"{a} pista(s) con ajuste propio",
+"{a} track(s) with their own setting"
+],
+[
+"Actualizado ✓ · {a} entradas",
+"Updated ✓ · {a} entries"
+],
+[
+"Aplicando efectos a «{a}»",
+"Applying effects to «{a}»"
+],
+[
+"Asignada a «{a}» ✓",
+"Assigned to «{a}» ✓"
+],
+[
+"Deshecho: {a} archivos quitados{b}{c}",
+"Undone: {a} files removed{b}{c}"
+],
+[
+"Escuchar «{a}»",
+"Listen to «{a}»"
+],
+[
+"Estado {a}",
+"Status {a}"
+],
+[
+"MP3 {a} kbps creado · {b} MB",
+"MP3 {a} kbps created · {b} MB"
+],
+[
+"Mixtape «{a}» creado",
+"Mixtape «{a}» created"
+],
+[
+"Perfil «{a}» guardado",
+"Profile «{a}» saved"
+],
+[
+"Pico: L {a} dB · R {b} dB",
+"Peak: L {a} dB · R {b} dB"
+],
+[
+"Plataformas: {a}",
+"Platforms: {a}"
+],
+[
+"Preset «{a}» cargado",
+"Preset «{a}» loaded"
+],
+[
+"ZIP listo: {a} · {b} MB",
+"ZIP ready: {a} · {b} MB"
+],
+[
+"columna {a})",
+"column {a})"
+],
+[
+"decodificado a {a} kHz",
+"decoded to {a} kHz"
+],
+[
+"deshecha ({a} archivos quitados{b})",
+"undone ({a} files removed{b})"
+],
+[
+"efecto interno desconocido: {a}",
+"unknown built-in effect: {a}"
+],
+[
+"latencia {a} m",
+"latency {a} m"
+],
+[
+"latencia {a} muestras",
+"latency {a} samples"
+],
+[
+"perfil «{a}»",
+"profile «{a}»"
+],
+[
+"{a} audios internos",
+"{a} internal audio files"
+],
+[
+"{a} boceto{b})",
+"{a} sketch(es))"
+],
+[
+"{a} conservados",
+"{a} kept"
+],
+[
+"{a} ingresos",
+"{a} revenue"
+],
+[
+"{a} repro",
+"{a} plays"
+],
+[
+"{a} · objetivo {b} LUFS · techo {c} dB · {d}",
+"{a} · target {b} LUFS · ceiling {c} dB · {d}"
+],
+[
+"{a}: {b} LUFS · pico {c} dB → {d}",
+"{a}: {b} LUFS · peak {c} dB → {d}"
+],
+[
+"Estado {a}: {b}",
+"Status {a}: {b}"
+],
+[
+"{a} adelantos",
+"{a} pre-releases"
+],
+[
+"{a} unida{b} a «{c}» ✓",
+"{a} merged into «{c}» ✓"
+],
+[
+"Los puntos son, por orden: {a}",
+"The dots are, in order: {a}"
+],
+[
+"{a}: a medias",
+"{a}: partly"
+],
+[
+"{a}: falta",
+"{a}: missing"
+],
+[
+"{a}: sí",
+"{a}: yes"
+],
+[
+"{a} canciones ({b} boceto{c})",
+"{a} songs ({b} sketch(es))"
+],
+[
+"{a} canción ({b} boceto{c})",
+"{a} song ({b} sketch)"
+],
+[
+"salida «{a}» · bloques de {b} muestras · latencia ≈ {c} ms. El reproductor del navegador queda en silencio mientras suena; los botones FX se oyen al instante",
+"output «{a}» · blocks of {b} samples · latency ≈ {c} ms. The browser player stays silent while it plays; the FX buttons are heard instantly"
 ]
 ]
 }

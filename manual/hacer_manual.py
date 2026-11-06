@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""Genera un PDF por idioma: Manual_ESP.pdf, Manual_ENG.pdf, Manual_DEUT.pdf, Manual_PORT.pdf. Uso: python hacer_manual.py [carpeta_salida] [ESP ENG DEUT PORT]
-Solo necesita reportlab (pip install reportlab). El contenido está en CONTENIDO (abajo): edítalo y vuelve a ejecutar."""
+"""Generates one PDF per language: Manual_ESP.pdf, Manual_ENG.pdf, Manual_DEUT.pdf, Manual_PORT.pdf. Usage: python hacer_manual.py [output_folder] [ESP ENG DEUT PORT]
+Only needs reportlab (pip install reportlab). The content is in CONTENIDO (below; the other languages in manual_eng/deut/port.py): edit it and run again."""
 import sys
 from pathlib import Path
 

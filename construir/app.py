@@ -1,11 +1,11 @@
-"""Punto de entrada del ejecutable (PyInstaller). Arranca el gestor, o ejecuta un script del gestor si se le pide:
-   GestorMusica --run-script build_data.py [args]   (así el gestor lanza sus propios scripts sin necesitar Python instalado)."""
+"""Entry point of the executable (PyInstaller). Starts the manager, or runs one of the manager's scripts if asked:
+   GestorMusica --run-script build_data.py [args]   (so the manager launches its own scripts without Python being installed)."""
 import builtins
 import os
 import runpy
 import sys
 
-if sys.stdin is None:  # app sin consola (Mac .app): las preguntas por terminal se saltan y todo se cambia luego en Ajustes
+if sys.stdin is None:  # app without a console (Mac .app): terminal questions are skipped and everything is changed later in Settings
     def _no_input(*_a, **_k):
         raise EOFError
     builtins.input = _no_input
@@ -29,12 +29,12 @@ if len(sys.argv) > 2 and sys.argv[1] == "--run-script":
     runpy.run_path(os.path.join(GESTOR, nombre), run_name="__main__")
     sys.exit(0)
 
-if len(sys.argv) > 1 and sys.argv[1].lower().endswith(".py") and os.path.isfile(sys.argv[1]):  # actuar como "python script.py" (p. ej. el trabajador de Efectos)
+if len(sys.argv) > 1 and sys.argv[1].lower().endswith(".py") and os.path.isfile(sys.argv[1]):  # behave like "python script.py" (e.g. the Effects worker)
     sys.path.insert(0, os.path.dirname(os.path.abspath(sys.argv[1])))
     sys.argv = sys.argv[1:]
     runpy.run_path(sys.argv[0], run_name="__main__")
     sys.exit(0)
 
-import gestor  # noqa: E402  (en gestor/, empaquetado como datos)
+import gestor  # noqa: E402  (in gestor/, bundled as data)
 
 sys.exit(gestor.main())

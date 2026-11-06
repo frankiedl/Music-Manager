@@ -1,6 +1,6 @@
-/* Módulo «estado»: panel del estado de la música + informes de plataformas por CSV + conexiones opcionales.
-   Este archivo: registro, pestañas, datos compartidos, gráficos SVG y el panel «Resumen» / «Álbumes».
-   Otros archivos: csv.js (lectura), importar.js (asistente), informes.js (vistas de rendimiento), conexiones.js (Spotify opcional). */
+/* «estado» module: music status panel + platform reports via CSV + optional connections.
+   This file: registration, tabs, shared data, SVG charts and the «Resumen» / «Álbumes» (Summary / Albums) panel.
+   Other files: csv.js (reader), importar.js (wizard), informes.js (performance views), conexiones.js (optional Spotify). */
 (function(){
 const EST=window.EST={vistas:{},D:{informes:[],perfiles:[],alias:{t:{},isrc:{}},spotify:{}},cargado:false};
 const E=EST.E=s=>GM.ui.esc(s==null?'':s);
@@ -10,7 +10,7 @@ EST.fmtE=n=>(Math.round(n*100)/100).toLocaleString('es-ES',{minimumFractionDigit
 const MESN=['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
 EST.mesTxt=(m,largo)=>{const [y,k]=m.split('-');return MESN[+k-1]+(largo?' ':' ’')+(largo?y:y.slice(2))};
 
-/* ---------- datos guardados (servidor del módulo) ---------- */
+/* ---------- saved data (module server) ---------- */
 EST.cargar=async()=>{
   const r=await GM.api('estado','datos').catch(e=>({ok:false,error:String(e)}));
   if(r&&r.ok){EST.D={informes:r.informes||[],perfiles:r.perfiles||[],alias:Object.assign({t:{},isrc:{}},r.alias||{}),spotify:r.spotify||{}};EST.cargado=true}
@@ -18,7 +18,7 @@ EST.cargar=async()=>{
   return r;
 };
 
-/* ---------- estado de cada canción en el proceso ---------- */
+/* ---------- status of each song in the process ---------- */
 EST.PASOS=[{k:'letra',n:'Letra',ic:'📝'},{k:'version',n:'Versión',ic:'🎧'},{k:'stems',n:'Stems',ic:'🎚'},{k:'master',n:'Máster',ic:'💿'},{k:'portada',n:'Portada',ic:'🖼'},{k:'publicada',n:'Publicada',ic:'🚀'}];
 const dirDe=s=>GM.dir(s)||'';
 EST.pasos=s=>{
@@ -40,14 +40,14 @@ const KIND={album:'Álbum',single:'Single',pre:'Pre-released',proyecto:'Proyecto
 EST.KIND=KIND;
 EST.thumb=g=>{const c=g&&g.cover;return c&&c.t?'/thumb?f='+encodeURIComponent(c.t):''};
 
-/* ---------- gráficos SVG propios (sin librerías: la app es offline) ---------- */
+/* ---------- own SVG charts (no libraries: the app works offline) ---------- */
 EST.donut=(items,tam=150)=>{
   const tot=items.reduce((a,x)=>a+x.v,0),r=tam/2-14,C=2*Math.PI*r;let off=0;
   if(!tot)return`<svg class="est-svg" style="width:${tam}px" viewBox="0 0 ${tam} ${tam}"><circle cx="${tam/2}" cy="${tam/2}" r="${r}" fill="none" stroke="var(--panel2)" stroke-width="22"/></svg>`;
   const arcs=items.filter(x=>x.v>0).map(x=>{const l=x.v/tot*C,a=`<circle cx="${tam/2}" cy="${tam/2}" r="${r}" fill="none" stroke="${x.c}" stroke-width="22" stroke-dasharray="${l} ${C-l}" stroke-dashoffset="${-off}" transform="rotate(-90 ${tam/2} ${tam/2})"><title>${E(x.n)}: ${x.v}</title></circle>`;off+=l;return a}).join('');
   return`<svg class="est-svg" style="width:${tam}px" viewBox="0 0 ${tam} ${tam}" role="img" aria-label="Reparto por estado">${arcs}<text x="${tam/2}" y="${tam/2+2}" text-anchor="middle" style="font-size:26px;font-weight:700;fill:var(--txt)">${tot}</text><text x="${tam/2}" y="${tam/2+18}" text-anchor="middle">canciones</text></svg>`;
 };
-/* barras por mes: datos=[{m:'2025-03',v:12}], color de las barras en `c` */
+/* bars per month: datos=[{m:'2025-03',v:12}], bar color in `c` */
 EST.barrasMes=(datos,{c='var(--accent)',h=170,fmt=fmtN,unidad=''}={})=>{
   const W=640,pl=34,pb=22,pt=8,n=datos.length||1,max=Math.max(1,...datos.map(d=>d.v)),bw=(W-pl)/n;
   const ejes=[0,.5,1].map(f=>{const y=pt+(h-pb-pt)*(1-f);return`<line class="ax" x1="${pl}" x2="${W}" y1="${y}" y2="${y}"/><text x="${pl-4}" y="${y+3}" text-anchor="end">${fmt(max*f)}</text>`}).join('');
@@ -62,8 +62,8 @@ EST.spark=(vals,c='var(--accent)',w=90,h=24)=>{
 };
 EST.barraH=(pct,cls='')=>`<div class="est-bar ${cls||(pct>=99.5?'g':'')}"><b style="width:${Math.max(0,Math.min(100,pct))}%"></b></div>`;
 
-/* ---------- cálculos del panel ---------- */
-function actividad(){ // nº de archivos de audio por mes, según la fecha de cada versión
+/* ---------- panel calculations ---------- */
+function actividad(){ // number of audio files per month, by the date of each version
   const M={};let ultima='';
   GM.songs.forEach(s=>(s.versions||[]).forEach(v=>{
     let f=v.fecha||'';if(!/^\d{4}-\d{2}/.test(f)&&v.mt)f=new Date(v.mt*1000).toISOString().slice(0,10);
@@ -152,7 +152,7 @@ EST.vistas.albumes=(el)=>{
   EST.enlazar(el);
 };
 
-/* ---------- el módulo ---------- */
+/* ---------- the module ---------- */
 const TABS=[['resumen','📊 Resumen'],['albumes','💿 Álbumes y canciones'],['informes','📈 Informes de plataformas'],['conexiones','🔌 Conexiones']];
 EST.pintar=async()=>{
   const el=EST.el;if(!el)return;const st=S();let t=st.tab&&EST.vistas[st.tab]?st.tab:'resumen';
@@ -166,7 +166,7 @@ EST.pintar=async()=>{
 
 GM.register({
   id:'estado',
-  home:{title:'Estado de tu música',render(el){EST.el=el;EST.pintar()}},   // va dentro de Inicio
+  home:{title:'Estado de tu música',render(el){EST.el=el;EST.pintar()}},   // goes inside Home
   render(el){EST.el=el;EST.pintar()},
 });
 })();

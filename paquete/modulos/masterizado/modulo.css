@@ -1,4 +1,4 @@
-/* Módulo masterizado — solo variables del gestor (--bg --panel --panel2 --line --txt --muted --accent --good --warn --bad) */
+/* masterizado module — only the manager's variables (--bg --panel --panel2 --line --txt --muted --accent --good --warn --bad) */
 .ms{display:flex;flex-direction:column;gap:14px;margin-top:4px;container-type:inline-size}
 .ms .panel{padding:16px 18px}
 .ms-cab1{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap}
@@ -29,7 +29,7 @@
 .ms-seg button.on{background:var(--accent);color:#fff}
 .ms-chips .chip{font-size:12px}
 
-/* lista de canciones */
+/* song list */
 .ms-lhead{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}
 .ms-der.arrastrando{outline:2px dashed var(--accent);outline-offset:-6px}
 .ms-pistas{display:flex;flex-direction:column;gap:8px}
@@ -56,7 +56,7 @@
 .ms-grande:hover:not(:disabled){color:#fff}
 .ms-grande svg{width:18px;height:18px}
 
-/* editor de una canción */
+/* single-song editor */
 .ms-ed{background:var(--panel2);border-radius:0 0 14px 14px;padding:14px;margin-top:-1px;outline:2px solid color-mix(in srgb,var(--accent) 55%,transparent)}
 .ms-onda{background:var(--panel);border-radius:10px;overflow:hidden}
 .ms-cv{display:block;width:100%;height:140px;cursor:crosshair}
@@ -76,7 +76,7 @@
 .ms-mrow .ms-mk{flex:0 0 34%;width:auto}.ms-mrow .ms-mv{flex:1;width:auto}
 .ms-rec{margin-top:6px}
 
-/* barra del álbum */
+/* album bar */
 .ms-ab{display:flex;align-items:center;gap:8px;margin-top:14px;padding:10px 12px;background:var(--panel2);border-radius:14px;flex-wrap:wrap}
 .ms-tm{font-variant-numeric:tabular-nums;font-size:12.5px;color:var(--muted);min-width:38px;text-align:center}
 .ms-linea{position:relative;flex:1;min-width:140px;height:34px;background:var(--panel);border-radius:9px;cursor:pointer;overflow:hidden}
@@ -86,7 +86,7 @@
 .ms-relleno{position:absolute;top:0;left:0;bottom:0;width:0;background:color-mix(in srgb,var(--accent) 28%,transparent);border-right:1px solid var(--accent);pointer-events:none}
 .ms-cab-r{position:absolute;top:0;bottom:0;width:2px;background:var(--txt);left:0;pointer-events:none}
 
-/* acciones y registro */
+/* actions and log */
 .ms-barra{height:6px;background:var(--panel2);border-radius:99px;overflow:hidden;margin-top:14px;display:none}
 .ms-barra.on{display:block}
 #ms-bar{height:100%;width:0;background:var(--accent);transition:width .2s}
@@ -104,7 +104,7 @@
 #ms-fxed{margin-top:12px}
 #ms-fxed .vst-wrap{max-width:none;padding:0}
 
-/* efectos FX1…FX5 por pista, interruptor y medidor */
+/* FX1…FX5 effects per track, switch and meter */
 .ms-fxsw{display:flex;gap:4px;margin-left:auto;margin-right:8px}
 .ms-fxb{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px}
 .ms-fxb:empty{display:none}

@@ -1,4 +1,4 @@
-/* Módulo «Importar»: asistente de 4 pasos para organizar música dispersa COPIÁNDOLA a la biblioteca (el origen no se toca). */
+/* «Importar» module: 4-step wizard to organize scattered music by COPYING it into the library (the source is never touched). */
 GM.register({
   id:'importar',
   render(el,GM){ IMP.montar(el,GM) },
@@ -35,7 +35,7 @@ const IMP=(()=>{
   }
   const vivo=()=>el&&el.firstElementChild&&el.firstElementChild.classList.contains('imp-root')&&document.body.contains(el);
   function pintar(forzar){
-    if(!el||(!forzar&&!vivo()))return;   // si la persona ya está en otra sección, no pisamos su pantalla
+    if(!el||(!forzar&&!vivo()))return;   // if the user is already in another section, do not take over their screen
     const cab=`<h1>Importar música</h1><p class="lead">Si tienes bocetos, versiones, tracks sueltos, grabaciones en directo y proyectos de tu programa de música repartidos por tus carpetas, aquí los ordenamos juntos. <b>Se copian a tu biblioteca; lo original no se toca.</b></p>${pasos()}`;
     let c='';
     if(S.paso===1)c=paso1();else if(S.paso===2)c=paso2();else if(S.paso===3)c=paso3();else c=paso4();
@@ -44,7 +44,7 @@ const IMP=(()=>{
     if(S.paso===3)pintarEspacio();
   }
 
-  /* ───────── paso 1: elegir carpeta ───────── */
+  /* ───────── step 1: choose folder ───────── */
   function paso1(){
     return `<div class="imp-seguro"><span class="ico">🛡</span><div><b>Sin riesgo para tu música.</b> Primero solo <b>miro</b> la carpeta que elijas (no abro ni cambio nada). Luego te enseño cómo la ordenaría y tú decides. Al final <b>copio</b> a tu biblioteca y compruebo que cada copia es idéntica. Tus archivos originales se quedan donde están, y si algo no te gusta puedes deshacer la importación.</div></div>
     <div class="panel"><h2 style="margin:0 0 4px">1 · ¿Dónde está tu música?</h2>
@@ -133,7 +133,7 @@ const IMP=(()=>{
     S.sel=new Set();S.filtro='';S.presu=null;S.paso=3;pintar();pedirPresu();
   }
 
-  /* ───────── paso 3: revisión ───────── */
+  /* ───────── step 3: review ───────── */
   function catsChips(c){
     const n={};c.archivos.forEach(f=>{if(f.incl)n[f.cat]=(n[f.cat]||0)+1});
     return Object.keys(n).sort((a,b)=>CATS.findIndex(x=>x[0]===a)-CATS.findIndex(x=>x[0]===b)).map(k=>`<span class="imp-mini">${ICO[k]} ${n[k]} ${E(CAT[k][1].split(' ')[0].toLowerCase())}</span>`).join(' ');
@@ -207,7 +207,7 @@ const IMP=(()=>{
       ${s.modo==='completa'&&pesa?`<div class="imp-aviso">⚠ Esta sesión pesa ${fb(s.ligera?s.tam_ligero:s.tam)}. Asegúrate de tener sitio (arriba verás el espacio).</div>`:''}</div>`;
   }
 
-  /* plan que se envía al servidor */
+  /* plan sent to the server */
   function plan(){
     return {job:S.job,canciones:S.songs.filter(c=>c.incl).map(c=>({titulo:c.titulo.trim()||'Sin título',boceto:c.boceto,
       archivos:c.archivos.filter(a=>a.incl).map(a=>({id:a.id,cat:a.cat,nombre:a.nombre})),
@@ -293,7 +293,7 @@ const IMP=(()=>{
   async function clic(ev){
     const t=ev.target.closest('[data-a]');if(!t)return;
     const a=t.dataset.a;
-    if(['sel','titulo','boc','incl','fsel','fincl','cat','mover','ses','ligera','bulk','bulkcat','selall'].includes(a))return; // los maneja «cambia»
+    if(['sel','titulo','boc','incl','fsel','fincl','cat','mover','ses','ligera','bulk','bulkcat','selall'].includes(a))return; // handled by «cambia»
     ev.preventDefault?.();
     if(a==='paso'){S.paso=+t.dataset.n;S.error='';if(S.paso===1&&!S.hist)cargarHist();pintar()}
     else if(a==='explorar'){S.expAbierto=!S.expAbierto;pintar();if(S.expAbierto&&!S.exp)explorarIr(S.ruta.trim()&&!S.ruta.includes('..')?S.ruta.trim():'')}
@@ -371,7 +371,7 @@ const IMP=(()=>{
     if(ids.length)GMr.ui.setDraft(ids,true);
     S.actualizada=true;S.nBocetos=ids.length;
     const n=cs.filter(c=>GMr.all.find(x=>x.dir===c.carpeta)).length;
-    GMr.ui.go('mod:importar');   // el gestor vuelve a pintar la sección con el resumen
+    GMr.ui.go('mod:importar');   // the manager redraws the section with the summary
     if(n<cs.length)GMr.ui.toast(`El gestor ha reconocido ${n} de ${cs.length} canciones (las demás no tienen audio ni letra que catalogar).`);
   }
   async function deshacer(id){

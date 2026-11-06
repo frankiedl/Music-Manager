@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""Deshace los movimientos de archivos que hizo el gestor, leyendo datos/diario_movimientos.jsonl al revés.
+"""Undoes the file moves made by the manager, reading datos/diario_movimientos.jsonl backwards.
 
-  python deshacer.py                          simula deshacer todo
-  python deshacer.py --apply                  deshace todo
-  python deshacer.py --song "Título" --apply  deshace solo esa canción
+  python deshacer.py                          simulate undoing everything
+  python deshacer.py --apply                  undo everything
+  python deshacer.py --song "Title" --apply   undo only that song
 
-Los archivos vuelven a su sitio original. Después retira las carpetas que queden vacías.
+Files go back to their original place. Then folders left empty are removed.
 """
 import argparse
 import json
@@ -57,7 +57,7 @@ def main():
             nid += 1
             j.write(json.dumps({"id": nid, "op": "undone", "ref": e["id"], "t": time.strftime("%Y-%m-%d %H:%M:%S")}) + "\n")
             j.flush()
-    for _ in range(3):  # reintenta: un servicio de sincronización puede tener una carpeta abierta un instante
+    for _ in range(3):  # retry: a sync service may keep a folder open for a moment
         for d in sorted(dirs, key=lambda p: -len(str(p))):
             cur = d
             while cur != ROOT:

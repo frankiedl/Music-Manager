@@ -1,4 +1,6 @@
 <!doctype html>
+<!-- Music Manager UI: the whole single-page client (HTML + CSS + one main script). UI text is written in Spanish and translated
+     at runtime by /mod/_core/i18n.js; modules hook in through /mod/_core/gm.js. See ARCHITECTURE.md (key functions: init, go, render*). -->
 <html lang="es">
 <head>
 <meta charset="utf-8">
@@ -11,7 +13,7 @@
 html,body{height:100%;margin:0}
 body{background:var(--bg);color:var(--txt);font:14px/1.45 -apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI Variable Text","Segoe UI",Inter,Roboto,sans-serif;-webkit-font-smoothing:antialiased;letter-spacing:-.01em;display:grid;grid-template-columns:248px 1fr;grid-template-rows:1fr auto;height:100vh;overflow:hidden}
 button{font:inherit;color:inherit;cursor:pointer}
-/* ---- navegación ---- */
+/* ---- navigation ---- */
 #nav{background:var(--side);backdrop-filter:saturate(180%) blur(30px);-webkit-backdrop-filter:saturate(180%) blur(30px);border-right:1px solid var(--line);padding:18px 12px;display:flex;flex-direction:column;gap:4px;overflow:auto}
 .brand{font-size:19px;font-weight:700;letter-spacing:-.03em;padding:2px 10px 12px}
 .brand{display:flex;align-items:flex-start;justify-content:space-between}
@@ -64,7 +66,7 @@ h2{font-size:22px;font-weight:700;letter-spacing:-.025em;margin:30px 0 12px}
 .charts{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}
 .ch h4,.sec>h4{font-size:12.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:600;margin:0 0 10px}
 .row{display:flex;align-items:center;gap:14px}
-/* ---- muro de portadas ---- */
+/* ---- cover wall ---- */
 .wall{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:22px 16px}
 .gc{position:relative;cursor:pointer}
 .gc img,.nocov{width:100%;aspect-ratio:1;object-fit:cover;border-radius:12px;display:block;box-shadow:var(--shadow);transition:transform .2s,box-shadow .2s}
@@ -72,7 +74,7 @@ h2{font-size:22px;font-weight:700;letter-spacing:-.025em;margin:30px 0 12px}
 .gc:hover img,.gc:hover .nocov{transform:scale(1.03);box-shadow:0 14px 36px rgba(0,0,0,.28)}
 .gt{margin-top:10px;font-weight:600;font-size:14px}
 .bar{height:4px;background:var(--panel2);border-radius:3px;margin:7px 0 2px;overflow:hidden}.bar i{display:block;height:100%;background:var(--accent)}
-/* ---- lista de canciones ---- */
+/* ---- song list ---- */
 .srow{display:grid;grid-template-columns:38px 48px 1fr auto;gap:14px;align-items:center;padding:8px 10px;border-radius:12px;cursor:pointer}
 .srow:hover{background:var(--panel2)}
 .srow img,.srow .sc0{width:48px;height:48px;border-radius:8px;object-fit:cover;background:var(--panel2)}
@@ -81,7 +83,7 @@ h2{font-size:22px;font-weight:700;letter-spacing:-.025em;margin:30px 0 12px}
 .pbtn{width:36px;height:36px;border-radius:50%;border:0;background:var(--panel2);display:grid;place-items:center;font-size:13px;padding:0;flex:none}
 .pbtn:hover{background:var(--accent);color:#fff}
 .pbtn.on{background:var(--accent);color:#fff;font-size:11px;letter-spacing:-1px}
-/* ---- ficha de canción ---- */
+/* ---- song page ---- */
 .hero{display:flex;gap:24px;align-items:flex-end;margin-bottom:18px;flex-wrap:wrap}
 .hero img,.hero .nocov{width:170px;height:170px;border-radius:16px;box-shadow:var(--shadow);aspect-ratio:auto}
 .hero .info{flex:1;min-width:240px}
@@ -99,14 +101,14 @@ select{border:0;background:var(--panel2);color:var(--txt);border-radius:8px;padd
 .mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
 .mcard{background:var(--panel);border-radius:14px;box-shadow:var(--shadow);padding:10px;display:flex;flex-direction:column;gap:6px}
 .mcard img,.mcard video{width:100%;max-height:160px;object-fit:cover;border-radius:10px}
-/* ---- barra del reproductor ---- */
+/* ---- player bar ---- */
 #bar{grid-column:1/3;background:var(--glass);backdrop-filter:saturate(180%) blur(30px);-webkit-backdrop-filter:saturate(180%) blur(30px);border-top:1px solid var(--line);padding:10px 22px;display:flex;align-items:center;gap:14px}
 #bar img,#bar .bc0{width:48px;height:48px;border-radius:8px;object-fit:cover;background:var(--panel2);box-shadow:0 2px 8px rgba(0,0,0,.25);flex:none}
 #bar .bi{min-width:140px;max-width:260px;display:flex;flex-direction:column}#bar .bi b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}#bar small{color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 #bar button{border:0;background:none;font-size:20px}
 #bar #bplay{width:42px;height:42px;border-radius:50%;background:var(--txt);color:var(--bg);font-size:17px;display:grid;place-items:center;padding:0}
 #bar audio{flex:1;min-width:160px;height:36px}
-/* ---- menú, diálogos, avisos ---- */
+/* ---- menu, dialogs, notices ---- */
 #ctx{position:fixed;z-index:60;min-width:220px;background:var(--glass);backdrop-filter:blur(30px) saturate(180%);-webkit-backdrop-filter:blur(30px) saturate(180%);border:1px solid var(--line);border-radius:12px;padding:6px;box-shadow:0 12px 40px rgba(0,0,0,.3)}
 #ctx .ci{padding:7px 12px;border-radius:7px;cursor:pointer;font-size:13.5px}#ctx .ci:hover{background:var(--accent);color:#fff}#ctx hr{border:0;border-top:1px solid var(--line);margin:5px 0}
 .ov{position:fixed;inset:0;background:rgba(0,0,0,.4);backdrop-filter:blur(6px);z-index:80;display:grid;place-items:center;padding:20px}
@@ -122,7 +124,7 @@ select{border:0;background:var(--panel2);color:var(--txt);border-radius:8px;padd
 ::-webkit-scrollbar{width:12px;height:12px}::-webkit-scrollbar-thumb{background:rgba(128,128,128,.35);border-radius:10px;border:3px solid transparent;background-clip:content-box}::-webkit-scrollbar-track{background:transparent}
 @media(max-width:820px){body{grid-template-columns:1fr;grid-template-rows:auto 1fr auto}#nav{flex-direction:row;overflow:auto;padding:8px;border-right:0;border-bottom:1px solid var(--line)}.brand,.qw,#q,.sp,#saved{display:none}.nv{width:auto;white-space:nowrap}#bar{grid-column:1}main{padding:18px}}
 
-/* ===== movimiento suave, sin destellos ===== */
+/* ===== smooth motion, no flashes ===== */
 html{background:var(--bg);color-scheme:light dark}
 @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 @keyframes fade{from{opacity:0}to{opacity:1}}
@@ -201,7 +203,7 @@ body.playing #bcov{animation:spinpulse 3s ease-in-out infinite}
 .lacts label.chip{display:inline-block}
 @media(prefers-reduced-motion:reduce){*{animation-duration:.01s!important;transition-duration:.01s!important}}
 
-/* ===== columna de canciones ===== */
+/* ===== songs column ===== */
 body{grid-template-columns:232px 330px 1fr}
 #slist{background:var(--panel);border-right:1px solid var(--line);display:flex;flex-direction:column;min-height:0}
 #slist .sh{padding:18px 14px 8px;display:grid;gap:8px}
@@ -233,13 +235,13 @@ body{grid-template-columns:232px 330px 1fr}
 @media(max-width:1180px){body{grid-template-columns:64px 300px 1fr}.nv{font-size:0;justify-content:center;padding:11px 0}.nv .ic{font-size:initial}.brand,.nv .bd{display:none}#nav{padding:14px 8px}}
 @media(max-width:820px){#slist{display:none}}
 
-/* ===== archivos de trabajo ===== */
+/* ===== working files ===== */
 .wrow{display:flex;align-items:center;gap:10px;padding:6px 10px;border-radius:10px}
 .wrow:hover{background:var(--panel2)}.wrow .wn{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:13.5px}
 .wrow .pbtn{width:30px;height:30px}
 #work details{background:var(--panel);border-radius:14px;box-shadow:var(--shadow);padding:6px 10px;margin-bottom:8px}
 #work summary{font-weight:600;color:var(--txt);padding:8px 4px}
-/* ===== letras y temática ===== */
+/* ===== lyrics and themes ===== */
 #fthem{width:100%;border:0;background:var(--panel2);color:var(--txt);border-radius:10px;padding:8px 10px;font:inherit;font-size:13px}
 .sr .snip{color:var(--accent);font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-style:italic}
 .th{display:inline-flex;align-items:center;gap:6px;border-radius:99px;background:var(--panel2);padding:4px 12px;font-size:12.5px;font-weight:500;border:1px dashed transparent;cursor:pointer}
@@ -285,7 +287,7 @@ mark{background:color-mix(in srgb,var(--accent) 30%,transparent);color:inherit;b
 #eq{height:16px;width:18px;flex:none}#eq i{width:3px}
 @media(max-width:820px){#bar{grid-template-columns:1fr auto;gap:10px}.bvol{display:none}}
 
-/* ===== pantalla Letras con panel lateral ===== */
+/* ===== Lyrics screen with side panel ===== */
 .lwrap{display:grid;grid-template-columns:minmax(0,1fr);gap:22px;align-items:start}
 .lwrap.open{grid-template-columns:minmax(0,1fr) minmax(320px,420px)}
 .lcard{border:2px solid transparent;transition:border-color .2s,box-shadow .25s,transform .15s}
@@ -308,7 +310,7 @@ mark{background:color-mix(in srgb,var(--accent) 30%,transparent);color:inherit;b
 .amaps{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:12px}
 .amap{display:flex;gap:14px;align-items:center;background:var(--panel);border-radius:16px;box-shadow:var(--shadow);padding:12px 14px}
 .amap img{width:64px;height:64px;border-radius:10px;object-fit:cover;flex:none;cursor:pointer}
-/* ===== mixtape y actualizar ===== */
+/* ===== mixtape and refresh ===== */
 .sr .mx{width:26px;height:26px;border-radius:50%;border:0;background:var(--panel2);color:var(--txt);font-size:16px;line-height:1;padding:0;display:grid;place-items:center;opacity:0;transition:opacity .15s,background .15s;flex:none}
 .sr:hover .mx,.sr .mx.on{opacity:1}.sr .mx:hover{background:var(--accent);color:#fff}.sr .mx.on{background:var(--accent);color:#fff}
 .sr .rt{display:flex;align-items:center;gap:8px}
@@ -385,17 +387,17 @@ const ROLES={imagen:[['','Sin asignar'],['portada','Portada oficial'],['alt','Al
   video:[['','Sin asignar'],['clip','Clip final'],['visualizer','Visualizer / loop'],['social','Para redes'],['borrador','Borrador']]};
 const FILTERS=[['all','Todas'],['pend','Con algo pendiente'],['pub','Publicadas'],['pre','Pre-released'],['nopub','Sin publicar'],['sinletra','Con música y sin letra'],['pubnoletra','Publicadas sin letra'],['nofinal','Publicadas sin versión identificada'],['nomaster','Con stems, sin máster'],['draft','Letras en boceto'],['sinaudio','Sin audio'],['hidden','Ocultas (no relevantes)']];
 
-/* ---------- datos ---------- */
-/* Archivos de trabajo: «Track 1», «Track 2»… y stems no son versiones de la canción */
+/* ---------- data ---------- */
+/* Working files: «Track 1», «Track 2»… and stems are not versions of the song */
 const TRACK_RE=/(^|[\s_.\-()])track[\s_\-]*\d+/i;
 const VERSIONISH=/mixdown|master|\bmix\b|final|demo|remix|cover|version|\bv\d/i;
 const CANON={vocals:'vocal',vocal:'vocal',voice:'vocal',voz:'vocal',vox:'vocal',drums:'drums',drum:'drums',bateria:'drums',bass:'bass',bajo:'bass',
   guitar:'guitar',guitars:'guitar',guitarra:'guitar',guitarras:'guitar',keys:'keys',keyboard:'keys',keyboards:'keys',teclado:'keys',teclas:'keys',synth:'synth',synths:'synth',strings:'strings',cuerdas:'strings',
   backing:'backing',backings:'backing',percussion:'perc',perc:'perc',fx:'fx',other:'other',lead:'lead',harmony:'harm',harmonies:'harm',choir:'choir',coro:'choir',coros:'choir',instrumental:'instr'};
 const wordsOf=n=>n.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').split(/[^a-z0-9]+/).filter(Boolean);
-/* Regla de varias señales: un archivo es stem si está en una carpeta «stems», si dice «stem»,
-   si su nombre es solo una palabra de instrumento (Vocals 1), o si dice vocal/voz/drums/bass…
-   y en la misma carpeta hay otros archivos con otras palabras de instrumento. */
+/* Multi-signal rule: a file is a stem if it is in a «stems» folder, if it says «stem»,
+   if its name is just an instrument word (Vocals 1), or if it says vocal/voz/drums/bass…
+   and the same folder has other files with other instrument words. */
 let KIND={};
 function buildKinds(){
   KIND={};
@@ -418,9 +420,9 @@ const kindOf=v=>KIND[v.p]||'ver';
 const realVers=s=>s.versions.filter(v=>kindOf(v)==='ver');
 const laneOf=(s,v)=>ST.lanes[v.p]||(v.prop&&s.published?'p':'u');
 const isPub=s=>D(s).startsWith('published'),isPre=s=>D(s).startsWith('prereleased');
-const isDraft=s=>!!(ST.draft&&ST.draft[s.id]); // letra en boceto: nunca se comparte
-let msel=new Set(),rowIds=[],lastSel=null; // selección múltiple en la columna de canciones
-/* La versión final de lo publicado se deduce sola: la de la carpeta master, o la única que hay. */
+const isDraft=s=>!!(ST.draft&&ST.draft[s.id]); // lyrics of a sketch: never shared
+let msel=new Set(),rowIds=[],lastSel=null; // multiple selection in the songs column
+/* The final version of what is published is deduced automatically: the one in the master folder, or the only one there is. */
 function autoFinal(s){
   if(!(isPub(s)||isPre(s)))return null;
   const vs=realVers(s).filter(v=>!/Imported Files|Conformed Files/i.test(v.p));
@@ -462,7 +464,7 @@ function groups(){
   return Object.values(G).map(g=>({...g,cover:pickCover(g.key,g.title)||(g.songs[0]&&pickCover(D(g.songs[0]),g.title)),
     manual:!!(ST.coverFor&&ST.coverFor[g.key]&&medByPath(ST.coverFor[g.key]))||(MED[g.key]||[]).some(i=>(MST[i.p]||{}).role==='portada')}))}
 function taskList(){
-  const SS=SONGS.filter(s=>!isDraft(s)); // lo que es boceto no aparece en Pendientes
+  const SS=SONGS.filter(s=>!isDraft(s)); // sketches do not show up in Pending
   const pub=SS.filter(isPub);
   const g=groups().filter(x=>x.kind==='album'||x.kind==='single');
   const dp=dupPairs().length;
@@ -473,12 +475,12 @@ function taskList(){
     {k:'nofinal',ic:'⭐',n:SS.filter(s=>s.versions.length&&(isPub(s)||isPre(s))&&!finalPath(s)).length,t:'publicadas sin versión identificada',d:'No sé cuál de sus versiones es la que salió publicada: indícamela.'},
     {k:'albumcover',ic:'🖼',n:g.filter(x=>!x.manual).length,t:'sin portada elegida a mano',d:'Ahora se usa una portada automática; confirma la buena.'},
     {k:'sinaudio',ic:'🔇',n:SS.filter(s=>!s.versions.length).length,t:'sin audio',d:'Entradas de catálogo sin ningún archivo de audio.'}]}
-/* ---------- canciones repetidas (misma letra) ---------- */
-// máster = archivo en una carpeta «master», o una versión que tú hayas elegido como final (★)
+/* ---------- repeated songs (same lyrics) ---------- */
+// master = a file in a «master» folder, or a version you chose as final (★)
 const hasMaster=s=>s.versions.some(v=>v.dep||/\/master\//i.test(v.p))||!!(ST.final[s.id]&&s.versions.some(v=>v.p===ST.final[s.id]));
 const hasStems=s=>s.versions.some(v=>kindOf(v)==='stem'||/\/stems\//i.test(v.p));
-const stemsNoMaster=s=>hasStems(s)&&!hasMaster(s); // se grabó y se separó en stems, pero nunca se sacó el máster
-// a quién conservar al fusionar: la publicada, o la que tiene máster; después el número de archivos
+const stemsNoMaster=s=>hasStems(s)&&!hasMaster(s); // it was recorded and split into stems, but the master was never made
+// who to keep when merging: the published one, or the one with a master; then the number of files
 const keepScore=s=>(isPub(s)?1000:0)+(hasMaster(s)?500:0)+(isPre(s)?250:0)+realVers(s).length;
 function dupPairs(){
   const wz=t=>String(t).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().split(/[^a-z0-9]+/).filter(Boolean);
@@ -487,7 +489,7 @@ function dupPairs(){
   const out=[];
   for(let i=0;i<I.length;i++)for(let k=i+1;k<I.length;k++){
     const a=I[i],b=I[k];if(Math.min(a.n,b.n)/Math.max(a.n,b.n)<0.7)continue;
-    if(isPub(a.s)&&isPub(b.s))continue; // dos publicadas con la misma letra: versiones distintas a propósito (p. ej. acústico)
+    if(isPub(a.s)&&isPub(b.s))continue; // two published songs with the same lyrics: deliberately different versions (e.g. acoustic)
     if(ST.nodup&&ST.nodup[[a.s.id,b.s.id].sort().join('|')])continue;
     if(jac(a.W,b.W)<0.85)continue;const sim=jac(a.B,b.B);if(sim<0.75)continue;
     const [keep,lose]=keepScore(a.s)>=keepScore(b.s)?[a.s,b.s]:[b.s,a.s];
@@ -544,7 +546,7 @@ function fillCols(){
   f.innerHTML='<option value="all">Todas las colecciones</option>'+Object.entries(c).sort((a,b)=>ord(a[0])-ord(b[0])||a[0].localeCompare(b[0],'es')).map(([k,n])=>`<option value="${esc(k)}">${esc(k)} (${n})</option>`).join('');
   f.value=c[colf]?colf:'all';if(!c[colf])colf='all'}
 function match(s){
-  if(isDraft(s)&&filt!=='draft')return false; // los bocetos solo se ven en «Bocetos»
+  if(isDraft(s)&&filt!=='draft')return false; // sketches are only visible in «Bocetos» (Sketches)
   if(colf!=='all'&&!colsOf(s).includes(colf))return false;
   if(thf!=='all'&&!tagsOf(s).includes(thf))return false;
   if(query){const q=nrm(query);if(!(nrm(s.title).includes(q)||nrm(s.origins.join(' ')).includes(q)||nrm(D(s)).includes(q)||(LETN[s.id]||'').includes(q)||tagsOf(s).some(t=>nrm(t).includes(q))))return false}
@@ -555,7 +557,7 @@ function match(s){
     case'hidden':return true}
   return true}
 
-/* ---------- guardado y avisos ---------- */
+/* ---------- saving and notices ---------- */
 function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove('on'),2600)}
 function save(){clearTimeout(saveT);$('#saved').textContent='Guardando…';
   saveT=setTimeout(async()=>{try{await fetch('/api/state',{method:'POST',body:JSON.stringify(ST)});$('#saved').textContent='Guardado ✓'}catch{$('#saved').textContent='⚠ No se pudo guardar'}},300)}
@@ -599,8 +601,8 @@ function togglePk(id){
 function refreshPk(){
   document.querySelectorAll('.pkp').forEach(btn=>{const x=ALL.find(z=>z.id===btn.dataset.song),b=x&&bestVersion(x),on=b&&playing===b&&!$('#audio').paused;
     btn.textContent=btn.classList.contains('pbtn')?(on?'⏸':'▶'):(on?'⏸ Pausar':'▶ Escuchar «'+clean(x.title)+'»')})}
-/* ---------- navegación ---------- */
-let autoFilt=false; // el filtro de la lista lo puso la sección (Bocetos/Pendientes), no el usuario
+/* ---------- navigation ---------- */
+let autoFilt=false; // the list filter was set by the section (Sketches/Pending), not by the user
 function go(v,arg){
   autoSaveLetra();
   if(v==='song'||v==='group'||v==='mowner'){stack.push({view,sect,cur,curG,curMO,filt,query});if(v==='song')cur=arg;else if(v==='mowner')curMO=arg;else{curG=arg;albTab='songs'}}
@@ -610,7 +612,7 @@ function go(v,arg){
     const ff=$('#ffilt');if(ff)ff.value=filt}
   view=v;render()}
 function back(){autoSaveLetra();const s=stack.pop();if(!s)return go('home');({view,sect,cur,curG,curMO,filt,query}=s);render()}
-/* los botones ▶ de las listas se ponen en rojo con ❚❚ mientras suena esa canción, y al pulsarlos la pausan */
+/* the ▶ buttons of the lists turn red with ❚❚ while that song is playing, and clicking them pauses it */
 function syncPlayBtns(){
   const a=$('#audio'),pl=playing&&songOfPath(playing),on=!!pl&&!!a&&!a.paused;
   document.querySelectorAll('.pbtn[data-id]').forEach(b=>{
@@ -731,7 +733,7 @@ function renderDrafts(){
    <div class="lgrid">${L.map(s=>{const t=LET[s.id]?LET[s.id].t.split('\n').filter(l=>l.trim()).slice(1,6).join('\n'):'';
      return `<div class="lcard draft ${statusOf(s)}" data-act="song" data-id="${s.id}" draggable="true"><div class="vt">${esc(clean(s.title))}${!s.versions.length?' <span class="tag">sin música</span>':''}</div><div class="ex">${t?esc(t):'<span class="meta">Sin letra todavía</span>'}</div><div style="margin-top:10px"><button class="chip" data-act="undraft" data-id="${s.id}">Quitar de bocetos</button></div></div>`}).join('')||'<div class="empty">Aún no hay bocetos. Arrastra aquí una canción para empezar.</div>'}</div>`}
 function renderTasks(){
-  const T=taskList().filter(t=>t.n); // lo que no tiene nada pendiente no hace falta mostrarlo
+  const T=taskList().filter(t=>t.n); // what has nothing pending does not need to be shown
   $('#main').innerHTML=`<h1>Pendientes</h1><p class="lead">Lo que falta por resolver en tu catálogo. Haz clic en una tarjeta para ver las canciones afectadas.</p>
    ${T.length?`<div class="tasks">${T.map(t=>`<div class="task" data-act="task" data-k="${t.k}"><div style="font-size:26px">${t.ic}</div><div class="n">${t.n}</div><div class="t">${t.t}</div><div class="meta">${t.d}</div></div>`).join('')}</div>`:'<div class="empty">✓ Todo al día: no hay nada pendiente.</div>'}`}
 function groupOrder(g){
@@ -868,7 +870,7 @@ function zoomImg(list,i){
   o.addEventListener('click',e=>{const r=e.target.dataset&&e.target.dataset.r;if(r==='x')o.remove();else if(r==='p')go2(-1);else if(r==='n')go2(1)});
   const key=e=>{if(!document.body.contains(o))return removeEventListener('keydown',key);if(e.key==='ArrowLeft')go2(-1);else if(e.key==='ArrowRight')go2(1)};
   addEventListener('keydown',key)}
-/* ---------- ficha de canción ---------- */
+/* ---------- song page ---------- */
 const MASTER_RE=/master|masteriz|normaliz|limit/i;
 const stemOf=p=>p.split('/').pop().replace(/\.[^.]+$/,'').toLowerCase().replace(/master(ed|izad[oa])?|remaster(ed)?|mixdown|[^a-z0-9]+/g,'');
 function verNums(s){
@@ -957,7 +959,7 @@ function renderSong(){
      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px">${s.versions.length?`<button class="bigplay" data-act="playbest">▶ Escuchar ${fin?'la versión final':'la mejor versión'}</button>`:''}${s.versions.length?`<button class="chip" data-act="mixadd" data-id="${s.id}">${inMix(s.id)?'✓ En un mixtape':'＋ Añadir a un mixtape…'}</button>`:''}${GM.songActions().map(a=>`<button class="chip" data-act="modsong" data-k="${esc(a.mod)}">${a.icon||''} ${esc(a.label)}</button>`).join('')}</div></div>
     <div class="sc3">
    <div class="sec lyr"><h2>Letra${isDraft(s)?' <span class="tag" style="vertical-align:middle">📝 BOCETO · no se comparte</span>':''}</h2><div class="lacts"><button class="chip pri" data-act="letraedit">${s.letra?'✏️ Editar letra':'✏️ Escribir o pegar la letra'}</button><label class="chip">📄 Cargar desde un archivo .txt<input type="file" id="lfile" accept=".txt,text/plain" hidden></label><button class="chip${isDraft(s)?' on':''}" data-act="draft">📝 ${isDraft(s)?'Es un boceto · quitar marca':'Marcar como boceto'}</button></div>
-    <pre id="letra">${s.letra?'Cargando…':'Esta canción todavía no tiene letra. Pulsa «Escribir o pegar la letra» y guárdala aquí mismo.'}</pre></div>
+    <pre id="letra">${(window.T||(x=>x))(s.letra?'Cargando…':'Esta canción todavía no tiene letra. Pulsa «Escribir o pegar la letra» y guárdala aquí mismo.')}</pre></div>
    </div></div>
    ${orphanBox(s)}
    <div class="sdz" id="sdrop"><button class="chip" data-act="pickdrop">＋ Añadir archivos</button><input type="file" id="dropfile" multiple hidden></div>
@@ -995,9 +997,9 @@ async function loadWork(s){
   const row=f=>`<div class="wrow" data-wp="${esc(f.p)}"><span class="wn">${esc(f.n)}</span><span class="meta">${f.mb} MB</span>${AUD.test(f.n)?'<button class="pbtn" data-act="playfile" title="Escuchar">▶</button>':''}<button class="chip" data-act="openfile" title="Abrir en el Explorador">📂</button></div>`;
   const html=groups.filter(g=>g[1].length).map(([t,L])=>`<details${L.length<=6?' open':''}><summary>${t} <span class="meta">· ${L.length}</span></summary>${L.slice(0,60).map(row).join('')}${L.length>60?`<div class="meta" style="padding:6px 0">…y ${L.length-60} más. Ábrelos desde el Explorador.</div>`:''}</details>`).join('');
   box.innerHTML=`<h2>Archivos de trabajo</h2>${html||'<div class="meta">Esta canción no tiene stems, tracks sueltos ni otros archivos de trabajo.</div>'}`}
-// quita las marcas de sección del prompt de música ([Verse], [Chorus], [Bridge]…): líneas que son solo un [texto]
+// strips the section marks of the music prompt ([Verse], [Chorus], [Bridge]…): lines that are just a [text]
 const cleanLetra=t=>String(t).replace(/\r\n?/g,'\n').split('\n').filter(l=>!/^\s*\[[^\]]{1,80}\]\s*$/.test(l)).join('\n').replace(/\n{3,}/g,'\n\n').replace(/^\s*\n+/,'');
-let ledit=null; // letra que se está editando: si te vas sin guardar, se guarda sola
+let ledit=null; // lyrics being edited: if you leave without saving, they are saved automatically
 function autoSaveLetra(){
   const t=document.querySelector('#ltxt');if(!ledit||!t){ledit=null;return}
   const v=cleanLetra(t.value).trim(),e=ledit;ledit=null;
@@ -1034,7 +1036,7 @@ function setCoverRole(p,owner){
 function setRole(p,role){
   if(role==='portada'){setCoverRole(p,ownerOfPath(p));refresh();return toast('★ Portada cambiada')}
   (MST[p]=MST[p]||{}).role=role;saveMed();refresh();toast(role?'Guardado':'Marca quitada')}
-/* ---- carpeta ARTE ---- */
+/* ---- ARTE folder ---- */
 let _projs=null;
 const projSet=()=>_projs||(_projs=new Set(groups().filter(g=>g.kind==='proyecto').map(g=>g.key.split('/')[1])));
 function arteBase(key){
@@ -1066,7 +1068,7 @@ function coverTarget(s){
   return {sid:s.id,amb:(album&&!ownerImgs(o).length)?'album':'cancion',owners:album?[o,par]:[o]}}
 function groupTarget(g){return {sid:g.songs[0]?g.songs[0].id:'key:'+g.key,amb:(g.kind==='album'||g.kind==='proyecto')?'album':'cancion',owners:[g.key]}}
 function pickFile(t){const i=$('#upcoverG');i.dataset.sid=t.sid;i.dataset.amb=t.amb;i.click()}
-/* ---------- recortar la portada en 1:1, 4:3, 3:4, 16:9 y 9:16 (guarda archivos nuevos, no toca el original) ---------- */
+/* ---------- crop the cover to 1:1, 4:3, 3:4, 16:9 and 9:16 (saves new files, the original is untouched) ---------- */
 function openCropper(c,t){
   const FM=[['1:1',1],['4:3',4/3],['3:4',3/4],['16:9',16/9],['9:16',9/16]];
   const base=String(c.n||'portada').replace(/\.[^.]+$/,'');
@@ -1128,7 +1130,7 @@ function chooseExisting(t){
   o.addEventListener('click',e=>{const c=e.target.closest('.pick');if(c){setCoverRole(c.dataset.p,c.dataset.o);o.remove();coverCache.clear();refresh();toast('★ Portada cambiada')}else if(e.target.dataset.r)o.remove()})}
 function coverMenu(x,y,t){ctx(x,y,[['🖼 Cambiar portada…',()=>coverChooser(t)],null,['Abrir su carpeta de arte',()=>{const k=t.amb==='album'?t.owners[t.owners.length-1]:t.owners[0];openFolder(arteBase(k).join('/')+'/'+(t.amb==='album'?'Portadas y arte':'Arte'))}]])}
 
-/* ---------- menú contextual y acciones ---------- */
+/* ---------- context menu and actions ---------- */
 function ctx(x,y,items){
   closeCtx();const m=document.createElement('div');m.id='ctx';
   m.innerHTML=items.map((it,i)=>it?`<div class="ci" data-i="${i}">${it[0]}</div>`:'<hr>').join('');
@@ -1215,7 +1217,7 @@ function paint(r){r.style.setProperty('--v',(r.value/r.max*100)+'%')}
 $('#bplay').onclick=()=>{const a=$('#audio');if(a.src)a.paused?a.play():a.pause();else toast('Haz doble clic en una canción para escucharla')};
 $('#bprev').onclick=()=>step(-1);$('#bnext').onclick=()=>step(1);$('#audio').onended=()=>step(1);
 
-/* ---------- soltar archivos: se clasifican y se catalogan solos ---------- */
+/* ---------- dropping files: they are classified and cataloged automatically ---------- */
 async function soltarArchivos(files,sid){
   const list=[...files];if(!list.length)return;
   const lote=encodeURIComponent(JSON.stringify(list.map(f=>f.name)));
@@ -1237,7 +1239,7 @@ async function soltarArchivos(files,sid){
   if(view==='song'||view==='lyrics')refresh()}
 function dropZone(t){
   if(!t||!t.closest)return null;
-  if(t.closest('#drop'))return null; // la zona de arte tiene su propio comportamiento
+  if(t.closest('#drop'))return null; // the artwork area has its own behavior
   const row=t.closest('.sr[data-id]');if(row)return {el:row,sid:row.dataset.id};
   if(view==='song'&&t.closest('#main')&&cur)return {el:$('#sdrop'),sid:cur};
   return null}
@@ -1246,7 +1248,7 @@ document.addEventListener('dragover',e=>{if(!hasFiles(e))return;const z=dropZone
 document.addEventListener('dragleave',e=>{if(!hasFiles(e))return;if(!e.relatedTarget||!e.relatedTarget.closest||!e.relatedTarget.closest('.sr,#main'))document.querySelectorAll('.sr.over,#sdrop.over').forEach(x=>x.classList.remove('over'))});
 document.addEventListener('drop',e=>{if(!hasFiles(e))return;const z=dropZone(e.target);if(!z)return;e.preventDefault();document.querySelectorAll('.sr.over,#sdrop.over').forEach(x=>x.classList.remove('over'));soltarArchivos(e.dataTransfer.files,z.sid)});
 
-/* ---------- añadir canciones (arrastrar carpetas o archivos) ---------- */
+/* ---------- add songs (drag folders or files) ---------- */
 const AUDX=/\.(wav|mp3|m4a|flac|aiff?)$/i,TXTX=/\.(txt|docx?|rtf|md|pdf)$/i;
 const JUNK=/(^|\/)(\.DS_Store|Thumbs\.db|desktop\.ini)$|\.(pkf|pk|asd|reapeaks|tmp)$|(^|\/)Backup\//i;
 const SUBS=new Set(['stems','versiones','master','sesiones','otros','docs','midi','arte','video']);
@@ -1261,7 +1263,7 @@ async function readEntry(entry,path){ // recorre carpetas arrastradas: [{file,pa
   for(;;){const b=await new Promise(r=>rd.readEntries(r,()=>r([])));if(!b.length)break;all.push(...b)}
   return (await Promise.all(all.map(e=>readEntry(e,path+entry.name+'/')))).flat()}
 async function itemsFromDrop(dt){
-  const ents=[...(dt.items||[])].map(i=>i.webkitGetAsEntry&&i.webkitGetAsEntry()).filter(Boolean); // hay que pedirlas dentro del evento
+  const ents=[...(dt.items||[])].map(i=>i.webkitGetAsEntry&&i.webkitGetAsEntry()).filter(Boolean); // they must be requested inside the event
   if(ents.length)return (await Promise.all(ents.map(e=>readEntry(e,'')))).flat();
   return [...dt.files].map(f=>({file:f,path:f.webkitRelativePath||f.name}))}
 function proposalsFrom(items){
@@ -1269,7 +1271,7 @@ function proposalsFrom(items){
   const P=[],tops={},loose=[];
   good.forEach(i=>{const seg=i.path.split('/');if(seg.length>1)(tops[seg[0]]=tops[seg[0]]||[]).push({...i,seg});else loose.push(i)});
   Object.entries(tops).forEach(([name,fs])=>{
-    // una carpeta con varias subcarpetas que son canciones (cada una con su audio) = una colección, no una sola canción
+    // a folder with several subfolders that are songs (each with its audio) = a collection, not a single song
     const subs={};fs.forEach(f=>{if(f.seg.length>=3&&!SUBS.has(f.seg[1].toLowerCase())&&AUDX.test(f.seg[f.seg.length-1]))(subs[f.seg[1]]=subs[f.seg[1]]||[]).push(1)});
     const songs=Object.keys(subs);
     if(songs.length>=2)songs.forEach(sn=>P.push({title:sn.replace(/^\s*\d{1,2}[\s.\-_]+/,'').trim()||sn,files:fs.filter(f=>f.seg[1]===sn).map(f=>f.file)}));
@@ -1326,7 +1328,7 @@ async function subirNuevas(todo,where){
   const res=[];let n=0,firstId=null;
   for(const p of todo){
     const ex=existingFor(p.title),lote=encodeURIComponent(JSON.stringify(p.files.map(f=>f.name)));
-    // la letra primero: el .txt que lleva el nombre de la canción (o «letra») pasa a ser su letra
+    // lyrics first: the .txt named after the song (or «letra») becomes its lyrics
     const nt=nrm(p.title),score=f=>/\.txt$/i.test(f.name)?(/^letra\.txt$/i.test(f.name)||nrm(f.name.replace(/\.txt$/i,''))===nt?0:1):2;
     const files=[...p.files].sort((a,b)=>score(a)-score(b));
     for(const f of files){
@@ -1347,7 +1349,7 @@ $('#addsongs').onclick=()=>openAddSongs();
 {const b=$('#addsongs');b.ondragover=e=>{if(hasFiles(e)){e.preventDefault();b.classList.add('over')}};b.ondragleave=()=>b.classList.remove('over');
  b.ondrop=async e=>{e.preventDefault();b.classList.remove('over');openAddSongs(await itemsFromDrop(e.dataTransfer))}}
 
-/* clic en el título o la portada del reproductor: ir a la ficha de esa canción */
+/* click on the player's title or cover: go to that song's page */
 document.addEventListener('click',e=>{
   if(!e.target.closest('#btitle,#bcov')||!playing)return;
   const x=ALL.find(z=>z.versions.some(v=>v.p===playing));
@@ -1356,11 +1358,11 @@ document.addEventListener('click',e=>{
   if(view==='song'&&cur===x.id)return;
   go('song',x.id)});
 
-/* ---------- arrastrar canciones a «Bocetos» ---------- */
+/* ---------- dragging songs onto «Bocetos» (Sketches) ---------- */
 const isSongDrag=e=>e.dataTransfer&&[...e.dataTransfer.types].includes('application/x-songs');
 document.addEventListener('dragstart',e=>{
   const r=e.target.closest&&e.target.closest('.sr[data-id],.srow[data-id],.lcard[data-id]');if(!r)return;
-  const id=r.dataset.id,ids=msel.size>1&&msel.has(id)?[...msel]:[id]; // si arrastras una de la selección, van todas
+  const id=r.dataset.id,ids=msel.size>1&&msel.has(id)?[...msel]:[id]; // if you drag one of the selection, they all go
   e.dataTransfer.effectAllowed='copyMove';e.dataTransfer.setData('application/x-songs',JSON.stringify(ids));e.dataTransfer.setData('text/plain',ids.length+' canción(es)');
   if(ids.length>1){const g=document.createElement('div');g.className='dragghost';g.textContent=ids.length+' canciones';document.body.appendChild(g);e.dataTransfer.setDragImage(g,12,12);setTimeout(()=>g.remove(),0)}
   document.body.classList.add('dragging-songs')});
@@ -1372,12 +1374,12 @@ document.addEventListener('drop',e=>{if(!isSongDrag(e))return;const t=e.target.c
   const L=ids.map(i=>ALL.find(z=>z.id===i)).filter(Boolean);if(L.length)setDraft(L,true)});
 
 /* ---------- mixtape ---------- */
-/* ---------- mixtapes: varios, cada uno con su casete, nombre, calidad y aviso de copyright ---------- */
+/* ---------- mixtapes: several, each with its cassette, name, quality and copyright notice ---------- */
 const MIX_ARTIST='',MIX_OWNER='',MIX_SAFE_DEF=false;
 const mixArtist=()=>MIX_ARTIST||((typeof CFG!=='undefined'&&CFG.artista)||'');
 const mixOwnerDef=()=>MIX_OWNER||((typeof CFG!=='undefined'&&(CFG.titular||CFG.artista))||'');
 const PEN="'Ink Free','Segoe Print','Segoe Script','Bradley Hand','Noteworthy','Marker Felt','Comic Sans MS',cursive";
-// por casete: zona del título, zona del ©, tinta de cada uno (d = oscura, l = clara)
+// per cassette: title area, © area, ink of each (d = dark, l = light)
 const CINTAS=[
  {t:[.10,.05,.80,.19],c:[.19,.60,.62,.10],ti:'d',ci:'d'},
  {t:[.10,.04,.80,.20],c:[.19,.55,.62,.09],ti:'l',ci:'d'},
@@ -1389,14 +1391,14 @@ const CINTAS=[
  {t:[.10,.015,.80,.12],c:[.19,.765,.62,.085],ti:'l',ci:'l'}];
 const _cimg={};
 const loadCinta=i=>_cimg[i]||(_cimg[i]=new Promise(res=>{const im=new Image();im.onload=()=>res(im);im.onerror=()=>res(null);im.src='/assets/casetes/cinta'+(i+1)+'.jpg'}));
-function cintaFallback(g,x,y,w,h){ // casete dibujado, por si faltan las fotos
+function cintaFallback(g,x,y,w,h){ // drawn cassette, in case the photos are missing
   g.fillStyle='#2b2b30';g.beginPath();g.roundRect(x,y,w,h,w*.03);g.fill();
   g.fillStyle='#e9e0c8';g.beginPath();g.roundRect(x+w*.06,y+h*.06,w*.88,h*.62,w*.015);g.fill();
   g.fillStyle='#1c1c20';g.beginPath();g.roundRect(x+w*.22,y+h*.3,w*.56,h*.26,h*.13);g.fill();
   g.fillStyle='#d8d8d8';[.34,.66].forEach(f=>{g.beginPath();g.arc(x+w*f,y+h*.43,h*.07,0,7);g.fill()});
   g.fillStyle='#17171a';g.beginPath();g.roundRect(x+w*.2,y+h*.74,w*.6,h*.2,w*.02);g.fill()}
 async function cintaCanvas(idx,title,copy,size){
-  // la portada tiene la forma del casete (apaisada) con un marco fino: sin aire arriba ni abajo
+  // the cover has the cassette's (landscape) shape with a thin frame: no space above or below
   size=size||1200;try{await document.fonts.load('40px "Ink Free"')}catch{}
   const im=await loadCinta(idx);let cfg=CINTAS[idx]||CINTAS[0];
   const mg=size*.03,dw=size-2*mg,dh=dw*(im?im.height/im.width:.62),H=Math.round(dh+2*mg),dx=mg,dy=mg;
@@ -1413,13 +1415,13 @@ async function cintaCanvas(idx,title,copy,size){
     g.save();g.translate(x+w/2,y+h/2);g.rotate(rot*Math.PI/180);g.textAlign='center';g.textBaseline='middle';
     g.fillStyle=ink==='l'?'#f4efe2':'#1d2c78';g.globalAlpha=.93;g.fillText(txt,0,0);g.restore()};
   put(title,cfg.t,cfg.ti,-1.4,1);
-  put(copy,cfg.c,cfg.ci,.6,.62); // el © va más pequeño y centrado
+  put(copy,cfg.c,cfg.ci,.6,.62); // the © is smaller and centered
   return cv}
 let mixOpen=null,_mcT=null;
 const MIXS=()=>ST.mixtapes||(ST.mixtapes=[]);
 const mixById=id=>MIXS().find(x=>x.id===id),curMix=()=>mixById(mixOpen);
 const mixBusySet=new Set(),mixErr=new Map(),mixSel=new Set();let mixQueue=[],mixBusy=false;
-const mixDrop=(mid,id)=>fetch('/api/mix_borrar',{method:'POST',body:JSON.stringify({mixid:mid,id})}).catch(()=>{}); // borra solo el MP3 creado para el mixtape
+const mixDrop=(mid,id)=>fetch('/api/mix_borrar',{method:'POST',body:JSON.stringify({mixid:mid,id})}).catch(()=>{}); // deletes only the MP3 created for the mixtape
 const mixP=it=>it.p||(()=>{const s=ALL.find(x=>x.id===it.id);return s&&bestVersion(s)})();
 const mixNeeds=(m,it)=>!(it.mp3&&it.mp3.k===m.kbps&&it.mp3.p===mixP(it));
 function mixStatus(m,it){
@@ -1449,7 +1451,7 @@ async function mixRun(){
 function mixSelPaint(){
   const b=$('#mxrmsel');if(b){b.hidden=!mixSel.size;b.textContent='Quitar seleccionadas ('+mixSel.size+')'}
   const a=$('#mxall'),m=curMix();if(a&&m)a.checked=!!m.items.length&&m.items.every(i=>mixSel.has(i.id))}
-function mixMigrate(){ // el mixtape único de antes pasa a ser el primero de la lista
+function mixMigrate(){ // the single mixtape of older versions becomes the first in the list
   if(!ST.mixtapes){ST.mixtapes=[];const o=ST.mixtape;
     if(o&&(o.items||[]).length)ST.mixtapes.push({id:'mx'+Date.now().toString(36),name:o.name||'Mixtape',kbps:o.kbps||192,letras:o.letras!==false,copy:o.copy!==false,owner:o.owner||mixOwnerDef(),safe:o.safe!==false,label:'',cname:'',items:o.items})}
   MIXS().forEach(m=>{if(!m.items)m.items=[];if(!m.kbps)m.kbps=192;if(m.letras===undefined)m.letras=true;if(m.copy===undefined)m.copy=true;
@@ -1498,7 +1500,7 @@ function mixPick(ids,x,y){
   const items=MIXS().map(m=>{const all=ids.every(i=>m.items.some(z=>z.id===i));
     return [(all?'✓ ':'🎞 ')+esc(m.name)+' <span style="opacity:.55">· '+m.items.length+'</span>',()=>all?ids.forEach(i=>mixRemoveFrom(m.id,i)):addToMix(m.id,ids)]});
   ctx(x,y,[...items,...(items.length?[null]:[]),['＋ Nuevo mixtape…',()=>newMixDialog(m=>addToMix(m.id,ids))]])}
-function mixAddBtn(id,e){ // el ＋ de una canción: con un mixtape activo lo añade/quita directo; sin ninguno, pregunta a cuál
+function mixAddBtn(id,e){ // a song's ＋: with an active mixtape it adds/removes directly; with none, it asks which one
   const a=mixActive();
   if(a)return a.items.some(i=>i.id===id)?mixRemoveFrom(a.id,id):addToMix(a.id,[id]);
   mixPick([id],e.clientX,e.clientY)}
@@ -1561,7 +1563,7 @@ async function mixGo(){
     setTimeout(tick,700)};
   tick()}
 
-/* ---------- actualizar y avisar de cambios en las carpetas ---------- */
+/* ---------- refresh and report changes in the folders ---------- */
 let SIG=null;
 async function checkSig(){
   try{const r=await fetch('/api/firma').then(r=>r.json());if(SIG===null){SIG=r.firma;return}
@@ -1578,7 +1580,7 @@ $('#rbtn').onclick=refreshAll;
 document.addEventListener('click',e=>{if(e.target.closest('[data-act="refreshall"]'))refreshAll()});
 addEventListener('focus',checkSig);setInterval(checkSig,90000);
 
-/* ---------- columna de canciones ---------- */
+/* ---------- songs column ---------- */
 function fillThemes(){fillCols();const f=$('#fthem');if(!f)return;const T=allThemes();
   f.innerHTML='<option value="all">Todas las temáticas</option>'+T.map(([t,n])=>`<option value="${esc(t)}">${esc(t)} (${n})</option>`).join('');f.value=T.some(x=>x[0]===thf)?thf:'all'}
 function syncList(){const f=$('#ffilt');if(f)f.value=filt;fillThemes();renderRows()}
@@ -1592,7 +1594,7 @@ function renderRows(){
     return `<div class="sr${view==='song'&&cur===s.id?' sel':''}${nowId===s.id?' now':''}${msel.has(s.id)?' msl':''}" data-act="song" data-id="${s.id}" draggable="true"><div class="cv">${c?`<img loading="lazy" src="/thumb?f=${encodeURIComponent(c.t)}">`:'<div class="sc0"></div>'}<button class="pl" data-act="playsong" data-id="${s.id}" title="Reproducir">▶</button></div>
     <div class="tx"><div class="st">${esc(clean(s.title))}</div>${(()=>{const l=query&&!nrm(s.title).includes(nrm(query))?lineWith(s,query):'';return l?`<div class="snip">“${esc(l)}”</div>`:`<div class="meta">${s.versions.length?(realVers(s).length||0)+' versión(es)'+(s.versions.length>realVers(s).length?' · '+(s.versions.length-realVers(s).length)+' de trabajo':''):'sin audio'}${finalPath(s)?' · ★ '+(isPub(s)||isPre(s)?'publicada':'final'):''}${isDraft(s)?' · 📝 boceto':''}</div>`})()}</div><div class="rt"><span class="dt ${isPub(s)?'pub':isPre(s)?'pre':''}"></span><button class="mx${inActive(s.id)?' on':''}" data-act="mixadd" data-id="${s.id}" title="${mixActive()?(inActive(s.id)?'Quitar de «'+esc(mixActive().name)+'»':'Añadir a «'+esc(mixActive().name)+'»'):'Añadir a un mixtape…'}">${inActive(s.id)?'✓':'＋'}</button></div></div>`}).join('')||'<div class="empty">No hay canciones con ese filtro.</div>'}
 
-/* ---------- eventos (un solo sitio) ---------- */
+/* ---------- events (one single place) ---------- */
 async function onAct(e){
   const t=e.target.closest('[data-act]');if(!t)return;const a=t.dataset.act;const inL=!!t.closest('#slist');
   const row=t.closest('.vrow'),p=row&&row.dataset.p,s=view==='song'?ALL.find(x=>x.id===cur):null;
@@ -1649,7 +1651,7 @@ async function onAct(e){
     case 'sfilt':filt=(filt===t.dataset.f&&filt!=='all')?'all':t.dataset.f;autoFilt=false;{const ff=$('#ffilt');if(ff)ff.value=filt}return refresh();
     case 'task':{const k=t.dataset.k;if(k==='dups')return openDups();if(k==='albumcover'){sect='albums';afl='albumcover';view='albums';stack=[];return render()}
       filt=k;query='';$('#q').value='';syncList();const f=FILTERS.find(x=>x[0]===k);toast('Columna de canciones filtrada: '+(f?f[1]:''));return}
-    case 'song':{ // un clic abre, doble clic reproduce
+    case 'song':{ // one click opens, double click plays
       if(e.target.closest('[data-act="playsong"],[data-act="playgroup"]'))return;
       const id=t.dataset.id;
       if(tclick&&tclick.id===id){clearTimeout(tclick.h);tclick=null;const x=SONGS.find(z=>z.id===id),b=x&&bestVersion(x);if(b)play(b,inL||view==='songs'?listQueue():undefined);return}
@@ -1681,21 +1683,21 @@ async function onAct(e){
     case 'addart':upAmb=t.dataset.amb||'cancion';return $('#upfile').click();
   }}
 $('#main').addEventListener('click',onAct);$('#slist').addEventListener('click',onAct);
-/* selección múltiple: Ctrl/Cmd+clic suma o quita, Mayús+clic selecciona un rango; clic normal la limpia */
+/* multiple selection: Ctrl/Cmd+click adds or removes, Shift+click selects a range; a normal click clears it */
 function setDraft(L,on){
   L.forEach(x=>{if(on)ST.draft[x.id]=true;else delete ST.draft[x.id]});
-  if(on)MIXS().forEach(mm=>{mm.items=mm.items.filter(i=>!ST.draft[i.id])}); // un boceto no viaja en el mixtape
+  if(on)MIXS().forEach(mm=>{mm.items=mm.items.filter(i=>!ST.draft[i.id])}); // a sketch does not travel in the mixtape
   save();mixBadge();renderRows();refresh();
   toast(on?(L.length>1?L.length+' letras marcadas como boceto · no se comparten':'Marcada como boceto · no se comparte'):(L.length>1?'Quitada la marca de boceto a '+L.length:'Ya no es un boceto'))}
 function selInfo(){const n=msel.size;if(n>1)$('#scount').textContent=n+' seleccionadas · botón derecho para fusionarlas'}
 const SELQ='.sr[data-id],.srow[data-id]';
 new MutationObserver(()=>{if(msel.size>1)paintSel()}).observe($('#main'),{childList:true,subtree:true});
-function paintSel(){const on=msel.size>1; // una sola selección no se marca: es la canción abierta
+function paintSel(){const on=msel.size>1; // a single selection is not highlighted: it is the open song
   document.querySelectorAll('#srows .sr,#main .srow').forEach(r=>r.classList.toggle('msl',on&&msel.has(r.dataset.id)));
   if(!on){const L=(filt==='hidden'?ALL.filter(x=>ST.hidden[x.id]):SONGS).filter(match);$('#scount').textContent=L.length+' de '+DENOM()+' canciones y letras'}else selInfo()}
 function clearSel(){msel.clear();lastSel=null;paintSel()}
-function selRow(id,range,box){ // como el Explorador: Mayús = rango desde el ancla, Ctrl/Cmd = suma o quita una
-  if(!msel.size&&view==='song'&&cur&&cur!==id){msel.add(cur);lastSel=cur} // la canción abierta es el ancla
+function selRow(id,range,box){ // like Explorer: Shift = range from the anchor, Ctrl/Cmd = add or remove one
+  if(!msel.size&&view==='song'&&cur&&cur!==id){msel.add(cur);lastSel=cur} // the open song is the anchor
   const ids=[...box.querySelectorAll(SELQ)].map(r=>r.dataset.id);
   if(range){const anc=lastSel&&ids.includes(lastSel)?lastSel:id,a=ids.indexOf(anc),b=ids.indexOf(id);msel.clear();ids.slice(Math.min(a,b),Math.max(a,b)+1).forEach(i=>msel.add(i));lastSel=anc}
   else{if(msel.has(id))msel.delete(id);else msel.add(id);lastSel=id}
@@ -1705,7 +1707,7 @@ document.addEventListener('click',e=>{
   if(e.target.closest('[data-act="playsong"],[data-act="mixadd"],[data-act="playgroup"]'))return;
   const r=e.target.closest(SELQ);if(!r)return;
   if(e.ctrlKey||e.metaKey||e.shiftKey){e.preventDefault();e.stopImmediatePropagation();clearTimeout(tclick&&tclick.h);tclick=null;selRow(r.dataset.id,e.shiftKey,r.parentElement);return}
-  msel.clear();msel.add(r.dataset.id);lastSel=r.dataset.id;selCur=null;paintSel()},true); // clic normal: selecciona solo esa (y se abre como siempre)
+  msel.clear();msel.add(r.dataset.id);lastSel=r.dataset.id;selCur=null;paintSel()},true); // normal click: selects only that one (and it opens as usual)
 function multiMenu(x,y){
   const n=msel.size;
   ctx(x,y,[['🎞 Añadir '+n+' a un mixtape…',()=>mixPick([...msel],x,y)],['Fusionar '+n+' canciones (son la misma)…',unirVarias],[(()=>{const L=[...msel].map(i=>ALL.find(z=>z.id===i)).filter(Boolean);return L.every(isDraft)?'📝 Quitar marca de boceto a '+n:'📝 Marcar '+n+' como boceto (no compartir)'})(),()=>{const L=[...msel].map(i=>ALL.find(z=>z.id===i)).filter(Boolean);setDraft(L,!L.every(isDraft))}],['No son relevantes · ocultar '+n,()=>{[...msel].forEach(i=>{ST.hidden[i]=true});save();SONGS=ALL.filter(z=>!ST.hidden[z.id]);clearSel();refresh();toast(n+' entradas ocultas · las recuperas en el filtro «Ocultas»')}],null,['Quitar la selección',clearSel]])}
@@ -1732,7 +1734,7 @@ document.addEventListener('contextmenu',e=>{
   if(row&&view==='song'){e.preventDefault();return versionMenu(e.clientX,e.clientY,SONGS.find(x=>x.id===cur),row.dataset.p)}
   if(sr){e.preventDefault();const id=sr.dataset.id;
     if(msel.size>1&&msel.has(id))return multiMenu(e.clientX,e.clientY);
-    msel.clear();msel.add(id);lastSel=id;paintSel(); // botón derecho sobre una no seleccionada: pasa a ser la única
+    msel.clear();msel.add(id);lastSel=id;paintSel(); // right click on an unselected one: it becomes the only one
     songMenu(e.clientX,e.clientY,SONGS.find(x=>x.id===id))}});
 document.querySelectorAll('.nv[data-go]').forEach(b=>b.onclick=()=>go(b.dataset.go));
 $('#gear').onclick=()=>go('mod:ajustes');
@@ -1749,7 +1751,7 @@ addEventListener('keydown',e=>{
   if(e.key==='Escape'){if(msel.size)clearSel();closeCtx();document.querySelectorAll('.ov').forEach(o=>o.remove())}
   if(e.code==='Space'&&!/INPUT|TEXTAREA|SELECT|BUTTON/.test(e.target.tagName)&&!e.target.isContentEditable&&!document.querySelector('.ov')){
     e.preventDefault();const a=$('#audio');
-    // Espacio reproduce la canción seleccionada (la abierta, la de Letras o la única marcada en la lista); otra vez, la pausa
+    // Space plays the selected song (the open one, the one in Lyrics or the only one checked in the list); again, pauses it
     const sid=view==='song'?cur:view==='lyrics'?lsel:(msel.size===1?[...msel][0]:null),tgt=sid&&ALL.find(x=>x.id===sid);
     if(tgt){
       const pl=playing&&songOfPath(playing);
@@ -1769,7 +1771,7 @@ document.addEventListener('change',e=>{
   if(t.id==='mxall'){m.items.forEach(i=>t.checked?mixSel.add(i.id):mixSel.delete(i.id));document.querySelectorAll('.mxsel').forEach(c=>c.checked=t.checked);return mixSelPaint()}
   if(t.id==='mxk')m.kbps=+t.value;else if(t.id==='mxl')m.letras=t.checked;else if(t.id==='mxc')m.copy=t.checked;else if(t.id==='mxs')m.safe=t.checked;else if(t.id==='mxone')m.onefile=t.checked;else return;save();
   if(t.id==='mxk'){mixEnqueue(m);toast('Creando las versiones MP3 a '+m.kbps+' kbps…');document.querySelectorAll('.mst').forEach(el=>{const it=m.items.find(i=>i.id===el.dataset.mst);if(it)el.innerHTML=mixStatus(m,it)})}});
-/* arrastrar canciones a un mixtape (su tarjeta, su página o el botón Mixtape del menú) */
+/* drag songs onto a mixtape (its card, its page or the Mixtape button of the menu) */
 document.addEventListener('dragover',e=>{if(!isSongDrag(e))return;const t=e.target.closest('[data-mxdrop],.nv[data-go="mixtape"]');if(t){e.preventDefault();e.dataTransfer.dropEffect='copy';t.classList.add('dover')}});
 document.addEventListener('dragleave',e=>{const t=e.target.closest&&e.target.closest('[data-mxdrop],.nv[data-go="mixtape"]');if(t&&!t.contains(e.relatedTarget))t.classList.remove('dover')});
 document.addEventListener('drop',e=>{
@@ -1780,7 +1782,7 @@ document.addEventListener('drop',e=>{
   if(t.dataset.mxdrop)return addToMix(t.dataset.mxdrop,ids);
   const L=MIXS();if(L.length===1)return addToMix(L[0].id,ids);
   go('mixtape');toast(L.length?'Suéltalas sobre el mixtape que quieras':'Crea primero un mixtape y vuelve a arrastrarlas')});
-/* arrastrar canciones dentro de la página de un álbum: añadir (álbumes tuyos) u ordenar */
+/* drag songs inside an album page: add (your albums) or reorder */
 const ALBSEL='[data-albrow],[data-albdrop]';
 document.addEventListener('dragover',e=>{if(!isSongDrag(e)||view!=='group')return;const t=e.target.closest(ALBSEL);if(t){e.preventDefault();e.dataTransfer.dropEffect='move';t.classList.add('dover')}});
 document.addEventListener('dragleave',e=>{const t=e.target.closest&&e.target.closest(ALBSEL);if(t&&!t.contains(e.relatedTarget))t.classList.remove('dover')});
@@ -1793,7 +1795,7 @@ document.addEventListener('drop',e=>{
   if(ids.every(i=>g.songs.some(x=>x.id===i)))return albMove(g,ids,before);
   if(g.nuevo)return albAdd(g,ids,before);
   toast('Solo puedes añadir canciones a los álbumes que tú creas')});
-/* flechas ↑ ↓: pasar a la canción anterior/siguiente de la lista (Mayús amplía la selección) */
+/* ↑ ↓ arrows: move to the previous/next song of the list (Shift extends the selection) */
 let selCur=null;
 addEventListener('keydown',e=>{
   if(e.key!=='ArrowDown'&&e.key!=='ArrowUp')return;
@@ -1809,7 +1811,7 @@ addEventListener('keydown',e=>{
   if(e.shiftKey){selRow(nx,true,$('#srows'))}
   else{
     msel.clear();msel.add(nx);lastSel=nx;
-    if(view==='song'){autoSaveLetra();cur=nx;render()}      // la canción abierta pasa a la siguiente
+    if(view==='song'){autoSaveLetra();cur=nx;render()}      // the open song moves to the next one
     else if(view==='lyrics'){lsel=nx;lyricPanel();document.querySelector('.lcard[data-id="'+nx+'"]')?.scrollIntoView({block:'nearest'})}
     paintSel()}
   const r2=document.querySelector('#srows [data-id="'+nx+'"]')||row;if(r2)r2.scrollIntoView({block:'nearest'})});

@@ -1,10 +1,10 @@
-"""Módulo «estado» (servidor). Guarda en ctx.datos, en el equipo de la persona:
-   informes/<id>.json   cada informe CSV importado (filas ya normalizadas)
-   perfiles.json        perfiles de «qué columna es qué»
-   alias.json           títulos/ISRC que la persona ha casado a mano con sus canciones
-   spotify.json         claves propias de Spotify (solo si activa la conexión opcional)
-   spotify_catalogo.json  datos públicos de catálogo traídos de Spotify
-Nada de esto viaja al estado compartido (estado.json)."""
+""""estado" module (server). Stores in ctx.datos, on the user's computer:
+   informes/<id>.json   each imported CSV report (rows already normalized)
+   perfiles.json        "which column is what" profiles
+   alias.json           titles/ISRC the user matched by hand to their songs
+   spotify.json         the user's own Spotify keys (only if the optional connection is enabled)
+   spotify_catalogo.json  public catalog data fetched from Spotify
+None of this goes into the shared state (estado.json)."""
 import base64
 import json
 import os
@@ -80,7 +80,7 @@ def informe_borrar(req, ctx):
         return req.send({"ok": False, "error": "Identificador no válido."}, 400)
     p = _dir_inf(ctx) / f"{iid}.json"
     if p.is_file():
-        p.unlink()  # dato propio del módulo (un informe importado), no música de la persona
+        p.unlink()  # the module's own data (an imported report), not the user's music
     req.send({"ok": True})
 
 
@@ -101,9 +101,9 @@ def alias_guardar(req, ctx):
 
 
 # ---------------------------------------------------------------- Spotify (opcional, opt-in)
-# Solo datos PÚBLICOS de catálogo, con las claves propias de la persona (flujo «Client Credentials»:
-# no entra en su cuenta ni lee datos privados). Lo único que sale del equipo hacia Spotify: las claves
-# (para pedir un permiso temporal) y el texto de búsqueda (título de la canción y nombre del artista).
+# Only PUBLIC catalog data, with the user's own keys ("Client Credentials" flow:
+# it does not log into their account or read private data). The only things that leave the computer for Spotify: the keys
+# (to request a temporary token) and the search text (song title and artist name).
 SP_TOKEN = "https://accounts.spotify.com/api/token"
 SP_API = "https://api.spotify.com/v1"
 _tok = {"v": None, "hasta": 0}
@@ -189,7 +189,7 @@ def _norm(s):
 
 
 def spotify_consultar(req, ctx):
-    """body: {canciones:[{id,titulo}]}  → busca cada título del artista y guarda lo público que encuentre."""
+    """body: {canciones:[{id,titulo}]}  → looks up each title of the artist and stores the public data it finds."""
     c = _spotify_cfg(ctx)
     if not c.get("activo"):
         return req.send({"ok": False, "error": "La conexión con Spotify está desactivada."})

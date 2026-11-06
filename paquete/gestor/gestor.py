@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""Gestor de música (local, para Windows, Mac y Linux). Solo escucha en tu propio equipo (127.0.0.1).
+"""Music manager (local, for Windows, Mac and Linux). It only listens on your own computer (127.0.0.1).
 
-- Sirve la interfaz (index.html) y tu música con soporte de Range para escucharla en el navegador.
-- Guarda tu trabajo en datos/estado.json (etiquetas, estrellas, notas). Solo mueve archivos cuando tú lo pides,
-  y cada movimiento queda en datos/diario_movimientos.jsonl (se puede deshacer con deshacer.py).
+- Serves the UI (index.html) and your music with Range support so it can be played in the browser.
+- Saves your work in datos/estado.json (tags, stars, notes). It only moves files when you ask,
+  and every move is logged in datos/diario_movimientos.jsonl (it can be undone with deshacer.py).
 
-Uso:  python3 gestor.py            (la primera vez te pregunta qué carpeta es tu biblioteca)
-      python3 gestor.py --setup    (volver a elegir la biblioteca, el nombre o el titular)
+Usage:  python3 gestor.py            (the first time it asks which folder is your library)
+        python3 gestor.py --setup    (choose the library, the name or the copyright owner again)
 """
 import json
 import mimetypes
@@ -46,7 +46,7 @@ sys.path.insert(0, str(MODDIR / "_core"))
 try:
     import acceso
     import modulos_core
-except ImportError:  # sin el núcleo de módulos el gestor funciona igual
+except ImportError:  # without the module core the manager works the same
     acceso = modulos_core = None
 REG = None
 AGENTE = {"token": "", "origenes": []}
@@ -54,7 +54,7 @@ AGENTE = {"token": "", "origenes": []}
 
 # ---------------------------------------------------------------- utilidades
 def run_script(name, *args, timeout=None):
-    """Ejecuta uno de los scripts de la carpeta gestor/ aislado y con salida UTF-8 en cualquier sistema."""
+    """Runs one of the scripts in the gestor/ folder isolated and with UTF-8 output on any system."""
     cmd = [sys.executable, "--run-script", name, *args] if C.FROZEN else [sys.executable, "-X", "utf8", "-I", str(HERE / name), *args]
     return subprocess.run(cmd, capture_output=True, text=True,
                           encoding="utf-8", errors="replace", timeout=timeout)
@@ -81,7 +81,7 @@ def inside_root(rel):
 
 
 def folder_signature():
-    """Huella barata de las carpetas de música y ARTE: nº de archivos + suma de fechas. Cambia si añades o tocas algo."""
+    """Cheap fingerprint of the music and ARTE folders: number of files + sum of dates. Changes if you add or touch something."""
     n = t = 0
     stack = [ROOT / d for d in ("published", "prereleased", "unreleased", "ARTE")]
     while stack:
@@ -91,7 +91,7 @@ def folder_signature():
                 for e in it:
                     if e.is_dir(follow_symlinks=False):
                         stack.append(e.path)
-                        t += zlib.crc32(e.path.encode("utf-8", "ignore"))  # renombrar una carpeta cambia la huella
+                        t += zlib.crc32(e.path.encode("utf-8", "ignore"))  # renaming a folder changes the fingerprint
                     else:
                         n += 1
                         t += int(e.stat().st_mtime) + zlib.crc32(e.name.encode("utf-8", "ignore"))
@@ -133,7 +133,7 @@ def find_ffmpeg():
 
 
 def reveal(p):
-    """Abre la carpeta (o muestra el archivo) en el Explorador, el Finder o el gestor de archivos de Linux."""
+    """Opens the folder (or reveals the file) in Explorer, Finder or the Linux file manager."""
     if sys.platform.startswith("win"):
         subprocess.Popen(["explorer", "/select,", str(p)] if p.is_file() else ["explorer", str(p)])
     elif sys.platform == "darwin":
@@ -159,7 +159,7 @@ def _words(n):
 
 
 def classify_drop(name, title, lote):
-    """Devuelve (tipo, subcarpeta dentro de la canción | None si va a ARTE)."""
+    """Returns (type, subfolder inside the song | None if it goes to ARTE)."""
     import re
     stem, ext = os.path.splitext(name)
     ext = ext.lower()
@@ -200,7 +200,7 @@ def mix_cache_dir(mixid):
 
 
 def mix_convert(mixid, sid, rel, kbps):
-    """Crea (si no existe ya) la versión MP3 de una canción a la calidad del mixtape. Se guarda en MIXTAPES/_versiones/<mixtape>/."""
+    """Creates (if it does not exist yet) the MP3 version of a song at the mixtape quality. Saved in MIXTAPES/_versiones/<mixtape>/."""
     import hashlib
     import re
     import subprocess
@@ -231,7 +231,7 @@ def mix_convert(mixid, sid, rel, kbps):
         tmp.unlink(missing_ok=True)
         raise RuntimeError("ffmpeg falló: " + (r.stderr or "")[-200:])
     import time
-    for intento in range(20):  # Dropbox o el antivirus pueden tener el archivo recién creado abierto un instante
+    for intento in range(20):  # Dropbox or the antivirus may keep the just-created file open for a moment
         try:
             os.replace(tmp, out)
             break
@@ -239,14 +239,14 @@ def mix_convert(mixid, sid, rel, kbps):
             if intento == 19:
                 raise
             time.sleep(0.4)
-    for old in d.glob(f"{sid_s}_*.mp3"):  # una versión vieja de la misma canción (otra calidad u otro archivo) ya no sirve
+    for old in d.glob(f"{sid_s}_*.mp3"):  # an old version of the same song (other quality or other file) is no longer valid
         if old != out and ".tmp." not in old.name:
             old.unlink(missing_ok=True)
     return out
 
 
 def run_mixtape(jid, data):
-    """Convierte cada canción a MP3 (con letra en la etiqueta) y crea el ZIP (HTML + Canciones/ + Letras/) o un único HTML."""
+    """Converts each song to MP3 (with lyrics in the tag) and builds the ZIP (HTML + Canciones/ + Letras/) or a single HTML."""
     import base64
     import mixtape_pkg
     lang = data.get("_lang", "es")
@@ -294,7 +294,7 @@ def read_json(p, default):
 # ---------------------------------------------------------------- servidor
 class Servidor(ThreadingHTTPServer):
     daemon_threads = True
-    # En Windows, reutilizar la dirección dejaría "pisar" un puerto que ya usa otro programa: se exige uso exclusivo.
+    # On Windows, reusing the address would let us "steal" a port another program is using: require exclusive use.
     allow_reuse_address = os.name != "nt"
 
     def server_bind(self):
@@ -318,13 +318,13 @@ class H(SimpleHTTPRequestHandler):
         self.wfile.write(b)
 
     def allowed(self):
-        """Solo atiende peticiones de esta propia página o de un origen autorizado con su token (ver modulos/_core/acceso.py)."""
+        """Only serves requests from this very page or from an authorized origin with its token (see modulos/_core/acceso.py)."""
         host = (self.headers.get("Host") or "").lower()
         if host not in (f"127.0.0.1:{PORT}", f"localhost:{PORT}"):
             return False
         return acceso.autorizar(self, AGENTE, PORT) if acceso else True
 
-    def end_headers(self):  # la interfaz publicada en otra web (origen autorizado) puede leer las respuestas
+    def end_headers(self):  # the UI published on another website (authorized origin) may read the responses
         if acceso:
             for k, v in acceso.cabeceras_cors(self, AGENTE):
                 self.send_header(k, v)
@@ -341,7 +341,7 @@ class H(SimpleHTTPRequestHandler):
             return self.send_error(HTTPStatus.FORBIDDEN)
         u = urlparse(self.path)
         q = parse_qs(u.query)
-        if REG is not None:  # módulos: lista, archivos estáticos y rutas de servidor
+        if REG is not None:  # modules: list, static files and server routes
             if u.path == "/api/modulos":
                 return self.send_json(REG.listar())
             if u.path.startswith("/mod/"):
@@ -404,7 +404,7 @@ class H(SimpleHTTPRequestHandler):
             if not p.is_file():
                 return self.send_error(HTTPStatus.NOT_FOUND)
             return self.file(p, "text/plain; charset=utf-8")
-        if u.path.startswith("/assets/"):  # imágenes de la interfaz (casetes de las portadas de mixtape)
+        if u.path.startswith("/assets/"):  # UI images (cassettes for mixtape covers)
             ap = (HERE / "assets" / unquote(u.path[len("/assets/"):])).resolve()
             try:
                 ap.relative_to((HERE / "assets").resolve())
@@ -413,7 +413,7 @@ class H(SimpleHTTPRequestHandler):
             if not ap.is_file() or ap.suffix.lower() not in (".jpg", ".jpeg", ".png", ".webp", ".svg"):
                 return self.send_error(HTTPStatus.NOT_FOUND)
             return self.file(ap, mimetypes.guess_type(ap.name)[0] or "image/jpeg")
-        if u.path == "/descargar":  # descarga el ZIP de un mixtape (solo dentro de MIXTAPES)
+        if u.path == "/descargar":  # download a mixtape ZIP (only inside MIXTAPES)
             dp = (ROOT / unquote(q.get("p", [""])[0])).resolve()
             try:
                 dp.relative_to((ROOT / "MIXTAPES").resolve())
@@ -432,25 +432,25 @@ class H(SimpleHTTPRequestHandler):
     def unir(self, data):
         try:
             return self._unir(data)
-        except Exception as ex:  # que la pantalla vea el motivo real en vez de un error mudo
+        except Exception as ex:  # let the screen show the real reason instead of a silent error
             import traceback
             return self.send_json({"ok": False, "error": f"{type(ex).__name__}: {ex} · {traceback.format_exc().splitlines()[-3].strip()}"}, 500)
 
     def _unir(self, data):
-        """Une una "canción" que en realidad es parte de otra (stems, versión…): mueve sus archivos y lo anota."""
+        """Merges a "song" that is really part of another (stems, version…): moves its files and logs it."""
         import re
         songs = {s["id"]: s for s in read_json(DATA, {"songs": []})["songs"]}
         a, b = songs.get(data.get("desde")), songs.get(data.get("hacia"))
         if not a or not b or a["id"] == b["id"]:
             return self.send_json({"ok": False, "error": "canciones no válidas"}, 400)
         moved = 0
-        if a.get("dir") and b.get("dir") and a["dir"] != b["dir"]:  # misma carpeta: no hay nada que mover
+        if a.get("dir") and b.get("dir") and a["dir"] != b["dir"]:  # same folder: nothing to move
             r = run_script("mover_carpetas.py", f"{a['dir'].replace(chr(10), ' ')}={b['dir'].replace(chr(10), ' ')}", "--apply")
             if r.returncode != 0:
                 return self.send_json({"ok": False, "error": (r.stderr or "")[-300:]}, 500)
             m = re.search(r"(\d+) archivos", r.stdout or "")
             moved = int(m.group(1)) if m else 0
-        # si la entrada absorbida trae letra y la canción destino no tiene, se la lleva (letra.txt junto a la canción)
+        # if the absorbed entry has lyrics and the target song has none, it takes them (letra.txt next to the song)
         if a.get("letra") and not b.get("letra") and b.get("dir"):
             src_l = inside_root(a["letra"])
             dst_l = ROOT / b["dir"].replace("\n", " ") / "letra.txt"
@@ -474,7 +474,7 @@ class H(SimpleHTTPRequestHandler):
         return self.send_json({"ok": True})
 
     def mover_version(self, data):
-        """Mueve un archivo a la carpeta versiones/ de otra canción (con diario, deshacible)."""
+        """Moves a file to the versiones/ folder of another song (journaled, undoable)."""
         import time
         songs = {s["id"]: s for s in read_json(DATA, {"songs": []})["songs"]}
         dest = songs.get(data.get("hacia"))
@@ -505,7 +505,7 @@ class H(SimpleHTTPRequestHandler):
         return {x["id"]: x for x in read_json(DATA, {"songs": []})["songs"]}.get(sid)
 
     def letra_guardar(self, data):
-        """Guarda la letra escrita o pegada en la app como letra.txt de la carpeta de la canción (la anterior queda en docs/)."""
+        """Saves lyrics typed or pasted in the app as letra.txt in the song folder (the previous one goes to docs/)."""
         import time
         song = self._song(data.get("id"))
         texto = (data.get("texto") or "").replace("\r\n", "\n").strip()
@@ -527,13 +527,13 @@ class H(SimpleHTTPRequestHandler):
         return self.send_json({"ok": True})
 
     def subir(self):
-        """Recibe un archivo de arte/vídeo y lo guarda en la carpeta de la canción o del álbum."""
+        """Receives an artwork/video file and saves it in the song or album folder."""
         import re
         q = parse_qs(urlparse(self.path).query)
         song = self._song(q.get("id", [""])[0])
         ambito = q.get("ambito", ["cancion"])[0]
         akey = unquote(q.get("key", [""])[0]).strip()
-        if akey.startswith("unreleased/") and akey.count("/") == 1 and ".." not in akey:  # álbum nuevo sin canciones todavía
+        if akey.startswith("unreleased/") and akey.count("/") == 1 and ".." not in akey:  # new album with no songs yet
             song = {"id": "", "dir": akey}
             ambito = "album-key"
         name = os.path.basename(unquote(q.get("nombre", [""])[0]))
@@ -576,7 +576,7 @@ class H(SimpleHTTPRequestHandler):
         return self.send_json({"ok": True, "p": C.posix(target.relative_to(ROOT))})
 
     def refrescar(self, data):
-        """Vuelve a leer las carpetas: audio nuevo, canciones nuevas, arte y vídeo nuevos."""
+        """Re-reads the folders: new audio, new songs, new artwork and video."""
         for sc in ("build_data.py", "build_medios.py"):
             run_script(sc)
         return self.send_json({"ok": True, "firma": folder_signature()})
@@ -589,7 +589,7 @@ class H(SimpleHTTPRequestHandler):
         return self.send_json({"ok": True, "mb": round(out.stat().st_size / 1e6, 1)})
 
     def mix_borrar(self, data):
-        """Borra los MP3 de trabajo de un mixtape (o los de una canción dentro de él). Nunca toca tu música ni los ZIP."""
+        """Deletes a mixtape's working MP3s (or those of one song in it). Never touches your music or the ZIPs."""
         import re
         import shutil
         d = mix_cache_dir(data.get("mixid"))
@@ -602,13 +602,13 @@ class H(SimpleHTTPRequestHandler):
         return self.send_json({"ok": True})
 
     def album_crear(self, data):
-        """Crea la carpeta de un álbum nuevo (unreleased/<nombre>). Las canciones se le añaden después sin moverlas."""
+        """Creates the folder of a new album (unreleased/<name>). Songs are added to it later without moving them."""
         nombre = safe_name(data.get("nombre") or "", "Álbum nuevo")
         (ROOT / "unreleased" / nombre).mkdir(parents=True, exist_ok=True)
         return self.send_json({"ok": True, "nombre": nombre})
 
     def album_borrar(self, data):
-        """Quita la carpeta de un álbum solo si está vacía. Nunca borra archivos."""
+        """Removes an album folder only if it is empty. Never deletes files."""
         nombre = safe_name(data.get("nombre") or "", "")
         d = ROOT / "unreleased" / nombre if nombre else None
         if d is not None and d.is_dir():
@@ -629,12 +629,12 @@ class H(SimpleHTTPRequestHandler):
         return self.send_json({"ok": True, "id": jid})
 
     def soltar(self):
-        """Recibe un archivo soltado sobre una canción, lo clasifica y lo coloca en su sitio."""
+        """Receives a file dropped on a song, classifies it and puts it in its place."""
         import hashlib
         import re
         q = parse_qs(urlparse(self.path).query)
         nueva = unquote(q.get("nueva", [""])[0]).strip()
-        if nueva:  # canción que aún no existe: se crea su carpeta (unreleased/ o prereleased/) y el gestor la reconoce al actualizar
+        if nueva:  # song that does not exist yet: its folder is created (unreleased/ or prereleased/) and the manager picks it up on refresh
             donde = q.get("donde", ["unreleased"])[0]
             donde = donde if donde in ("unreleased", "prereleased") else "unreleased"
             carpeta = safe_name(nueva, "canción nueva")
@@ -655,7 +655,7 @@ class H(SimpleHTTPRequestHandler):
         tipo, sub = classify_drop(name, title, lote)
         ext = os.path.splitext(name)[1].lower()
         base = ROOT / (song["dir"].replace("\n", " ") if song.get("dir") else f"unreleased/{safe_name(title)}")
-        if sub is None:  # arte / vídeo -> carpeta ARTE
+        if sub is None:  # artwork / video -> ARTE folder
             import arte_map as am
             parts = song["dir"].replace("\n", " ").split("/") if song.get("dir") else ["unreleased", safe_name(title)]
             projects = {parts[1]} if len(parts) == 3 and parts[0] == "unreleased" else set()
@@ -665,7 +665,7 @@ class H(SimpleHTTPRequestHandler):
             folder = ROOT.joinpath("ARTE", *bp, am.SONG["arte"] if ext in IMG_EXT else am.SONG["video"])
         else:
             folder = base.joinpath(*sub.split("/"))
-        # una letra suelta (.txt) en una canción sin letra pasa a ser su letra
+        # a loose lyrics file (.txt) on a song without lyrics becomes its lyrics
         as_lyric = ext == ".txt" and not song.get("letra") and left < 400_000
         if as_lyric:
             raw = self.rfile.read(left)
@@ -809,7 +809,7 @@ def ask_folder():
         r.destroy()
         if p:
             return p
-    except Exception:  # noqa: BLE001  (sin tkinter o sin pantalla: se pregunta por la terminal)
+    except Exception:  # noqa: BLE001  (no tkinter or no display: ask in the terminal)
         pass
     try:
         return input("Escribe o arrastra aquí la carpeta de tu biblioteca de música y pulsa Enter: ").strip().strip('"').strip("'")
@@ -843,7 +843,7 @@ def setup(force=False):
 
 
 def cambiar_biblioteca(ruta):
-    """Cambia la carpeta de la biblioteca en caliente: se guarda en config.json y se vuelve a leer todo."""
+    """Switches the library folder live: saved in config.json and everything is re-read."""
     global ROOT
     p = Path(str(ruta)).expanduser().resolve()
     if not p.is_dir():
@@ -879,7 +879,7 @@ def main():
                                                  guardar_cfg=lambda d: (CFG.update(d), C.save_config(CFG)), cambiar_biblioteca=cambiar_biblioteca))
         REG.cargar()
         print("Módulos cargados:", ", ".join(REG.mods) or "ninguno")
-        if AGENTE.get("web"):  # enlace para emparejar la web publicada con este agente (se abre en el navegador)
+        if AGENTE.get("web"):  # link to pair the published website with this agent (opens in the browser)
             print(f"Enlace de emparejamiento: {AGENTE['web'].rstrip('/')}/#agente=http://127.0.0.1:{PORT}&token={AGENTE['token']}")
     srv = None
     for port in range(int(CFG.get("puerto") or 8765), int(CFG.get("puerto") or 8765) + 20):

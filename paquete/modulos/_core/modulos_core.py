@@ -1,17 +1,17 @@
-"""Núcleo de módulos del gestor (servidor). Lo comparten el gestor personal y el paquete distribuible.
+"""Module core of the manager (server side). Shared by the personal manager and the distributable package.
 
-Cada módulo vive en  modulos/<id>/  con un  modulo.json:
+Each module lives in  modulos/<id>/  with a  modulo.json:
 
     {"id": "masterizado", "nombre": "Masterización", "descripcion": "…",
      "js": ["modulo.js"], "css": ["modulo.css"], "py": "servidor.py", "distribuir": true}
 
-y, si tiene parte de servidor, un  servidor.py  con:
+and, if it has a server part, a  servidor.py  with:
 
-    ROUTES = {"GET estado": fn, "POST guardar": fn}      # /api/mod/<id>/estado  y  /api/mod/<id>/guardar
-    def setup(ctx): ...                                   # opcional, se llama al cargar
+    ROUTES = {"GET estado": fn, "POST guardar": fn}      # /api/mod/<id>/estado  and  /api/mod/<id>/guardar
+    def setup(ctx): ...                                   # optional, called on load
 
-Cada ruta es  fn(req, ctx).  El gestor NO se reinicia solo: tras tocar un servidor.py hay que reiniciar el gestor.
-Las carpetas que empiezan por «_» (como _core y _plantilla) no se cargan como módulos.
+Each route is  fn(req, ctx).  The manager does NOT reload by itself: after editing a servidor.py, restart the manager.
+Folders starting with "_" (such as _core and _plantilla) are not loaded as modules.
 """
 import importlib.util
 import json
@@ -26,11 +26,11 @@ STATIC_EXT = {".js", ".css", ".html", ".json", ".png", ".jpg", ".jpeg", ".svg", 
 
 
 class Req:
-    """Lo que recibe cada ruta de un módulo."""
+    """What each module route receives."""
 
     def __init__(self, h, q):
-        self.h = h          # el manejador HTTP del gestor (por si hace falta algo muy especial)
-        self.q = q          # parámetros de la URL: {"id": ["abc"]}
+        self.h = h          # the manager's HTTP handler (in case something very special is needed)
+        self.q = q          # URL parameters: {"id": ["abc"]}
 
     def arg(self, nombre, defecto=""):
         return unquote(self.q.get(nombre, [defecto])[0])
@@ -50,7 +50,7 @@ class Req:
         return self.h.rfile.read(n) if n else b""
 
     def guardar_en(self, destino):
-        """Guarda el cuerpo de la petición (un archivo subido) en `destino` sin cargarlo entero en memoria. Devuelve los bytes."""
+        """Saves the request body (an uploaded file) to `destino` without loading it all into memory. Returns the byte count."""
         n = self.tam()
         left = n
         with open(destino, "wb") as f:
@@ -72,7 +72,7 @@ class Req:
         self.h.send_json(obj, code)
 
     def file(self, ruta, ctype=None, descarga=None):
-        """Envía un archivo (con nombre de descarga si se indica)."""
+        """Sends a file (with a download name if given)."""
         ruta = Path(ruta)
         size = ruta.stat().st_size
         self.h.send_response(200)
@@ -96,8 +96,8 @@ class Req:
 
 class Registro:
     def __init__(self, carpeta, ctx_base):
-        """carpeta: la carpeta modulos/.  ctx_base: dict con lo que el gestor ofrece a los módulos
-        (root, datos, cfg, songs, song, ffmpeg, safe_name, run_script, log…). Cada módulo recibe una copia con su propia carpeta de datos."""
+        """carpeta: the modulos/ folder.  ctx_base: dict with what the manager offers to modules
+        (root, datos, cfg, songs, song, ffmpeg, safe_name, run_script, log…). Each module gets a copy with its own data folder."""
         self.carpeta = Path(carpeta)
         self.ctx_base = ctx_base
         self.mods = {}
@@ -121,7 +121,7 @@ class Registro:
                 self.mods[mid] = {"man": man, "dir": d, "rutas": rutas}
                 if setup:
                     setup(self.ctx(mid))
-            except Exception:  # un módulo roto no tumba el gestor
+            except Exception:  # a broken module does not bring the manager down
                 print(f"[módulos] no se pudo cargar «{d.name}»:\n{traceback.format_exc()}")
                 self.mods.pop(d.name, None)
 
@@ -146,7 +146,7 @@ class Registro:
             raiz.mkdir(parents=True, exist_ok=True)
             fa.write_text(json.dumps(cur, ensure_ascii=False, indent=2), encoding="utf-8")
             return cur
-        c["ajustes"], c["guardar_ajustes"] = ajustes, guardar_ajustes   # preferencias compartidas por todos los módulos
+        c["ajustes"], c["guardar_ajustes"] = ajustes, guardar_ajustes   # preferences shared by all modules
         return SimpleNamespace(**c)
 
     def listar(self):
@@ -154,7 +154,7 @@ class Registro:
                  "js": m["man"].get("js", []), "css": m["man"].get("css", [])} for mid, m in self.mods.items()]
 
     def estatico(self, mid, rel):
-        """Ruta de un archivo estático de un módulo (o de _core). None si no es válido."""
+        """Path of a module's static file (or of _core). None if it is not valid."""
         base = (self.carpeta / "_core") if mid == "_core" else (self.mods.get(mid) or {}).get("dir")
         if not base:
             return None
@@ -166,7 +166,7 @@ class Registro:
         return p if p.is_file() and p.suffix.lower() in STATIC_EXT else None
 
     def despachar(self, h, metodo, ruta_url):
-        """/api/mod/<id>/<ruta>?… → la función del módulo. Devuelve False si no hay ruta."""
+        """/api/mod/<id>/<route>?… → the module's function. Returns False if there is no such route."""
         u = urlparse(ruta_url)
         partes = u.path[len("/api/mod/"):].split("/", 1)
         if len(partes) != 2 or partes[0] not in self.mods:
@@ -186,13 +186,13 @@ class Registro:
 
 
 # ---------------------------------------------------------------------------------------------------------------
-# Traducción en el servidor (textos que se escriben en archivos: COPYRIGHT.txt, letras de mixtape…).
-# Mismo diccionario que la interfaz: modulos/_core/idiomas/<xx>.json. El idioma llega en la cabecera X-Lang.
+# Server-side translation (texts written into files: COPYRIGHT.txt, mixtape lyrics…).
+# Same dictionary as the UI: modulos/_core/idiomas/<xx>.json. The language arrives in the X-Lang header.
 _DICC = {}
 
 
 def idioma_de(h):
-    """Idioma pedido por el navegador (es/en/de/pt); es por defecto."""
+    """Language requested by the browser (es/en/de/pt); es by default."""
     try:
         l = (h.headers.get("X-Lang") or "es").lower()[:2]
     except Exception:  # noqa: BLE001
@@ -201,7 +201,7 @@ def idioma_de(h):
 
 
 def traducir(texto, lang):
-    """Traduce una frase exacta de la interfaz; si no está en el diccionario, la deja igual."""
+    """Translates an exact UI sentence; if it is not in the dictionary, it is returned unchanged."""
     if not lang or lang == "es" or not texto:
         return texto
     d = _DICC.get(lang)

@@ -1,16 +1,17 @@
-"""Dónde vive el arte y el vídeo en la carpeta ARTE (y cómo volver al «dueño» lógico de cada archivo).
+"""Where artwork and video live inside the ARTE folder (and how to get back to the logical "owner" of each file).
 
 ARTE\\
-  Álbumes\\<álbum>\\Portadas y arte | Vídeo y clips | Proyectos de vídeo
-  Álbumes\\<álbum>\\<NN canción>\\Arte | Vídeo
-  Singles\\<título>\\Arte | Vídeo
-  Pre-released\\<título>\\Arte | Vídeo
-  Proyectos\\<proyecto>\\Portadas y arte | Vídeo y clips | Proyectos de vídeo
-  Proyectos\\<proyecto>\\<canción>\\Arte | Vídeo
-  Sin publicar\\<canción>\\Arte | Vídeo
+  Álbumes\\<album>\\Portadas y arte | Vídeo y clips | Proyectos de vídeo
+  Álbumes\\<album>\\<NN song>\\Arte | Vídeo
+  Singles\\<title>\\Arte | Vídeo
+  Pre-released\\<title>\\Arte | Vídeo
+  Proyectos\\<project>\\Portadas y arte | Vídeo y clips | Proyectos de vídeo
+  Proyectos\\<project>\\<song>\\Arte | Vídeo
+  Sin publicar\\<song>\\Arte | Vídeo
 
-El «dueño lógico» es la carpeta de la canción o del álbum en published / prereleased / unreleased
-(p. ej. published/Álbumes/Mi álbum/01 Mi canción): así el gestor sigue sabiendo a quién pertenece.
+The "logical owner" is the song or album folder in published / prereleased / unreleased
+(e.g. published/Álbumes/My album/01 My song): this way the manager still knows who each file belongs to.
+(Folder names above are the real, Spanish, on-disk names: they are part of the library layout.)
 """
 ALB = {"arte": "Portadas y arte", "video": "Vídeo y clips", "proyectos": "Proyectos de vídeo"}
 SONG = {"arte": "Arte", "video": "Vídeo"}
@@ -24,7 +25,7 @@ def norm_albumes(x):
 
 
 def base_for(parts, projects=()):
-    """parts: carpeta lógica de la canción/álbum (['published','Álbumes','A','01 T']). Devuelve la ruta bajo ARTE o None."""
+    """parts: logical folder of the song/album (['published','Álbumes','A','01 T']). Returns the path under ARTE or None."""
     p = list(parts)
     if not p:
         return None
@@ -43,7 +44,7 @@ def base_for(parts, projects=()):
 
 
 def owner_of(arte_parts):
-    """arte_parts: ruta bajo ARTE. Devuelve (partes del dueño lógico, 'album'|'cancion', 'arte'|'video'|'proyectos') o None."""
+    """arte_parts: path under ARTE. Returns (logical owner parts, 'album'|'cancion', 'arte'|'video'|'proyectos') or None."""
     p = list(arte_parts)
     if len(p) < 3:
         return None
@@ -62,6 +63,6 @@ def owner_of(arte_parts):
 
 
 def is_album_owner(parts, projects=()):
-    """¿La carpeta lógica es un álbum/proyecto (no una canción)?"""
+    """Is the logical folder an album/project (not a song)?"""
     p = list(parts)
     return (p[0] == "published" and len(p) == 3 and norm_albumes(p[1])) or (p[0] == "unreleased" and len(p) == 2 and p[1] in projects)

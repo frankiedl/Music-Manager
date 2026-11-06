@@ -1,4 +1,4 @@
-/* módulo «estado» — todo con las variables del gestor, vale en claro y oscuro */
+/* «estado» module — everything with the manager's variables, works in light and dark mode */
 .est-tabs{display:flex;flex-wrap:wrap;gap:7px;margin:4px 0 20px}
 .est-kpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-bottom:18px}
 .est-kpi{background:var(--panel);border-radius:16px;box-shadow:var(--shadow);padding:14px 16px}

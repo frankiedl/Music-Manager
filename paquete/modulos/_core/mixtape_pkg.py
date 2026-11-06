@@ -1,9 +1,9 @@
-"""Construcción del paquete de un mixtape (compartido por el gestor personal y el distribuible).
+"""Builds a mixtape package (shared by the personal manager and the distributable one).
 
-ZIP:  Abrir.html (según idioma) · Canciones/NN - Título.mp3 · Letras/NN - Título.txt · COPYRIGHT.txt · Portada.jpg
-HTML: un solo archivo, sin librerías ni Internet; letras incrustadas en JSON; audio por rutas relativas
-      (o en base64 dentro del propio HTML en la opción «todo en un solo HTML»).
-La letra va además en la etiqueta del MP3 (USLT, letra no sincronizada)."""
+ZIP:  Abrir.html (name depends on language) · Canciones/NN - Title.mp3 · Letras/NN - Title.txt · COPYRIGHT.txt · Portada.jpg
+HTML: a single file, no libraries or Internet; lyrics embedded as JSON; audio through relative paths
+      (or base64 inside the HTML itself with the "everything in a single HTML" option).
+The lyrics also go into the MP3 tag (USLT, unsynchronized lyrics)."""
 import base64
 import datetime
 import html as _html
@@ -15,16 +15,16 @@ import tempfile
 import zipfile
 from pathlib import Path
 
-LIMITE_UNICO = 25 * 1024 * 1024   # tope del HTML «todo en uno»
+LIMITE_UNICO = 25 * 1024 * 1024   # size cap of the all-in-one HTML
 
-# nombre del HTML y de las carpetas según el idioma del mixtape
+# name of the HTML and of the folders depending on the mixtape language
 NOMBRES = {
     "es": ("Abrir.html", "Canciones", "Letras"),
     "en": ("Open.html", "Songs", "Lyrics"),
     "de": ("Oeffnen.html", "Lieder", "Liedtexte"),
     "pt": ("Abrir.html", "Musicas", "Letras"),
 }
-# textos del reproductor y avisos del servidor (no pasan por el diccionario de la interfaz)
+# player texts and server messages (they do not go through the UI dictionary)
 UI = {
     "es": dict(tracks="Pistas", lyrics="Letra", nolyrics="Esta pista no tiene letra.", play="Reproducir", pause="Pausa",
                prev="Anterior", next="Siguiente", vol="Volumen", seek="Posición", noaudio="No se pudo reproducir este audio.",
@@ -45,8 +45,8 @@ ISO3 = {"es": "spa", "en": "eng", "de": "deu", "pt": "por"}
 
 
 def poner_uslt(path, texto, lang):
-    """Escribe la letra como fotograma USLT (letra no sincronizada) de la etiqueta ID3v2.3 del MP3.
-    ffmpeg solo sabe guardarla como un TXXX llamado «USLT», que los reproductores no reconocen."""
+    """Writes the lyrics as a USLT frame (unsynchronized lyrics) of the MP3's ID3v2.3 tag.
+    ffmpeg can only store them as a TXXX named "USLT", which players do not recognize."""
     path = Path(path)
     b = path.read_bytes()
     if b[:3] != b"ID3" or b[3] != 3:
@@ -82,8 +82,8 @@ def _json_seguro(obj):
 
 
 def html_reproductor(lang, nombre, artist, tracks, portada, audios=None):
-    """tracks: [{n,title,file,lyrics,notice}]; portada: ruta relativa o data URI ('' si no hay);
-    audios: lista de base64 (modo «todo en uno») o None."""
+    """tracks: [{n,title,file,lyrics,notice}]; portada (cover): relative path or data URI ('' if none);
+    audios: list of base64 strings (all-in-one mode) or None."""
     plantilla = (Path(__file__).parent / "mixtape_plantilla.html").read_text(encoding="utf-8")
     ui = UI.get(lang, UI["en"])
     carpeta = NOMBRES.get(lang, NOMBRES["en"])[1]
@@ -104,8 +104,8 @@ def _cuerpo_letra(txt, title):
 
 def construir(job, *, ff, lang, tr, songs, items, base, name, nombre, artist, owner, con_copy, con_safe, letras, kbps,
               cover_bytes, root, safe_name, convertir, ruta_letra, onefile=False):
-    """Crea el paquete. convertir(it) → Path del MP3 ya convertido; ruta_letra(song) → Path|None.
-    Devuelve dict con zip (entregable), carpeta y mb."""
+    """Builds the package. convertir(it) → Path of the already converted MP3; ruta_letra(song) → Path|None.
+    Returns a dict with zip (deliverable), carpeta (folder) and mb."""
     nom_html, d_can, d_let = NOMBRES.get(lang, NOMBRES["en"])
     ui = UI.get(lang, UI["en"])
     base = Path(base)

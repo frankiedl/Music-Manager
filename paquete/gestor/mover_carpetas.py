@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Mueve carpetas completas (archivo a archivo, con diario y deshacible) de un sitio a otro de tu biblioteca.
+"""Moves whole folders (file by file, journaled and undoable) from one place to another in your library.
 
-  python mover_carpetas.py "origen=destino" ["origen2=destino2" ...] [--apply]
+  python mover_carpetas.py "source=target" ["source2=target2" ...] [--apply]
 
-Rutas relativas a la biblioteca. Si el archivo destino ya existe se añade " (2)": nunca sobrescribe ni borra.
+Paths are relative to the library. If the target file already exists " (2)" is appended: it never overwrites or deletes.
 """
 import json
 import os
@@ -33,7 +33,7 @@ def main():
     moves = []
     for s, d in pairs:
         src, dst = ROOT / s, ROOT / d
-        if os.path.isfile(C.lp(src)):  # archivo suelto: el destino es la ruta final del archivo
+        if os.path.isfile(C.lp(src)):  # loose file: the target is the final path of the file
             moves.append((src, Path(free(str(dst)))))
             continue
         if not os.path.isdir(C.lp(src)):

@@ -40,4 +40,6 @@ This repository builds the executables in the cloud (GitHub Actions); it contain
 
 `paquete/` (generic manager), `construir/` (PyInstaller build), `manual/` (PDF manual generator), `.github/workflows/construir.yml`.
 
+For developers: see [ARCHITECTURE.md](ARCHITECTURE.md) (folders, data files, request flow, modules, translations, build). Code identifiers and folder names are in Spanish; comments and developer docs are in English.
+
 Build locally: `pip install pyinstaller pillow reportlab` then `python construir/construir.py --paquete paquete --salida salida`.

@@ -1,7 +1,7 @@
-/* Módulo «masterizado» — pestaña «Masterización» en cada álbum.
-   Basado en el editor de masterizado independiente (Web Audio): mide la sonoridad (LUFS, BS.1770 / EBU R128),
-   iguala el volumen, limita los picos, recorta, pone fundidos y silencios, escribe etiquetas ID3/RIFF + carátula
-   y exporta WAV (ZIP o carpeta master/ de cada canción). Todo el audio se procesa en el navegador; ver NOTAS.md. */
+/* «masterizado» module — «Masterización» (Mastering) tab on each album.
+   Based on the standalone mastering editor (Web Audio): measures loudness (LUFS, BS.1770 / EBU R128),
+   matches the volume (loudness normalization), limits the peaks, trims, adds fades and silences, writes ID3/RIFF tags + cover art
+   and exports WAV (ZIP or each song's master/ folder). All audio is processed in the browser; see NOTAS.md. */
 (function(){
 'use strict';
 const ID='masterizado';
@@ -10,17 +10,17 @@ const OBJETIVOS=[[-14,'-14 LUFS · Streaming (Spotify, YouTube, Apple Music)'],[
 const TECHOS=[[-1,'-1,0 dB · recomendado para distribuir'],[-0.3,'-0,3 dB'],[-2,'-2,0 dB · prudente'],[0,'0 dB · sin techo']];
 const IDIOMAS=[['','— Elige idioma —'],['spa','Español'],['eng','Inglés'],['por','Portugués'],['fra','Francés'],['deu','Alemán'],['ita','Italiano'],['cat','Catalán'],['glg','Gallego'],['eus','Euskera'],['nld','Neerlandés'],['swe','Sueco'],['nor','Noruego'],['dan','Danés'],['fin','Finés'],['pol','Polaco'],['ces','Checo'],['hun','Húngaro'],['ron','Rumano'],['ell','Griego'],['rus','Ruso'],['ukr','Ucraniano'],['tur','Turco'],['ara','Árabe'],['heb','Hebreo'],['hin','Hindi'],['jpn','Japonés'],['kor','Coreano'],['zho','Chino (mandarín)'],['vie','Vietnamita'],['ind','Indonesio'],['swa','Suajili'],['lat','Latín'],['zxx','Instrumental (sin letra)']];
 const GENEROS=['Acústico','Alternativo','Ambient','Blues','Bossa nova','Clásica','Country','Dance','Disco','Drum and Bass','Electrónica','Experimental','Flamenco','Folk','Funk','Hip Hop','House','Indie','Jazz','Latino','Lo-fi','Metal','Pop','Pop rock','Punk','R&B','Rap','Reggae','Reggaeton','Rock','Rumba','Salsa','Singer-songwriter','Soul','Synthpop','Techno','Trap','Trance','Trip Hop','Banda sonora','Música del mundo'];
-/* nombre de la etiqueta (en español o inglés) → fotograma ID3 */
+/* tag name (in Spanish or English) → ID3 frame */
 const ID3_META={compositor:'TCOM',composer:'TCOM',copyright:'TCOP',editorial:'TPUB',publisher:'TPUB',sello:'TPUB',label:'TPUB',isrc:'TSRC',bpm:'TBPM',letrista:'TEXT',lyricist:'TEXT',director:'TPE3',conductor:'TPE3',remezclador:'TPE4',remixer:'TPE4',disco:'TPOS',disc:'TPOS','número de disco':'TPOS',ánimo:'TMOO',animo:'TMOO',mood:'TMOO',tonalidad:'TKEY',key:'TKEY',web:'WXXX_',website:'WXXX_'};
 const INFO_META={comentario:'ICMT',comment:'ICMT',copyright:'ICOP',ingeniero:'IENG',engineer:'IENG','técnico':'IENG',technician:'IENG',productor:'IENG'};
 const CLAVES_META=['Compositor','Letrista','Productor','Mezclador','Ingeniero','Editorial','Sello','Copyright','ISRC','BPM','Tonalidad','Ánimo','Director','Remezclador','Disco','Comentario','Web'];
 const pista0=()=>({name:null,artist:'',trimStart:0,trimEnd:null,fadeIn:0,fadeOut:0,padStart:0,padEnd:0,previewNorm:false,meta:[]});
-/* EFECTOS DESACTIVADOS (decisión del usuario): el código del panel FX1…FX5, del motor en directo y del módulo vst se conserva para retomarlo; poner true lo reactiva. Ver NOTAS.md. */
+/* EFFECTS DISABLED (user's decision): the code of the FX1…FX5 panel, of the live engine and of the vst module is kept to resume it later; setting true re-enables it. See NOTAS.md. */
 const FX_ACTIVO=false;
 const ajustes0=()=>({estado:'Borrador',modo:'pista',lufs:-14,techo:-1,bits:24,dither:true,artista:'',anio:'',genero:'',idioma:'',portada:true,fuera:[],pistas:{},fx:{on:false,cadena:[],porPista:{}},mixMasters:{},origMix:{}});
 
 /* ================= utilidades ================= */
-/* ceder el hilo: con MessageChannel no se frena aunque la pestaña esté en segundo plano */
+/* yield the thread: with MessageChannel it does not slow down even if the tab is in the background */
 const _mc=new MessageChannel();let _esp=[];_mc.port1.onmessage=()=>{const w=_esp;_esp=[];w.forEach(f=>f())};
 const ceder=()=>new Promise(r=>{_esp.push(r);_mc.port2.postMessage(0)});
 const clamp=(v,a,b)=>v<a?a:(v>b?b:v);
@@ -42,7 +42,7 @@ const SVG={
 };
 
 /* ================= LECTURA DE AUDIO ================= */
-/* WAV sin pérdidas: conserva frecuencia de muestreo y profundidad originales */
+/* lossless WAV: keeps the original sample rate and bit depth */
 function leerWav(buf){
   const dv=new DataView(buf),u8=new Uint8Array(buf);
   const tag=i=>String.fromCharCode(u8[i],u8[i+1],u8[i+2],u8[i+3]);
@@ -71,8 +71,8 @@ function leerWav(buf){
   else throw new Error('Profundidad no compatible: '+bits+' bits');
   return {sampleRate:sr,bits,float:esFloat,channels:canales,length:n,ch,decodificado:false};
 }
-/* Cualquier otro formato (MP3, FLAC, M4A, AIFF…): lo decodifica el navegador a 44,1 kHz en coma flotante.
-   Es una fuente «float»: se exporta igualmente a los bits que elijas, pero a 44,1 kHz. */
+/* Any other format (MP3, FLAC, M4A, AIFF…): the browser decodes it to 44.1 kHz floating point.
+   It is a «float» source: it is still exported at the bit depth you choose, but at 44.1 kHz. */
 let ACD=null;
 async function decodificar(buf){
   const AC=window.AudioContext||window.webkitAudioContext;
@@ -82,7 +82,7 @@ async function decodificar(buf){
   return {sampleRate:ab.sampleRate,bits:null,float:true,channels:ab.numberOfChannels,length:ab.length,ch,decodificado:true};
 }
 async function leerAudio(buf){
-  try{return leerWav(buf)}catch(e){/* no es un WAV normal: lo decodifica el navegador */}
+  try{return leerWav(buf)}catch(e){/* not a plain WAV: the browser decodes it */}
   return decodificar(buf);
 }
 
@@ -100,7 +100,7 @@ function biquad(x,c){
   for(let i=0;i<x.length;i++){const xn=x[i],yn=c.b0*xn+c.b1*x1+c.b2*x2-c.a1*y1-c.a2*y2;x2=x1;x1=xn;y2=y1;y1=yn;y[i]=yn}
   return y;
 }
-/* Devuelve la sonoridad integrada (LUFS). Cede el hilo entre canales para no congelar la pantalla. */
+/* Returns the integrated loudness (LUFS). Yields the thread between channels so the screen does not freeze. */
 async function medirLUFS(canales,fs){
   const k=coefK(fs),nC=canales.length,bloque=Math.round(0.4*fs),paso=Math.round(bloque/4),len=canales[0].length;
   if(len<bloque)return -70;
@@ -124,9 +124,9 @@ async function medirLUFS(canales,fs){
 }
 function picoDb(canales){let p=0;for(const ch of canales)for(let i=0;i<ch.length;i++){const a=Math.abs(ch[i]);if(a>p)p=a}return p>0?20*Math.log10(p):-Infinity}
 
-/* ================= GANANCIA + LIMITADOR (se trabaja «en sitio» sobre la copia editada) ================= */
+/* ================= GAIN + LIMITER (works «in place» on the edited copy) ================= */
 function aplicarGanancia(canales,lin){if(lin===1)return;for(const ch of canales)for(let i=0;i<ch.length;i++)ch[i]*=lin}
-function minimoVentana(arr,win){ // mínimo de arr[i..i+win) para cada i (cola doble con índices)
+function minimoVentana(arr,win){ // minimum of arr[i..i+win) for each i (double-ended queue with indices)
   const n=arr.length,out=new Float32Array(n),dq=new Int32Array(n);let h=0,t=0;
   for(let j=n-1;j>=0;j--){
     while(t>h&&arr[dq[t-1]]>=arr[j])t--;
@@ -140,7 +140,7 @@ function limitar(canales,fs,techoLin){
   const nC=canales.length,n=canales[0].length,deseada=new Float32Array(n);
   for(let i=0;i<n;i++){let p=0;for(let c=0;c<nC;c++){const a=Math.abs(canales[c][i]);if(a>p)p=a}deseada[i]=p>techoLin?techoLin/p:1}
   const ventana=Math.max(1,Math.round(fs*0.0015)),objetivo=minimoVentana(deseada,ventana); // mira 1,5 ms hacia delante
-  const rel=Math.exp(-1/(fs*0.060));let env=1; // ataque instantáneo, relajación 60 ms
+  const rel=Math.exp(-1/(fs*0.060));let env=1; // instant attack, 60 ms release
   for(let i=0;i<n;i++){const d=objetivo[i];env=d<env?d:d+(env-d)*rel;objetivo[i]=env}
   for(const ch of canales)for(let i=0;i<n;i++)ch[i]*=objetivo[i];
 }
@@ -217,7 +217,7 @@ function codificarWav(canales,sr,bits,tags,portada,dither){
   return juntar([riff,...partes]);
 }
 
-/* ================= ZIP sin compresión (los WAV no se comprimen bien; así no hace falta ninguna librería) ================= */
+/* ================= uncompressed ZIP (WAVs do not compress well; this way no library is needed) ================= */
 const CRC=(()=>{const t=new Uint32Array(256);for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=c&1?0xEDB88320^(c>>>1):c>>>1;t[n]=c>>>0}return t})();
 function crc32(u8){let c=0xFFFFFFFF;for(let i=0;i<u8.length;i++)c=CRC[(c^u8[i])&255]^(c>>>8);return (c^0xFFFFFFFF)>>>0}
 class ZipSinCompresion{
@@ -244,9 +244,9 @@ class ZipSinCompresion{
 }
 function descargar(blob,nombre){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=nombre;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},4000)}
 
-/* ================= carátula ================= */
+/* ================= cover art ================= */
 async function cargarCaratula(g){
-  if(g.mix&&GM.mixCover){   // mixtape: la portada de casete del propio mixtape
+  if(g.mix&&GM.mixCover){   // mixtape: the mixtape's own cassette cover
     try{
       const blob=await (await fetch(await GM.mixCover(g.mix,1200))).blob();
       return {bytes:new Uint8Array(await blob.arrayBuffer()),mime:blob.type||'image/jpeg',url:URL.createObjectURL(blob)};
@@ -257,7 +257,7 @@ async function cargarCaratula(g){
     const r=await fetch(GM.audioUrl(g.cover.p));if(!r.ok)return null;
     let blob=await r.blob(),mime=(blob.type||'').toLowerCase();
     if(!mime||mime==='application/octet-stream')mime=/\.png$/i.test(g.cover.p)?'image/png':/\.webp$/i.test(g.cover.p)?'image/webp':'image/jpeg';
-    // ID3 solo entiende bien JPEG y PNG; las demás (o las enormes) se pasan a JPEG de hasta 3000 px
+    // ID3 only handles JPEG and PNG well; the others (or huge ones) are converted to JPEG of up to 3000 px
     if((mime!=='image/jpeg'&&mime!=='image/png')||blob.size>3.5*1048576){
       const bm=await createImageBitmap(blob),esc=Math.min(1,3000/Math.max(bm.width,bm.height)),cv=document.createElement('canvas');
       cv.width=Math.round(bm.width*esc);cv.height=Math.round(bm.height*esc);cv.getContext('2d').drawImage(bm,0,0,cv.width,cv.height);
@@ -267,10 +267,10 @@ async function cargarCaratula(g){
   }catch(e){console.warn('masterizado: carátula',e);return null}
 }
 
-/* ================= la pestaña ================= */
-let activa=null;           // la pestaña montada ahora mismo (para pararla al montar otra)
-const FXCACHE=new Map();   // pista+cadena → trabajo ya procesado en el servidor
-const informes={};         // último resultado por álbum (sobrevive a «Actualizar»)
+/* ================= the tab ================= */
+let activa=null;           // the tab mounted right now (to stop it when another one is mounted)
+const FXCACHE=new Map();   // track+chain → job already processed on the server
+const informes={};         // last result per album (survives «Actualizar» / Refresh)
 let acReprod=null;
 const ctxReprod=()=>acReprod||(acReprod=new (window.AudioContext||window.webkitAudioContext)());
 
@@ -282,11 +282,11 @@ function montar(el,g){
   S.fuera=S.fuera||[];S.pistas=S.pistas||{};S.fx=Object.assign({on:false,cadena:[],porPista:{}},S.fx||{});S.fx.porPista=S.fx.porPista||{};Object.keys(S.fx.porPista).forEach(k=>{const v=S.fx.porPista[k];if(!v||Array.isArray(v)||typeof v!=='object')delete S.fx.porPista[k]});S.fx.cadena=(S.fx.cadena||[]).slice(0,5);S.mixMasters=S.mixMasters||{};S.origMix=S.origMix||{};
   let guardaT=null;const guardar=()=>{clearTimeout(guardaT);guardaT=setTimeout(()=>GM.save(),500)};
   let portada=null,vivo=true,ocupado=false,manualN=1;
-  const T=[];                         // pistas (del álbum + añadidas a mano)
-  const abiertas=new Set();           // pistas con el editor desplegado
+  const T=[];                         // tracks (of the album + added by hand)
+  const abiertas=new Set();           // tracks with the editor expanded
   const motor={src:null,buf:null,sonando:false,id:null,off:0,t0:0,o0:0,raf:null};
   const arrastre={modo:null,t:null};
-  /* palabras según el contexto: álbum, mixtape o canción suelta (ver NOTAS.md, «Textos nuevos») */
+  /* words depending on the context: album, mixtape or single song (see NOTAS.md, «Textos nuevos») */
   const X=g.mix?{Cap:'Mixtape',de:'del mixtape',el:'el mixtape',guardar:'Guardar másters del mixtape',dest:'la carpeta MIXTAPES/_masters de este mixtape',vacio:'Este mixtape no tiene canciones todavía. Añade canciones al mixtape o arrastra aquí archivos WAV.'}
     :g.unica?{Cap:'Canción',de:'de la canción',el:'la canción',guardar:'Guardar máster',dest:'la carpeta master de la canción',vacio:'Esta canción no tiene audio todavía. Arrastra aquí un archivo WAV.'}
     :{Cap:'Álbum',de:'del álbum',el:'el álbum',guardar:'Guardar másters del álbum',dest:'la carpeta master de cada canción',vacio:'Este álbum no tiene canciones todavía. Añade canciones al álbum o arrastra aquí archivos WAV.'};
@@ -362,12 +362,12 @@ function montar(el,g){
     </div></div>`;
   const $=s=>el.querySelector(s);
 
-  /* ---------- registro y progreso ---------- */
+  /* ---------- log and progress ---------- */
   function log(msg,cls){const l=$('#ms-log');if(!l)return;l.classList.add('on');const d=document.createElement('div');if(cls)d.className='l-'+cls;d.textContent=msg;l.appendChild(d);l.scrollTop=l.scrollHeight}
   function progreso(p){const b=$('#ms-barra');if(!b)return;b.classList.toggle('on',p>=0&&p<1);$('#ms-bar').style.width=(clamp(p,0,1)*100)+'%'}
   function aviso(html,cls){const a=$('#ms-avisos');a.innerHTML=html?`<div class="callout ms-av ${cls||''}">${html}</div>`:''}
 
-  /* ---------- ajustes de la columna izquierda ---------- */
+  /* ---------- left column settings ---------- */
   $('#ms-estado').innerHTML=ESTADOS.map(e=>`<button class="chip" data-v="${A(e)}">${E(e)}</button>`).join('');
   $('#ms-lufs').innerHTML=OBJETIVOS.map(([v,l])=>`<option value="${v}">${E(l)}</option>`).join('');
   $('#ms-techo').innerHTML=TECHOS.map(([v,l])=>`<option value="${v}">${E(l)}</option>`).join('');
@@ -402,8 +402,8 @@ function montar(el,g){
   function pistaDe(id,p,extra){
     return Object.assign({id,p,ruta:null,file:null,info:null,ch:null,peaks:null,lufs:null,pico:null,gain:null,estadoCarga:'espera',error:'',edBuf:null,norm:null,normKey:'',manual:false,sinAudio:false},extra);
   }
-  /* Fuente de cada canción: su versión final o la mejor (GM.finalPath || GM.bestVersion). Los másters que genera este mismo
-     módulo («… (máster).wav» en master/) se saltan: si no, al volver a abrir la pestaña se masterizaría un máster ya masterizado. */
+  /* Source of each song: its final version or the best one (GM.finalPath || GM.bestVersion). The masters generated by this very
+     module («… (máster).wav» in master/) are skipped: otherwise reopening the tab would master an already mastered master. */
   const GENERADO=/\(m[aá]ster\)( \(\d+\))?\.wav$/i;
   function fuenteDe(s){
     const c=GM.finalPath(s)||GM.bestVersion(s)||null;
@@ -412,7 +412,7 @@ function montar(el,g){
     const o=v.find(x=>!/\/master\//i.test(x.p))||v[0];
     return o?o.p:c;
   }
-  /* mixtape: respeta la versión elegida en el mixtape (it.p), salvo que sea un máster de este módulo (entonces, el original guardado) */
+  /* mixtape: respects the version chosen in the mixtape (it.p), unless it is a master from this module (then, the saved original) */
   const MIXM=/^MIXTAPES\/_masters\//i;
   function fuenteMix(s){
     const it=g.mix.items.find(i=>i.id===s.id);let p=it&&it.p;
@@ -436,12 +436,12 @@ function montar(el,g){
   const activas=()=>T.filter(t=>!t.sinAudio&&!t.error);
   const totalAlbum=()=>activas().reduce((a,t)=>a+durEd(t),0);
 
-  /* carga bajo demanda: el audio entero solo está en memoria mientras se necesita (así caben 15 canciones de 60 MB) */
-  /* efectos (módulo vst): la pista se procesa en el servidor ANTES de todo lo demás (medición, ganancia y limitador siguen en el navegador) */
-  /* 5 huecos FX1…FX5 (S.fx.cadena, iguales para todo el conjunto); cada pista elige cuáles incluye (máscara) o los apaga todos */
+  /* on-demand loading: the whole audio is only in memory while needed (so 15 songs of 60 MB fit) */
+  /* effects (vst module): the track is processed on the server BEFORE everything else (measurement, gain and limiter stay in the browser) */
+  /* 5 slots FX1…FX5 (S.fx.cadena, the same for the whole set); each track picks which ones it includes (mask) or turns them all off */
   const fxM=t=>{const o=S.fx.porPista[t.id]||{};return {m:[0,1,2,3,4].map(i=>!(o.m&&o.m[i]===0)),off:!!o.off}};
   const fxCad=t=>{if(!FX_ACTIVO||!S.fx.on)return null;const {m,off}=fxM(t);if(off)return null;const c=S.fx.cadena.filter((x,i)=>m[i]&&x.on!==false);return c.length?c:null};
-  function fxRevisar(t){   // si la cadena de la pista cambió desde que se cargó, lo medido y el audio cargado ya no valen
+  function fxRevisar(t){   // if the track's chain changed since it was loaded, the measurement and the loaded audio are no longer valid
     if(t.fxKey===undefined||fxClave(t)===(t.fxKey||''))return;
     t.ch=null;t.edBuf=null;t.norm=null;t.lufs=null;t.pico=null;t.gain=null;t.fxKey=undefined;
   }
@@ -451,7 +451,7 @@ function montar(el,g){
     const key=t.fxKey=fxClave(t),h=FXCACHE.get(key);
     if(h){try{const b=await (await GM.apiBlob('vst','audio?id='+h.id+'&que=proc')).arrayBuffer();t.fxBaj=h.baj;return b}catch(e){FXCACHE.delete(key)}}
     log('Aplicando efectos a «'+nombreDe(t)+'»…','info');
-    const r=await GM.mods.vst.procesar({ruta:t.file?undefined:t.ruta,archivo:t.file||undefined,cadena:c,ini:0,dur:7200,bits:24});   // si pasa de 0 dB el servidor baja el volumen y lo anota (bajado_db): lo devolvemos al decodificar
+    const r=await GM.mods.vst.procesar({ruta:t.file?undefined:t.ruta,archivo:t.file||undefined,cadena:c,ini:0,dur:7200,bits:24});   // if it goes above 0 dB the server lowers the volume and records it (bajado_db): we restore it when decoding
     t.fxBaj=r.info.bajado_db||0;FXCACHE.set(key,{id:r.info.id,baj:t.fxBaj});URL.revokeObjectURL(r.url);return r.blob.arrayBuffer();
   }
   async function traerBuffer(t){
@@ -483,7 +483,7 @@ function montar(el,g){
     return {res,min,max};
   }
   let colaCarga=Promise.resolve();
-  function cargarInfo(t){ // una tras otra, sin bloquear la pantalla
+  function cargarInfo(t){ // one after another, without blocking the screen
     colaCarga=colaCarga.then(async()=>{
       if(!vivo||t.info&&t.peaks||t.sinAudio)return;
       t.estadoCarga='cargando';filaEstado(t);
@@ -495,7 +495,7 @@ function montar(el,g){
     return colaCarga;
   }
 
-  /* ---------- edición no destructiva: recorte + fundidos + silencios ---------- */
+  /* ---------- non-destructive editing: trim + fades + silences ---------- */
   function editar(t){
     const sr=t.info.sampleRate,n=t.info.length,s0=clamp(Math.floor(ini(t)*sr),0,n),s1=clamp(Math.floor(fin(t)*sr),0,n),core=Math.max(0,s1-s0);
     const pA=Math.max(0,Math.floor((t.p.padStart||0)*sr)),pB=Math.max(0,Math.floor((t.p.padEnd||0)*sr)),total=Math.max(1,pA+core+pB);
@@ -523,7 +523,7 @@ function montar(el,g){
     return t.lufs<=-70?0:S.lufs-t.lufs;
   }
   function recalcularGanancias(){T.forEach(t=>{t.gain=ganancia(t);t.norm=null});T.forEach(t=>filaEstado(t));pintarCuadro()}
-  /* el limitador mira el pico de las muestras; con techo negativo se deja 0,3 dB más de margen para el pico real entre muestras */
+  /* the limiter looks at the sample peak; with a negative ceiling 0.3 dB more headroom is left for the true peak between samples */
   const techoLin=()=>dbALin(S.techo-(S.techo<0?0.3:0));
   async function bufferIgualado(t){
     const clave=S.lufs+'|'+S.techo+'|'+S.modo+'|'+t.lufs+'|'+(t.gain==null?'':t.gain);
@@ -536,10 +536,10 @@ function montar(el,g){
     t.norm=aBuffer(ed,t.info.sampleRate);t.normKey=clave;return t.norm;
   }
 
-  /* ---------- motor de escucha en directo (módulo vst · motor.py). El navegador no suena mientras funciona ---------- */
+  /* ---------- live monitoring engine (vst module · motor.py). The browser does not play while it runs ---------- */
   const EM={vivo:false,est:null,at:0,sig:'',fallo:false,motivo:'',sinSd:false,poll:null,guard:0};
   const emCmd=o=>GM.mods.vst.motor.cmd(o).catch(()=>({ok:false}));
-  const sinkTest=()=>{try{return localStorage.getItem('gm_sink')==='nulo'}catch(e){return false}};   // solo pruebas: salida nula, no suena nada
+  const sinkTest=()=>{try{return localStorage.getItem('gm_sink')==='nulo'}catch(e){return false}};   // tests only: null output, nothing plays
   async function emUsable(){
     if(EM.vivo)return true;
     if(!FX_ACTIVO||EM.fallo||S.fx.motor===false||!GM.mods.vst||!S.fx.cadena.length)return false;
@@ -596,13 +596,13 @@ function montar(el,g){
     L.parentElement.title='Pico: L '+e.pico[0]+' dB · R '+e.pico[1]+' dB';
   }
   const emPT={};
-  function emPista(t){   // un cambio de edición o de máscara llega al motor al momento
+  function emPista(t){   // an edit or mask change reaches the engine immediately
     if(!EM.vivo||!vivo)return;
     clearTimeout(emPT[t.id]);
     emPT[t.id]=setTimeout(()=>{const o=fxM(t),p=t.p;emCmd({c:'pista',id:t.id,campos:{mascara:o.m,apagado:o.off,ini:p.trimStart||0,fin:p.trimEnd==null?undefined:p.trimEnd,padStart:p.padStart||0,padEnd:p.padEnd||0,fadeIn:p.fadeIn||0,fadeOut:p.fadeOut||0}});emGainPush()},120);
   }
   let emGT=null;
-  function emGainPush(){   // ganancia y techo de cada pista (cambian al re-medir tras tocar efectos, objetivo o techo)
+  function emGainPush(){   // gain and ceiling of each track (they change when re-measuring after touching effects, target or ceiling)
     if(!EM.vivo)return;clearTimeout(emGT);
     emGT=setTimeout(async()=>{
       if(!EM.vivo||!vivo)return;
@@ -615,7 +615,7 @@ function montar(el,g){
     },700);
   }
 
-  /* ---------- reproducción ---------- */
+  /* ---------- playback ---------- */
   const pos=()=>EM.vivo?(motor.sonando?clamp((EM.est?EM.est.pos:0)+(performance.now()-EM.at)/1000,0,EM.est&&EM.est.dur?EM.est.dur:1e9):motor.off):motor.sonando&&motor.buf?clamp(motor.o0+(ctxReprod().currentTime-motor.t0),0,motor.buf.duration):motor.off;
   const actual=()=>T.find(t=>t.id===motor.id)||activas()[0];
   const sonando=t=>motor.sonando&&motor.id===t.id;
@@ -677,7 +677,7 @@ function montar(el,g){
     $('#ms-amarcas').innerHTML=h;pintarBarra();
   }
 
-  /* ---------- pintar la lista ---------- */
+  /* ---------- draw the list ---------- */
   function subHtml(t){
     if(t.sinAudio)return '<span class="ms-mal">Esta canción no tiene audio: no entra en el máster.</span>';
     if(t.estadoCarga==='error')return `<span class="ms-mal">No se pudo leer: ${E(t.error)}</span>`;
@@ -709,6 +709,7 @@ function montar(el,g){
   function pintarPistas(){
     const cont=$('#ms-pistas');cont.innerHTML='';
     $('#ms-vacio').style.display=T.length?'none':'block';
+    {const A=activas();$('#ms-anorm').checked=A.length>0&&A.every(t=>t.p.previewNorm)}   // remember «Oír con el volumen igualado» (listen loudness-matched) when reopening
     if(!T.length)$('#ms-vacio').textContent=S.fuera.length?'Quitaste todas las canciones del máster. Pulsa «Recuperar las quitadas» para volver a verlas.':X.vacio;
     let num0=0;
     T.forEach(t=>{
@@ -735,10 +736,10 @@ function montar(el,g){
     if(S.fuera.length){const r=document.createElement('div');r.className='ms-rec';r.innerHTML=`<button class="chip" id="ms-recup">↩ Recuperar las quitadas (${S.fuera.length})</button>`;cont.appendChild(r);r.querySelector('button').onclick=()=>{if(!confirmarOcupado())return;S.fuera=[];guardar();recargarPistas()}}
     resumen();pintarMarcas();T.forEach(t=>{if(abiertas.has(t.id))dibujar(t)});pintarCuadro();
   }
-  function pintarCuadro(){} // (hueco: aquí se refrescan las cifras que dependen de los ajustes)
+  function pintarCuadro(){} // (placeholder: the figures that depend on the settings are refreshed here)
   const confirmarOcupado=()=>{if(ocupado){GM.ui.toast('Espera a que termine lo que se está haciendo.');return false}return true};
   function recargarPistas(){parar();T.forEach(t=>{t.ch=null});T.length=0;abiertas.clear();construirPistas();pintarPistas();T.forEach(cargarInfo)}
-  function mover(t,d){   // solo mixtapes: el orden se refleja en mixtape.items
+  function mover(t,d){   // mixtapes only: the order is reflected in mixtape.items
     if(!confirmarOcupado())return;
     const L=T.filter(x=>!x.manual),i=L.indexOf(t),k=i+d;if(k<0||k>=L.length)return;
     const a=T.indexOf(t),b=T.indexOf(L[k]);[T[a],T[b]]=[T[b],T[a]];
@@ -761,7 +762,7 @@ function montar(el,g){
     if(abiertas.has(t.id))asegurar(t).then(()=>dibujar(t)).catch(()=>{});
   }
 
-  /* ---------- editor desplegable de cada canción ---------- */
+  /* ---------- expandable editor of each song ---------- */
   function editorHtml(t){
     const p=t.p;
     return `<div class="ms-onda"><canvas class="ms-cv" data-id="${A(t.id)}"></canvas></div>
@@ -796,7 +797,7 @@ function montar(el,g){
     ed.querySelector('.ms-pa').oninput=e=>{p.padStart=Math.max(0,+e.target.value||0);cambio(t)};
     ed.querySelector('.ms-pb').oninput=e=>{p.padEnd=Math.max(0,+e.target.value||0);cambio(t)};
     ed.querySelector('.ms-art').oninput=e=>{p.artist=e.target.value;guardar()};
-    ed.querySelector('.ms-pn').onchange=async e=>{p.previewNorm=e.target.checked;t.norm=null;guardar();if(motor.sonando&&motor.id===t.id)reproducir(t,clamp(pos(),0,durEd(t)));else if(p.previewNorm)try{await medir(t);recalcularGanancias()}catch(x){}dibujar(t)};
+    ed.querySelector('.ms-pn').onchange=async e=>{p.previewNorm=e.target.checked;t.norm=null;guardar();{const A=activas();$('#ms-anorm').checked=A.length>0&&A.every(x=>x.p.previewNorm)}if(motor.sonando&&motor.id===t.id)reproducir(t,clamp(pos(),0,durEd(t)));else if(p.previewNorm)try{await medir(t);recalcularGanancias()}catch(x){}dibujar(t)};
     ed.querySelector('.ms-mas').onclick=()=>{p.meta.push({key:'',value:''});guardar();pintarPistas()};
     ed.querySelectorAll('.ms-mrow').forEach(r=>{const i=+r.dataset.i;
       r.querySelector('.ms-mk').oninput=e=>{p.meta[i].key=e.target.value;guardar()};
@@ -815,7 +816,7 @@ function montar(el,g){
   window.addEventListener('mouseup',()=>{const t=arrastre.t,m=arrastre.modo;arrastre.modo=null;arrastre.t=null;if(t&&(m==='ini'||m==='fin'))cambio(t)},{signal:sig});
   window.addEventListener('resize',()=>T.forEach(t=>{if(abiertas.has(t.id))dibujar(t)}),{signal:sig});
 
-  /* forma de onda (los colores salen de las variables del gestor, así sirve en claro y oscuro) */
+  /* waveform (the colors come from the manager's variables, so it works in light and dark mode) */
   const css=n=>getComputedStyle(el).getPropertyValue(n).trim()||'#888';
   function dibujar(t){
     if(!t||!t.peaks||!t.info)return;const cv=el.querySelector('canvas.ms-cv[data-id="'+CSS.escape(t.id)+'"]');if(!cv)return;
@@ -834,7 +835,7 @@ function montar(el,g){
     c.strokeStyle=css('--txt');c.lineWidth=dpr*1.5;c.beginPath();c.moveTo(px,0);c.lineTo(px,H);c.stroke();c.fillStyle=css('--txt');c.beginPath();c.arc(px,dpr*6,dpr*4,0,Math.PI*2);c.fill();
   }
 
-  /* barra del álbum */
+  /* album bar */
   const tl=$('#ms-alinea'),fr=e=>{const r=tl.getBoundingClientRect();return clamp((e.clientX-r.left)/r.width,0,1)};
   tl.addEventListener('mousedown',e=>{scrub=fr(e);$('#ms-arell').style.width=(scrub*100)+'%';$('#ms-acab').style.left=(scrub*100)+'%'});
   window.addEventListener('mousemove',e=>{if(scrub==null)return;scrub=fr(e);$('#ms-arell').style.width=(scrub*100)+'%';$('#ms-acab').style.left=(scrub*100)+'%';$('#ms-acur').textContent=tiempo(scrub*totalAlbum())},{signal:sig});
@@ -868,7 +869,7 @@ function montar(el,g){
     }finally{ocupado=false;resumen()}
   }
 
-  /* ---------- efectos: 5 huecos FX1…FX5 + «Con efectos / Original» ---------- */
+  /* ---------- effects: 5 slots FX1…FX5 + «Con efectos / Original» ---------- */
   let fxH=null,fxMontado=false,fxT=null,fxST=null;
   function fxResumen(){
     const n=S.fx.cadena.length,pro=Object.keys(S.fx.porPista).length;
@@ -894,7 +895,7 @@ function montar(el,g){
     guardar();fxRevisar(t);fxBtns(t);fxResumen();
     if(EM.vivo)emPista(t);else fxDif();
   }
-  function fxDif(){   // sin motor en directo: la comparación es por render (se vuelve a procesar la canción actual)
+  function fxDif(){   // without the live engine: comparison is by render (the current song is processed again)
     clearTimeout(fxT);fxT=setTimeout(()=>{const a=actual();if(a&&!a.sinAudio&&a.fxKey!==undefined)fxReprocesar([a],motor.sonando?pos():null)},700);
   }
   async function fxReprocesar(L,reanudar){
@@ -947,10 +948,10 @@ function montar(el,g){
     for(let i=0;i<total;i++){
       const t=L[i];progreso(i/total);$('#ms-estadoOp').textContent=`Procesando ${i+1} de ${total}: ${nombreDe(t)}`;
       await asegurar(t);
-      let ed=editar(t);const sr=t.info.sampleRate;t.ch=mantener(t)?t.ch:null; // el original se suelta en cuanto hay copia editada
+      let ed=editar(t);const sr=t.info.sampleRate;t.ch=mantener(t)?t.ch:null; // the original is released as soon as there is an edited copy
       t.gain=ganancia(t);if(t.gain==null)t.gain=t.lufs<=-70?0:S.lufs-t.lufs;
       await ceder();aplicarGanancia(ed,dbALin(t.gain));
-      /* Los efectos (módulo vst) ya se aplicaron al cargar la pista (traerFx): lo que se mide y se edita es el audio con efectos. */
+      /* The effects (vst module) were already applied when loading the track (traerFx): what is measured and edited is the audio with effects. */
       await ceder();if(S.techo!==0)limitar(ed,sr,techoLin());
       await ceder();
       const tags={...tags0,title:nombreDe(t),artist:(t.p.artist||'').trim()||tags0.albumArtist,track:`${todasAct.indexOf(t)+1}/${todasAct.length}`,meta:t.p.meta,composer:(t.p.artist||'').trim()||tags0.albumArtist,lyrics:(GM.lyrics&&GM.lyrics(t.id)||'').trim()};
@@ -1003,7 +1004,7 @@ function montar(el,g){
       const msg=`Guardados ${guardados} másters en la carpeta master de sus canciones.`;
       log('✓ '+msg,'ok');informes[g.key]=msg+' Ya aparecen como versiones de cada canción.';
       GM.ui.toast(msg);
-      destruir();GM.ui.reload();return;       // vuelve a leer las carpetas para que aparezcan
+      destruir();GM.ui.reload();return;       // re-reads the folders so they show up
     }catch(e){progreso(-1);log(`✗ Se detuvo tras guardar ${guardados} de ${L.length}: ${e.message}`,'warn');if(guardados){GM.ui.toast('Se guardaron '+guardados+' másters; hubo un problema con el siguiente.')}}
     finally{if(vivo){ocupado=false;$('#ms-estadoOp').textContent='';resumen()}}
   }
@@ -1042,7 +1043,7 @@ function montar(el,g){
   }
   $('#ms-analizar').onclick=analizar;$('#ms-zip').onclick=exportarZip;$('#ms-bib').onclick=guardarEnBiblioteca;
 
-  /* ---------- añadir WAV a mano (extra): no se recuerdan al recargar ---------- */
+  /* ---------- add WAV by hand (extra): not remembered after reloading ---------- */
   async function anadir(files){
     const L=[...files].filter(f=>/\.wav$/i.test(f.name)||/wav/i.test(f.type));
     if(!L.length){log('Solo se pueden añadir archivos WAV a mano.','warn');return}
@@ -1060,7 +1061,7 @@ function montar(el,g){
   ['dragleave','drop'].forEach(n=>zona.addEventListener(n,e=>{zona.classList.remove('arrastrando')}));
   zona.addEventListener('drop',e=>{if(e.dataTransfer&&e.dataTransfer.files.length){e.preventDefault();anadir(e.dataTransfer.files)}});
 
-  /* ---------- fin de la pestaña ---------- */
+  /* ---------- end of the tab ---------- */
   function destruir(){
     if(!vivo)return;vivo=false;parar();clearInterval(EM.poll);if(EM.vivo){EM.vivo=false;try{GM.mods.vst.motor.cerrar()}catch(e){}}ab.abort();clearTimeout(guardaT);GM.save();
     if(portada&&portada.url)URL.revokeObjectURL(portada.url);

@@ -1,10 +1,10 @@
-"""Módulo «Importar»: ayuda a organizar música repartida por carpetas COPIÁNDOLA a la biblioteca.
+""""Importar" module: helps organize music scattered across folders by COPYING it into the library.
 
-Reglas que este archivo cumple siempre:
-  · La carpeta de origen se abre SOLO para leer (nunca se escribe, mueve ni borra nada en ella).
-  · En la biblioteca solo se crean carpetas/archivos NUEVOS (si el nombre existe se añade « (2)»); nunca se sobrescribe.
-  · «Deshacer» solo borra archivos que esa importación creó y que siguen idénticos a lo copiado.
-Todo con la biblioteca estándar de Python. Los trabajos largos van en hilos y se consultan por sondeo (GET estado?job=).
+Rules this file always follows:
+  · The source folder is opened ONLY for reading (nothing in it is ever written, moved or deleted).
+  · In the library only NEW folders/files are created (if the name exists " (2)" is appended); nothing is overwritten.
+  · "Undo" only deletes files that this import created and that are still identical to what was copied.
+Standard library only. Long jobs run in threads and are polled (GET estado?job=).
 """
 import difflib
 import hashlib
@@ -22,8 +22,8 @@ from pathlib import Path
 DAWS = {".als": "Ableton Live", ".alp": "Ableton Live", ".flp": "FL Studio", ".logicx": "Logic Pro", ".logic": "Logic Pro",
         ".cpr": "Cubase", ".npr": "Nuendo", ".rpp": "Reaper", ".ptx": "Pro Tools", ".ptf": "Pro Tools", ".song": "Studio One",
         ".band": "GarageBand", ".reason": "Reason", ".bwproject": "Bitwig", ".aup3": "Audacity", ".sesx": "Audition"}
-PAQUETES = {".logicx", ".logic", ".band"}                       # en Mac son carpetas que se comportan como un archivo
-AUDIO_GESTOR = {".wav", ".mp3", ".m4a", ".flac", ".aif", ".aiff"}  # lo que el gestor sabe catalogar y reproducir
+PAQUETES = {".logicx", ".logic", ".band"}                       # on Mac these are folders that behave like a file
+AUDIO_GESTOR = {".wav", ".mp3", ".m4a", ".flac", ".aif", ".aiff"}  # what the manager can catalog and play
 AUDIO = AUDIO_GESTOR | {".ogg", ".opus", ".aac", ".wma", ".amr", ".caf", ".3gp"}
 MIDI = {".mid", ".midi"}
 TEXTO = {".txt", ".md"}
@@ -40,9 +40,9 @@ LISTABLES = re.compile(r"^(bounces?|bounced files|exports?|exported|renders?|ren
 EXCLUIDAS_LIGERAS = re.compile(r"^(backups?|freezes?|freeze files|bounced files|cach[eé]s?|peaks?|auto-?backup|autosaves?|time machine|undo|temp|tmp|"
                                r".*\.nosync|ableton cache|.*cache)$", re.I)
 
-LARGO_DIRECTO = 15 * 60       # segundos: un audio más largo suele ser un directo o un ensayo
-CORTO_BOCETO = 30             # segundos: un audio más corto suele ser una idea
-LIMITE_COMPLETO = int(os.environ.get("GESTOR_IMPORTAR_LIMITE_COMPLETO", 2 * 1024 ** 3))  # por encima: verificación por muestreo
+LARGO_DIRECTO = 15 * 60       # seconds: a longer audio is usually a live take or a rehearsal
+CORTO_BOCETO = 30             # seconds: a shorter audio is usually an idea
+LIMITE_COMPLETO = int(os.environ.get("GESTOR_IMPORTAR_LIMITE_COMPLETO", 2 * 1024 ** 3))  # above this: verification by sampling
 BLOQUE = 4 * 1024 * 1024
 MARGEN_ESPACIO = 64 * 1024 * 1024
 
@@ -56,12 +56,12 @@ class Cancelado(Exception):
 
 
 class Rechazado(ValueError):
-    """Archivo que NO debe copiarse (fuera del origen, enlace…): no se reintenta."""
+    """File that must NOT be copied (outside the source, a link…): it is not retried."""
 
 
 # ───────────────────────── utilidades ─────────────────────────
 def _lp(p):
-    """Ruta larga de Windows (más de 260 caracteres); en Mac/Linux no hace nada."""
+    """Windows long path (more than 260 characters); does nothing on Mac/Linux."""
     p = str(p)
     if os.name != "nt":
         return p
@@ -83,7 +83,7 @@ def _clave(s):
 
 
 def _vista(s):
-    """Texto seguro para enviar por JSON (nombres con bytes raros)."""
+    """Text that is safe to send as JSON (names with odd bytes)."""
     return str(s).encode("utf-8", "replace").decode("utf-8")
 
 
@@ -118,7 +118,7 @@ def _oculta(e):
         return True
     if os.name == "nt":
         try:
-            return bool(e.stat(follow_symlinks=False).st_file_attributes & 6)  # oculto o de sistema
+            return bool(e.stat(follow_symlinks=False).st_file_attributes & 6)  # hidden or system
         except (OSError, AttributeError):
             return False
     return False
@@ -136,7 +136,7 @@ def _escribir_diario(ctx, obj):
             os.fsync(f.fileno())
 
 
-# ───────────────────────── explorador de carpetas ─────────────────────────
+# ───────────────────────── folder browser ─────────────────────────
 def _unidades():
     out = []
     if os.name == "nt":
@@ -147,7 +147,7 @@ def _unidades():
                 if mask & (1 << i):
                     letra = chr(65 + i)
                     tipo = ctypes.windll.kernel32.GetDriveTypeW(f"{letra}:\\")
-                    if tipo in (2, 3, 4, 6):  # extraíble, fijo, red, RAM (se salta el lector de CD)
+                    if tipo in (2, 3, 4, 6):  # removable, fixed, network, RAM (the CD reader is skipped)
                         out.append({"n": f"Unidad {letra}:" + (" (externa)" if tipo == 2 else " (red)" if tipo == 4 else ""), "ruta": f"{letra}:\\"})
         except Exception:  # noqa: BLE001
             out = [{"n": f"Unidad {c}:", "ruta": f"{c}:\\"} for c in "CDEFGH" if os.path.isdir(f"{c}:\\")]
@@ -181,7 +181,7 @@ def _atajos():
 
 
 def carpetas(req, ctx):
-    """GET carpetas?ruta=  → solo SUBCARPETAS (nombres), nunca el contenido de los archivos."""
+    """GET carpetas?ruta=  → only SUBFOLDERS (names), never file contents."""
     ruta = req.arg("ruta", "").strip()
     if not ruta:
         return req.send({"ok": True, "ruta": "", "migas": [], "padre": None, "unidades": _unidades(), "atajos": _atajos(), "subcarpetas": []})
@@ -214,7 +214,7 @@ def carpetas(req, ctx):
     return req.send({"ok": True, "ruta": str(p), "migas": migas, "padre": padre, "subcarpetas": subs, "truncado": truncado})
 
 
-# ───────────────────────── limpieza de títulos y heurísticas ─────────────────────────
+# ───────────────────────── title cleanup and heuristics ─────────────────────────
 _RUIDO = (r"mixdown|mix|mezcla|mezclado|master(?:ed|izado|izada|izacion)?|mastering|m[aá]ster|premaster|final(?:\s*mix)?|bounce[d]?|render(?:ed)?|export(?:ed)?|"
           r"demo|boceto|idea|rough|draft|borrador|take|toma|stems?|v\s?\d+|ver\s?\d+|versi[oó]n(?:\s?\d+)?|rev\s?\d+|copy|copia|nuevo|new|old|wip|"
           r"preview|test|prueba|edit|alt|instrumental|a?\s?cappella|acapella|letra|letras|lyrics|live|directo|ensayo|concierto|rehearsal|soundcheck|gig|\d+\s?bpm|\d+(?:\.\d+)?\s?k(?:hz)?|\d+\s?bit|\d+\s?kbps|-?\d+\s?lufs")
@@ -264,7 +264,7 @@ def es_generico(titulo):
 
 
 def duracion_wav(ruta, tam):
-    """Duración exacta de un WAV leyendo solo su cabecera. None si no se entiende."""
+    """Exact duration of a WAV reading only its header. None if it cannot be parsed."""
     try:
         with open(_lp(ruta), "rb") as f:
             cab = f.read(12)
@@ -310,7 +310,7 @@ def _fmt_dur(s):
 
 
 def clasificar_audio(f, antepasados):
-    """→ (categoría, motivo). `antepasados`: nombres (planos) de las carpetas que contienen el archivo, dentro del origen."""
+    """→ (category, reason). `antepasados`: (flat) names of the folders that contain the file, inside the source."""
     n = _plano(os.path.splitext(f["nombre"])[0]).replace("_", " ")
     dur, est = f.get("dur"), f.get("est")
     a = lambda rx: next((x for x in antepasados if rx.search(x)), None)  # noqa: E731
@@ -379,7 +379,7 @@ def estado(req, ctx):
 
 
 def _medir_dir(S, P, absdir, excl=False, profundidad=0):
-    """Suma el tamaño de una carpeta de proyecto/paquete (sin enlaces simbólicos)."""
+    """Adds up the size of a project/package folder (without symlinks)."""
     if S["cancel"].is_set():
         raise Cancelado()
     try:
@@ -438,7 +438,7 @@ def _recorrer(S, absdir, partes, proj, modo, excl):
         except OSError:
             continue
 
-    # ¿hay proyectos de DAW en esta carpeta?
+    # are there DAW projects in this folder?
     lones = {}
     if modo is None:
         paquetes = [e for e in dirs if _ext(e.name) in PAQUETES]
@@ -475,7 +475,7 @@ def _recorrer(S, absdir, partes, proj, modo, excl):
         if proj is not None:
             _contabilizar(proj, st.st_size, e.name, excl)
         if e.name in lones or (ext in DAWS and proj is not None and proj.get("tipo") == "carpeta" and modo is None and ext in DAWS):
-            continue  # el archivo de proyecto no se lista como archivo suelto: va como «sesión»
+            continue  # the project file is not listed as a loose file: it goes as a "session"
         if modo == "interno":
             if ext in AUDIO:
                 proj["n_audio"] += 1
@@ -561,10 +561,10 @@ def _hilo_escaneo(j):
     j["fin"] = time.time()
 
 
-# ───────────────────────── propuesta de canciones ─────────────────────────
+# ───────────────────────── song proposal ─────────────────────────
 def _proponer(S):
     lista, proyectos = S["lista"], {p["id"]: p for p in S["proyectos"]}
-    # 1) cada proyecto es una semilla de canción
+    # 1) each project is the seed of a song
     semillas = {}  # clave -> dict
 
     def semilla(clave, titulo, razon):
@@ -616,7 +616,7 @@ def _proponer(S):
         if f["ext"] not in AUDIO_GESTOR and f["kind"] == "audio":
             f["motivo"] += f" · formato {f['ext']} (el gestor no lo reproduce: va a «otros/audio»)"
 
-        # ¿a qué canción pertenece?
+        # which song does it belong to?
         if f["proj"]:
             P = proyectos[f["proj"]]
             semillas[proj_clave[P["id"]]]["archivos"].append(f)
@@ -624,7 +624,7 @@ def _proponer(S):
             continue
         stem = os.path.splitext(f["nombre"])[0]
         es_texto = f["kind"] in ("texto", "doc")
-        # carpeta de stems: la canción es la de la carpeta
+        # stems folder: the song is the folder's song
         idx_stem = next((i for i, a in enumerate(ant) if _RE_STEM.search(a)), None)
         if f["cat"] == "stem" and idx_stem is not None:
             nombre_dir = re.sub(r"(?i)\b(stems?|pistas|multipistas?|multitracks?)\b", " ", ant_ruta[idx_stem])
@@ -654,7 +654,7 @@ def _proponer(S):
             f["motivo_cancion"] = "por el nombre del archivo"
         pendientes.append((f, t, False))
 
-    # los no-audio con nombre genérico (portadas, fotos) siguen a la canción de su carpeta
+    # non-audio files with a generic name (covers, photos) follow the song of their folder
     por_dir = {}
     for f, t, _x in pendientes:
         if f["kind"] == "audio":
@@ -690,7 +690,7 @@ def _proponer(S):
             if k2 <= k or len(k) < 5 or len(k2) < 5 or raiz(k) == raiz(k2):
                 continue
             if re.sub(r"\D", "", k) != re.sub(r"\D", "", k2):
-                continue  # «Tema 1» y «Tema 2» NO son la misma canción
+                continue  # "Tema 1" and "Tema 2" are NOT the same song
             if abs(len(k) - len(k2)) > max(3, len(k) // 3):
                 continue
             r = difflib.SequenceMatcher(None, k, k2).ratio()
@@ -715,7 +715,7 @@ def _proponer(S):
             base["razones"].append(f"junto «{_vista(next(iter(o['titulos'])))}» porque el nombre es muy parecido" + (f" ({round(sim[1] * 100)} %)" if sim else ""))
         final.append(base)
     final += [semillas[k] for k in semillas if semillas[k].get("coleccion")]
-    # canciones que solo tienen papeles/imágenes/MIDI (sin audio, sin letra ni sesión): se juntan aparte y se proponen sin marcar
+    # songs that only have papers/images/MIDI (no audio, no lyrics or session): grouped apart and proposed unchecked
     sueltas = [s for s in final if s["archivos"] and not s["sesiones"] and all(f["cat"] in ("doc", "arte", "video", "midi") for f in s["archivos"])]
     if sueltas:
         final = [s for s in final if s not in sueltas]
@@ -723,7 +723,7 @@ def _proponer(S):
         final.append({"clave": "__sueltos__", "titulos": {"Archivos sueltos sin canción": 1}, "archivos": todo, "sesiones": [], "sueltos": True,
                       "razones": ["no encontré ningún audio ni letra con el mismo nombre; los dejo sin marcar por si quieres asignarlos a una canción (con «Mover»)"]})
 
-    # 4) duplicados exactos (mismo nombre y tamaño)
+    # 4) exact duplicates (same name and size)
     vistos = {}
     canciones, n_arch = [], 0
     final.sort(key=lambda s: _plano(max(s["titulos"], key=lambda t: (s["titulos"][t], -len(t)))))
@@ -757,7 +757,7 @@ def _proponer(S):
         canciones.append({"id": f"c{i}", "titulo": _vista(titulo), "razon": razon, "boceto": boceto, "sueltos": bool(s.get("sueltos")), "archivos": fl, "sesiones": sesiones})
     huerfanas = [c for c in canciones if not c["archivos"] and not c["sesiones"]]
     canciones = [c for c in canciones if c not in huerfanas]
-    # carpetas llenas de audios cortos (¿librerías de samples?): se proponen excluidas
+    # folders full of short audio files (sample libraries?): proposed as excluded
     por_carpeta = {}
     for c in canciones:
         for f in c["archivos"]:
@@ -794,13 +794,13 @@ def propuesta(req, ctx):
     return req.send({"ok": True, "job": j["id"], **j["res"]})
 
 
-# ───────────────────────── plan de copia ─────────────────────────
+# ───────────────────────── copy plan ─────────────────────────
 SUBDIR_CAT = {"version": ("versiones",), "master": ("master",), "stem": ("stems",), "directo": ("versiones", "directos"), "boceto": ("versiones", "bocetos"),
               "toma": ("otros", "tomas"), "midi": ("midi",), "doc": ("docs",), "arte": ("arte",), "video": ("video",), "otro": ("otros",)}
 
 
 def _caminar_sesion(S, base_abs, ligera):
-    """[(partes_relativas, ruta_abs, tam)] de una carpeta de proyecto, sin enlaces simbólicos."""
+    """[(relative_parts, abs_path, size)] of a project folder, without symlinks."""
     out = []
 
     def rec(absd, partes, prof):
@@ -831,7 +831,7 @@ def _caminar_sesion(S, base_abs, ligera):
 
 
 def _resolver_plan(j, plan, detallado):
-    """Convierte lo que decidió la persona en una lista de operaciones. Todo origen debe ser un archivo ya escaneado dentro del origen."""
+    """Turns what the user decided into a list of operations. Every source must be a file already scanned inside the source folder."""
     if "res" not in j:
         raise ValueError("escaneo no terminado")
     rutas, proyectos = j["rutas"], j["sesiones_srv"]
@@ -885,7 +885,7 @@ def _resolver_plan(j, plan, detallado):
                         total += t
                 else:
                     total += P["tam_ligero"] if ligera else P["tam"]
-            else:  # solo el/los archivos de proyecto
+            else:  # only the project file(s)
                 carpeta = origen_dir if P["tipo"] == "carpeta" else os.path.dirname(origen_dir)
                 for nom in P["principales"]:
                     absf = os.path.join(carpeta, nom)
@@ -895,7 +895,7 @@ def _resolver_plan(j, plan, detallado):
                         continue
                     song["ops"].append({"src": absf, "sub": ("sesiones", daw), "nombre": _seguro(nom, archivo=True), "tam": t})
                     total += t
-        # defensa: nada fuera del origen (rutas relativas ya escaneadas, pero se vuelve a comprobar en cada copia)
+        # defense: nothing outside the source (relative paths already scanned, but checked again on every copy)
         for o in song["ops"]:
             o["origen_real"] = origen_real
         if song["ops"]:
@@ -940,7 +940,7 @@ def _huella(ruta, tam, modo):
 
 
 def _muestras(tam):
-    """Zonas que se comparan en archivos enormes: principio, final y 32 bloques repartidos."""
+    """Regions compared in huge files: start, end and 32 blocks spread across."""
     M = 1024 * 1024
     z = {(0, min(4 * M, tam))}
     if tam > 4 * M:
@@ -952,7 +952,7 @@ def _muestras(tam):
 
 
 def _reservar(S, ruta):
-    """Devuelve una ruta que no exista ni esté ya reservada, añadiendo « (2)», « (3)»… antes de la extensión."""
+    """Returns a path that neither exists nor is already reserved, appending " (2)", " (3)"… before the extension."""
     base, ext = os.path.splitext(ruta)
     cand, n = ruta, 1
     while cand.lower() in S["usados"] or os.path.lexists(_lp(cand)):
@@ -967,7 +967,7 @@ def _es_bloqueo(ex):
 
 
 def _copiar_uno(S, o, dst):
-    """Copia por bloques, verifica y renombra. Devuelve (modo_hash, sha). Lanza Cancelado / OSError / ValueError."""
+    """Copies in blocks, verifies and renames. Returns (hash_mode, sha). Raises Cancelado / OSError / ValueError."""
     src = o["src"]
     real = os.path.realpath(src)
     if not (real == o["origen_real"] or real.startswith(o["origen_real"].rstrip("\\/") + os.sep)) or os.path.islink(src):
@@ -1004,7 +1004,7 @@ def _copiar_uno(S, o, dst):
         sha_d = _huella(tmp, copiado, modo)
         if sha_o != sha_d:
             raise ValueError("la verificación falló: la copia no es idéntica")
-        os.utime(_lp(tmp), ns=(st0.st_atime_ns, st0.st_mtime_ns))  # conserva la fecha original
+        os.utime(_lp(tmp), ns=(st0.st_atime_ns, st0.st_mtime_ns))  # keep the original date
         if os.path.lexists(_lp(dst)):
             raise FileExistsError("el destino ya existe")
         os.rename(_lp(tmp), _lp(dst))
@@ -1071,7 +1071,7 @@ def _hilo_copia(j, j0, ctx):
                 if j["cancel"].is_set():
                     raise Cancelado()
                 partes = list(o["sub"])
-                if o.get("raiz_unica"):  # carpeta de proyecto copiada entera: su nombre también evita chocar con otra
+                if o.get("raiz_unica"):  # project folder copied whole: its name also avoids clashing with another one
                     k = tuple(o["raiz_unica"])
                     if k not in raices:
                         nuevo = _reservar(j, str(carpeta.joinpath(*k)))
@@ -1125,7 +1125,7 @@ def _hilo_copia(j, j0, ctx):
         print("[importar] error al copiar:\n" + traceback.format_exc())
         j["estado"] = "error"
         j["error"] = str(ex) if isinstance(ex, ValueError) else f"{type(ex).__name__}: {ex}"
-    for info in creadas:  # carpetas de canción que quedaron vacías (todo omitido o cancelado): se quitan, solo si no tienen ningún archivo
+    for info in creadas:  # song folders left empty (everything skipped or cancelled): removed, only if they hold no file at all
         if info["archivos"] == 0:
             for dp, _dn, _fn in os.walk(str(root / info["carpeta"]), topdown=False):
                 try:
@@ -1162,7 +1162,7 @@ def cancelar(req, ctx):
     return req.send({"ok": bool(j)})
 
 
-# ───────────────────────── diario y deshacer ─────────────────────────
+# ───────────────────────── journal and undo ─────────────────────────
 def _leer_diario(ctx):
     p = _jdiario(ctx)
     if not p.exists():
@@ -1229,7 +1229,7 @@ def _hilo_deshacer(j, regs, iid, ctx):
             p = (root / r["dst"])
             try:
                 real = p.resolve()
-                real.relative_to(root)  # nunca fuera de la biblioteca
+                real.relative_to(root)  # never outside the library
             except (ValueError, OSError):
                 j["conservados"].append({"n": _vista(r["dst"]), "por": "ruta no válida"})
                 continue
@@ -1245,7 +1245,7 @@ def _hilo_deshacer(j, regs, iid, ctx):
                 j["borrados"] += 1
             except OSError as ex:
                 j["conservados"].append({"n": _vista(r["dst"]), "por": _vista(ex.strerror or str(ex))})
-        # carpetas: solo las que esa importación creó y solo si quedaron vacías (rmdir nunca borra contenido)
+        # folders: only those this import created and only if they were left empty (rmdir never deletes contents)
         dirs = set()
         for c in carpetas:
             base = root / c

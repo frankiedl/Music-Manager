@@ -1,9 +1,9 @@
-/* Ajustes: carpeta de la música, nombre y titular, y (los plugins de efectos están desactivados por ahora). */
+/* Settings: music folder, name and copyright owner (the effects plugins are disabled for now). */
 (()=>{
 const api=(r,b)=>GM.api('ajustes',r,b);
 const esc=s=>GM.ui.esc(s);
 
-/* Explorador de carpetas dentro de la app. Devuelve la ruta elegida o null. Otros módulos pueden usarlo: GM.mods.ajustes.elegirCarpeta('Título') */
+/* In-app folder browser. Returns the chosen path or null. Other modules can use it: GM.mods.ajustes.elegirCarpeta('Title') */
 function elegirCarpeta(titulo,inicio){
   return new Promise(res=>{
     const o=GM.ui.modal(`<h3>${esc(titulo||'Elegir carpeta')}</h3><div class="meta" id="aj-ruta" style="word-break:break-all;margin:4px 0 8px"></div>

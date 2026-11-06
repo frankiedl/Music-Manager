@@ -1,5 +1,5 @@
-/* Módulo «estado» · asistente para importar un informe CSV/TSV: elegir archivo → «qué columna es qué» → comprobar → guardar.
-   El archivo se lee en el navegador y solo se guarda el resultado ya limpio en la carpeta de datos del módulo (en tu equipo). */
+/* «estado» module · wizard to import a CSV/TSV report: choose file → «which column is what» → check → save.
+   The file is read in the browser and only the cleaned result is saved in the module's data folder (on your computer). */
 (function(){
 const EST=window.EST,E=EST.E,C=window.EstadoCSV;
 const CAMPOS=[
@@ -19,7 +19,7 @@ const SEPN={',':'Coma ( , )',';':'Punto y coma ( ; )','\t':'Tabulador','|':'Barr
 function adivinar(cab){
   const usado=new Set(),mapa={};
   const nc=cab.map(c=>C.norm(c));
-  CAMPOS.forEach(c=>{ // 1º coincidencia exacta, 2º que contenga la palabra
+  CAMPOS.forEach(c=>{ // 1st exact match, 2nd containing the word
     for(const pass of [0,1]){ if(mapa[c.k]!=null)break;
       for(const s of c.syn){const i=nc.findIndex((h,ix)=>!usado.has(ix)&&(pass?h.includes(s):h===s));if(i>=0){mapa[c.k]=i;usado.add(i);break}}}
   });
@@ -31,7 +31,7 @@ function aplicarPerfil(I,p){
   if(!tot||ok<tot)return false;
   I.mapa=mapa;I.dec=p.dec||I.dec;I.orden=p.orden||I.orden;if(p.mon)I.mon=p.mon;if(p.plataforma)I.plat=p.plataforma;I.perfil=p.nombre;I.idPerfil=p.id;return true;
 }
-function preparar(I){ // separa filas y cabecera con lo elegido
+function preparar(I){ // split rows and header with what was chosen
   I.R=C.filas(I.texto,I.sep);
   if(I.hdrAuto)I.hdr=C.cabecera(I.R);
   I.cab=(I.R[I.hdr]||[]).map(x=>String(x).trim());
@@ -64,7 +64,7 @@ function leerArchivo(file){
     const I={nombre:file.name,buf,texto:d.texto,enc:d.codificacion,sep:C.separador(d.texto),hdrAuto:true,mapa:{},mon:'EUR',plat:'',mes:'',orden:'',paso:2,hash:fnv(d.texto)};
     preparar(I);I.dec=C.decimal(I.R,I.hdr+1,null,I.sep);
     const ad=adivinar(I.cab);
-    // ¿hay un perfil guardado que encaje?
+    // is there a saved profile that fits?
     const ps=(EST.D.perfiles||[]).slice().sort((a,b)=>Object.keys(b.mapa||{}).length-Object.keys(a.mapa||{}).length);
     I.mapa=ad;let usado=false;for(const p of ps){if(aplicarPerfil(I,p)){usado=true;break}}
     I.perfilAuto=usado;
@@ -148,9 +148,9 @@ function pantallaColumnas(el,I){
 
 function pantallaComprobar(el,I){
   const r=I.res,mt=null,A=EST.D.alias;
-  // casado de prueba (antes de guardar)
+  // trial matching (before saving)
   const tmp={D:EST.D};const F=r.filas;
-  const resolver=EST.resolverFila,matcherTmp=(()=>{ // misma lógica que las vistas
+  const resolver=EST.resolverFila,matcherTmp=(()=>{ // same logic as the views
     const full=new Map(),rel=new Map();GM.songs.forEach(s=>{const t=GM.title(s);full.set(C.norm(t),s.id);rel.set(C.titulo(t),s.id)});return{full,rel}})();
   const cnt={exacto:0,isrc:0,manual:0,parecido:0,sin:0,ign:0},sin=new Map();
   F.forEach(o=>{const x=resolver(o,matcherTmp,A);if(x.ign)cnt.ign++;else if(x.sid)cnt[x.how]++;else{cnt.sin++;const k=C.norm(o.t),y=sin.get(k)||{t:o.t,n:0};y.n+=o.n;sin.set(k,y)}});

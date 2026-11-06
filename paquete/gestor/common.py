@@ -1,24 +1,24 @@
-"""Rutas y configuración compartidas por el gestor y sus scripts (Windows, Mac y Linux)."""
+"""Paths and configuration shared by the manager and its scripts (Windows, Mac and Linux)."""
 import json
 import os
 import sys
 from pathlib import Path
 
-FROZEN = bool(getattr(sys, "frozen", False))    # True dentro del ejecutable (PyInstaller)
+FROZEN = bool(getattr(sys, "frozen", False))    # True inside the executable (PyInstaller)
 if FROZEN:
-    RES = Path(sys._MEIPASS)                    # código, estáticos y módulos empaquetados (solo lectura)
+    RES = Path(sys._MEIPASS)                    # bundled code, static files and modules (read-only)
     CODE = RES / "gestor"
-    APP = Path(sys.executable).resolve().parent  # carpeta del ejecutable: aquí viven config.json y datos/
+    APP = Path(sys.executable).resolve().parent  # folder of the executable: config.json and datos/ live here
     if sys.platform == "darwin" and APP.name == "MacOS" and APP.parent.name == "Contents":
-        APP = APP.parent.parent.parent          # dentro de GestorMusica.app: se usa la carpeta que contiene la .app
-    if not os.access(APP, os.W_OK):             # p. ej. instalado en /Applications o en un disco de solo lectura
+        APP = APP.parent.parent.parent          # inside GestorMusica.app: use the folder that contains the .app
+    if not os.access(APP, os.W_OK):             # e.g. installed in /Applications or on a read-only disk
         APP = Path.home() / ("Library/Application Support" if sys.platform == "darwin" else ".local/share") / "GestorMusica"
         APP.mkdir(parents=True, exist_ok=True)
 else:
     CODE = Path(__file__).resolve().parent      # .../GestorMusica/gestor
     APP = CODE.parent                           # .../GestorMusica
     RES = APP
-DATOS = APP / "datos"                           # tu estado, diario y datos generados (se crea solo)
+DATOS = APP / "datos"                           # your state, move journal and generated data (created automatically)
 CONFIG = APP / "config.json"
 RESERVED = {"stems", "versiones", "master", "sesiones", "otros", "docs", "midi", "arte", "video"}
 AUDIO = {".wav", ".mp3", ".m4a", ".flac", ".aif", ".aiff"}
@@ -39,13 +39,13 @@ def save_config(cfg):
 
 
 def root():
-    """Carpeta de la biblioteca de música (la que eliges la primera vez)."""
+    """Music library folder (the one chosen the first time)."""
     b = load_config().get("biblioteca") or os.environ.get("GESTOR_BIBLIOTECA", "")
     return Path(b).expanduser().resolve() if b else None
 
 
 def lp(p):
-    """Ruta larga en Windows (más de 260 caracteres); en Mac y Linux no hace nada."""
+    """Long path on Windows (more than 260 characters); does nothing on Mac and Linux."""
     p = os.path.abspath(str(p))
     return "\\\\?\\" + p if os.name == "nt" and not p.startswith("\\\\?\\") else p
 

@@ -1,22 +1,22 @@
-"""Servidor del módulo «masterizado»: solo sirve para GUARDAR los másters en la biblioteca.
-Todo el procesado de audio se hace en el navegador; aquí únicamente se escribe el WAV ya terminado.
+"""Server of the "masterizado" module: it only SAVES the masters into the library.
+All audio processing happens in the browser; here the finished WAV is just written.
 
-Rutas:
-  POST guardar_master?id=<idCancion>&nombre=<archivo.wav>   cuerpo = el WAV en bruto
-       → lo guarda en  <carpeta de la canción>/master/  sin sobrescribir nunca (si existe añade « (2)», « (3)»…)
-  POST guardar_master?mix=<idMixtape>&id=<idItem>&nombre=…  → igual, pero en MIXTAPES/_masters/<idMixtape>/ (los mixtapes nunca escriben en master/ de las canciones)
-  GET  masters?mix=<idMixtape>                               → lo que ya hay en esa carpeta
-  GET  masters?ids=<id1>,<id2>…                              → qué archivos hay ya en la carpeta master/ de cada canción
+Routes:
+  POST guardar_master?id=<songId>&nombre=<file.wav>   body = the raw WAV
+       → saved in  <song folder>/master/  never overwriting (if it exists " (2)", " (3)"… is appended)
+  POST guardar_master?mix=<mixtapeId>&id=<itemId>&nombre=…  → same, but in MIXTAPES/_masters/<mixtapeId>/ (mixtapes never write into the songs' master/)
+  GET  masters?mix=<mixtapeId>                               → what is already in that folder
+  GET  masters?ids=<id1>,<id2>…                              → which files are already in each song's master/ folder
 """
 import os
 import re
 from pathlib import Path
 
-LIMITE = 4 * 1024 * 1024 * 1024 - 1024  # un WAV no pasa de 4 GB
+LIMITE = 4 * 1024 * 1024 * 1024 - 1024  # a WAV cannot exceed 4 GB
 
 
 def _carpeta_cancion(ctx, sid):
-    """Carpeta de la canción, validada: tiene que existir y quedar DENTRO de la biblioteca."""
+    """Song folder, validated: it must exist and be INSIDE the library."""
     s = ctx.song(sid) if sid else None
     if not s or not s.get("dir"):
         return None
@@ -34,7 +34,7 @@ def _carpeta_master(ctx, sid):
     base = _carpeta_cancion(ctx, sid)
     if not base:
         return None
-    m = (base / "master").resolve()  # si «master» fuese un enlace hacia fuera, tampoco vale
+    m = (base / "master").resolve()  # if «master» were a link pointing outside, it is not valid either
     try:
         m.relative_to(Path(ctx.root).resolve())
     except ValueError:
@@ -43,7 +43,7 @@ def _carpeta_master(ctx, sid):
 
 
 def _carpeta_mix(ctx, mid):
-    """MIXTAPES/_masters/<id del mixtape>/ dentro de la biblioteca. Nunca las carpetas master/ de las canciones."""
+    """MIXTAPES/_masters/<mixtape id>/ inside the library. Never the songs' master/ folders."""
     mid = re.sub(r"[^A-Za-z0-9_-]", "_", str(mid or ""))
     if not mid:
         return None
@@ -81,10 +81,10 @@ def guardar_master(req, ctx):
         if cab[:4] != b"RIFF" or cab[8:12] != b"WAVE":
             raise ValueError("el archivo recibido no es un WAV")
         stem, final, k = nombre[:-4], m / nombre, 1
-        while final.exists():  # NUNCA se sobrescribe nada
+        while final.exists():  # NOTHING is ever overwritten
             k += 1
             final = m / f"{stem} ({k}).wav"
-        os.rename(tmp, final)  # (en Windows falla si existe; en el resto, la comprobación de arriba basta)
+        os.rename(tmp, final)  # (on Windows it fails if it exists; elsewhere the check above is enough)
     except Exception:
         try:
             tmp.unlink()
@@ -96,7 +96,7 @@ def guardar_master(req, ctx):
 
 
 def masters(req, ctx):
-    """Lista lo que ya hay en master/ (para avisar antes de guardar)."""
+    """Lists what is already in master/ (to warn before saving)."""
     out = {}
     if req.arg("mix"):
         m = _carpeta_mix(ctx, req.arg("mix"))

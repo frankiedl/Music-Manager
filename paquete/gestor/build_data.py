@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
-"""Lee la carpeta de tu biblioteca y genera datos/data.json y datos/letras.json para el gestor.
+"""Reads your library folder and generates datos/data.json and datos/letras.json for the manager.
 
-Solo LEE tu música: no mueve ni borra nada. Se vuelve a ejecutar cada vez que pulsas «Actualizar».
+It only READS your music: nothing is moved or deleted. It runs again every time you press "Actualizar" (Refresh).
 
-Estructura que entiende (la crea sola «Añadir canciones»):
-  unreleased/<canción>/                  sin publicar          (o unreleased/<proyecto>/<canción>/)
-  prereleased/<canción>/                 adelantos
-  published/Singles/<canción>/           singles publicados
-  published/Álbumes/<álbum>/<NN canción>/
-  dentro de cada canción: letra.txt, versiones/, master/, stems/, sesiones/, docs/, midi/ y audio suelto
-  Las carpetas que empiezan por «_» o «.» se ignoran.
+Layout it understands ("Añadir canciones" / Add songs creates it automatically):
+  unreleased/<song>/                     unreleased            (or unreleased/<project>/<song>/)
+  prereleased/<song>/                    pre-releases
+  published/Singles/<song>/              published singles
+  published/Álbumes/<album>/<NN song>/
+  inside each song: letra.txt (lyrics), versiones/, master/, stems/, sesiones/, docs/, midi/ and loose audio
+  Folders starting with "_" or "." are ignored.
 """
 import csv
 import difflib
@@ -64,7 +64,7 @@ def subdirs(d):
 
 
 def role_dirs(d):
-    """Subcarpetas master / versiones / stems de una canción (sin distinguir mayúsculas: Linux sí las distingue)."""
+    """master / versiones / stems subfolders of a song (case-insensitive: Linux is case-sensitive)."""
     out = []
     try:
         for x in d.iterdir():
@@ -76,7 +76,7 @@ def role_dirs(d):
 
 
 def audio_files(d):
-    """[(ruta, rol)] con el audio de una canción: master/, versiones/, stems/ y los archivos sueltos de su carpeta."""
+    """[(path, role)] with a song's audio: master/, versiones/, stems/ and the loose files in its folder."""
     res = []
     try:
         for f in sorted(d.iterdir()):
@@ -98,12 +98,12 @@ def looks_song(d):
 
 
 def candidates(R):
-    """[(clave, carpeta)] de todas las carpetas que parecen una canción."""
+    """[(key, folder)] of every folder that looks like a song."""
     cand = []
     un = R / "unreleased"
     for d in subdirs(un):
         subs = [x for x in subdirs(d) if x.name.lower() not in C.RESERVED]
-        if not looks_song(d) and any(looks_song(x) for x in subs):  # carpeta de proyecto / álbum en preparación
+        if not looks_song(d) and any(looks_song(x) for x in subs):  # project folder / album in preparation
             cand += [(f"unreleased/{d.name}/{x.name}", x) for x in subs]
         else:
             cand.append((f"unreleased/{d.name}", d))
@@ -153,7 +153,7 @@ def main():
         return 1
     C.DATOS.mkdir(parents=True, exist_ok=True)
 
-    # uniones hechas desde el gestor (a = canción absorbida, b = destino)
+    # merges done from the manager (a = absorbed song, b = target)
     canon = {}
     dp = C.DATOS / "decisiones.csv"
     if dp.exists():
@@ -182,7 +182,7 @@ def main():
         names = sorted({f.name.lower() for f, _ in vs})
         sig = lyric_sig(text) if text.strip() else ""
         sid = (old.get(key) or {}).get("id")
-        if not sid:  # ¿es una carpeta renombrada o movida (p. ej. de unreleased a published)?
+        if not sid:  # is it a renamed or moved folder (e.g. from unreleased to published)?
             hit = None
             for vk, e in vanished.items():
                 if e["id"] in used:
@@ -201,7 +201,7 @@ def main():
             sid = "N" + hashlib.md5((key + sid).encode("utf-8")).hexdigest()[:6]
         used.add(sid)
         newmap[key] = {"id": sid, "sig": sig, "files": names}
-        if sid in canon:  # absorbida por una unión: sus archivos ya están en la canción destino
+        if sid in canon:  # absorbed by a merge: its files are already in the target song
             continue
 
         title = _re_num.sub("", d.name).strip() or d.name
@@ -240,7 +240,7 @@ def main():
             sc.sort(reverse=True)
             letras[sid] = {"t": text, "th": [t for _, t in sc[:3]]}
 
-    for k, e in vanished.items():  # recuerda las carpetas que desaparecen un tiempo, por si vuelven
+    for k, e in vanished.items():  # remember folders that disappear for a while, in case they come back
         if e["id"] not in used:
             newmap.setdefault(k, e)
     lst.sort(key=lambda o: o["title"].lower())

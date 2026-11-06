@@ -1,10 +1,10 @@
-/* Módulo «estado» · vistas de los informes importados: totales, por mes, por plataforma, por canción y por álbum, tendencias,
-   y la pantalla para resolver las filas que no se han casado con ninguna canción. */
+/* «estado» module · views of the imported reports: totals, per month, per platform, per song and per album, trends,
+   and the screen to resolve the rows that were not matched to any song. */
 (function(){
 const EST=window.EST,E=EST.E,C=window.EstadoCSV,fmtN=EST.fmtN,fmtE=EST.fmtE;
 const COLORES=['var(--accent)','#5e8bff','var(--good)','#a259ff','var(--warn)','#17b3a3','#ff8a3d','#8e8e93'];
 
-/* ---------- casado de filas con canciones ---------- */
+/* ---------- matching rows to songs ---------- */
 let _cache=null;
 EST.invalida=()=>{_cache=null};
 function matcher(){
@@ -44,7 +44,7 @@ const rango=(a,b)=>{const o=[];for(let m=a;m<=b&&o.length<600;m=mesSig(m,1))o.pu
 const money=(o)=>{const k=Object.keys(o).filter(c=>o[c]);return k.length?k.map(c=>fmtE(o[c])+(c?' '+c:'')).join(' + '):'—'};
 const sum=(arr,f)=>arr.reduce((a,r)=>a+(f(r)||0),0);
 function agrupa(F,clave,disp){const M=new Map();F.forEach(r=>{const k=clave(r);if(k==null||k==='')return;const x=M.get(k)||{k,d:disp?disp(r):k,n:0,e:0,m:{}};x.n+=r.n||0;x.e+=r.e||0;x.m[r.m]=(x.m[r.m]||{n:0,e:0});x.m[r.m].n+=r.n||0;x.m[r.m].e+=r.e||0;M.set(k,x)});return[...M.values()]}
-function tendencia(serie,meses,met){ // últimos 3 meses frente a los 3 anteriores
+function tendencia(serie,meses,met){ // last 3 months versus the 3 before
   if(meses.length<4)return null;const u=meses[meses.length-1];
   const v=i=>(serie[mesSig(u,-i)]||{})[met]||0,a=v(0)+v(1)+v(2),b=v(3)+v(4)+v(5);
   if(!a&&!b)return null;if(!b)return{nuevo:1};return{p:(a-b)/b*100};
@@ -87,7 +87,7 @@ EST.vistas.informes=(el)=>{
   const aprox=new Set(F.filter(r=>r.how==='parecido').map(r=>C.norm(r.t))).size;
   const bs=(arr)=>arr.sort((a,b)=>(met==='n'?b.n-a.n:b.e-a.e));
 
-  /* por canción y por álbum */
+  /* per song and per album */
   const porCan=bs(agrupa(F.filter(r=>r.sid),r=>r.sid,r=>r.sid).map(x=>{x.m2=x.m;if(met==='e'){x.e=sum(F.filter(r=>r.sid===x.k&&(r.u||'')===f.mon),r=>r.e)}return x}));
   const sidAlb=new Map();GM.groups().forEach(g=>g.songs.forEach(s=>{if(!sidAlb.has(s.id)||g.kind==='album')sidAlb.set(s.id,g)}));
   const porAlb=bs(agrupa(F.filter(r=>r.sid&&sidAlb.has(r.sid)),r=>sidAlb.get(r.sid).key,r=>sidAlb.get(r.sid).title).map(x=>{if(met==='e'){x.e=sum(F.filter(r=>r.sid&&sidAlb.has(r.sid)&&sidAlb.get(r.sid).key===x.k&&(r.u||'')===f.mon),r=>r.e)}return x}));
@@ -146,7 +146,7 @@ EST.vistas.informes=(el)=>{
   EST.enlazar(el);
 };
 
-/* ---------- resolver los no casados ---------- */
+/* ---------- resolve the unmatched ones ---------- */
 function pintarResolver(el){
   const F=EST.filas(),soloAprox=!!EST.soloAprox;
   const G=new Map();

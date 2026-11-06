@@ -1,5 +1,173 @@
 {
 "exactas": {
+"efectos (FX1…FX": "efeitos (FX1…FX",
+"Define hasta 5 efectos una sola vez (los mismos plugins y ajustes para todo": "Defina até 5 efeitos uma única vez (os mesmos plugins e ajustes para",
+"Dónde está tu música y cómo te llamas": "Onde está sua música e como você se chama",
+"Efectos · FX1…FX5, antes del limitador": "Efeitos · FX1…FX5, antes do limitador",
+"El motor de escucha se cerró": "O motor de reprodução foi encerrado",
+"En cada pista, los botones": "Em cada faixa, os botões",
+"Escucha en directo": "Escuta ao vivo",
+"Instalar motor en directo": "Instalar motor ao vivo",
+"La escucha en directo (sin esperas al cambiar efectos) se activa sola al pulsar ▶ cuando hay efectos definidos": "A escuta ao vivo (sem esperas ao mudar efeitos) é ativada sozinha ao clicar em ▶ quando há efeitos definidos",
+"Medidor de la escucha en directo": "Medidor da escuta ao vivo",
+"Motor en directo instalado ✓": "Motor ao vivo instalado ✓",
+"Original: los efectos están saltados (no se oyen ni se exportan)": "Original: os efeitos estão em bypass (não são ouvidos nem exportados)",
+"Para usar efectos hay que instalar el soporte de plugins (en la sección «Efectos» del gestor). La masterización funciona igual sin ellos": "Para usar efeitos é preciso instalar o suporte a plugins (na seção «Efeitos» do gerenciador). A masterização funciona igual sem eles",
+"Sin efectos definidos (el audio pasa tal cual). Pulsa «Configurar» para añadir hasta 5": "Nenhum efeito definido (o áudio passa sem alteração). Clique em «Configurar» para adicionar até 5",
+"Sin el motor en directo, «Con efectos / Original» compara procesando la canción antes (tarda unos segundos en cada cambio). Para oírlo al instante hace falta «sounddevice»": "Sem o motor ao vivo, «Com efeitos / Original» compara processando a música antes (leva alguns segundos a cada troca). Para ouvir na hora é preciso o «sounddevice»",
+"Todos los efectos apagados en esta pista": "Todos os efeitos desligados nesta faixa",
+"apagado en la cadena)": "desligado na cadeia)",
+"el motor no aceptó la lista": "o motor não aceitou a lista",
+"eligen cuáles lleva y": "escolhem quais ela usa e",
+"hueco(s) activos": "slot(s) ativo(s)",
+"lo de aquí": "tudo aqui",
+"los apaga todos en esa pista. Lo que oyes es lo que se exporta. Tus originales no se tocan": "desliga todos nessa faixa. O que você ouve é o que é exportado. Seus originais não são alterados",
+"no respondió": "não respondeu",
+"no se pudo subir el archivo": "não foi possível enviar o arquivo",
+"pista(s": "faixa(s",
+"pista(s) con ajuste propio": "faixa(s) com ajuste próprio",
+"Aceptar": "OK",
+"Actualizado": "Atualizado",
+"Alternativa": "Alternativa",
+"Alternativo": "Alternativo",
+"Ambient": "Ambient",
+"Aplicando efectos a «": "Aplicando efeitos a «",
+"Arte": "Arte",
+"Asignada a «": "Atribuída a «",
+"Barra ( | )": "Barra vertical ( | )",
+"Blues": "Blues",
+"Borrador": "Rascunho",
+"Cabe": "Cabe",
+"Cambiar": "Alterar",
+"Cerrando": "Fechando",
+"Checo": "Tcheco",
+"Coma ( , )": "Vírgula ( , )",
+"Comentario": "Comentário",
+"Compositor": "Compositor",
+"Confirmar": "Confirmar",
+"Consultar": "Consultar",
+"Copiando": "Copiando",
+"Copyright": "Copyright",
+"Coreano": "Coreano",
+"Country": "Country",
+"Dance": "Dance",
+"Deezer": "Deezer",
+"Deshaciendo": "Desfazendo",
+"Deshecho": "Desfeito",
+"Directo": "Ao vivo",
+"Director": "Regente",
+"Disco": "Disco",
+"Documento": "Documento",
+"Editorial": "Editora",
+"Efecto": "Efeito",
+"Eliminar": "Excluir",
+"Euskera": "Basco",
+"Experimental": "Experimental",
+"Flamenco": "Flamenco",
+"Folk": "Folk",
+"Funk": "Funk",
+"Gallego": "Galego",
+"Griego": "Grego",
+"Guardado ✓": "Salvo ✓",
+"Hebreo": "Hebraico",
+"Hindi": "Hindi",
+"House": "House",
+"Imagen": "Imagem",
+"Indie": "Indie",
+"Indonesio": "Indonésio",
+"Ingeniero": "Engenheiro de som",
+"Instalar": "Instalar",
+"Italiano": "Italiano",
+"Jazz": "Jazz",
+"LUFS · pico": "LUFS · pico",
+"LUFS · techo": "LUFS · teto",
+"Latino": "Latina",
+"Letrista": "Letrista",
+"Mandos": "Controles",
+"Metal": "Metal",
+"Mezcla": "Mixagem",
+"Mezclador": "Engenheiro de mixagem",
+"Mixtape «": "Mixtape «",
+"Mover": "Mover",
+"Noruego": "Norueguês",
+"Olvidar": "Esquecer",
+"Otro": "Outro",
+"Pausa": "Pausa",
+"Pausar": "Pausar",
+"Perfil «": "Perfil «",
+"Pico: L": "Pico: L",
+"Pista": "Faixa",
+"Polaco": "Polonês",
+"Pop": "Pop",
+"Pre-": "Pre-",
+"Preset «": "Preset «",
+"Productor": "Produtor",
+"Proyecto": "Projeto",
+"Punk": "Punk",
+"Rap": "Rap",
+"Reemplazar": "Substituir",
+"Reggae": "Reggae",
+"Reggaeton": "Reggaeton",
+"Remezclador": "Remixador",
+"Renombrada ✓": "Renomeada ✓",
+"Rock": "Rock",
+"Rumano": "Romeno",
+"Rumba": "Rumba",
+"Ruso": "Russo",
+"Salsa": "Salsa",
+"Sello": "Selo",
+"Singles": "Singles",
+"Soul": "Soul",
+"Suajili": "Suaíli",
+"Sueco": "Sueco",
+"Synthpop": "Synthpop",
+"Tabulador": "Tabulação",
+"Techno": "Techno",
+"Tidal": "Tidal",
+"Toma": "Take",
+"Tonalidad": "Tonalidade",
+"Trance": "Trance",
+"Trap": "Trap",
+"Turco": "Turco",
+"Ucraniano": "Ucraniano",
+"Unidas ✓": "Unidas ✓",
+"Vaciar": "Esvaziar",
+"Verificando": "Verificando",
+"Vietnamita": "Vietnamita",
+"Web": "Web",
+"ZIP listo": "ZIP pronto",
+"archivos quitados": "arquivos removidos",
+"audios internos": "áudios internos",
+"columna": "coluna",
+"conservados": "mantidos",
+"dB · R": "dB · R",
+"decodificado a": "decodificado para",
+"deshecha": "desfeita",
+"efecto interno desconocido": "efeito interno desconhecido",
+"entradas": "entradas",
+"kbps creado": "kbps criado",
+"latencia": "latência",
+"muestras": "amostras",
+"objetivo": "objetivo",
+"perfil «": "perfil «",
+"unida": "unida",
+"» cargado": "» carregado",
+"» guardado": "» salvo",
+"adelantos": "pré-lançamentos",
+"1 · Archivo": "1 · Arquivo",
+"3 · Comprobar": "3 · Verificar",
+"4 · Hecho": "4 · Concluído",
+"letra · versión · stems · máster · portada · publicada": "letra · versão · stems · master · capa · publicada",
+"el archivo es demasiado grande": "o arquivo é grande demais",
+"etiqueta ID3v2.3 no encontrada": "tag ID3v2.3 não encontrada",
+"1 canción": "1 música",
+"crear una app en su panel de desarrolladores; el modo de desarrollo exige que la cuenta propietaria tenga": "criar um app no painel de desenvolvedores; o modo de desenvolvimento exige que a conta proprietária tenha",
+"Hay muchas carpetas; muestro las primeras 3000": "Há muitas pastas; mostrando as primeiras 3000",
+"Se copian a tu biblioteca; lo original no se toca": "São copiados para a sua biblioteca; o original não é alterado",
+"ms. El reproductor del navegador queda en silencio mientras suena; los botones FX se oyen al instante": "ms. O player do navegador fica em silêncio enquanto toca; os botões FX são ouvidos na hora",
+"muestras · latencia ≈": "amostras · latência ≈",
+"salida «": "saída «",
+"» · bloques de": "» · blocos de",
 "% igual": "% igual",
 "0 dB · sin techo": "0 dB · sem teto",
 "1 · ¿Dónde está tu música?": "1 · Onde está a sua música?",
@@ -1054,7 +1222,6 @@
 "falta la canción o el texto": "falta a música ou o texto",
 "ffmpeg falló": "o ffmpeg falhou",
 "ffmpeg falló con «": "o ffmpeg falhou com «",
-"ffmpeg falló con «{a}»: {b}": "o ffmpeg falhou com «{a}»: {b}",
 "ffmpeg no pudo leer ese audio": "o ffmpeg não conseguiu ler esse áudio",
 "filas": "linhas",
 "filas casadas con claridad · 🔎": "linhas associadas com clareza · 🔎",
@@ -1442,9 +1609,182 @@
 "Para escuchar con efectos en directo hace falta «sounddevice» (con PortAudio, la librería que habla con tu tarjeta de sonido). Se descarga de internet (pypi.org) y se instala en el Python de este gestor. ¿Instalarlo?": "Para ouvir com efeitos ao vivo é preciso o «sounddevice» (com PortAudio, a biblioteca que fala com a sua placa de som). Ele é baixado da internet (pypi.org) e instalado no Python deste gerenciador. Instalar?",
 "Suelta aquí para marcarlas como": "⬇ Solte aqui para marcá-las como",
 "Tienen audio pero no su letra guardada (publicadas o no). Si es un instrumental, ocúltala o márcala como": "Têm áudio, mas não a letra salva (publicadas ou não). Se for um instrumental, oculte-a ou marque-a como",
-"Álbumes y": "Álbuns e"
+"Álbumes y": "Álbuns e",
+"Por ejemplo: D:\\Mis proyectos de música · /Users/yo/Música": "Por exemplo: D:\\Meus projetos de música · /Users/eu/Música"
 },
 "patrones": [
+[
+"Aplicando efectos {a} de {b}: {c}",
+"Aplicando efeitos {a} de {b}: {c}"
+],
+[
+"Con efectos: {a} de {b} hueco(s) activos{c}",
+"Com efeitos: {a} de {b} slot(s) ativo(s){c}"
+],
+[
+"Define hasta 5 efectos una sola vez (los mismos plugins y ajustes para todo {j}). En cada pista, los botones",
+"Defina até 5 efeitos uma única vez (os mesmos plugins e ajustes para {j}). Em cada faixa, os botões"
+],
+[
+"Efectos {a} en {b} pista(s)",
+"Efeitos {a} em {b} faixa(s)"
+],
+[
+"Tus datos (estrellas, notas, ajustes…) están en: {g}",
+"Seus dados (estrelas, notas, ajustes…) estão em: {g}"
+],
+[
+"{a} pista(s) con ajuste propio",
+"{a} faixa(s) com ajuste próprio"
+],
+[
+"Actualizado ✓ · {a} entradas",
+"Atualizado ✓ · {a} entradas"
+],
+[
+"Aplicando efectos a «{a}»",
+"Aplicando efeitos a «{a}»"
+],
+[
+"Asignada a «{a}» ✓",
+"Atribuída a «{a}» ✓"
+],
+[
+"Deshecho: {a} archivos quitados{b}{c}",
+"Desfeito: {a} arquivos removidos{b}{c}"
+],
+[
+"Escuchar «{a}»",
+"Ouvir «{a}»"
+],
+[
+"Estado {a}",
+"Estado {a}"
+],
+[
+"MP3 {a} kbps creado · {b} MB",
+"MP3 {a} kbps criado · {b} MB"
+],
+[
+"Mixtape «{a}» creado",
+"Mixtape «{a}» criado"
+],
+[
+"Perfil «{a}» guardado",
+"Perfil «{a}» salvo"
+],
+[
+"Pico: L {a} dB · R {b} dB",
+"Pico: L {a} dB · R {b} dB"
+],
+[
+"Plataformas: {a}",
+"Plataformas: {a}"
+],
+[
+"Preset «{a}» cargado",
+"Preset «{a}» carregado"
+],
+[
+"ZIP listo: {a} · {b} MB",
+"ZIP pronto: {a} · {b} MB"
+],
+[
+"columna {a})",
+"coluna {a})"
+],
+[
+"decodificado a {a} kHz",
+"decodificado para {a} kHz"
+],
+[
+"deshecha ({a} archivos quitados{b})",
+"desfeita ({a} arquivos removidos{b})"
+],
+[
+"efecto interno desconocido: {a}",
+"efeito interno desconhecido: {a}"
+],
+[
+"latencia {a} m",
+"latência {a} m"
+],
+[
+"latencia {a} muestras",
+"latência {a} amostras"
+],
+[
+"perfil «{a}»",
+"perfil «{a}»"
+],
+[
+"{a} audios internos",
+"{a} áudios internos"
+],
+[
+"{a} boceto{b})",
+"{a} rascunho{b})"
+],
+[
+"{a} conservados",
+"{a} mantidos"
+],
+[
+"{a} ingresos",
+"{a} receitas"
+],
+[
+"{a} repro",
+"{a} reproduções"
+],
+[
+"{a} · objetivo {b} LUFS · techo {c} dB · {d}",
+"{a} · objetivo {b} LUFS · teto {c} dB · {d}"
+],
+[
+"{a}: {b} LUFS · pico {c} dB → {d}",
+"{a}: {b} LUFS · pico {c} dB → {d}"
+],
+[
+"Estado {a}: {b}",
+"Estado {a}: {b}"
+],
+[
+"{a} adelantos",
+"{a} pré-lançamentos"
+],
+[
+"{a} unida{b} a «{c}» ✓",
+"{a} unida{b} a «{c}» ✓"
+],
+[
+"Los puntos son, por orden: {a}",
+"Os pontos são, por ordem: {a}"
+],
+[
+"{a}: a medias",
+"{a}: em parte"
+],
+[
+"{a}: falta",
+"{a}: falta"
+],
+[
+"{a}: sí",
+"{a}: sim"
+],
+[
+"{a} canciones ({b} boceto{c})",
+"{a} músicas ({b} rascunho{c})"
+],
+[
+"{a} canción ({b} boceto{c})",
+"{a} música ({b} rascunho)"
+],
+[
+"salida «{a}» · bloques de {b} muestras · latencia ≈ {c} ms. El reproductor del navegador queda en silencio mientras suena; los botones FX se oyen al instante",
+"saída «{a}» · blocos de {b} amostras · latência ≈ {c} ms. O player do navegador fica em silêncio enquanto toca; os botões FX são ouvidos na hora"
+],
 [
 "Avisos ({a})",
 "Avisos ({a})"
@@ -1680,6 +2020,10 @@
 [
 "encontradas, {a} no",
 "encontradas, {a} não"
+],
+[
+"ffmpeg falló con «{a}»: {b}",
+"o ffmpeg falhou com «{a}»: {b}"
 ],
 [
 "ffmpeg falló: {b}",

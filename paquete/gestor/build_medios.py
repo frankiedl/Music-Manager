@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Inventario de arte y vídeo -> datos/medios.json (solo lee tu música).
+"""Artwork and video inventory -> datos/medios.json (only reads your music).
 
-Recorre published/ prereleased/ unreleased/ (carpetas «arte» y «video» dentro de cada canción) y la carpeta ARTE/,
-y agrupa por «dueño» (carpeta de canción o de álbum). Las miniaturas necesitan Pillow (pip install pillow);
-sin Pillow se usan las imágenes pequeñas tal cual.
+Walks published/ prereleased/ unreleased/ ("arte" and "video" folders inside each song) and the ARTE/ folder,
+and groups by "owner" (song or album folder). Thumbnails need Pillow (pip install pillow);
+without Pillow small images are used as they are.
 """
 import hashlib
 import json
@@ -19,7 +19,7 @@ import common as C  # noqa: E402
 try:
     from PIL import Image
     Image.MAX_IMAGE_PIXELS = None
-except ImportError:  # el gestor funciona igual, solo que las portadas grandes no tendrán miniatura
+except ImportError:  # the manager works the same, large covers just won't get a thumbnail
     Image = None
 
 THUMBS = C.DATOS / "thumbs"
@@ -45,7 +45,7 @@ def classify(ext):
 
 
 def thumb(rel, full):
-    """Miniatura JPEG de 520 px en datos/thumbs (caché por ruta+tamaño+fecha). Devuelve el nombre o ''."""
+    """520 px JPEG thumbnail in datos/thumbs (cached by path+size+date). Returns the file name or ''."""
     lp = C.lp(full)
     st = os.stat(lp)
     name = hashlib.md5(f"{rel}|{st.st_size}|{int(st.st_mtime)}".encode()).hexdigest() + ".jpg"

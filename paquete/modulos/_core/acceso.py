@@ -1,12 +1,12 @@
-"""Acceso desde otra web al agente local del gestor (modo «web app»).
+"""Access to the manager's local agent from another website ("web app" mode).
 
-Idea: tus datos y tu música se quedan en tu equipo. El gestor es un *agente local* (127.0.0.1). La interfaz puede cargarse
-desde el propio agente (como hasta ahora) o desde una web publicada; en ese caso esa web habla con tu agente.
-Para que ninguna otra página pueda tocar tu biblioteca:
+Idea: your data and your music stay on your computer. The manager is a *local agent* (127.0.0.1). The UI can be loaded
+from the agent itself (as always) or from a published website; in that case that website talks to your agent.
+So that no other page can touch your library:
 
-  · solo se aceptan peticiones de otro origen si ese origen está en la lista  origenes  de  datos/agente.json
-  · y además traen el token de emparejamiento (cabecera X-Gestor-Token, o ?t=… en imágenes y audio).
-  · las peticiones de la propia página del agente funcionan como siempre, sin token.
+  · requests from another origin are accepted only if that origin is in the  origenes  list of  datos/agente.json
+  · and they also carry the pairing token (X-Gestor-Token header, or ?t=… for images and audio).
+  · requests from the agent's own page work as always, without a token.
 """
 import json
 import secrets
@@ -14,7 +14,7 @@ from pathlib import Path
 
 
 def cargar(datos_dir):
-    """Lee (o crea) datos/agente.json: {"token": "...", "origenes": ["https://tu-web.example"]}."""
+    """Reads (or creates) datos/agente.json: {"token": "...", "origenes": ["https://your-site.example"]}."""
     datos_dir = Path(datos_dir)
     datos_dir.mkdir(parents=True, exist_ok=True)
     p = datos_dir / "agente.json"
@@ -44,29 +44,29 @@ EXTENSIONES = ("chrome-extension://", "moz-extension://", "safari-web-extension:
 
 
 def origen_permitido(h, agente):
-    """El origen de la petición si es una web autorizada o una extensión de navegador (en ambos casos hace falta además el token)."""
+    """The request origin if it is an authorized website or a browser extension (in both cases the token is also required)."""
     o = (h.headers.get("Origin") or "").lower().rstrip("/")
-    if o.startswith(EXTENSIONES):  # una página web no puede falsear este origen; igualmente exige el token
+    if o.startswith(EXTENSIONES):  # a web page cannot fake this origin; the token is required anyway
         return o
     return o if o and o in [x.lower().rstrip("/") for x in agente.get("origenes", [])] else ""
 
 
 def autorizar(h, agente, puerto):
-    """True si la petición puede atenderse. (El Host ya se comprobó antes.)"""
+    """True if the request may be served. (The Host header was already checked.)"""
     o = (h.headers.get("Origin") or "").lower().rstrip("/")
     propios = (f"http://127.0.0.1:{puerto}", f"http://localhost:{puerto}")
     if o in propios:
         return True
-    if o:  # otro origen: solo si está permitido y trae el token
+    if o:  # other origin: only if allowed and it carries the token
         return bool(origen_permitido(h, agente)) and _token_ok(h, agente, h.path)
-    # sin Origin (navegación, imágenes, audio): si viene de otro sitio hace falta el token
+    # no Origin (navigation, images, audio): if it comes from another site the token is required
     if (h.headers.get("Sec-Fetch-Site") or "").lower() == "cross-site":
         return _token_ok(h, agente, h.path)
     return True
 
 
 def cabeceras_cors(h, agente):
-    """Cabeceras CORS para el origen permitido (vacío si no lo es)."""
+    """CORS headers for the allowed origin (empty if it is not allowed)."""
     o = origen_permitido(h, agente)
     if not o:
         return []
@@ -77,10 +77,10 @@ def cabeceras_cors(h, agente):
 
 
 def preflight(h, agente):
-    """Responde a OPTIONS. Devuelve True si lo atendió."""
+    """Answers OPTIONS. Returns True if it handled it."""
     o = origen_permitido(h, agente)
     h.send_response(204 if o else 403)
-    if o:  # Allow-Origin, Vary y Private-Network los añade end_headers del gestor (no repetirlos aquí)
+    if o:  # Allow-Origin, Vary and Private-Network are added by the manager's end_headers (do not repeat them here)
         h.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
         h.send_header("Access-Control-Allow-Headers", "Content-Type, X-Gestor-Token, Range")
         h.send_header("Access-Control-Max-Age", "600")

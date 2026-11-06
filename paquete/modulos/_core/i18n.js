@@ -1,13 +1,14 @@
-/* Traductor en tiempo de ejecución del gestor (es → en · de · pt). Se carga ANTES de gm.js.
-   No reescribe las pantallas: observa el DOM y traduce los textos de la interfaz que estén en el diccionario
+/* Runtime translator of the manager (es → en · de · pt). Loaded BEFORE gm.js.
+   It does not rewrite the screens: it observes the DOM and translates the UI texts that are in the dictionary
    modulos/_core/idiomas/<xx>.json  {"exactas":{"texto":"traducción"},"patrones":[["{n} canciones","{n} songs"]]}.
-   Lo que no está en el diccionario (títulos, letras, nombres de carpetas…) se queda tal cual.
-   API: window.T('texto') · GM.idioma · GM.setIdioma('en')  ·  ?lang=xx en la URL para probar. */
+   What is not in the dictionary (titles, lyrics, folder names…) stays as it is.
+   API: window.T('texto') · GM.idioma · GM.setIdioma('en')  ·  ?lang=xx in the URL to test.
+   The source language is Spanish: every new UI string must be added to the dictionaries (see distribucion/i18n/comprobar_idiomas.py). */
 (()=>{
 const LANGS=['es','en','de','pt'],KEY='gm_idioma';
 const NOMBRES={es:'Español',en:'English',de:'Deutsch',pt:'Português'};
 let lang='es',EX=Object.create(null),PAT=[];
-const cache=new Map(),orig=new WeakMap();   // orig: nodo o elemento → {txt|attr:valor original}
+const cache=new Map(),orig=new WeakMap();   // orig: node or element → {txt|attr: original value}
 const ATTRS=['placeholder','title','aria-label','alt'];
 const SKIP={SCRIPT:1,STYLE:1,TEXTAREA:1,NOSCRIPT:1,CODE:1,PRE:1};
 const tieneLetras=/[A-Za-zÀ-ÿ]/;
@@ -23,45 +24,49 @@ function cargar(l){
   EX=Object.create(null);PAT=[];cache.clear();
   if(l==='es')return;
   try{
-    const x=new XMLHttpRequest();x.open('GET','/mod/_core/idiomas/'+l+'.json',false);x.send();   // síncrono: evita el parpadeo en español
+    const x=new XMLHttpRequest();x.open('GET','/mod/_core/idiomas/'+l+'.json',false);x.send();   // synchronous: avoids a flash of Spanish text
     if(x.status!==200)return;
     const d=JSON.parse(x.responseText);
     Object.assign(EX,d.exactas||{});
     for(const [es,tr] of (d.patrones||[])){
       const partes=es.split(/\{(\w+)\}/),nombres=[];let re='';
       partes.forEach((p,i)=>{if(i%2){nombres.push(p);
-        /* un marcador pegado a una letra («Letra{j}», «canción{b}») solo admite sufijos cortos: «s», « (3)», «, Ana» */
+        /* a marker glued to a letter («Letra{j}», «canción{b}») only accepts short suffixes: «s», « (3)», «, Ana» */
         const pegado=(i>0&&/[A-Za-zÀ-ÿ]$/.test(partes[i-1]))||(i<partes.length-1&&/^[A-Za-zÀ-ÿ]/.test(partes[i+1]));
         re+=pegado?'(\\s?\\([^)]*\\)|[^\\s]{0,3}|,\\s\\S+|[\\d\\s·.,%x\\-]*)':'([\\s\\S]+?)'}
       else re+=p.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')});
       try{PAT.push({re:new RegExp('^'+re+'$'),nombres,tr,lit:partes.filter((p,i)=>!(i%2)).join('').length})}catch{}}
-    PAT.sort((a,b)=>b.lit-a.lit);   // primero los más específicos
+    PAT.sort((a,b)=>b.lit-a.lit);   // most specific first
   }catch(e){console.warn('i18n: no se pudo cargar el diccionario',l,e)}}
 
-function buscar(core,prof){
-  let r=EX[core];if(r!==undefined)return r;
+function buscar(core,prof,soloExacta){
+  let r=EX[core];if(r!==undefined||soloExacta)return r;
   for(const p of PAT){const q=p.re.exec(core);if(q){const v={};p.nombres.forEach((n,i)=>{if(!(n in v))v[n]=q[i+1]});
     return p.tr.replace(/\{(\w+)\}/g,(_,n)=>{if(!(n in v))return '{'+n+'}';const x=v[n];return (prof||0)<2?(parte(x,(prof||0)+1)):x})}}}
-/* traduce un trozo (valor capturado o segmento): exacta, o sin emojis/puntuación en los extremos */
+/* translates a piece (captured value or segment): exact, or without emojis/punctuation at the edges */
 function parte(x,prof){
   const m=/^(\s*)([\s\S]*?)(\s*)$/.exec(x),c=m[2].replace(/\s+/g,' ');if(!c||!tieneLetras.test(c))return x;
   let r=buscar(c,prof);
   if(r===undefined){const q=/^([^\wÀ-ÿ¿¡«{]*)([\s\S]*?)([\s….:,;·→]*)$/.exec(c);if(q[2]&&(q[1]||q[3])){const t=buscar(q[2],prof);if(t!==undefined)r=q[1]+t+q[3]}}
+  if(r===undefined&&(prof||0)<2)r=porTrozos(c);   // a captured value that is itself a compound phrase
   return r===undefined?x:m[1]+r+m[3]}
 const SEP=/(\s+·\s+|\s+—\s+|[.;:]\s+|,\s+|\s+\(|\)\s+)/;
-function porTrozos(c){   // último recurso: traduce cada trozo de una frase compuesta que sí esté en el diccionario
+function porTrozos(c){   // last resort: translates each piece of a compound sentence that is in the dictionary
   const t=c.split(SEP);if(t.length<3)return undefined;
   let hay=false;const o=t.map((x,i)=>{if(i%2||!x)return x;const y=parte(x,0);if(y!==x)hay=true;return y});
   return hay?o.join(''):undefined}
-function trad(s){   // traduce una cadena conservando los espacios y los signos/emojis de los extremos
+function trad(s){   // translates a string keeping the spaces and the signs/emojis at the edges
   if(lang==='es'||!s||!tieneLetras.test(s))return s;
   const m=/^(\s*)([\s\S]*?)(\s*)$/.exec(s),core=m[2].replace(/\s+/g,' ');
   let r=cache.get(core);
   if(r===undefined){
-    r=buscar(core,0);
-    if(r===undefined){
-      const q=/^([^\wÀ-ÿ¿¡«{]*)([\s\S]*?)([\s….:,;·→]*)$/.exec(core);
-      if(q[2]&&(q[1]||q[3])){const t=buscar(q[2],0);if(t!==undefined)r=q[1]+t+q[3]}}
+    const q=/^([^\wÀ-ÿ¿¡«{]*)([\s\S]*?)([\s….:,;·→]*)$/.exec(core),borde=q[2]&&(q[1]||q[3]);
+    /* exact matches first (also without the emoji/punctuation at the edges), then patterns: a loose pattern such as
+       «{c} canciones{d}» must not swallow a whole sentence that has its own exact entry */
+    r=buscar(core,0,true);
+    if(r===undefined&&borde){const t=buscar(q[2],0,true);if(t!==undefined)r=q[1]+t+q[3]}
+    if(r===undefined)r=buscar(core,0);
+    if(r===undefined&&borde){const t=buscar(q[2],0);if(t!==undefined)r=q[1]+t+q[3]}
     if(r===undefined)r=porTrozos(core);
     if(r===undefined)r=null;
     if(cache.size>30000)cache.clear();
@@ -73,7 +78,7 @@ function ignorado(el){for(;el&&el.nodeType===1;el=el.parentNode){if(SKIP[el.tagN
 function nodoTexto(n){
   if(ignorado(n.parentNode))return;
   const o=orig.get(n),v=n.nodeValue;
-  if(o&&v===o.out)return;                 // ya traducido
+  if(o&&v===o.out)return;                 // already translated
   const t=trad(v);
   if(t!==v){orig.set(n,{txt:v,out:t});n.nodeValue=t}else if(o)orig.delete(n)}
 
@@ -103,10 +108,10 @@ function observar(){
       if(r.type==='childList')r.addedNodes.forEach(recorrer);
       else if(r.type==='characterData')nodoTexto(r.target);
       else if(r.type==='attributes'){const el=r.target;if(r.attributeName==='value'){if(el.tagName==='INPUT'&&/^(button|submit|reset)$/i.test(el.type))attr(el,'value')}else attr(el,r.attributeName)}}
-    obs.takeRecords()});    // descarta lo que provocan nuestras propias escrituras
+    obs.takeRecords()});    // discard what our own writes trigger
   obs.observe(document.documentElement,{childList:true,subtree:true,characterData:true,attributes:true,attributeFilter:[...ATTRS,'value']})}
 
-/* cambio de idioma al instante: restaura los originales y vuelve a traducir */
+/* instant language switch: restore the originals and translate again */
 function restaurar(raiz){
   const w=document.createTreeWalker(raiz,NodeFilter.SHOW_ELEMENT|NodeFilter.SHOW_TEXT);let n;
   while((n=w.nextNode())){
@@ -141,6 +146,6 @@ function listo(){
   if(window.GM){GM.idioma=lang;GM.idiomas=NOMBRES;GM.setIdioma=setIdioma}
   aplicar();observar()}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',listo);else listo();
-/* el documento ya existe parcialmente: empieza a observar desde ya para no dejar pasar nada */
+/* the document already exists partially: start observing right away so nothing slips through */
 if(lang!=='es'){document.documentElement.lang=lang;observar()}
 })();

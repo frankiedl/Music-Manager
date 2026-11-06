@@ -1,5 +1,5 @@
-/* Módulo «estado» · pestaña «Conexiones»: qué se puede conseguir de cada plataforma (resumen honesto de LEEME.md)
-   y la única conexión opcional: datos públicos de catálogo de Spotify con las claves propias de la persona. */
+/* «estado» module · «Conexiones» (Connections) tab: what can be obtained from each platform (honest summary of LEEME.md)
+   and the only optional connection: public Spotify catalog data with the user's own keys. */
 (function(){
 const EST=window.EST,E=EST.E;
 const FUENTES=[

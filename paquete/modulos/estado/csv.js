@@ -1,12 +1,12 @@
-/* Módulo «estado» · lectura de CSV/TSV (sin dependencias). Todo ocurre en el equipo: el archivo no se sube a ningún sitio.
+/* «estado» module · CSV/TSV reader (no dependencies). Everything happens on the computer: the file is not uploaded anywhere.
    EstadoCSV.leer(arrayBuffer)  → {texto, codificacion}
    EstadoCSV.separador(texto)   → ',' | ';' | '\t' | '|'
-   EstadoCSV.filas(texto, sep)  → [[celda,…],…]
-   EstadoCSV.cabecera(filas)    → índice de la fila de cabecera (salta preámbulos tipo «Informe de …»)
+   EstadoCSV.filas(texto, sep)  → [[cell,…],…]
+   EstadoCSV.cabecera(filas)    → index of the header row (skips preambles such as «Informe de …»)
    EstadoCSV.decimal(filas, desde, columnas) → ',' | '.'
-   EstadoCSV.numero(texto, dec) → número (o null)
-   EstadoCSV.fecha(texto, orden)→ 'AAAA-MM' (o null);  EstadoCSV.ordenFechas(valores) → 'dmy' | 'mdy' | null (si es ambiguo)
-   EstadoCSV.norm / titulo / titulos(texto) → claves para casar títulos */
+   EstadoCSV.numero(texto, dec) → number (or null)
+   EstadoCSV.fecha(texto, orden)→ 'YYYY-MM' (or null);  EstadoCSV.ordenFechas(valores) → 'dmy' | 'mdy' | null (if ambiguous)
+   EstadoCSV.norm / titulo / titulos(texto) → keys to match titles */
 (function(root){
   const MESES={ene:1,enero:1,jan:1,january:1,feb:2,febrero:2,february:2,mar:3,marzo:3,march:3,abr:4,abril:4,apr:4,april:4,may:5,mayo:5,jun:6,junio:6,june:6,
     jul:7,julio:7,july:7,ago:8,agosto:8,aug:8,august:8,sep:9,sept:9,septiembre:9,setiembre:9,september:9,oct:10,octubre:10,october:10,nov:11,noviembre:11,november:11,dic:12,diciembre:12,dec:12,december:12};
@@ -118,12 +118,12 @@
     return null;
   }
 
-  /* ----- títulos ----- */
+  /* ----- titles ----- */
   const norm=s=>String(s==null?'':s).normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/&/g,' and ').replace(/[^a-z0-9]+/g,' ').trim();
   const SUFIJOS='remaster(?:ed)?(?:\\s+\\d{4})?|\\d{4}\\s+remaster(?:ed)?|remasterizad[oa]|radio\\s+edit|single(?:\\s+version)?|album\\s+version|version|versi[oó]n|edit|mix|remix|live|en\\s+vivo|acoustic|ac[uú]stic[oa]|feat\\.?[^)\\]]*|ft\\.?[^)\\]]*|with\\s[^)\\]]*|con\\s[^)\\]]*|demo|instrumental|official[^)\\]]*|video[^)\\]]*|lyric[^)\\]]*|audio|bonus[^)\\]]*|explicit|clean|deluxe[^)\\]]*|prod\\.?[^)\\]]*';
   const reParen=new RegExp('\\s*[\\(\\[]\\s*(?:'+SUFIJOS+')\\s*[\\)\\]]','gi');
   const reGuion=new RegExp('\\s+[-–—]\\s+(?:'+SUFIJOS+')\\s*$','i');
-  function titulo(s){ // clave «relajada»: sin (Remastered), - Single, (feat. X)…
+  function titulo(s){ // «relaxed» key: without (Remastered), - Single, (feat. X)…
     let t=String(s==null?'':s);
     for(let i=0;i<3;i++){t=t.replace(reParen,'');t=t.replace(reGuion,'')}
     return norm(t);

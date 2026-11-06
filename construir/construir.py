@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-r"""Construye el ejecutable del gestor con PyInstaller (modo carpeta) a partir del paquete genérico ya generado.
+r"""Builds the manager's executable with PyInstaller (folder mode) from the already generated generic package.
 
-  python construir.py [--paquete RUTA/GestorMusica] [--salida RUTA] [--sin-manual]
+  python construir.py [--paquete PATH/GestorMusica] [--salida PATH] [--sin-manual]
 
-Requiere:  pip install pyinstaller pillow reportlab   (Python 3.11 o 3.12 recomendado, ver CONSTRUIR.md)
-Resultado: SALIDA/GestorMusica-<sistema>/  con  GestorMusica(.exe | .app), carpeta de soporte (_internal) y los manuales (Manual_ESP.pdf, Manual_ENG.pdf, Manual_DEUT.pdf, Manual_PORT.pdf)
-           SALIDA/GestorMusica-<sistema>.zip
+Requires:  pip install pyinstaller pillow reportlab   (Python 3.11 or 3.12 recommended, see CONSTRUIR.md)
+Result:    SALIDA/GestorMusica-<system>/  with  GestorMusica(.exe | .app), support folder (_internal) and the manuals (Manual_ESP.pdf, Manual_ENG.pdf, Manual_DEUT.pdf, Manual_PORT.pdf)
+           SALIDA/GestorMusica-<system>.zip
 """
 import os
 import platform
@@ -24,7 +24,7 @@ SIS = {"Windows": "windows", "Darwin": "mac", "Linux": "linux"}.get(platform.sys
 if SIS == "mac":
     SIS += "-" + ("apple-silicon" if platform.machine() == "arm64" else "intel")
 NOMBRE = "GestorMusica"
-# la stdlib que usan gestor.py, los scripts y los servidor.py de los módulos (se cargan por ruta y PyInstaller no los ve)
+# the stdlib used by gestor.py, the scripts and the modules' servidor.py (loaded by path, so PyInstaller does not see them)
 HIDDEN = ["argparse", "concurrent.futures", "csv", "ctypes", "datetime", "difflib", "glob", "hashlib", "http.server", "importlib.util",
           "json", "math", "mimetypes", "platform", "re", "secrets", "shutil", "socket", "string", "subprocess", "threading", "traceback",
           "types", "unicodedata", "urllib.parse", "urllib.request", "urllib.error", "uuid", "webbrowser", "zipfile", "zlib",
@@ -33,7 +33,7 @@ HIDDEN = ["argparse", "concurrent.futures", "csv", "ctypes", "datetime", "diffli
 
 def main():
     if not (PAQ / "gestor" / "index.html").is_file():
-        raise SystemExit(f"No encuentro el paquete genérico en {PAQ}. Ejecuta antes empaquetar.py")
+        raise SystemExit(f"Cannot find the generic package in {PAQ}. Run empaquetar.py first")
     sep = os.pathsep
     trabajo = SAL / "_pyi"
     shutil.rmtree(trabajo, ignore_errors=True)
@@ -43,7 +43,7 @@ def main():
            "--exclude-module", "numpy", "--exclude-module", "pedalboard"]
     for h in HIDDEN:
         cmd += ["--hidden-import", h]
-    cmd += ["--windowed"] if SIS.startswith("mac") else []   # Windows: se mantiene la ventana de texto pequeña («cierra para salir»)
+    cmd += ["--windowed"] if SIS.startswith("mac") else []   # Windows: keep the small text window ("close it to quit")
     if SIS.startswith("mac"):
         cmd += ["--target-architecture", "universal2"] if os.environ.get("GM_UNIVERSAL2") else []
         cmd += ["--osx-bundle-identifier", "app.gestormusica.local"]
@@ -64,9 +64,9 @@ def main():
     shutil.rmtree(trabajo, ignore_errors=True)
     zp = SAL / f"{NOMBRE}-{SIS}.zip"
     zp.unlink(missing_ok=True)
-    if SIS.startswith("mac"):  # ditto conserva enlaces simbólicos y permisos dentro del .app
+    if SIS.startswith("mac"):  # ditto keeps symlinks and permissions inside the .app
         subprocess.run(["ditto", "-c", "-k", "--keepParent", str(out), str(zp)], check=True)
-        print("Listo:", out, "| Zip:", zp)
+        print("Done:", out, "| Zip:", zp)
         return
     with zipfile.ZipFile(zp, "w", zipfile.ZIP_DEFLATED) as z:
         for f in sorted(out.rglob("*")):
@@ -76,7 +76,7 @@ def main():
             zi.compress_type = zipfile.ZIP_DEFLATED
             zi.external_attr = (0o755 if os.access(f, os.X_OK) and SIS != "windows" else 0o644) << 16
             z.writestr(zi, f.read_bytes())
-    print(f"Listo: {out}\nZip: {zp} ({round(zp.stat().st_size / 1048576, 1)} MB)")
+    print(f"Done: {out}\nZip: {zp} ({round(zp.stat().st_size / 1048576, 1)} MB)")
 
 
 if __name__ == "__main__":

@@ -1,5 +1,5 @@
-"""Ajustes del gestor: carpeta de la biblioteca, nombre y titular, y carpetas extra donde buscar plugins VST3.
-Las preferencias que comparten varios módulos se guardan con ctx.guardar_ajustes (datos/ajustes.json)."""
+"""Manager settings: library folder, name and copyright owner, and extra folders to look for VST3 plugins in.
+Preferences shared by several modules are saved with ctx.guardar_ajustes (datos/ajustes.json)."""
 import os
 import string
 import sys
@@ -48,7 +48,7 @@ def biblioteca(req, ctx):
 
 
 def carpetas(req, ctx):
-    """Explorador de carpetas: solo lista nombres de subcarpetas (no lee contenido)."""
+    """Folder browser: only lists subfolder names (does not read contents)."""
     ruta = req.arg("ruta")
     if not ruta:
         if os.name == "nt":
