@@ -1,6 +1,6 @@
 """Builds a mixtape package (shared by the personal manager and the distributable one).
 
-ZIP:  Abrir.html (name depends on language) · Canciones/NN - Title.mp3 · Letras/NN - Title.txt · COPYRIGHT.txt · Portada.jpg
+ZIP:  Abrir.html (name depends on language) · Canciones/NN - Title.mp3 · Letras/NN - Title.txt · COPYRIGHT.txt · Portada.jpg (name depends on language)
 HTML: a single file, no libraries or Internet; lyrics embedded as JSON; audio through relative paths
       (or base64 inside the HTML itself with the "everything in a single HTML" option).
 The lyrics also go into the MP3 tag (USLT, unsynchronized lyrics)."""
@@ -24,6 +24,8 @@ NOMBRES = {
     "de": ("Oeffnen.html", "Lieder", "Liedtexte"),
     "pt": ("Abrir.html", "Musicas", "Letras"),
 }
+# cover file name by language
+PORTADA = {"es": "Portada.jpg", "pt": "Capa.jpg", "de": "Cover.jpg", "en": "Cover.jpg"}
 # player texts and server messages (they do not go through the UI dictionary)
 UI = {
     "es": dict(tracks="Pistas", lyrics="Letra", nolyrics="Esta pista no tiene letra.", play="Reproducir", pause="Pausa",
@@ -124,7 +126,7 @@ def construir(job, *, ff, lang, tr, songs, items, base, name, nombre, artist, ow
             (folder / d_let).mkdir(exist_ok=True)
         cover = None
         if cover_bytes:
-            cover = folder / "Portada.jpg"
+            cover = folder / PORTADA.get(lang, "Cover.jpg")
             cover.write_bytes(cover_bytes)
         job.update(total=len(items), done=0, estado="convirtiendo")
         avisos, pistas = [], []
@@ -190,7 +192,7 @@ def construir(job, *, ff, lang, tr, songs, items, base, name, nombre, artist, ow
             base.mkdir(parents=True, exist_ok=True)
             destino.write_text(doc, encoding="utf-8")
             return dict(zip=destino.relative_to(root).as_posix(), carpeta=base.relative_to(root).as_posix(), mb=round(destino.stat().st_size / 1e6, 1))
-        (folder / nom_html).write_text(html_reproductor(lang, nombre, artist, pistas, "Portada.jpg" if cover_bytes else ""), encoding="utf-8")
+        (folder / nom_html).write_text(html_reproductor(lang, nombre, artist, pistas, PORTADA.get(lang, "Cover.jpg") if cover_bytes else ""), encoding="utf-8")
         zp = base / (folder.name + ".zip")
         archivos = [f for f in folder.rglob("*") if f.is_file()]
         archivos.sort(key=lambda f: (f.parent != folder, f.name != nom_html, str(f.relative_to(folder)).lower()))

@@ -77,7 +77,7 @@ Covers, images and clips of each song or album in one place. Thumbnails are stor
 ### Mixtapes
 ![Mixtape](docs/screenshots/05-mixtape.png)
 
-Make as many mixtapes as you want, each with a name, a quality (128, 192 or 320 kbps) and a copyright notice. Drag songs in: the manager creates MP3 versions in `MIXTAPES/_versiones` (your originals are not touched) and a cassette-style cover with your title and © line. **Send** builds a ZIP containing an `Abrir.html` that your recipient opens with a double click (cover, track list, player and the lyrics of the playing song; no install, no internet), the MP3s, one `.txt` per lyric, `COPYRIGHT.txt` and `Portada.jpg`. The lyrics are also written inside each MP3's tags. Needs ffmpeg (see the manual).
+Make as many mixtapes as you want, each with a name, a quality (128, 192 or 320 kbps) and a copyright notice. Drag songs in: the manager creates MP3 versions in `MIXTAPES/_versiones` (your originals are not touched) and a cassette-style cover with your title and © line. **Send** builds a ZIP containing an `Open.html` that your recipient opens with a double click (cover, track list, player and the lyrics of the playing song; no install, no internet), a `Songs` folder with the MP3s, a `Lyrics` folder with one `.txt` per song, `COPYRIGHT.txt` and `Cover.jpg`. File and folder names follow the language you chose in the interface (for example `Abrir.html` in Spanish, `Oeffnen.html` in German). The lyrics are also written inside each MP3's tags. Needs ffmpeg (see the manual).
 
 ### Mastering: loudness normalization
 ![Album mastering](docs/screenshots/04-album-mastering.png)
