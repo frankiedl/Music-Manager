@@ -637,9 +637,9 @@ function render(){
   const gr=$('#gear');if(gr)gr.classList.toggle('on',sect==='mod:ajustes'||sect==='mod:importar');
   viewFn()();
   $('#main').scrollTop=0;polish(true);renderRows();
-  const n=taskList().reduce((a,t)=>a+(t.n?1:0),0);$('#tbadge').textContent=n||'';$('#tbadge').style.display=n?'':'none'}
+  const n=taskList().reduce((a,t)=>a+(t.n||0),0);   // badge = sum of the numbers shown on the cards$('#tbadge').textContent=n||'';$('#tbadge').style.display=n?'':'none'}
 function refresh(){const y=$('#main').scrollTop;viewFn()();$('#main').scrollTop=y;polish(false);renderRows();
-  const n=taskList().reduce((a,t)=>a+(t.n?1:0),0);$('#tbadge').textContent=n||'';$('#tbadge').style.display=n?'':'none'}
+  const n=taskList().reduce((a,t)=>a+(t.n||0),0);   // badge = sum of the numbers shown on the cards$('#tbadge').textContent=n||'';$('#tbadge').style.display=n?'':'none'}
 async function loadLetras(){try{LET=await fetch('/api/letras').then(r=>r.json())}catch{LET={}}LETN={};Object.entries(LET).forEach(([id,v])=>LETN[id]=nrm(v.t))}
 async function reload(){const r=await fetch('/api/data').then(r=>r.json());ALL=r.songs;applyNames();SONGS=ALL.filter(x=>!ST.hidden[x.id]);coverCache.clear();buildKinds();await loadLetras();fillThemes()}
 
