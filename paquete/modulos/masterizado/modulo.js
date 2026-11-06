@@ -1001,8 +1001,8 @@ function montar(el,g){
         guardados++;return {nombre:r.ruta,nota:r.renombrado?'ya existía uno con ese nombre: se añadió « (n)»':''};
       });
       progreso(-1);
-      const msg=`Guardados ${guardados} másters en la carpeta master de sus canciones.`;
-      log('✓ '+msg,'ok');informes[g.key]=msg+' Ya aparecen como versiones de cada canción.';
+      const msg=window.T?window.T(`Guardados ${guardados} másters en la carpeta master de sus canciones`):`Guardados ${guardados} másters en la carpeta master de sus canciones`;
+      log('✓ '+msg+'.','ok');informes[g.key]=msg+'. '+(window.T?window.T('Ya aparecen como versiones de cada canción'):'Ya aparecen como versiones de cada canción')+'.';
       GM.ui.toast(msg);
       destruir();GM.ui.reload();return;       // re-reads the folders so they show up
     }catch(e){progreso(-1);log(`✗ Se detuvo tras guardar ${guardados} de ${L.length}: ${e.message}`,'warn');if(guardados){GM.ui.toast('Se guardaron '+guardados+' másters; hubo un problema con el siguiente.')}}

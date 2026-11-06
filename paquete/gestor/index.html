@@ -880,7 +880,7 @@ function verNums(s){
   all.filter(v=>!isM(v)).forEach(v=>{if(v.dup&&g[v.dup]){m[v.p]='V'+g[v.dup];return}m[v.p]='V'+(++n);if(v.dup)g[v.dup]=n});
   all.filter(isM).forEach(v=>{const st=stemOf(v.p),prev=all.filter(x=>!isM(x)&&(x.mt||0)<=(v.mt||0));
     const base=(v.dup&&all.find(x=>!isM(x)&&x.dup===v.dup))||all.find(x=>!isM(x)&&st&&stemOf(x.p)===st)||prev[prev.length-1]||all.find(x=>!isM(x));
-    m[v.p]=base?'Máster de '+m[base.p]:'Máster'});
+    m[v.p]=base?T('Máster de')+' '+m[base.p]:T('Máster')});
   return m}
 function vrow(s,v,VN){
   const st=ST.stars[v.p]||0,fin=finalPath(s)===v.p,auto=fin&&ST.final[s.id]!==v.p,pubd=isPub(s)||isPre(s),fn=v.p.split('/').pop();

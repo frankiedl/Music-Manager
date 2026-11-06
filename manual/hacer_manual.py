@@ -29,7 +29,7 @@ C = "<font name='Courier'>%s</font>"
 CONTENIDO = [
     ("h1", "1. Qué es"),
     ("p", "El <b>Gestor de música</b> es un programa para ordenar tu propia música en tu ordenador: canciones, letras, versiones, másters, stems, portadas y vídeos. "
-          "Lo escuchas en el navegador, marcas bocetos, fusionas duplicados, preparas álbumes y mixtapes en MP3 con sus letras, y puedes masterizar con efectos."),
+          "Lo escuchas en el navegador, marcas bocetos, fusionas duplicados, preparas álbumes y mixtapes en MP3 con sus letras, y puedes normalizar su volumen."),
     ("p", "Todo ocurre <b>en tu equipo</b>: el programa solo atiende a tu propio ordenador (dirección 127.0.0.1), no tiene cuentas, no envía estadísticas y tu música "
           "no se copia a ningún sitio; se lee desde tu carpeta. <b>No necesitas instalar Python</b> ni nada más."),
     ("p", "La carpeta que recibes contiene solo esto: el ejecutable (" + C % "GestorMusica.exe" + " en Windows, " + C % "GestorMusica.app" + " en Mac), "
@@ -98,26 +98,21 @@ CONTENIDO = [
           "<b>Copia</b> a <i>unreleased/&lt;Título&gt;</i>; nunca mueve ni borra el origen ni sobrescribe (añade « (2)»). Detecta duplicados y agrupa por título parecido. "
           "Cada copia queda en un diario y puede deshacerse."),
     ("h2", "Ajustes (la rueda ⚙ junto a «Mi música»)"),
-    ("p", "Arriba a la izquierda, junto a «Mi música». Aquí cambias la carpeta de la biblioteca (se vuelve a leer todo al momento), tu nombre artístico, el titular del copyright y las carpetas extra donde buscar plugins de efectos, con el botón <b>Volver a escanear plugins</b>. También encontrarás aquí la importación de música."),
-    ("h2", "Masterización y efectos"),
+    ("p", "Arriba a la izquierda, junto a «Mi música». Aquí cambias la carpeta de la biblioteca (se vuelve a leer todo al momento), tu nombre artístico y el titular del copyright. También encontrarás aquí la importación de música."),
+    ("h2", "Masterización"),
     ("p", "Hay tres sitios: la pestaña <b>Masterización</b> de cada álbum, el botón <b>Masterizar</b> en la ficha de cada canción y el botón <b>Masterizar</b> en la página de cada mixtape."),
     ("p", "En cada álbum, la pestaña <b>Masterización</b> mide el volumen (LUFS), iguala las canciones (cada una, o relativo al álbum), aplica limitador de picos, recortes, fundidos y silencios, "
           "escribe etiquetas (ID3), añade la carátula y exporta un ZIP, o guarda los másters en la biblioteca (<i>master/NN - Título (máster).wav</i>; nunca sobrescribe y pide confirmación). "
           "El cálculo se hace en tu navegador."),
-    ("p", "Dentro de la masterización hay un panel <b>Efectos</b>: una cadena de efectos (internos y tus plugins VST3) que se aplica antes del limitador, igual para todas las pistas o distinta por pista. En un mixtape, los másters se guardan en <i>MIXTAPES/_masters</i> (nunca en las carpetas de tus canciones) y puedes usarlos en ese mixtape o volver a las versiones originales. "
-          "Se puede guardar el resultado como versión nueva, sin sobrescribir nada. Los efectos usan la librería <b>pedalboard</b>, que <b>no viene incluida</b> (sección 5)."),
+    ("p", "En un mixtape, los másters se guardan en <i>MIXTAPES/_masters</i> (nunca en las carpetas de tus canciones) y puedes usarlos en ese mixtape o volver a las versiones originales. "
+          "Se puede guardar el resultado como versión nueva, sin sobrescribir nada."),
 
-    ("h1", "5. Programas opcionales: ffmpeg y pedalboard"),
-    ("p", "No van dentro del programa por sus licencias. Sin ellos todo funciona salvo los mixtapes MP3 (ffmpeg) y el panel de efectos (pedalboard)."),
+    ("h1", "5. Programa opcional: ffmpeg"),
+    ("p", "No va dentro del programa por su licencia. Sin él todo funciona salvo los mixtapes MP3."),
     ("h2", "ffmpeg (mixtapes)"),
     ("li", ["<b>Windows:</b> en PowerShell escribe " + C % "winget install Gyan.FFmpeg" + ", o descarga ffmpeg de ffmpeg.org y deja <b>ffmpeg.exe junto a GestorMusica.exe</b>.",
             "<b>Mac:</b> instala Homebrew (brew.sh) y escribe " + C % "brew install ffmpeg" + "; o deja el archivo <b>ffmpeg</b> en la carpeta junto a GestorMusica.app.",
             "Reinicia el gestor después de instalarlo."]),
-    ("h2", "pedalboard (efectos)"),
-    ("p", "pedalboard (licencia GPL-3.0) necesita un Python normal instalado en el equipo (3.9 a 3.12, de python.org). Instálalo, abre una terminal y escribe " + C % "python -m pip install pedalboard" +
-          " (en Mac " + C % "python3 -m pip install pedalboard" + "). Después, en el panel <b>Efectos</b> de la masterización, usa «Instalar soporte de plugins» o, si hace falta, indica la ruta de ese Python (en Windows suele ser "
-          "<i>C:\\Users\\tu-usuario\\AppData\\Local\\Programs\\Python\\Python312\\python.exe</i>; en Mac, <i>/usr/local/bin/python3</i> o <i>/opt/homebrew/bin/python3</i>). "
-          "La instalación automática instala en ese Python, no en el ejecutable."),
 
     ("h1", "6. Copias de seguridad y deshacer"),
     ("li", ["Haz copia de seguridad de <b>dos cosas</b>: tu carpeta de biblioteca, y la carpeta <b>datos</b> junto con <i>config.json</i> (están junto al ejecutable).",
@@ -131,7 +126,7 @@ CONTENIDO = [
     ("h1", "7. Privacidad y seguridad"),
     ("li", ["El servidor solo atiende a tu propio equipo (127.0.0.1) y rechaza peticiones que no vengan de su propia página.",
             "No hay cuentas, estadísticas ni telemetría. Tu música, letras y datos no salen de tu equipo.",
-            "Lo único que puede usar internet, y solo si tú lo pides: el conector opcional de Spotify (catálogo público) y la instalación de pedalboard con pip.",
+            "Lo único que puede usar internet, y solo si tú lo pides: el conector opcional de Spotify (catálogo público).",
             "El token de <i>datos/agente.json</i> sirve solo para emparejar una web publicada con tu programa; si no la usas, ignóralo y no lo compartas."]),
 
     ("h1", "8. Solución de problemas"),
@@ -143,7 +138,6 @@ CONTENIDO = [
                ["Biblioteca vacía o desactualizada", "Pulsa Actualizar; comprueba la carpeta en Ajustes."],
                ["Una canción no aparece", "Revisa que su carpeta no empiece por _ o . y que tenga audio o letra."],
                ["Mixtapes: «No encuentro ffmpeg»", "Instala ffmpeg (sección 5) y reinicia el gestor."],
-               ["Efectos: pedalboard no instalado", "Instala un Python y pedalboard, y usa «Instalar soporte de plugins» en el panel de efectos (sección 5)."],
                ["Mac: no guarda datos o pide permisos", "Mueve la carpeta a Documentos (no a Aplicaciones) y concede el acceso a carpetas si macOS lo pide."],
                ["Algo raro tras actualizar", "Cierra el programa, borra datos/thumbs y ábrelo de nuevo (se regenera). No borres el resto de datos."],
                ["Quiero empezar de cero", "Cierra el programa y renombra la carpeta datos; tu música no se toca."]]),

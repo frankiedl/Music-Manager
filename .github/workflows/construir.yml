@@ -1,9 +1,17 @@
 name: Construir
 
 on:
-  workflow_dispatch:        # botón «Run workflow» en la pestaña Actions
+  workflow_dispatch:        # "Run workflow" button in the Actions tab
+    inputs:
+      version:
+        description: "Release tag to publish (e.g. v1.0-beta). Leave empty to only build."
+        required: false
+        default: ""
   push:
-    tags: ["v*"]            # y al crear una etiqueta, p. ej. v1.0
+    tags: ["v*"]            # creating a tag such as v1.0 builds and publishes a Release
+
+permissions:
+  contents: write
 
 jobs:
   construir:
@@ -28,3 +36,22 @@ jobs:
           name: GestorMusica-${{ matrix.nombre }}
           path: salida/*.zip
           if-no-files-found: error
+
+  publicar:
+    needs: construir
+    if: startsWith(github.ref, 'refs/tags/v') || inputs.version != ''
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: zips
+          merge-multiple: true
+      - name: Publish Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ inputs.version || github.ref_name }}
+        run: |
+          gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1 \
+            && gh release upload "$TAG" zips/*.zip --clobber --repo "$GITHUB_REPOSITORY" \
+            || gh release create "$TAG" zips/*.zip --repo "$GITHUB_REPOSITORY" --prerelease \
+                 --title "$TAG" --notes "Unsigned builds. Windows 10 and the Mac builds are untested. See the README for install steps."

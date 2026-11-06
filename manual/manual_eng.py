@@ -8,7 +8,7 @@ TEXTOS = dict(titulo="Music Manager", subtitulo="User guide", version="Version {
 CONTENIDO = [
     ("h1", "1. What it is"),
     ("p", "The <b>Music Manager</b> is a program to organize your own music on your computer: songs, lyrics, versions, masters, stems, covers and videos. "
-          "You listen to it in the browser, mark sketches, merge duplicates, prepare albums and MP3 mixtapes with their lyrics, and you can master with effects."),
+          "You listen to it in the browser, mark sketches, merge duplicates, prepare albums and MP3 mixtapes with their lyrics, and you can normalize their loudness."),
     ("p", "Everything happens <b>on your computer</b>: the program only answers your own machine (address 127.0.0.1), it has no accounts, sends no statistics and your music "
           "is not copied anywhere; it is read from your folder. <b>You do not need to install Python</b> or anything else."),
     ("p", "The folder you receive contains only this: the executable (" + C % "GestorMusica.exe" + " on Windows, " + C % "GestorMusica.app" + " on Mac), "
@@ -77,27 +77,21 @@ CONTENIDO = [
           "It <b>copies</b> to <i>unreleased/&lt;Title&gt;</i>; it never moves or deletes the source and never overwrites (it adds \" (2)\"). It detects duplicates and groups by similar title. "
           "Every copy is recorded in a journal and can be undone."),
     ("h2", "Settings (the ⚙ wheel next to \"My music\")"),
-    ("p", "At the top left, next to \"My music\". Here you change the library folder (everything is read again at once), your artist name, the copyright holder, the extra folders where effect plugins are searched, with the <b>Scan plugins again</b> button, "
-          "and the interface <b>Language</b>. You will also find the music import here."),
-    ("h2", "Mastering and effects"),
+    ("p", "At the top left, next to \"My music\". Here you change the library folder (everything is read again at once), your artist name, the copyright holder and the interface <b>Language</b>. You will also find the music import here."),
+    ("h2", "Mastering"),
     ("p", "There are three places: the <b>Mastering</b> tab of each album, the <b>Master</b> button on each song's page and the <b>Master</b> button on each mixtape's page."),
     ("p", "In each album, the <b>Mastering</b> tab measures the loudness (LUFS), evens out the songs (each one, or relative to the album), applies a peak limiter, trims, fades and silences, "
           "writes tags (ID3), adds the cover art and exports a ZIP, or saves the masters in the library (<i>master/NN - Title (master).wav</i>; it never overwrites and asks for confirmation). "
           "The calculation is done in your browser."),
-    ("p", "Inside mastering there is an <b>Effects</b> panel: a chain of effects (built-in ones and your VST3 plugins) applied before the limiter, the same for all tracks or different per track. In a mixtape, masters are saved in <i>MIXTAPES/_masters</i> (never in your song folders) and you can use them in that mixtape or go back to the original versions. "
-          "The result can be saved as a new version, without overwriting anything. Effects use the <b>pedalboard</b> library, which is <b>not included</b> (section 5)."),
+    ("p", "In a mixtape, masters are saved in <i>MIXTAPES/_masters</i> (never in your song folders) and you can use them in that mixtape or go back to the original versions. "
+          "The result can be saved as a new version, without overwriting anything."),
 
-    ("h1", "5. Optional programs: ffmpeg and pedalboard"),
-    ("p", "They are not bundled because of their licenses. Without them everything works except MP3 mixtapes (ffmpeg) and the effects panel (pedalboard)."),
+    ("h1", "5. Optional program: ffmpeg"),
+    ("p", "It is not bundled because of its license. Without it everything works except MP3 mixtapes."),
     ("h2", "ffmpeg (mixtapes)"),
     ("li", ["<b>Windows:</b> in PowerShell type " + C % "winget install Gyan.FFmpeg" + ", or download ffmpeg from ffmpeg.org and leave <b>ffmpeg.exe next to GestorMusica.exe</b>.",
             "<b>Mac:</b> install Homebrew (brew.sh) and type " + C % "brew install ffmpeg" + "; or leave the <b>ffmpeg</b> file in the folder next to GestorMusica.app.",
             "Restart the manager after installing it."]),
-    ("h2", "pedalboard (effects)"),
-    ("p", "pedalboard (GPL-3.0 license) needs a regular Python installed on the computer (3.9 to 3.12, from python.org). Install it, open a terminal and type " + C % "python -m pip install pedalboard" +
-          " (on Mac " + C % "python3 -m pip install pedalboard" + "). Then, in the mastering <b>Effects</b> panel, use \"Install plugin support\" or, if needed, enter the path of that Python (on Windows it is usually "
-          "<i>C:\\Users\\your-user\\AppData\\Local\\Programs\\Python\\Python312\\python.exe</i>; on Mac, <i>/usr/local/bin/python3</i> or <i>/opt/homebrew/bin/python3</i>). "
-          "The automatic installation installs into that Python, not into the executable."),
 
     ("h1", "6. Backups and undo"),
     ("li", ["Back up <b>two things</b>: your library folder, and the <b>datos</b> folder together with <i>config.json</i> (they are next to the executable).",
@@ -111,7 +105,7 @@ CONTENIDO = [
     ("h1", "7. Privacy and security"),
     ("li", ["The server only answers your own computer (127.0.0.1) and rejects requests that do not come from its own page.",
             "There are no accounts, statistics or telemetry. Your music, lyrics and data never leave your computer.",
-            "The only things that may use the internet, and only if you ask: the optional Spotify connector (public catalog) and installing pedalboard with pip.",
+            "The only things that may use the internet, and only if you ask: the optional Spotify connector (public catalog).",
             "The token in <i>datos/agente.json</i> is only for pairing a published web page with your program; if you do not use that, ignore it and do not share it."]),
 
     ("h1", "8. Troubleshooting"),
@@ -123,7 +117,6 @@ CONTENIDO = [
                ["Library empty or out of date", "Press Refresh; check the folder in Settings."],
                ["A song does not appear", "Check that its folder does not start with _ or . and that it has audio or lyrics."],
                ["Mixtapes: \"I can't find ffmpeg\"", "Install ffmpeg (section 5) and restart the manager."],
-               ["Effects: pedalboard not installed", "Install a Python and pedalboard, and use \"Install plugin support\" in the effects panel (section 5)."],
                ["Mac: it does not save data or asks for permissions", "Move the folder to Documents (not Applications) and grant folder access if macOS asks."],
                ["Something odd after updating", "Close the program, delete datos/thumbs and open it again (it is regenerated). Do not delete the rest of datos."],
                ["I want to start from scratch", "Close the program and rename the datos folder; your music is not touched."]]),
