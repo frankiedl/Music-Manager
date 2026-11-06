@@ -86,6 +86,14 @@ CONTENIDO = [
     ("p", "In a mixtape, masters are saved in <i>MIXTAPES/_masters</i> (never in your song folders) and you can use them in that mixtape or go back to the original versions. "
           "The result can be saved as a new version, without overwriting anything."),
 
+    ("h2", "Rights"),
+    ("p", "On each song's page, the <b>Rights</b> section has two things. The <b>release status</b> (Unreleased, Pre-released or Published): by default the folder decides it, "
+          "but you can choose it with one click without moving anything; «By folder» goes back to automatic. And its <b>registrations</b> with collecting societies: <b>+ Add registration</b> stores the society, the code or number, "
+          "the date, the status (pending, sent, registered), the author and publisher percentages and notes. They are your own notes: the manager does not connect to any society."),
+    ("p", "The <b>Rights</b> section of the menu sums up what is published without a registration (also a Pending card and a Songs filter), lets you edit the list of societies "
+          "(SGAE, SACEM, GEMA, ASCAP, BMI, SESAC, PRS, SIAE, SADAIC, SPA… and your own; those from your country come first) and offers the <b>registration sheet</b>: download it as CSV, fill it in with Excel "
+          "and import it again (CSV or .xlsx). Before applying you see what is created, what changes and any warnings (unknown songs or societies); importing never deletes anything."),
+
     ("h1", "5. Optional program: ffmpeg"),
     ("p", "It is not bundled because of its license. Without it everything works except MP3 mixtapes."),
     ("h2", "ffmpeg (mixtapes)"),

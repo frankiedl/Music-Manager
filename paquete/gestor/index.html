@@ -382,9 +382,9 @@ let CFG={artista:'',titular:''};
 let colf='all',ALL=[],SONGS=[],ST={lanes:{},stars:{},notes:{},final:{}},MED={},MST={};
 let LET={},LETN={},thf='all',afl='all',view='home',sect='home',cur=null,curG=null,curMO=null,stack=[],filt='all',query='',playing=null,Q=[],QI=-1,saveT=null,saveM=null,tclick=null;
 const coverCache=new Map();
-const PLATS=['SoundCloud','Spotify','Instagram','TikTok','YouTube','Facebook'];
 const ROLES={imagen:[['','Sin asignar'],['portada','Portada oficial'],['alt','Alternativa'],['social','Para redes']],
   video:[['','Sin asignar'],['clip','Clip final'],['visualizer','Visualizer / loop'],['social','Para redes'],['borrador','Borrador']]};
+const FILTS=()=>[...FILTERS,...GM.filters().map(f=>[f.k,f.label])];
 const FILTERS=[['all','Todas'],['pend','Con algo pendiente'],['pub','Publicadas'],['pre','Pre-released'],['nopub','Sin publicar'],['sinletra','Con música y sin letra'],['pubnoletra','Publicadas sin letra'],['nofinal','Publicadas sin versión identificada'],['nomaster','Con stems, sin máster'],['draft','Letras en boceto'],['sinaudio','Sin audio'],['hidden','Ocultas (no relevantes)']];
 
 /* ---------- data ---------- */
@@ -419,7 +419,9 @@ function buildKinds(){
 const kindOf=v=>KIND[v.p]||'ver';
 const realVers=s=>s.versions.filter(v=>kindOf(v)==='ver');
 const laneOf=(s,v)=>ST.lanes[v.p]||(v.prop&&s.published?'p':'u');
-const isPub=s=>D(s).startsWith('published'),isPre=s=>D(s).startsWith('prereleased');
+/* Release status: the folder decides (published/ prereleased/ unreleased/) unless the user chose one on the song page (ST.release[id] = 'pub'|'pre'|'un') */
+const relOf=s=>(ST.release&&ST.release[s.id])||'';
+const isPub=s=>{const r=relOf(s);return r?r==='pub':D(s).startsWith('published')},isPre=s=>{const r=relOf(s);return r?r==='pre':D(s).startsWith('prereleased')};
 const isDraft=s=>!!(ST.draft&&ST.draft[s.id]); // lyrics of a sketch: never shared
 let msel=new Set(),rowIds=[],lastSel=null; // multiple selection in the songs column
 /* The final version of what is published is deduced automatically: the one in the master folder, or the only one there is. */
@@ -474,7 +476,8 @@ function taskList(){
     {k:'sinletra',ic:'📝',n:SS.filter(s=>s.versions.length&&!s.letra).length,t:'con música y sin letra',d:'Tienen audio pero no su letra guardada (publicadas o no). Si es un instrumental, ocúltala o márcala como boceto.'},
     {k:'nofinal',ic:'⭐',n:SS.filter(s=>s.versions.length&&(isPub(s)||isPre(s))&&!finalPath(s)).length,t:'publicadas sin versión identificada',d:'No sé cuál de sus versiones es la que salió publicada: indícamela.'},
     {k:'albumcover',ic:'🖼',n:g.filter(x=>!x.manual).length,t:'sin portada elegida a mano',d:'Ahora se usa una portada automática; confirma la buena.'},
-    {k:'sinaudio',ic:'🔇',n:SS.filter(s=>!s.versions.length).length,t:'sin audio',d:'Entradas de catálogo sin ningún archivo de audio.'}]}
+    {k:'sinaudio',ic:'🔇',n:SS.filter(s=>!s.versions.length).length,t:'sin audio',d:'Entradas de catálogo sin ningún archivo de audio.'},
+    ...GM.tasks()]}
 /* ---------- repeated songs (same lyrics) ---------- */
 // master = a file in a «master» folder, or a version you chose as final (★)
 const hasMaster=s=>s.versions.some(v=>v.dep||/\/master\//i.test(v.p))||!!(ST.final[s.id]&&s.versions.some(v=>v.p===ST.final[s.id]));
@@ -553,8 +556,9 @@ function match(s){
   switch(filt){case'pub':return isPub(s);case'pre':return isPre(s);case'nopub':return !isPub(s)&&!isPre(s);
     case'sinletra':return !isDraft(s)&&s.versions.length&&!s.letra;case'pubnoletra':return !isDraft(s)&&isPub(s)&&!s.letra;
     case'nofinal':return !isDraft(s)&&s.versions.length&&(isPub(s)||isPre(s))&&!finalPath(s);case'sinaudio':return !isDraft(s)&&!s.versions.length;case'nomaster':return !isDraft(s)&&stemsNoMaster(s);case'draft':return isDraft(s);
-    case'pend':return !isDraft(s)&&(stemsNoMaster(s)||(s.versions.length&&!s.letra)||(s.versions.length&&(isPub(s)||isPre(s))&&!finalPath(s))||!s.versions.length);
+    case'pend':return !isDraft(s)&&(stemsNoMaster(s)||(s.versions.length&&!s.letra)||(s.versions.length&&(isPub(s)||isPre(s))&&!finalPath(s))||!s.versions.length||GM.filters().some(f=>f.pend&&f.fn(s)));
     case'hidden':return true}
+  const mf=GM.filters().find(f=>f.k===filt);if(mf)return !isDraft(s)&&mf.fn(s); // filters added by modules
   return true}
 
 /* ---------- saving and notices ---------- */
@@ -637,9 +641,11 @@ function render(){
   const gr=$('#gear');if(gr)gr.classList.toggle('on',sect==='mod:ajustes'||sect==='mod:importar');
   viewFn()();
   $('#main').scrollTop=0;polish(true);renderRows();
-  const n=taskList().reduce((a,t)=>a+(t.n||0),0);   // badge = sum of the numbers shown on the cards$('#tbadge').textContent=n||'';$('#tbadge').style.display=n?'':'none'}
+  const n=taskList().reduce((a,t)=>a+(t.n||0),0);   // badge = sum of the numbers shown on the cards
+  $('#tbadge').textContent=n||'';$('#tbadge').style.display=n?'':'none'}
 function refresh(){const y=$('#main').scrollTop;viewFn()();$('#main').scrollTop=y;polish(false);renderRows();
-  const n=taskList().reduce((a,t)=>a+(t.n||0),0);   // badge = sum of the numbers shown on the cards$('#tbadge').textContent=n||'';$('#tbadge').style.display=n?'':'none'}
+  const n=taskList().reduce((a,t)=>a+(t.n||0),0);   // badge = sum of the numbers shown on the cards
+  $('#tbadge').textContent=n||'';$('#tbadge').style.display=n?'':'none'}
 async function loadLetras(){try{LET=await fetch('/api/letras').then(r=>r.json())}catch{LET={}}LETN={};Object.entries(LET).forEach(([id,v])=>LETN[id]=nrm(v.t))}
 async function reload(){const r=await fetch('/api/data').then(r=>r.json());ALL=r.songs;applyNames();SONGS=ALL.filter(x=>!ST.hidden[x.id]);coverCache.clear();buildKinds();await loadLetras();fillThemes()}
 
@@ -682,9 +688,9 @@ function renderAlbums(){
 function renderSongs(){
   const B=SONGS.filter(x=>x.letra&&x.versions.length&&!isDraft(x)),L=B.filter(match);
   $('#main').innerHTML=`<h1>Canciones</h1><p class="lead">${L.length} de ${B.length} canciones (con letra y música). Un clic abre la canción, un doble clic (o ▶) la reproduce.</p>
-   <div class="chips">${FILTERS.map(([k,n])=>`<button class="chip${k===filt?' on':''}" data-act="sfilt" data-f="${k}">${n}</button>`).join('')}${clrBtn()}</div>
+   <div class="chips">${FILTS().map(([k,n])=>`<button class="chip${k===filt?' on':''}" data-act="sfilt" data-f="${k}">${n}</button>`).join('')}${clrBtn()}</div>
    <div>${L.map(s=>{const c=coverOf(s);return `<div class="srow" data-act="song" data-id="${s.id}" draggable="true"><button class="pbtn" data-act="playsong" data-id="${s.id}" title="Reproducir">▶</button>${c?`<img loading="lazy" src="/thumb?f=${encodeURIComponent(c.t)}">`:'<div class="sc0"></div>'}<div style="min-width:0"><div class="st">${esc(clean(s.title))}</div><div class="meta">${s.versions.length?s.versions.length+' versión(es)':'sin audio'}${ST.final[s.id]?' · ★ final elegida':''}</div></div>
-    <div class="chs">${isPub(s)?'<span class="b ok">Publicada</span>':isPre(s)?'<span class="b warn">Pre-released</span>':''}${!s.letra&&isPub(s)?'<span class="b no">sin letra</span>':''}</div></div>`}).join('')||'<div class="empty">No hay canciones con ese filtro.</div>'}</div>`}
+    <div class="chs">${isPub(s)?'<span class="b ok">Publicada</span>':isPre(s)?'<span class="b warn">Pre-released</span>':''}${!s.letra&&isPub(s)?'<span class="b no">sin letra</span>':''}${GM.badges(s)}</div></div>`}).join('')||'<div class="empty">No hay canciones con ese filtro.</div>'}</div>`}
 let lonly='all',lsel=null;
 function hl(text,q){
   const base=c=>c.normalize('NFD')[0].toLowerCase();
@@ -827,24 +833,23 @@ function artMap(){
   return (empties?`<div style="grid-column:1/-1"><button class="chip" data-act="artempty">${artEmpty?'Ocultar':'Mostrar'} las ${empties} que no tienen nada todavía</button></div>`:'')
     +L.filter(x=>artEmpty||x.na||x.nv).map(card).join('')}
 let gfilt='all';
-const GF=[['all','Todo'],['nocover','Sin portada oficial'],['noclip','Sin clip final'],['noplat','Sin plataformas'],['pubnocover','Publicadas sin portada']];
+const GF=[['all','Todo'],['nocover','Sin portada oficial'],['noclip','Sin clip final'],['pubnocover','Publicadas sin portada']];
 function globalRows(){
   const bySong={};SONGS.forEach(s=>{if(s.dir)bySong[D(s)]=s});
   return Object.entries(MED).map(([o,items])=>{
-    const plat=new Set(items.flatMap(i=>(MST[i.p]||{}).plat||[]));
     const n=k=>items.filter(i=>i.k===k).length,role=(k,r)=>items.some(i=>i.k===k&&(MST[i.p]||{}).role===r);
     return {o,s:bySong[o],pub:o.startsWith('published'),img:n('imagen'),vid:n('video'),proj:n('proyecto'),
-      cover:role('imagen','portada'),clip:role('video','clip'),plat:[...plat],mb:items.reduce((a,i)=>a+i.mb,0)}})}
+      cover:role('imagen','portada'),clip:role('video','clip'),mb:items.reduce((a,i)=>a+i.mb,0)}})}
 function renderGlobal(){
-  const rows=globalRows().filter(r=>({all:1,nocover:r.img&&!r.cover,noclip:r.vid&&!r.clip,noplat:!r.plat.length,pubnocover:r.pub&&!r.cover})[gfilt]);
+  const rows=globalRows().filter(r=>({all:1,nocover:r.img&&!r.cover,noclip:r.vid&&!r.clip,pubnocover:r.pub&&!r.cover})[gfilt]);
   $('#main').innerHTML=`<h1>Arte y vídeo</h1><p class="lead">Todo el arte y el vídeo está en la carpeta <b>ARTE</b>, organizado por álbum, single y proyecto. Haz clic en uno para ver sus imágenes y vídeos aquí mismo, sin salir del gestor.</p>
    <div style="margin:0 0 14px"><button class="chip pri" data-act="openarte" data-p="ARTE">📂 Abrir la carpeta ARTE</button></div>
    <div class="amaps">${artMap()}</div>
    <h2>Detalle por carpeta</h2>
    <div class="chips">${GF.map(([k,n])=>`<button class="chip${k===gfilt?' on':''}" data-act="gfilt" data-f="${k}">${n}</button>`).join('')}${clrBtn()}</div>
    <p class="meta">${rows.length} carpetas · ${(rows.reduce((a,r)=>a+r.mb,0)/1000).toFixed(1)} GB</p>
-   <div class="panel" style="padding:8px 10px"><table style="width:100%;border-collapse:collapse;font-size:13.5px"><tr style="text-align:left;color:var(--muted)"><th style="padding:8px">Carpeta</th><th>Imágenes</th><th>Vídeos</th><th>Proyectos</th><th>Portada</th><th>Clip final</th><th>Plataformas</th></tr>
-   ${rows.map(r=>`<tr data-act="mowner" data-k="${esc(r.o)}" style="border-top:1px solid var(--line);cursor:pointer"><td style="padding:9px 8px">${r.pub?'<span style="color:var(--good)">●</span> ':''}${esc(r.o.replace(/\//g,' › '))}</td><td>${r.img}</td><td>${r.vid}</td><td>${r.proj}</td><td>${r.cover?'✓':r.img?'<span class="meta">—</span>':''}</td><td>${r.clip?'✓':r.vid?'<span class="meta">—</span>':''}</td><td>${esc(r.plat.join(', '))}</td></tr>`).join('')}</table></div>`}
+   <div class="panel" style="padding:8px 10px"><table style="width:100%;border-collapse:collapse;font-size:13.5px"><tr style="text-align:left;color:var(--muted)"><th style="padding:8px">Carpeta</th><th>Imágenes</th><th>Vídeos</th><th>Proyectos</th><th>Portada</th><th>Clip final</th></tr>
+   ${rows.map(r=>`<tr data-act="mowner" data-k="${esc(r.o)}" style="border-top:1px solid var(--line);cursor:pointer"><td style="padding:9px 8px">${r.pub?'<span style="color:var(--good)">●</span> ':''}${esc(r.o.replace(/\//g,' › '))}</td><td>${r.img}</td><td>${r.vid}</td><td>${r.proj}</td><td>${r.cover?'✓':r.img?'<span class="meta">—</span>':''}</td><td>${r.clip?'✓':r.vid?'<span class="meta">—</span>':''}</td></tr>`).join('')}</table></div>`}
 let VPRE='none';
 function renderMOwner(){
   const key=curMO||'';
@@ -896,8 +901,7 @@ function mediaCard(i){
   const prev=i.k==='imagen'?`<img loading="lazy" data-act="zoom" data-u="${u}" style="cursor:zoom-in" title="Ver grande" src="${i.t?'/thumb?f='+encodeURIComponent(i.t):u}">`
     :i.k==='video'?`<video controls preload="${VPRE}" src="${u}${VPRE==='metadata'?'#t=0.1':''}"></video>`:`<div class="meta">${i.k==='proyecto'?'📁 Proyecto':'🖼 Archivo de trabajo'} (sin vista previa)</div>`;
   const roles=ROLES[i.k]?`<select data-r="1">${ROLES[i.k].map(([v,n])=>`<option value="${v}"${m.role===v?' selected':''}>${n}</option>`).join('')}</select>`:'';
-  const pl=ROLES[i.k]?`<div style="display:flex;flex-wrap:wrap;gap:4px 10px">${PLATS.map(p=>`<label style="font-size:11.5px"><input type="checkbox" data-pl="${p}"${(m.plat||[]).includes(p)?' checked':''}> ${p}</label>`).join('')}</div>`:'';
-  return `<div class="mcard" data-mp="${esc(i.p)}">${prev}<div class="vt" style="font-size:13px">${m.role==='portada'||m.role==='clip'?'<span class="tag fin">★ '+(m.role==='portada'?'Portada':'Clip final')+'</span> ':''}${esc(i.n)}</div><div class="meta">${i.mb} MB</div>${roles}${pl}</div>`}
+  return `<div class="mcard" data-mp="${esc(i.p)}">${prev}<div class="vt" style="font-size:13px">${m.role==='portada'||m.role==='clip'?'<span class="tag fin">★ '+(m.role==='portada'?'Portada':'Clip final')+'</span> ':''}${esc(i.n)}</div><div class="meta">${i.mb} MB</div>${roles}</div>`}
 function mediaSection(s){
   const o=D(s),par=o.split('/').slice(0,-1).join('/');
   const g=[[o,'cancion','De esta canción'],[par,'album','Del álbum o proyecto']].map(([k,a,n])=>({n,items:(MED[k]||[]).filter(i=>i.ambito===a)})).filter(x=>x.items.length);
@@ -962,6 +966,7 @@ function renderSong(){
     <pre id="letra">${(window.T||(x=>x))(s.letra?'Cargando…':'Esta canción todavía no tiene letra. Pulsa «Escribir o pegar la letra» y guárdala aquí mismo.')}</pre></div>
    </div></div>
    ${orphanBox(s)}
+   <div id="gm-songsecs"></div>
    <div class="sdz" id="sdrop"><button class="chip" data-act="pickdrop">＋ Añadir archivos</button><input type="file" id="dropfile" multiple hidden></div>
    ${s.versions.length?`<div class="sec"><h2>${isPub(s)||isPre(s)?'Versión publicada':'Versión final'}</h2>
      ${finV?vrow(s,finV,VN)+(ST.final[s.id]?'':`<div class="meta" style="margin:-2px 0 6px 4px">${isPub(s)||isPre(s)?'La detecté yo por la carpeta master. Si no es esta, pulsa «★ Hacer final» en la correcta.':''}</div>`):
@@ -983,7 +988,10 @@ function renderSong(){
      <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="chip" data-act="unir">Unir con otra canción…</button><button class="chip" data-act="hide">Ocultar del gestor</button></div></details></div>`;
   $('#note').oninput=e=>{ST.notes[s.id]=e.target.value;save()};
   if(s.letra)fetch('/api/letra?f='+encodeURIComponent(s.letra)).then(r=>r.ok?r.text():'No se pudo leer la letra.').then(t=>{const p=$('#letra');if(p)p.textContent=t});
-  wireMed();wireLyr(s);loadWork(s);const ti=$('#tagin');if(ti)ti.onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();document.querySelector('[data-act="tagadd"]').click()}}}
+  songSecs(s);wireMed();wireLyr(s);loadWork(s);const ti=$('#tagin');if(ti)ti.onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();document.querySelector('[data-act="tagadd"]').click()}}}
+function songSecs(s){const box=$('#gm-songsecs');if(!box)return;
+  GM.songSections().forEach(h=>{const d=document.createElement('div');d.className='sec gm-songsec';d.innerHTML=`<h2>${esc(h.title||'')}</h2><div></div>`;box.appendChild(d);
+    try{h.render(d.lastChild,s,GM)}catch(e){d.lastChild.innerHTML='<div class="callout">Este módulo ha fallado: '+esc(e.message)+'</div>'}})}
 async function loadWork(s){
   const box=$('#work');if(!box)return;
   let files=[];try{files=await fetch('/api/archivos?id='+s.id).then(r=>r.json())}catch{}
@@ -1022,7 +1030,6 @@ function wireMed(){document.querySelectorAll('[data-mp]').forEach(c=>{const p=c.
   c.oncontextmenu=e=>{e.preventDefault();mediaMenu(e,p)};
   c.onchange=e=>{const m=MST[p]=MST[p]||{};
     if(e.target.dataset.r!==undefined){if(e.target.value==='portada')setCoverRole(p,ownerOfPath(p));else m.role=e.target.value}
-    if(e.target.dataset.pl){const a=new Set(m.plat||[]);e.target.checked?a.add(e.target.dataset.pl):a.delete(e.target.dataset.pl);m.plat=[...a]}
     saveMed();if(e.target.dataset.r!==undefined)refresh()}})}
 function mediaMenu(e,p){
   const img=/\.(jpe?g|png|webp|gif)$/i.test(p);
@@ -1650,7 +1657,7 @@ async function onAct(e){
     case 'afilt':afl=(afl===t.dataset.f&&afl!=='all')?'all':t.dataset.f;return refresh();
     case 'sfilt':filt=(filt===t.dataset.f&&filt!=='all')?'all':t.dataset.f;autoFilt=false;{const ff=$('#ffilt');if(ff)ff.value=filt}return refresh();
     case 'task':{const k=t.dataset.k;if(k==='dups')return openDups();if(k==='albumcover'){sect='albums';afl='albumcover';view='albums';stack=[];return render()}
-      filt=k;query='';$('#q').value='';syncList();const f=FILTERS.find(x=>x[0]===k);toast('Columna de canciones filtrada: '+(f?f[1]:''));return}
+      filt=k;query='';$('#q').value='';syncList();const f=FILTS().find(x=>x[0]===k);toast('Columna de canciones filtrada: '+(f?f[1]:''));return}
     case 'song':{ // one click opens, double click plays
       if(e.target.closest('[data-act="playsong"],[data-act="playgroup"]'))return;
       const id=t.dataset.id;
@@ -1826,7 +1833,7 @@ async function init(){
   try{await GM.load()}catch(e){console.warn('módulos',e)}
   const r=await fetch('/api/data').then(r=>r.json());
   try{const m=await fetch('/api/medios').then(r=>r.json());m.owners.forEach(o=>{MED[o.owner]=o.items});MST=m.state||{}}catch{}
-  $('#ffilt').innerHTML=FILTERS.map(([k,n])=>`<option value="${k}">${n}</option>`).join('');
+  $('#ffilt').innerHTML=FILTS().map(([k,n])=>`<option value="${k}">${n}</option>`).join('');
   ALL=r.songs;ST=Object.assign({lanes:{},stars:{},notes:{},final:{},tags:{},hidden:{}},r.state||{});if(!ST.final)ST.final={};if(!ST.tags)ST.tags={};if(!ST.hidden)ST.hidden={};if(!ST.col)ST.col={};if(!ST.nodup)ST.nodup={};if(!ST.draft)ST.draft={};if(!ST.names)ST.names={};applyNames();mixMigrate();SONGS=ALL.filter(x=>!ST.hidden[x.id]);
   if(!ST.mod)ST.mod={};modNav();
   buildKinds();await loadLetras();fillThemes();mixBadge();checkSig();

@@ -86,6 +86,14 @@ CONTENIDO = [
     ("p", "Num mixtape, os masters são salvos em <i>MIXTAPES/_masters</i> (nunca nas pastas das suas músicas) e você pode usá-los nesse mixtape ou voltar às versões originais. "
           "O resultado pode ser salvo como versão nova, sem sobrescrever nada."),
 
+    ("h2", "Direitos"),
+    ("p", "Na página de cada música, a seção <b>Direitos</b> tem duas coisas. O <b>estado de publicação</b> (Não publicada, Pre-released ou Publicada): por padrão a pasta decide, "
+          "mas você pode escolhê-lo com um clique sem mover nada; «Pela pasta» volta ao automático. E os seus <b>registros</b> em sociedades de autores: <b>+ Adicionar registro</b> guarda a sociedade, o código ou número, "
+          "a data, o estado (pendente, enviado, registrado), as porcentagens de autor e editora e notas. São as suas próprias anotações: o gerenciador não se conecta a nenhuma sociedade."),
+    ("p", "A seção <b>Direitos</b> do menu resume o que foi publicado sem registro (também é um cartão de Pendentes e um filtro de Músicas), permite editar a lista de sociedades "
+          "(SGAE, SACEM, GEMA, ASCAP, BMI, SESAC, PRS, SIAE, SADAIC, SPA… e as suas; as do seu país aparecem primeiro) e oferece a <b>planilha de registro</b>: baixe em CSV, preencha no Excel "
+          "e importe de novo (CSV ou .xlsx). Antes de aplicar você vê o que será criado, o que muda e os avisos (músicas ou sociedades desconhecidas); a importação nunca apaga nada."),
+
     ("h1", "5. Programa opcional: ffmpeg"),
     ("p", "Não vai dentro do programa por causa de sua licença. Sem ele tudo funciona, exceto os mixtapes MP3."),
     ("h2", "ffmpeg (mixtapes)"),

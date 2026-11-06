@@ -107,6 +107,14 @@ CONTENIDO = [
     ("p", "En un mixtape, los másters se guardan en <i>MIXTAPES/_masters</i> (nunca en las carpetas de tus canciones) y puedes usarlos en ese mixtape o volver a las versiones originales. "
           "Se puede guardar el resultado como versión nueva, sin sobrescribir nada."),
 
+    ("h2", "Derechos"),
+    ("p", "En la página de cada canción, la sección <b>Derechos</b> tiene dos cosas. El <b>estado de publicación</b> (Sin publicar, Pre-released o Publicada): por defecto lo deduce la carpeta, "
+          "pero puedes elegirlo con un clic sin mover nada; «Según la carpeta» vuelve al automático. Y sus <b>registros</b> en sociedades de autores: <b>+ Añadir registro</b> guarda la sociedad, el código o número, "
+          "la fecha, el estado (pendiente, enviado, registrado), los porcentajes de autor y editor y notas. Son tus propias anotaciones: el gestor no se conecta con ninguna sociedad."),
+    ("p", "La sección <b>Derechos</b> del menú resume lo publicado sin registro (también es una tarjeta de Pendientes y un filtro de Canciones), te deja editar la lista de sociedades "
+          "(SGAE, SACEM, GEMA, ASCAP, BMI, SESAC, PRS, SIAE, SADAIC, SPA… y las tuyas; las de tu país salen primero) y ofrece la <b>hoja de registro</b>: descárgala en CSV, rellénala en Excel "
+          "e impórtala de nuevo (CSV o .xlsx). Antes de aplicar verás qué se crea, qué cambia y los avisos (canciones o sociedades desconocidas); al importar nunca se borra nada."),
+
     ("h1", "5. Programa opcional: ffmpeg"),
     ("p", "No va dentro del programa por su licencia. Sin él todo funciona salvo los mixtapes MP3."),
     ("h2", "ffmpeg (mixtapes)"),

@@ -93,6 +93,9 @@ For a single song it works the same way: measure, set the target, listen to the 
 ### Metadata
 Every file you export (masters, mixtape MP3s) gets *only your* tags: title, artist, album artist, album, track number, year, genre, language, composer, © holder, cover and lyrics. Any tags the original file had are removed, so no stray information travels with your music.
 
+### Rights
+Each song page has a **Rights** section. Set the **release status** (Unreleased, Pre-released or Published) with one click: by default the folder decides, and choosing a status never moves anything. Keep a list of **registrations** with collecting societies (society, code or number, date, status pending / sent / registered, author and publisher percentages, notes); these are your own records and the manager never connects to any society. The society list comes with presets per country (SGAE, SACEM, GEMA, ASCAP, BMI, SESAC, PRS, SIAE, SADAIC, SPA) and you can add, rename or delete entries. A **registration sheet** can be downloaded as CSV for Excel and imported back (CSV or `.xlsx`) with a preview of what will be created or changed; importing never deletes anything. Songs that are published without any registration show up in Pending and as a song filter.
+
 ### Import
 Open it from **Settings → Import music from other folders**. A four-step wizard (choose folder → search → review → copy) that brings in sketches, versions, stems, live recordings and DAW projects from anywhere. It *copies* into `unreleased/<Title>`, never moves or deletes the source, never overwrites (it adds " (2)"), detects duplicates and groups similar titles. Every copy is logged and can be undone.
 

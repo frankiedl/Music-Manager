@@ -1,0 +1,13 @@
+{
+  "id": "derechos",
+  "nombre": "Derechos",
+  "descripcion": "Estado de publicación de cada canción, registros en sociedades de autores (SGAE, SACEM, GEMA, ASCAP…) y hoja de registro en Excel/CSV. Son tus propias anotaciones: no se conecta con ninguna sociedad.",
+  "js": [
+    "modulo.js"
+  ],
+  "css": [
+    "modulo.css"
+  ],
+  "py": "servidor.py",
+  "distribuir": true
+}

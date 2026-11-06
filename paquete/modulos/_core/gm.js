@@ -8,12 +8,16 @@
      nav:{label:'Mi sección', icon:'🎛'},                       // adds a button to the side menu (optional)
      render(el,GM){ el.innerHTML='...' },                        // draws that section into #main
      albumTab:{id:'tab', label:'Mi pestaña', render(el,g,GM){}}, // extra tab on each album page (optional)
+     songSection:{title:'Mi sección', render(el,song,GM){}},    // extra section on each song page (optional)
+     badges(song,GM){return '<span class="b">…</span>'},       // small badges on the song cards (optional)
+     tasks(GM){return [{k:'miFiltro',ic:'⚑',n:3,t:'…',d:'…'}]},  // cards in Pending; k = the id of one of your filters (optional)
+     filters:[{k:'miFiltro',label:'…',fn:song=>true,pend:false}], // extra song filters; pend:true = also counts as «something pending» (optional)
      init(GM){}                                                  // called on registration (optional)
    })
    Labels are written in Spanish: the runtime translator (i18n.js) shows them in the user's language.
 */
 window.GM=(()=>{
-  const mods={},albTabs=[],navs=[],songActs=[],mixActs=[],homeSecs=[],ev={};
+  const mods={},albTabs=[],navs=[],songActs=[],mixActs=[],homeSecs=[],songSecs=[],ev={};
   const M={
     mods,
     register(m){
@@ -22,6 +26,7 @@ window.GM=(()=>{
       if(m.songAction)songActs.push({mod:m.id,...m.songAction});
       if(m.mixtapeAction)mixActs.push({mod:m.id,...m.mixtapeAction});
       if(m.home)homeSecs.push({mod:m.id,...m.home});   // section inside Home: home:{title,render(el,GM)}
+      if(m.songSection)songSecs.push({mod:m.id,...m.songSection});
       if(m.albumTab)albTabs.push({mod:m.id,id:m.albumTab.id||'tab',label:m.albumTab.label||m.id,render:m.albumTab.render});
       if(m.init){try{m.init(M)}catch(e){console.error('módulo',m.id,e)}}
     },
@@ -73,7 +78,15 @@ window.GM=(()=>{
       reload:()=>refreshAll(),            // re-reads the folders (like the Refresh button)
       setDraft:(ids,on)=>setDraft(ids.map(i=>ALL.find(z=>z.id===i)).filter(Boolean),on),   // marks/unmarks «boceto» (sketch) on several songs by id
     },
-    navs:()=>navs,albumTabs:()=>albTabs,songActions:()=>songActs,mixtapeActions:()=>mixActs,homeSections:()=>homeSecs,
+    navs:()=>navs,albumTabs:()=>albTabs,songActions:()=>songActs,mixtapeActions:()=>mixActs,homeSections:()=>homeSecs,songSections:()=>songSecs,
+    badges(s){return Object.values(mods).map(m=>{try{return m.badges?m.badges(s,M)||'':''}catch(e){return ''}}).join('')},
+    tasks(){return Object.values(mods).flatMap(m=>{try{return m.tasks?m.tasks(M)||[]:[]}catch(e){console.error(e);return []}})},
+    filters(){return Object.values(mods).flatMap(m=>(m.filters||[]).map(f=>({mod:m.id,...f})))},
+    /* release status chosen by the user (overrides the folder): 'pub' | 'pre' | 'un' | '' (= decided by the folder) */
+    release:id=>(ST.release&&ST.release[id])||'',
+    setRelease(id,v){ST.release=ST.release||{};if(v)ST.release[id]=v;else delete ST.release[id];save()},
+    isPub:s=>isPub(s),isPre:s=>isPre(s),
+
     async load(){
       try{const c=await fetch('/api/config').then(r=>r.ok?r.json():{});Object.assign(M.cfg,c||{})}catch{}
       const L=await fetch('/api/modulos').then(r=>r.json()).catch(()=>[]);

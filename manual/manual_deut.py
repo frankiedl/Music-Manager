@@ -86,6 +86,14 @@ CONTENIDO = [
     ("p", "In einem Mixtape werden die Master in <i>MIXTAPES/_masters</i> gespeichert (nie in den Ordnern deiner Songs), und du kannst sie in diesem Mixtape verwenden oder zu den Originalversionen zurückkehren. "
           "Das Ergebnis lässt sich als neue Version speichern, ohne etwas zu überschreiben."),
 
+    ("h2", "Rechte"),
+    ("p", "Auf der Seite jedes Songs hat der Bereich <b>Rechte</b> zwei Teile. Den <b>Veröffentlichungsstatus</b> (Unveröffentlicht, Pre-released oder Veröffentlicht): Standardmäßig entscheidet der Ordner, "
+          "du kannst ihn aber mit einem Klick wählen, ohne etwas zu verschieben; «Nach Ordner» stellt wieder auf automatisch. Und die <b>Registrierungen</b> bei Verwertungsgesellschaften: <b>+ Registrierung hinzufügen</b> speichert Gesellschaft, Code oder Nummer, "
+          "Datum, Status (ausstehend, gesendet, registriert), Urheber- und Verlagsanteil in Prozent und Notizen. Es sind deine eigenen Notizen: Der Manager verbindet sich mit keiner Gesellschaft."),
+    ("p", "Der Menüpunkt <b>Rechte</b> fasst zusammen, was ohne Registrierung veröffentlicht ist (auch als Karte in Offen und als Filter in Songs), lässt dich die Liste der Gesellschaften bearbeiten "
+          "(SGAE, SACEM, GEMA, ASCAP, BMI, SESAC, PRS, SIAE, SADAIC, SPA… und deine eigenen; die deines Landes stehen oben) und bietet die <b>Registrierungstabelle</b>: als CSV herunterladen, in Excel ausfüllen "
+          "und wieder importieren (CSV oder .xlsx). Vor dem Anwenden siehst du, was angelegt wird, was sich ändert und welche Hinweise es gibt (unbekannte Songs oder Gesellschaften); beim Import wird nie etwas gelöscht."),
+
     ("h1", "5. Optionales Programm: ffmpeg"),
     ("p", "Es ist wegen seiner Lizenz nicht enthalten. Ohne es funktioniert alles außer den MP3-Mixtapes."),
     ("h2", "ffmpeg (Mixtapes)"),
