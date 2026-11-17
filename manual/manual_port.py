@@ -11,13 +11,13 @@ CONTENIDO = [
           "Você a escuta no navegador, marca rascunhos, une duplicatas, prepara álbuns e mixtapes em MP3 com suas letras, e pode normalizar o volume delas."),
     ("p", "Tudo acontece <b>no seu computador</b>: o programa só atende a sua própria máquina (endereço 127.0.0.1), não tem contas, não envia estatísticas e a sua música "
           "não é copiada para lugar nenhum; ela é lida da sua pasta. <b>Você não precisa instalar o Python</b> nem mais nada."),
-    ("p", "A pasta que você recebe contém só isto: o executável (" + C % "GestorMusica.exe" + " no Windows, " + C % "GestorMusica.app" + " no Mac), "
+    ("p", "A pasta que você recebe contém só isto: o executável (" + C % "MusicManager.exe" + " no Windows, " + C % "MusicManager.app" + " no Mac), "
           "uma pasta de suporte (" + C % "_internal" + " no Windows; não mexa nela), uma pasta " + C % "datos" + " vazia e este manual."),
 
     ("h1", "2. Instalação e primeira execução"),
     ("h2", "Windows 10 e Windows 11"),
-    ("li", ["Descompacte o zip numa pasta sua, por exemplo <i>Documentos\\GestorMusica</i>. Não o execute de dentro do zip e evite pastas protegidas como <i>Arquivos de Programas</i>.",
-            "Dê um duplo clique em <b>GestorMusica.exe</b>. Abre-se uma pequena janela de texto (é o motor do programa: <b>feche-a para sair</b>) e, após alguns segundos, o seu navegador abre com o gerenciador.",
+    ("li", ["Descompacte o zip numa pasta sua, por exemplo <i>Documentos\\MusicManager</i>. Não o execute de dentro do zip e evite pastas protegidas como <i>Arquivos de Programas</i>.",
+            "Dê um duplo clique em <b>MusicManager.exe</b>. Abre-se uma pequena janela de texto (é o motor do programa: <b>feche-a para sair</b>) e, após alguns segundos, o seu navegador abre com o gerenciador.",
             "<b>Aviso do Windows (SmartScreen):</b> como o programa não é assinado, pode aparecer «O Windows protegeu o computador». Clique em <b>Mais informações</b> e depois em <b>Executar assim mesmo</b>.",
             "Se o zip vier da internet, antes de descompactar você pode clicar com o botão direito no zip, escolher <i>Propriedades</i> e marcar <b>Desbloquear</b>.",
             "Se o antivírus o bloquear por engano (às vezes acontece com programas sem assinatura), adicione a pasta como exceção.",
@@ -25,10 +25,10 @@ CONTENIDO = [
     ("h2", "Mac (Intel e Apple Silicon)"),
     ("li", ["Há duas versões: <b>apple-silicon</b> (Macs M1, M2, M3, M4…) e <b>intel</b>. Se você não sabe qual tem: menu Apple > <i>Sobre este Mac</i>; se disser Apple M…, use apple-silicon.",
             "Descompacte o zip (duplo clique) e mova a pasta para, por exemplo, <i>Documentos</i>. Os seus dados são salvos <b>junto ao .app</b>, então não o deixe dentro de Aplicativos "
-            "(se não for possível gravar ali, usa-se <i>~/Library/Application Support/GestorMusica</i>).",
-            "<b>Aviso do Gatekeeper:</b> o aplicativo não é assinado pela Apple. Na primeira vez, clique com o <b>botão direito (ou Control+clique) em GestorMusica.app > Abrir > Abrir</b>. "
+            "(se não for possível gravar ali, usa-se <i>~/Library/Application Support/MusicManager</i>).",
+            "<b>Aviso do Gatekeeper:</b> o aplicativo não é assinado pela Apple. Na primeira vez, clique com o <b>botão direito (ou Control+clique) em MusicManager.app > Abrir > Abrir</b>. "
             "Só é preciso uma vez. Se o macOS disser que está «danificado», abra o Terminal e digite (troque o caminho pelo seu):"]),
-    ("cod", "xattr -dr com.apple.quarantine /caminho/para/GestorMusica.app"),
+    ("cod", "xattr -dr com.apple.quarantine /caminho/para/MusicManager.app"),
     ("li", ["Ao abrir você não verá uma janela própria: o navegador abre com o gerenciador. Para sair, botão direito no ícone do Dock > <i>Sair</i>."]),
     ("h2", "A primeira vez"),
     ("p", "Aparece uma caixa para <b>escolher a pasta da sua biblioteca</b> de música (pode ser uma pasta nova e vazia). No Windows o programa também pergunta o seu nome artístico e o titular do copyright (para os mixtapes); "
@@ -119,17 +119,17 @@ CONTENIDO = [
     ("h1", "5. Programa opcional: ffmpeg"),
     ("p", "Não vai dentro do programa por causa de sua licença. Sem ele tudo funciona, exceto os mixtapes MP3."),
     ("h2", "ffmpeg (mixtapes)"),
-    ("li", ["<b>Windows:</b> no PowerShell digite " + C % "winget install Gyan.FFmpeg" + ", ou baixe o ffmpeg de ffmpeg.org e deixe o <b>ffmpeg.exe junto ao GestorMusica.exe</b>.",
-            "<b>Mac:</b> instale o Homebrew (brew.sh) e digite " + C % "brew install ffmpeg" + "; ou deixe o arquivo <b>ffmpeg</b> na pasta junto ao GestorMusica.app.",
+    ("li", ["<b>Windows:</b> no PowerShell digite " + C % "winget install Gyan.FFmpeg" + ", ou baixe o ffmpeg de ffmpeg.org e deixe o <b>ffmpeg.exe junto ao MusicManager.exe</b>.",
+            "<b>Mac:</b> instale o Homebrew (brew.sh) e digite " + C % "brew install ffmpeg" + "; ou deixe o arquivo <b>ffmpeg</b> na pasta junto ao MusicManager.app.",
             "Reinicie o gerenciador depois de instalá-lo."]),
 
     ("h1", "6. Backups e desfazer"),
     ("li", ["Faça backup de <b>duas coisas</b>: a sua pasta de biblioteca, e a pasta <b>datos</b> junto com o <i>config.json</i> (estão junto ao executável).",
             "Para passar o programa a outro computador: copie a pasta do programa com <i>datos</i> e <i>config.json</i>, e em Configurações aponte para a biblioteca nova.",
-            "O gerenciador <b>nunca apaga</b> os seus arquivos. Quando move algo (unificar, mover uma versão, importar) anota em <i>_GestorMusica/datos/diario_movimientos.jsonl</i> (dentro da sua pasta de música: todos os computadores que usam essa pasta veem o mesmo; não abra o programa em dois computadores ao mesmo tempo), e isso pode ser desfeito. "
+            "O gerenciador <b>nunca apaga</b> os seus arquivos. Quando move algo (unificar, mover uma versão, importar) anota em <i>_MusicManager/datos/diario_movimientos.jsonl</i> (dentro da sua pasta de música: todos os computadores que usam essa pasta veem o mesmo; não abra o programa em dois computadores ao mesmo tempo), e isso pode ser desfeito. "
             "A seção Importar tem o seu próprio desfazer. Para o diário geral, abra um terminal na pasta do programa e digite:"]),
-    ("cod", "Windows:  GestorMusica.exe --run-script deshacer.py            (só simula)\n          GestorMusica.exe --run-script deshacer.py --apply    (desfaz)\n"
-            "Mac:      GestorMusica.app/Contents/MacOS/GestorMusica --run-script deshacer.py --apply"),
+    ("cod", "Windows:  MusicManager.exe --run-script deshacer.py            (só simula)\n          MusicManager.exe --run-script deshacer.py --apply    (desfaz)\n"
+            "Mac:      MusicManager.app/Contents/MacOS/MusicManager --run-script deshacer.py --apply"),
     ("li", ["Ao atualizar para uma versão nova, substitua a pasta do executável, mas conserve <i>datos</i> e <i>config.json</i>."]),
 
     ("h1", "7. Privacidade e segurança"),
@@ -148,6 +148,6 @@ CONTENIDO = [
                ["Uma música não aparece", "Verifique se a sua pasta não começa por _ ou . e se tem áudio ou letra."],
                ["Mixtapes: «Não encontro o ffmpeg»", "Instale o ffmpeg (seção 5) e reinicie o gerenciador."],
                ["Mac: não salva dados ou pede permissões", "Mova a pasta para Documentos (não para Aplicativos) e conceda acesso a pastas se o macOS pedir."],
-               ["Algo estranho depois de atualizar", "Feche o programa, apague datos/thumbs e abra-o de novo (é regenerado). Não apague a pasta _GestorMusica da sua biblioteca (suas estrelas, notas e direitos estão lá)."],
+               ["Algo estranho depois de atualizar", "Feche o programa, apague datos/thumbs e abra-o de novo (é regenerado). Não apague a pasta _MusicManager da sua biblioteca (suas estrelas, notas e direitos estão lá)."],
                ["Quero começar do zero", "Feche o programa e renomeie a pasta datos; a sua música não é tocada."]]),
 ]

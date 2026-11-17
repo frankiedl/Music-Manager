@@ -11,13 +11,13 @@ CONTENIDO = [
           "You listen to it in the browser, mark sketches, merge duplicates, prepare albums and MP3 mixtapes with their lyrics, and you can normalize their loudness."),
     ("p", "Everything happens <b>on your computer</b>: the program only answers your own machine (address 127.0.0.1), it has no accounts, sends no statistics and your music "
           "is not copied anywhere; it is read from your folder. <b>You do not need to install Python</b> or anything else."),
-    ("p", "The folder you receive contains only this: the executable (" + C % "GestorMusica.exe" + " on Windows, " + C % "GestorMusica.app" + " on Mac), "
+    ("p", "The folder you receive contains only this: the executable (" + C % "MusicManager.exe" + " on Windows, " + C % "MusicManager.app" + " on Mac), "
           "a support folder (" + C % "_internal" + " on Windows; do not touch it), an empty " + C % "datos" + " folder and this manual."),
 
     ("h1", "2. Installation and first start"),
     ("h2", "Windows 10 and Windows 11"),
-    ("li", ["Unzip the file into a folder of your own, for example <i>Documents\\GestorMusica</i>. Do not run it from inside the zip and avoid protected folders such as <i>Program Files</i>.",
-            "Double-click <b>GestorMusica.exe</b>. A small text window opens (it is the engine of the program: <b>close it to quit</b>) and after a few seconds your browser opens with the manager.",
+    ("li", ["Unzip the file into a folder of your own, for example <i>Documents\\MusicManager</i>. Do not run it from inside the zip and avoid protected folders such as <i>Program Files</i>.",
+            "Double-click <b>MusicManager.exe</b>. A small text window opens (it is the engine of the program: <b>close it to quit</b>) and after a few seconds your browser opens with the manager.",
             "<b>Windows warning (SmartScreen):</b> because the program is not signed, you may see \"Windows protected your PC\". Click <b>More info</b> and then <b>Run anyway</b>.",
             "If the zip comes from the internet, before unzipping you can right-click the zip, choose <i>Properties</i> and tick <b>Unblock</b>.",
             "If your antivirus blocks it by mistake (it sometimes happens with unsigned programs), add the folder as an exception.",
@@ -25,10 +25,10 @@ CONTENIDO = [
     ("h2", "Mac (Intel and Apple Silicon)"),
     ("li", ["There are two versions: <b>apple-silicon</b> (M1, M2, M3, M4… Macs) and <b>intel</b>. If you do not know which you have: Apple menu > <i>About This Mac</i>; if it says Apple M…, use apple-silicon.",
             "Unzip (double-click) and move the folder to, for example, <i>Documents</i>. Your data is saved <b>next to the .app</b>, so do not leave it inside Applications "
-            "(if it cannot be written there, <i>~/Library/Application Support/GestorMusica</i> is used).",
-            "<b>Gatekeeper warning:</b> the application is not signed by Apple. The first time, <b>right-click (or Control-click) GestorMusica.app > Open > Open</b>. "
+            "(if it cannot be written there, <i>~/Library/Application Support/MusicManager</i> is used).",
+            "<b>Gatekeeper warning:</b> the application is not signed by Apple. The first time, <b>right-click (or Control-click) MusicManager.app > Open > Open</b>. "
             "This is needed only once. If macOS says it is \"damaged\", open Terminal and type (change the path to yours):"]),
-    ("cod", "xattr -dr com.apple.quarantine /path/to/GestorMusica.app"),
+    ("cod", "xattr -dr com.apple.quarantine /path/to/MusicManager.app"),
     ("li", ["When it opens you will not see a window of its own: the browser opens with the manager. To quit, right-click the Dock icon > <i>Quit</i>."]),
     ("h2", "The first time"),
     ("p", "A box appears to <b>choose your music library folder</b> (it can be a new, empty folder). On Windows the program also asks your artist name and the copyright holder (for mixtapes); "
@@ -119,17 +119,17 @@ CONTENIDO = [
     ("h1", "5. Optional program: ffmpeg"),
     ("p", "It is not bundled because of its license. Without it everything works except MP3 mixtapes."),
     ("h2", "ffmpeg (mixtapes)"),
-    ("li", ["<b>Windows:</b> in PowerShell type " + C % "winget install Gyan.FFmpeg" + ", or download ffmpeg from ffmpeg.org and leave <b>ffmpeg.exe next to GestorMusica.exe</b>.",
-            "<b>Mac:</b> install Homebrew (brew.sh) and type " + C % "brew install ffmpeg" + "; or leave the <b>ffmpeg</b> file in the folder next to GestorMusica.app.",
+    ("li", ["<b>Windows:</b> in PowerShell type " + C % "winget install Gyan.FFmpeg" + ", or download ffmpeg from ffmpeg.org and leave <b>ffmpeg.exe next to MusicManager.exe</b>.",
+            "<b>Mac:</b> install Homebrew (brew.sh) and type " + C % "brew install ffmpeg" + "; or leave the <b>ffmpeg</b> file in the folder next to MusicManager.app.",
             "Restart the manager after installing it."]),
 
     ("h1", "6. Backups and undo"),
     ("li", ["Back up <b>two things</b>: your library folder, and the <b>datos</b> folder together with <i>config.json</i> (they are next to the executable).",
             "To move the program to another computer: copy the program folder with <i>datos</i> and <i>config.json</i>, and in Settings point to the new library.",
-            "The manager <b>never deletes</b> your files. When it moves something (merge, move a version, import) it notes it in <i>_GestorMusica/datos/diario_movimientos.jsonl</i> (inside your music folder, so every computer using that folder sees the same; do not open the program on two computers at once), and it can be undone. "
+            "The manager <b>never deletes</b> your files. When it moves something (merge, move a version, import) it notes it in <i>_MusicManager/datos/diario_movimientos.jsonl</i> (inside your music folder, so every computer using that folder sees the same; do not open the program on two computers at once), and it can be undone. "
             "The Import section has its own undo. For the general journal, open a terminal in the program folder and type:"]),
-    ("cod", "Windows:  GestorMusica.exe --run-script deshacer.py            (simulation only)\n          GestorMusica.exe --run-script deshacer.py --apply    (undoes)\n"
-            "Mac:      GestorMusica.app/Contents/MacOS/GestorMusica --run-script deshacer.py --apply"),
+    ("cod", "Windows:  MusicManager.exe --run-script deshacer.py            (simulation only)\n          MusicManager.exe --run-script deshacer.py --apply    (undoes)\n"
+            "Mac:      MusicManager.app/Contents/MacOS/MusicManager --run-script deshacer.py --apply"),
     ("li", ["When updating to a new version, replace the executable folder but keep <i>datos</i> and <i>config.json</i>."]),
 
     ("h1", "7. Privacy and security"),
@@ -148,6 +148,6 @@ CONTENIDO = [
                ["A song does not appear", "Check that its folder does not start with _ or . and that it has audio or lyrics."],
                ["Mixtapes: \"I can't find ffmpeg\"", "Install ffmpeg (section 5) and restart the manager."],
                ["Mac: it does not save data or asks for permissions", "Move the folder to Documents (not Applications) and grant folder access if macOS asks."],
-               ["Something odd after updating", "Close the program, delete datos/thumbs and open it again (it is regenerated). Do not delete the _GestorMusica folder in your library (your stars, notes and rights are there)."],
+               ["Something odd after updating", "Close the program, delete datos/thumbs and open it again (it is regenerated). Do not delete the _MusicManager folder in your library (your stars, notes and rights are there)."],
                ["I want to start from scratch", "Close the program and rename the datos folder; your music is not touched."]]),
 ]

@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 r"""Builds the manager's executable with PyInstaller (folder mode) from the already generated generic package.
 
-  python construir.py [--paquete PATH/GestorMusica] [--salida PATH] [--sin-manual]
+  python construir.py [--paquete PATH/MusicManager] [--salida PATH] [--sin-manual]
 
 Requires:  pip install pyinstaller pillow reportlab   (Python 3.11 or 3.12 recommended, see CONSTRUIR.md)
-Result:    SALIDA/GestorMusica-<system>/  with  GestorMusica(.exe | .app), support folder (_internal) and the manuals (Manual_ESP.pdf, Manual_ENG.pdf, Manual_DEUT.pdf, Manual_PORT.pdf)
-           SALIDA/GestorMusica-<system>.zip
+Result:    SALIDA/MusicManager-<system>/  with  MusicManager(.exe | .app), support folder (_internal) and the manuals (Manual_ESP.pdf, Manual_ENG.pdf, Manual_DEUT.pdf, Manual_PORT.pdf)
+           SALIDA/MusicManager-<system>.zip
 """
 import os
 import platform
@@ -18,12 +18,12 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 DIST = HERE.parent
 arg = lambda n, d: Path(sys.argv[sys.argv.index(n) + 1]).resolve() if n in sys.argv else d  # noqa: E731
-PAQ = arg("--paquete", DIST / "salida" / "GestorMusica" if (DIST / "salida" / "GestorMusica").is_dir() else DIST / "paquete")
+PAQ = arg("--paquete", DIST / "salida" / "MusicManager" if (DIST / "salida" / "MusicManager").is_dir() else DIST / "paquete")
 SAL = arg("--salida", DIST / "salida")
 SIS = {"Windows": "windows", "Darwin": "mac", "Linux": "linux"}.get(platform.system(), platform.system().lower())
 if SIS == "mac":
     SIS += "-" + ("apple-silicon" if platform.machine() == "arm64" else "intel")
-NOMBRE = "GestorMusica"
+NOMBRE = "MusicManager"
 # the stdlib used by gestor.py, the scripts and the modules' servidor.py (loaded by path, so PyInstaller does not see them)
 HIDDEN = ["argparse", "concurrent.futures", "csv", "ctypes", "datetime", "difflib", "glob", "hashlib", "http.server", "importlib.util",
           "json", "math", "mimetypes", "platform", "re", "secrets", "shutil", "socket", "string", "subprocess", "threading", "traceback",
@@ -46,7 +46,7 @@ def main():
     cmd += ["--windowed"] if SIS.startswith("mac") else []   # Windows: keep the small text window ("close it to quit")
     if SIS.startswith("mac"):
         cmd += ["--target-architecture", "universal2"] if os.environ.get("GM_UNIVERSAL2") else []
-        cmd += ["--osx-bundle-identifier", "app.gestormusica.local"]
+        cmd += ["--osx-bundle-identifier", "app.musicmanager.local"]
     cmd.append(str(HERE / "app.py"))
     subprocess.run(cmd, check=True)
     out = SAL / f"{NOMBRE}-{SIS}"

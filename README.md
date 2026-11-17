@@ -10,7 +10,7 @@ Everything runs on your own computer. There are no accounts and no uploads: your
 
 1. **Download** the zip for your system from the *Releases* page (Windows, Mac Apple Silicon or Mac Intel).
 2. **Unzip** it into a folder of your own, for example `Documents/MusicManager`. Do not run it from inside the zip.
-3. **Open** `GestorMusica.exe` (Windows) or `GestorMusica.app` (Mac). Your browser opens with the manager. The first time, choose the folder where your music lives (it can be a new, empty one).
+3. **Open** `MusicManager.exe` (Windows) or `MusicManager.app` (Mac). Your browser opens with the manager. The first time, choose the folder where your music lives (it can be a new, empty one).
 
 The app is not code-signed yet, so your system warns you the first time:
 - **Windows:** "Windows protected your PC" → *More info* → *Run anyway*.

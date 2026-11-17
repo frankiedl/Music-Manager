@@ -11,13 +11,13 @@ CONTENIDO = [
           "Du hörst sie im Browser, markierst Skizzen, führst Duplikate zusammen, bereitest Alben und MP3-Mixtapes mit ihren Songtexten vor und kannst ihre Lautheit normalisieren."),
     ("p", "Alles geschieht <b>auf deinem Computer</b>: Das Programm antwortet nur deinem eigenen Rechner (Adresse 127.0.0.1), hat keine Konten, sendet keine Statistiken, und deine Musik "
           "wird nirgendwohin kopiert; sie wird aus deinem Ordner gelesen. <b>Du musst weder Python noch sonst etwas installieren</b>."),
-    ("p", "Der Ordner, den du erhältst, enthält nur Folgendes: die ausführbare Datei (" + C % "GestorMusica.exe" + " unter Windows, " + C % "GestorMusica.app" + " auf dem Mac), "
+    ("p", "Der Ordner, den du erhältst, enthält nur Folgendes: die ausführbare Datei (" + C % "MusicManager.exe" + " unter Windows, " + C % "MusicManager.app" + " auf dem Mac), "
           "einen Hilfsordner (" + C % "_internal" + " unter Windows; nicht anfassen), einen leeren Ordner " + C % "datos" + " und dieses Handbuch."),
 
     ("h1", "2. Installation und erster Start"),
     ("h2", "Windows 10 und Windows 11"),
-    ("li", ["Entpacke die Zip-Datei in einen eigenen Ordner, zum Beispiel <i>Dokumente\\GestorMusica</i>. Starte sie nicht aus dem Zip heraus und meide geschützte Ordner wie <i>Programme</i>.",
-            "Doppelklicke auf <b>GestorMusica.exe</b>. Ein kleines Textfenster öffnet sich (es ist der Motor des Programms: <b>schließe es, um zu beenden</b>), und nach ein paar Sekunden öffnet sich dein Browser mit dem Manager.",
+    ("li", ["Entpacke die Zip-Datei in einen eigenen Ordner, zum Beispiel <i>Dokumente\\MusicManager</i>. Starte sie nicht aus dem Zip heraus und meide geschützte Ordner wie <i>Programme</i>.",
+            "Doppelklicke auf <b>MusicManager.exe</b>. Ein kleines Textfenster öffnet sich (es ist der Motor des Programms: <b>schließe es, um zu beenden</b>), und nach ein paar Sekunden öffnet sich dein Browser mit dem Manager.",
             "<b>Windows-Warnung (SmartScreen):</b> Weil das Programm nicht signiert ist, kann «Der Computer wurde durch Windows geschützt» erscheinen. Klicke auf <b>Weitere Informationen</b> und dann auf <b>Trotzdem ausführen</b>.",
             "Stammt das Zip aus dem Internet, kannst du vor dem Entpacken mit Rechtsklick auf das Zip <i>Eigenschaften</i> wählen und <b>Zulassen</b> ankreuzen.",
             "Blockiert dein Virenscanner es irrtümlich (das passiert manchmal bei unsignierten Programmen), füge den Ordner als Ausnahme hinzu.",
@@ -25,10 +25,10 @@ CONTENIDO = [
     ("h2", "Mac (Intel und Apple Silicon)"),
     ("li", ["Es gibt zwei Versionen: <b>apple-silicon</b> (Macs mit M1, M2, M3, M4…) und <b>intel</b>. Weißt du nicht, welchen du hast: Apple-Menü > <i>Über diesen Mac</i>; steht dort Apple M…, nimm apple-silicon.",
             "Entpacke das Zip (Doppelklick) und verschiebe den Ordner zum Beispiel nach <i>Dokumente</i>. Deine Daten werden <b>neben der .app</b> gespeichert, lass sie also nicht im Ordner Programme "
-            "(kann dort nicht geschrieben werden, wird <i>~/Library/Application Support/GestorMusica</i> verwendet).",
-            "<b>Gatekeeper-Warnung:</b> Die Anwendung ist nicht von Apple signiert. Beim ersten Mal <b>Rechtsklick (oder Control-Klick) auf GestorMusica.app > Öffnen > Öffnen</b>. "
+            "(kann dort nicht geschrieben werden, wird <i>~/Library/Application Support/MusicManager</i> verwendet).",
+            "<b>Gatekeeper-Warnung:</b> Die Anwendung ist nicht von Apple signiert. Beim ersten Mal <b>Rechtsklick (oder Control-Klick) auf MusicManager.app > Öffnen > Öffnen</b>. "
             "Das ist nur einmal nötig. Sagt macOS, sie sei «beschädigt», öffne das Terminal und gib ein (ersetze den Pfad durch deinen):"]),
-    ("cod", "xattr -dr com.apple.quarantine /pfad/zu/GestorMusica.app"),
+    ("cod", "xattr -dr com.apple.quarantine /pfad/zu/MusicManager.app"),
     ("li", ["Beim Öffnen siehst du kein eigenes Fenster: Der Browser öffnet sich mit dem Manager. Zum Beenden Rechtsklick auf das Dock-Symbol > <i>Beenden</i>."]),
     ("h2", "Beim ersten Mal"),
     ("p", "Ein Dialog erscheint, in dem du <b>den Ordner deiner Musikbibliothek wählst</b> (es kann ein neuer, leerer Ordner sein). Unter Windows fragt das Programm außerdem nach deinem Künstlernamen und dem Urheberrechtsinhaber (für Mixtapes); "
@@ -119,17 +119,17 @@ CONTENIDO = [
     ("h1", "5. Optionales Programm: ffmpeg"),
     ("p", "Es ist wegen seiner Lizenz nicht enthalten. Ohne es funktioniert alles außer den MP3-Mixtapes."),
     ("h2", "ffmpeg (Mixtapes)"),
-    ("li", ["<b>Windows:</b> Gib in PowerShell " + C % "winget install Gyan.FFmpeg" + " ein, oder lade ffmpeg von ffmpeg.org herunter und lege <b>ffmpeg.exe neben GestorMusica.exe</b>.",
-            "<b>Mac:</b> Installiere Homebrew (brew.sh) und gib " + C % "brew install ffmpeg" + " ein; oder lege die Datei <b>ffmpeg</b> in den Ordner neben GestorMusica.app.",
+    ("li", ["<b>Windows:</b> Gib in PowerShell " + C % "winget install Gyan.FFmpeg" + " ein, oder lade ffmpeg von ffmpeg.org herunter und lege <b>ffmpeg.exe neben MusicManager.exe</b>.",
+            "<b>Mac:</b> Installiere Homebrew (brew.sh) und gib " + C % "brew install ffmpeg" + " ein; oder lege die Datei <b>ffmpeg</b> in den Ordner neben MusicManager.app.",
             "Starte den Manager nach der Installation neu."]),
 
     ("h1", "6. Sicherungen und Rückgängig"),
     ("li", ["Sichere <b>zwei Dinge</b>: deinen Bibliotheksordner und den Ordner <b>datos</b> zusammen mit <i>config.json</i> (sie liegen neben der ausführbaren Datei).",
             "Um das Programm auf einen anderen Computer zu übertragen: Kopiere den Programmordner mit <i>datos</i> und <i>config.json</i> und verweise in den Einstellungen auf die neue Bibliothek.",
-            "Der Manager <b>löscht nie</b> deine Dateien. Wenn er etwas verschiebt (zusammenführen, eine Version verschieben, importieren), trägt er es in <i>_GestorMusica/datos/diario_movimientos.jsonl</i> (in deinem Musikordner, daher sehen alle Computer, die diesen Ordner nutzen, dasselbe; öffne das Programm nicht auf zwei Computern gleichzeitig) ein, und es lässt sich rückgängig machen. "
+            "Der Manager <b>löscht nie</b> deine Dateien. Wenn er etwas verschiebt (zusammenführen, eine Version verschieben, importieren), trägt er es in <i>_MusicManager/datos/diario_movimientos.jsonl</i> (in deinem Musikordner, daher sehen alle Computer, die diesen Ordner nutzen, dasselbe; öffne das Programm nicht auf zwei Computern gleichzeitig) ein, und es lässt sich rückgängig machen. "
             "Der Bereich Importieren hat sein eigenes Rückgängig. Für das allgemeine Protokoll öffne ein Terminal im Programmordner und gib ein:"]),
-    ("cod", "Windows:  GestorMusica.exe --run-script deshacer.py            (nur Simulation)\n          GestorMusica.exe --run-script deshacer.py --apply    (macht rückgängig)\n"
-            "Mac:      GestorMusica.app/Contents/MacOS/GestorMusica --run-script deshacer.py --apply"),
+    ("cod", "Windows:  MusicManager.exe --run-script deshacer.py            (nur Simulation)\n          MusicManager.exe --run-script deshacer.py --apply    (macht rückgängig)\n"
+            "Mac:      MusicManager.app/Contents/MacOS/MusicManager --run-script deshacer.py --apply"),
     ("li", ["Beim Aktualisieren auf eine neue Version ersetze den Ordner der ausführbaren Datei, behalte aber <i>datos</i> und <i>config.json</i>."]),
 
     ("h1", "7. Datenschutz und Sicherheit"),
@@ -148,6 +148,6 @@ CONTENIDO = [
                ["Ein Song erscheint nicht", "Prüfe, dass sein Ordner nicht mit _ oder . beginnt und dass er Audio oder Songtext hat."],
                ["Mixtapes: «Ich finde ffmpeg nicht»", "Installiere ffmpeg (Abschnitt 5) und starte den Manager neu."],
                ["Mac: speichert keine Daten oder fragt nach Berechtigungen", "Verschiebe den Ordner nach Dokumente (nicht Programme) und erlaube den Ordnerzugriff, wenn macOS fragt."],
-               ["Etwas Seltsames nach dem Aktualisieren", "Schließe das Programm, lösche datos/thumbs und öffne es erneut (es wird neu erzeugt). Lösche nicht den Ordner _GestorMusica in deiner Bibliothek (dort sind deine Sterne, Notizen und Rechte)."],
+               ["Etwas Seltsames nach dem Aktualisieren", "Schließe das Programm, lösche datos/thumbs und öffne es erneut (es wird neu erzeugt). Lösche nicht den Ordner _MusicManager in deiner Bibliothek (dort sind deine Sterne, Notizen und Rechte)."],
                ["Ich will bei null anfangen", "Schließe das Programm und benenne den Ordner datos um; deine Musik bleibt unberührt."]]),
 ]

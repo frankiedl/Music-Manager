@@ -10,13 +10,13 @@ if FROZEN:
     CODE = RES / "gestor"
     APP = Path(sys.executable).resolve().parent  # folder of the executable: config.json and datos/ live here
     if sys.platform == "darwin" and APP.name == "MacOS" and APP.parent.name == "Contents":
-        APP = APP.parent.parent.parent          # inside GestorMusica.app: use the folder that contains the .app
+        APP = APP.parent.parent.parent          # inside MusicManager.app: use the folder that contains the .app
     if not os.access(APP, os.W_OK):             # e.g. installed in /Applications or on a read-only disk
-        APP = Path.home() / ("Library/Application Support" if sys.platform == "darwin" else ".local/share") / "GestorMusica"
+        APP = Path.home() / ("Library/Application Support" if sys.platform == "darwin" else ".local/share") / "MusicManager"
         APP.mkdir(parents=True, exist_ok=True)
 else:
-    CODE = Path(__file__).resolve().parent      # .../GestorMusica/gestor
-    APP = CODE.parent                           # .../GestorMusica
+    CODE = Path(__file__).resolve().parent      # .../MusicManager/gestor
+    APP = CODE.parent                           # .../MusicManager
     RES = APP
 LOCAL = APP / "datos"                           # per-computer files: generated data, thumbnails, access token
 DATOS = LOCAL                                  # shared files (stars, notes, journal…): moved into the library folder by usar_biblioteca()
@@ -64,7 +64,7 @@ SHARED_FILES = ("estado.json", "medios_estado.json", "decisiones.csv", "diario_m
 
 
 def usar_biblioteca():
-    """Your own data (stars, notes, rights, journal…) lives INSIDE the music folder (<library>/_GestorMusica/datos), so
+    """Your own data (stars, notes, rights, journal…) lives INSIDE the music folder (<library>/_MusicManager/datos), so
     every computer that opens the same Dropbox folder sees the same things; only the path of the library is per computer.
     Generated data and thumbnails stay local. Data already next to the program is copied there the first time."""
     global DATOS
@@ -73,8 +73,11 @@ def usar_biblioteca():
     if not r or not r.is_dir():
         DATOS = LOCAL
         return DATOS
-    d = r / "_GestorMusica" / "datos"
+    d = r / "_MusicManager" / "datos"
     try:
+        old = r / "_GestorMusica"                 # name used by the first test builds
+        if old.is_dir() and not (r / "_MusicManager").exists():
+            old.rename(r / "_MusicManager")
         d.mkdir(parents=True, exist_ok=True)
         import shutil
         for n in SHARED_FILES:

@@ -1,5 +1,5 @@
 """Entry point of the executable (PyInstaller). Starts the manager, or runs one of the manager's scripts if asked:
-   GestorMusica --run-script build_data.py [args]   (so the manager launches its own scripts without Python being installed)."""
+   MusicManager --run-script build_data.py [args]   (so the manager launches its own scripts without Python being installed)."""
 import builtins
 import os
 import runpy

@@ -1029,7 +1029,7 @@ def ask_folder():
 
 def _ajustes_biblioteca(lib, guardar=None):
     """Reads (or, with `guardar`, completes) the preferences stored inside the library, shared by all computers."""
-    f = Path(lib).expanduser() / "_GestorMusica" / "datos" / "ajustes.json"
+    f = Path(lib).expanduser() / "_MusicManager" / "datos" / "ajustes.json"
     try:
         d = json.loads(f.read_text(encoding="utf-8"))
     except (OSError, ValueError):
