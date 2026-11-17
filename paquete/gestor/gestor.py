@@ -1027,6 +1027,23 @@ def ask_folder():
         return ""
 
 
+def _ajustes_biblioteca(lib, guardar=None):
+    """Reads (or, with `guardar`, completes) the preferences stored inside the library, shared by all computers."""
+    f = Path(lib).expanduser() / "_GestorMusica" / "datos" / "ajustes.json"
+    try:
+        d = json.loads(f.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        d = {}
+    if guardar:
+        d.update({k: v for k, v in guardar.items() if v and not d.get(k)})
+        try:
+            f.parent.mkdir(parents=True, exist_ok=True)
+            f.write_text(json.dumps(d, ensure_ascii=False, indent=1), encoding="utf-8")
+        except OSError:
+            pass
+    return d
+
+
 def setup(force=False):
     cfg = C.load_config()
     arg = next((a.split("=", 1)[1] for a in sys.argv if a.startswith("--biblioteca=")), "")
@@ -1041,12 +1058,19 @@ def setup(force=False):
                 cfg["biblioteca"] = str(Path(p).expanduser().resolve())
                 break
             print("Esa carpeta no existe. Inténtalo de nuevo.")
+        aj = _ajustes_biblioteca(cfg["biblioteca"])   # name already saved in this library by another computer
+        if aj.get("artista"):
+            cfg["artista"], cfg["titular"] = aj["artista"], aj.get("titular") or aj["artista"]
+            print(f"Nombre artístico leído de tu biblioteca: {cfg['artista']}")
+            C.save_config(cfg)
+            return cfg
         try:
             cfg["artista"] = input(f"Tu nombre artístico [{cfg.get('artista', '')}]: ").strip() or cfg.get("artista", "")
             cfg["titular"] = input(f"Titular del copyright, para los mixtapes [{cfg.get('titular') or cfg['artista']}]: ").strip() or cfg.get("titular") or cfg["artista"]
         except EOFError:
             pass
         C.save_config(cfg)
+        _ajustes_biblioteca(cfg["biblioteca"], {"artista": cfg["artista"], "titular": cfg["titular"]})
     elif arg:
         C.save_config(cfg)
     return cfg
