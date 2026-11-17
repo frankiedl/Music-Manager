@@ -8,6 +8,7 @@ import base64
 import datetime
 import html as _html
 import json
+import time
 import re
 import shutil
 import subprocess
@@ -73,7 +74,20 @@ def poner_uslt(path, texto, lang):
     cab = b"ID3\x03\x00" + bytes([b[5] & 0x7F, (sz >> 21) & 0x7F, (sz >> 14) & 0x7F, (sz >> 7) & 0x7F, sz & 0x7F])
     tmp = path.with_suffix(".tmp")
     tmp.write_bytes(cab + nuevo + resto)
-    tmp.replace(path)
+    # Dropbox, antivirus or a player may hold the file for a moment (WinError 5/32): retry, then write in place
+    for intento in range(8):
+        try:
+            tmp.replace(path)
+            return
+        except PermissionError:
+            time.sleep(0.4 * (intento + 1))
+    try:
+        path.write_bytes(tmp.read_bytes())
+    finally:
+        try:
+            tmp.unlink()
+        except OSError:
+            pass
 
 
 def _json_seguro(obj):
@@ -200,6 +214,9 @@ def construir(job, *, ff, lang, tr, songs, items, base, name, nombre, artist, ow
             for f in archivos:
                 z.write(f, f.relative_to(folder).as_posix(), compress_type=zipfile.ZIP_STORED if f.suffix.lower() in (".mp3", ".jpg") else zipfile.ZIP_DEFLATED)
         return dict(zip=zp.relative_to(root).as_posix(), carpeta=folder.relative_to(root).as_posix(), mb=round(zp.stat().st_size / 1e6, 1))
+    except BaseException:
+        shutil.rmtree(folder, ignore_errors=True)  # a failed run must not leave a half-built folder (the next try would become "name (2)")
+        raise
     finally:
         if onefile:
             shutil.rmtree(folder, ignore_errors=True)

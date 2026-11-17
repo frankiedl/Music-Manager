@@ -1,10 +1,10 @@
 # Module «derechos» (Rights)
 
-**What it does.** Answers "is this song published, and is it registered?" in one clear place.
-- **Release status** per song (Unreleased / Pre-released / Published) on the song page (section *Derechos*). Stored in the core
-  state as `ST.release[songId] = 'pub'|'pre'|'un'` (`GM.release` / `GM.setRelease`). `isPub()/isPre()` in `index.html` use it and
-  fall back to the folder (`published/`, `prereleased/`). Choosing the status the folder already implies stores nothing. Folders are never
-  moved, so album/single grouping (`groups()`) still follows the folder.
+**What it does.** Answers "is this song registered?" (protection of the work). **Registrations only** since Nov 2026.
+- **Phase ≠ registrations.** The release status (phase: Unreleased / Pre-release / Published) moved to the «publicaciones» module
+  (bar at the top of the song page). It is still stored in the core state as `ST.release[songId] = 'pub'|'pre'|'un'`
+  (`GM.release` / `GM.setRelease`, `isPub()/isPre()` unchanged). Here it is only read (CSV column «Estado de publicación») and can
+  still be set by importing a sheet. The song section starts with a one-line reminder that registrations are not the phase.
 - **Registrations**: `GM.state('derechos').reg[songId] = [{id, soc, cod, fecha (YYYY-MM-DD), est: 'pend'|'env'|'reg', au, ed (%), notas}]`.
   Add / edit / delete on the song page. User's own notes; no connection to any society.
 - **Societies**: `state.socs = [{n, c}]` (absent = presets SGAE ES, SACEM FR, GEMA DE, ASCAP/BMI/SESAC US, PRS UK, SIAE IT, SADAIC AR,

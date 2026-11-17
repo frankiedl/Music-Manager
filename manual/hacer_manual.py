@@ -107,13 +107,35 @@ CONTENIDO = [
     ("p", "En un mixtape, los másters se guardan en <i>MIXTAPES/_masters</i> (nunca en las carpetas de tus canciones) y puedes usarlos en ese mixtape o volver a las versiones originales. "
           "Se puede guardar el resultado como versión nueva, sin sobrescribir nada."),
 
+    ("h2", "Fase y publicaciones"),
+    ("p", "La <b>fase</b> es dónde está la canción en su vida, y se elige arriba del todo en su página con tres botones grandes: <b>Sin publicar</b> (solo la tienes tú), "
+          "<b>Adelanto</b> (la has compartido antes del lanzamiento, por ejemplo en SoundCloud) y <b>Publicada</b> (lanzamiento oficial con una distribuidora: DistroKid, Ditto, TuneCore…). "
+          "Por defecto la deduce la carpeta; «↺ Según la carpeta» vuelve al automático. Si eliges una fase distinta de la carpeta, te pregunta «¿Mover también la carpeta?» y te enseña de dónde a dónde: "
+          "<b>Sí, mover la carpeta</b> (va a <i>unreleased</i>, <i>prereleased</i> o <i>published/Singles</i>, con su arte) o <b>Solo cambiar el estado</b>. Nunca sobrescribe: si ya hay una carpeta con ese nombre, no la mueve. "
+          "Cada movimiento queda en el diario y se puede deshacer; la canción conserva sus estrellas, notas, registros y subidas."),
+    ("p", "La sección <b>Publicado en</b> de cada canción apunta dónde está publicada: plataforma, tipo (Adelanto o Lanzamiento), fecha, enlace, UPC, ISRC, el ID de la tienda o distribuidora, notas "
+          "y números (reproducciones, me gusta, comentarios) con su fecha, para ver cómo crecen. En un álbum, la pestaña <b>Publicación</b> → <b>Marcar este álbum como publicado</b> pide los datos una vez, "
+          "los copia a todas sus canciones y luego, en un solo paso, pasa su fase a Publicada y puede mover sus carpetas a <i>published/Álbumes</i> en su orden. La lista de plataformas se edita en la sección "
+          "<b>Publicaciones</b> del menú. <b>Fase y registros son cosas distintas</b>: la fase dice si ya ha salido; los registros (sección Derechos) protegen la obra."),
+
     ("h2", "Derechos"),
-    ("p", "En la página de cada canción, la sección <b>Derechos</b> tiene dos cosas. El <b>estado de publicación</b> (Sin publicar, Pre-released o Publicada): por defecto lo deduce la carpeta, "
-          "pero puedes elegirlo con un clic sin mover nada; «Según la carpeta» vuelve al automático. Y sus <b>registros</b> en sociedades de autores: <b>+ Añadir registro</b> guarda la sociedad, el código o número, "
+    ("p", "En la página de cada canción, la sección <b>Derechos</b> guarda sus <b>registros</b>: la protección de la obra en sociedades de autores (o Safe Creative). <b>+ Añadir registro</b> guarda la sociedad, el código o número, "
           "la fecha, el estado (pendiente, enviado, registrado), los porcentajes de autor y editor y notas. Son tus propias anotaciones: el gestor no se conecta con ninguna sociedad."),
     ("p", "La sección <b>Derechos</b> del menú resume lo publicado sin registro (también es una tarjeta de Pendientes y un filtro de Canciones), te deja editar la lista de sociedades "
           "(SGAE, SACEM, GEMA, ASCAP, BMI, SESAC, PRS, SIAE, SADAIC, SPA… y las tuyas; las de tu país salen primero) y ofrece la <b>hoja de registro</b>: descárgala en CSV, rellénala en Excel "
           "e impórtala de nuevo (CSV o .xlsx). Antes de aplicar verás qué se crea, qué cambia y los avisos (canciones o sociedades desconocidas); al importar nunca se borra nada."),
+
+    ("h2", "SoundCloud"),
+    ("p", "Sube un álbum o una canción a <b>tu</b> cuenta de SoundCloud. Se conecta una vez, en la sección <b>SoundCloud</b> del menú, en tres pasos: crea una app en "
+          "<font name='Courier'>soundcloud.com/you/apps</font> (necesitas Artist Pro), pon como Redirect URI exactamente <font name='Courier'>http://127.0.0.1:8765/soundcloud/callback</font> "
+          "y pega el Client ID y el Client Secret; <b>Conectar</b> abre SoundCloud para que autorices. Las claves se guardan solo en tu carpeta <i>datos</i> (si el gestor no usa el puerto 8765 te avisa)."),
+    ("p", "Para subir, abre un álbum y entra en su pestaña <b>SoundCloud</b> (o pulsa <b>Subir a SoundCloud</b> en una canción). Verás una tabla con cada canción, el archivo que se sube "
+          "(el máster si lo hay), su tamaño, el título y la privacidad (privada por defecto), y los datos: género, etiquetas, descripción (puede llevar la letra), carátula, fecha, sello y licencia. "
+          "Nada se sube hasta que lo confirmas. Las pistas se suben una a una con su progreso; después se crea el álbum (set) en el mismo orden. Si una falla, las demás siguen y puedes reintentar solo esa. "
+          "Lo ya subido se marca «Ya subida»: puedes no repetirla o actualizar sus datos."),
+    ("p", "Cada subida se apunta sola en <b>Publicado en</b> (SoundCloud · Adelanto, con su enlace); si la subes <b>pública</b> te ofrece pasar la canción a la fase Adelanto. "
+          "<b>Actualizar números de SoundCloud</b> (en la sección SoundCloud) lee las reproducciones, me gusta, comentarios y reposts de tus pistas y los guarda con su fecha (uno por día); "
+          "al abrir una canción se actualizan solos una vez al día."),
 
     ("h1", "5. Programa opcional: ffmpeg"),
     ("p", "No va dentro del programa por su licencia. Sin él todo funciona salvo los mixtapes MP3."),

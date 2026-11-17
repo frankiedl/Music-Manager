@@ -167,8 +167,25 @@ def main():
     except (OSError, ValueError):
         old = {}
 
+    # songs moved to another phase folder from the manager: their journal lines carry the song id («sid») and its new
+    # folder («dir»), so the song keeps its id (and with it your stars, notes, rights, uploads…). Undone moves do not count.
+    alias = {}
+    jp = C.DATOS / "diario_movimientos.jsonl"
+    if jp.exists():
+        try:
+            ents = [json.loads(x) for x in open(jp, encoding="utf-8") if x.strip()]
+        except (OSError, ValueError):
+            ents = []
+        undone = {e.get("ref") for e in ents if e.get("op") == "undone"}
+        for e in ents:
+            if e.get("op") == "move" and e.get("sid") and e.get("dir") and e.get("id") not in undone:
+                alias = {k: v for k, v in alias.items() if v != e["sid"]}   # the latest folder of each song wins
+                alias[e["dir"]] = e["sid"]
+
     cand = candidates(R)
     cur = {k for k, _ in cand}
+    alias = {k: v for k, v in alias.items() if k in cur}
+    reservado = set(alias.values())
     vanished = {k: e for k, e in old.items() if k not in cur}
     used = set()
     lst, letras, newmap = [], {}, {}
@@ -181,11 +198,13 @@ def main():
             continue
         names = sorted({f.name.lower() for f, _ in vs})
         sig = lyric_sig(text) if text.strip() else ""
-        sid = (old.get(key) or {}).get("id")
+        sid = alias[key] if key in alias else (old.get(key) or {}).get("id")
+        if sid in reservado and alias.get(key) != sid:   # that id belongs to a song moved from the manager
+            sid = None
         if not sid:  # is it a renamed or moved folder (e.g. from unreleased to published)?
             hit = None
             for vk, e in vanished.items():
-                if e["id"] in used:
+                if e["id"] in used or e["id"] in reservado:
                     continue
                 if sig and len(sig) >= 40 and e.get("sig") and difflib.SequenceMatcher(None, sig, e["sig"]).ratio() >= 0.92:
                     hit = vk

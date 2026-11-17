@@ -86,13 +86,35 @@ CONTENIDO = [
     ("p", "Num mixtape, os masters são salvos em <i>MIXTAPES/_masters</i> (nunca nas pastas das suas músicas) e você pode usá-los nesse mixtape ou voltar às versões originais. "
           "O resultado pode ser salvo como versão nova, sem sobrescrever nada."),
 
+    ("h2", "Fase e publicações"),
+    ("p", "A <b>fase</b> é onde a música está na sua vida, e você a escolhe no topo da página dela com três botões grandes: <b>Sem publicar</b> (só você a tem), "
+          "<b>Pré-lançamento</b> (você a compartilhou antes do lançamento, por exemplo no SoundCloud) e <b>Publicada</b> (lançamento oficial com uma distribuidora: DistroKid, Ditto, TuneCore…). "
+          "Por padrão a pasta decide; «↺ Pela pasta» volta ao automático. Se você escolher uma fase diferente da pasta, ele pergunta «Mover também a pasta?» e mostra de onde para onde: "
+          "<b>Sim, mover a pasta</b> (vai para <i>unreleased</i>, <i>prereleased</i> ou <i>published/Singles</i>, com a arte) ou <b>Só mudar o estado</b>. Nunca sobrescreve: se já existe uma pasta com esse nome, não move. "
+          "Cada movimento fica no diário e pode ser desfeito; a música mantém as estrelas, notas, registros e envios."),
+    ("p", "A seção <b>Publicada em</b> de cada música anota onde ela está publicada: plataforma, tipo (Pré-lançamento ou Lançamento), data, link, UPC, ISRC, o ID na loja ou distribuidora, notas "
+          "e números (reproduções, curtidas, comentários) com a data, para ver como crescem. Num álbum, a aba <b>Publicação</b> → <b>Marcar este álbum como publicado</b> pede os dados uma vez, "
+          "copia para todas as músicas e depois, num só passo, passa a fase delas para Publicada e pode mover as pastas para <i>published/Álbumes</i> na ordem. A lista de plataformas é editada na seção "
+          "<b>Publicações</b> do menu. <b>Fase e registros são coisas diferentes</b>: a fase diz se já saiu; os registros (seção Direitos) protegem a obra."),
+
     ("h2", "Direitos"),
-    ("p", "Na página de cada música, a seção <b>Direitos</b> tem duas coisas. O <b>estado de publicação</b> (Não publicada, Pre-released ou Publicada): por padrão a pasta decide, "
-          "mas você pode escolhê-lo com um clique sem mover nada; «Pela pasta» volta ao automático. E os seus <b>registros</b> em sociedades de autores: <b>+ Adicionar registro</b> guarda a sociedade, o código ou número, "
+    ("p", "Na página de cada música, a seção <b>Direitos</b> guarda os seus <b>registros</b>: a proteção da obra em sociedades de autores (ou Safe Creative). <b>+ Adicionar registro</b> guarda a sociedade, o código ou número, "
           "a data, o estado (pendente, enviado, registrado), as porcentagens de autor e editora e notas. São as suas próprias anotações: o gerenciador não se conecta a nenhuma sociedade."),
     ("p", "A seção <b>Direitos</b> do menu resume o que foi publicado sem registro (também é um cartão de Pendentes e um filtro de Músicas), permite editar a lista de sociedades "
           "(SGAE, SACEM, GEMA, ASCAP, BMI, SESAC, PRS, SIAE, SADAIC, SPA… e as suas; as do seu país aparecem primeiro) e oferece a <b>planilha de registro</b>: baixe em CSV, preencha no Excel "
           "e importe de novo (CSV ou .xlsx). Antes de aplicar você vê o que será criado, o que muda e os avisos (músicas ou sociedades desconhecidas); a importação nunca apaga nada."),
+
+    ("h2", "SoundCloud"),
+    ("p", "Envie um álbum ou uma música para a <b>sua</b> conta do SoundCloud. A conexão é feita uma vez, na seção <b>SoundCloud</b> do menu, em três passos: crie um app em "
+          "<font name='Courier'>soundcloud.com/you/apps</font> (é preciso Artist Pro), coloque como Redirect URI exatamente <font name='Courier'>http://127.0.0.1:8765/soundcloud/callback</font> "
+          "e cole o Client ID e o Client Secret; <b>Conectar</b> abre o SoundCloud para você autorizar. As chaves são salvas só na sua pasta <i>datos</i> (se o gerenciador não usar a porta 8765, ele avisa)."),
+    ("p", "Para enviar, abra um álbum e entre na aba <b>SoundCloud</b> (ou clique em <b>Enviar para o SoundCloud</b> numa música). Você vê uma tabela com cada música, o arquivo que será enviado "
+          "(o master, se houver), o tamanho, o título e a privacidade (privada por padrão), e os dados: gênero, tags, descrição (pode levar a letra), capa, data, selo e licença. "
+          "Nada é enviado até você confirmar. As faixas sobem uma a uma com o progresso; depois o álbum (set) é criado na mesma ordem. Se uma falhar, as outras continuam e você pode tentar de novo só essa. "
+          "O que já foi enviado aparece como «Já enviada»: você pode não repetir ou atualizar os dados."),
+    ("p", "Cada envio é anotado sozinho em <b>Publicada em</b> (SoundCloud · Pré-lançamento, com o link); se você enviar como <b>pública</b>, ele oferece passar a música para a fase Pré-lançamento. "
+          "<b>Atualizar os números do SoundCloud</b> (na seção SoundCloud) lê as reproduções, curtidas, comentários e reposts das suas faixas e guarda com a data (um por dia); "
+          "ao abrir uma música, são atualizados sozinhos uma vez por dia."),
 
     ("h1", "5. Programa opcional: ffmpeg"),
     ("p", "Não vai dentro do programa por causa de sua licença. Sem ele tudo funciona, exceto os mixtapes MP3."),

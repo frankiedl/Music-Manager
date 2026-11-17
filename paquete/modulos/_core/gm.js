@@ -8,7 +8,8 @@
      nav:{label:'Mi sección', icon:'🎛'},                       // adds a button to the side menu (optional)
      render(el,GM){ el.innerHTML='...' },                        // draws that section into #main
      albumTab:{id:'tab', label:'Mi pestaña', render(el,g,GM){}}, // extra tab on each album page (optional)
-     songSection:{title:'Mi sección', render(el,song,GM){}},    // extra section on each song page (optional)
+     songSection:{title:'Mi sección', order:50, render(el,song,GM){}},  // extra section on each song page (optional; lower order = higher up)
+     songTop:{render(el,song,GM){}},                            // full-width bar at the very top of each song page (optional)
      badges(song,GM){return '<span class="b">…</span>'},       // small badges on the song cards (optional)
      tasks(GM){return [{k:'miFiltro',ic:'⚑',n:3,t:'…',d:'…'}]},  // cards in Pending; k = the id of one of your filters (optional)
      filters:[{k:'miFiltro',label:'…',fn:song=>true,pend:false}], // extra song filters; pend:true = also counts as «something pending» (optional)
@@ -17,7 +18,7 @@
    Labels are written in Spanish: the runtime translator (i18n.js) shows them in the user's language.
 */
 window.GM=(()=>{
-  const mods={},albTabs=[],navs=[],songActs=[],mixActs=[],homeSecs=[],songSecs=[],ev={};
+  const mods={},albTabs=[],navs=[],songActs=[],mixActs=[],homeSecs=[],songSecs=[],songTops=[],ev={};
   const M={
     mods,
     register(m){
@@ -27,6 +28,7 @@ window.GM=(()=>{
       if(m.mixtapeAction)mixActs.push({mod:m.id,...m.mixtapeAction});
       if(m.home)homeSecs.push({mod:m.id,...m.home});   // section inside Home: home:{title,render(el,GM)}
       if(m.songSection)songSecs.push({mod:m.id,...m.songSection});
+      if(m.songTop)songTops.push({mod:m.id,...m.songTop});
       if(m.albumTab)albTabs.push({mod:m.id,id:m.albumTab.id||'tab',label:m.albumTab.label||m.id,render:m.albumTab.render});
       if(m.init){try{m.init(M)}catch(e){console.error('módulo',m.id,e)}}
     },
@@ -72,13 +74,16 @@ window.GM=(()=>{
     thumbUrl:c=>c&&c.t?'/thumb?f='+encodeURIComponent(c.t):'',   // thumbnail of a cover (the object returned by GM.cover)
     cfg:{artista:'',titular:''},        // artist name and copyright owner, if the manager knows them (filled in on load)
     lyrics:id=>(typeof LET!=='undefined'&&LET[id])?LET[id].t:'',
+    tags:s=>typeof tagsOf==='function'?tagsOf(s):[],   // the song's themes/tags (from its lyrics and the ones you added)
     ui:{
       toast:m=>toast(m),modal:(h,f)=>modal(h,f),ask:(t,x,o)=>ask(t,x,o),esc:s=>esc(s),
       go:(v,a)=>go(v,a),refresh:()=>refresh(),
       reload:()=>refreshAll(),            // re-reads the folders (like the Refresh button)
       setDraft:(ids,on)=>setDraft(ids.map(i=>ALL.find(z=>z.id===i)).filter(Boolean),on),   // marks/unmarks «boceto» (sketch) on several songs by id
     },
-    navs:()=>navs,albumTabs:()=>albTabs,songActions:()=>songActs,mixtapeActions:()=>mixActs,homeSections:()=>homeSecs,songSections:()=>songSecs,
+    navs:()=>navs,albumTabs:()=>albTabs,songActions:()=>songActs,mixtapeActions:()=>mixActs,homeSections:()=>homeSecs,
+    songSections:()=>songSecs.map((x,i)=>[x,i]).sort((a,b)=>((a[0].order||50)-(b[0].order||50))||a[1]-b[1]).map(x=>x[0]),
+    songTops:()=>songTops,
     badges(s){return Object.values(mods).map(m=>{try{return m.badges?m.badges(s,M)||'':''}catch(e){return ''}}).join('')},
     tasks(){return Object.values(mods).flatMap(m=>{try{return m.tasks?m.tasks(M)||[]:[]}catch(e){console.error(e);return []}})},
     filters(){return Object.values(mods).flatMap(m=>(m.filters||[]).map(f=>({mod:m.id,...f})))},
@@ -86,6 +91,15 @@ window.GM=(()=>{
     release:id=>(ST.release&&ST.release[id])||'',
     setRelease(id,v){ST.release=ST.release||{};if(v)ST.release[id]=v;else delete ST.release[id];save()},
     isPub:s=>isPub(s),isPre:s=>isPre(s),
+    faseCarpeta:s=>{const d=D(s);return d.startsWith('published')?'pub':d.startsWith('prereleased')?'pre':'un'},   // phase deduced from the folder alone
+    /* moves whole song folders to the folder of another phase (unreleased/ prereleased/ published/), with their ARTE folder.
+       items:[{id, fase:'un'|'pre'|'pub', album?, pista?}], o:{simular:true} → only the plan ({plan:[{id,titulo,de,a,error?,igual?}]}),
+       o:{grupo:{de,album}} → album-level publish. The server keeps the song ids; the paths saved in your state follow the folders.
+       Journaled in datos/diario_movimientos.jsonl (undoable with deshacer.py). Never overwrites. */
+    moverCanciones:(items,o)=>moverCanciones(items,o||{}),
+    /* publications store: set by the «publicaciones» module (null without it). Other modules (e.g. SoundCloud) use it like:
+       GM.pub && GM.pub.upsert(songId, {plat:'SoundCloud', tipo:'pre', fecha, url, urn, priv}) */
+    pub:null,
 
     async load(){
       try{const c=await fetch('/api/config').then(r=>r.ok?r.json():{});Object.assign(M.cfg,c||{})}catch{}

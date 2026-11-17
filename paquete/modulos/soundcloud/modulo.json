@@ -1,0 +1,9 @@
+{
+  "id": "soundcloud",
+  "nombre": "SoundCloud",
+  "descripcion": "Sube un álbum o una canción a tu propia cuenta de SoundCloud con sus datos (título, privacidad, género, etiquetas, descripción o letra, carátula, fecha, sello, licencia) y crea el álbum (set) en su orden. Siempre con vista previa y confirmación. Usa tu propia app de SoundCloud: las claves se guardan solo en tu carpeta datos.",
+  "js": ["modulo.js"],
+  "css": ["modulo.css"],
+  "py": "servidor.py",
+  "distribuir": true
+}

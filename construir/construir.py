@@ -27,7 +27,7 @@ NOMBRE = "GestorMusica"
 # the stdlib used by gestor.py, the scripts and the modules' servidor.py (loaded by path, so PyInstaller does not see them)
 HIDDEN = ["argparse", "concurrent.futures", "csv", "ctypes", "datetime", "difflib", "glob", "hashlib", "http.server", "importlib.util",
           "json", "math", "mimetypes", "platform", "re", "secrets", "shutil", "socket", "string", "subprocess", "threading", "traceback",
-          "types", "unicodedata", "urllib.parse", "urllib.request", "urllib.error", "uuid", "webbrowser", "zipfile", "zlib",
+          "types", "unicodedata", "urllib.parse", "urllib.request", "urllib.error", "http.client", "ssl", "base64", "uuid", "webbrowser", "zipfile", "zlib",
           "tkinter", "tkinter.filedialog", "PIL.Image", "PIL.ImageOps"]
 
 

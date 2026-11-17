@@ -9,6 +9,8 @@ and, if it has a server part, a  servidor.py  with:
 
     ROUTES = {"GET estado": fn, "POST guardar": fn}      # /api/mod/<id>/estado  and  /api/mod/<id>/guardar
     def setup(ctx): ...                                   # optional, called on load
+    PUBLIC_ROUTES = {"GET callback": fn}                  # optional: /<id>/callback, served WITHOUT the access check (OAuth redirects);
+                                                          # the route must validate the request itself
 
 Each route is  fn(req, ctx).  The manager does NOT reload by itself: after editing a servidor.py, restart the manager.
 Folders starting with "_" (such as _core and _plantilla) are not loaded as modules.
@@ -112,13 +114,14 @@ class Registro:
             try:
                 man = json.loads((d / "modulo.json").read_text(encoding="utf-8"))
                 mid = man.get("id") or d.name
-                rutas, setup = {}, None
+                rutas, publicas, setup = {}, {}, None
                 if man.get("py"):
                     spec = importlib.util.spec_from_file_location("gmod_" + mid, d / man["py"])
                     mod = importlib.util.module_from_spec(spec)
                     spec.loader.exec_module(mod)
                     rutas, setup = getattr(mod, "ROUTES", {}), getattr(mod, "setup", None)
-                self.mods[mid] = {"man": man, "dir": d, "rutas": rutas}
+                    publicas = getattr(mod, "PUBLIC_ROUTES", {})
+                self.mods[mid] = {"man": man, "dir": d, "rutas": rutas, "publicas": publicas}
                 if setup:
                     setup(self.ctx(mid))
             except Exception:  # a broken module does not bring the manager down
@@ -180,6 +183,34 @@ class Registro:
             print(f"[módulos] error en {partes[0]}/{partes[1]}:\n{traceback.format_exc()}")
             try:
                 h.send_json({"ok": False, "error": f"{type(ex).__name__}: {ex}"}, 500)
+            except Exception:  # noqa: BLE001
+                pass
+        return True
+
+    def publica(self, h, metodo, ruta_url):
+        """/<id>/<route> → a route the module declares in PUBLIC_ROUTES (e.g. an OAuth redirect: «GET callback» = /<id>/callback).
+        Called BEFORE the manager's access check: a browser arriving from another website (the OAuth provider) carries
+        no Origin/token, so these routes must validate everything themselves (e.g. a single-use `state`). Only the Host
+        header is checked here (127.0.0.1 / localhost on this very port). Returns False if there is no such route."""
+        u = urlparse(ruta_url)
+        partes = u.path.lstrip("/").split("/", 1)
+        if len(partes) != 2 or partes[0] not in self.mods:
+            return False
+        fn = self.mods[partes[0]].get("publicas", {}).get(f"{metodo} {partes[1]}")
+        if not fn:
+            return False
+        try:
+            puerto = h.server.server_address[1]
+        except Exception:  # noqa: BLE001
+            return False
+        if (h.headers.get("Host") or "").lower() not in (f"127.0.0.1:{puerto}", f"localhost:{puerto}"):
+            return False
+        try:
+            fn(Req(h, parse_qs(u.query)), self.ctx(partes[0]))
+        except Exception:  # noqa: BLE001
+            print(f"[módulos] error en {partes[0]}/{partes[1]} (pública):\n{traceback.format_exc()}")
+            try:
+                h.send_error(500)
             except Exception:  # noqa: BLE001
                 pass
         return True

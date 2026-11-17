@@ -86,13 +86,35 @@ CONTENIDO = [
     ("p", "In a mixtape, masters are saved in <i>MIXTAPES/_masters</i> (never in your song folders) and you can use them in that mixtape or go back to the original versions. "
           "The result can be saved as a new version, without overwriting anything."),
 
+    ("h2", "Phase and publications"),
+    ("p", "The <b>phase</b> is where the song is in its life, and you choose it at the very top of its page with three big buttons: <b>Unpublished</b> (only you have it), "
+          "<b>Pre-release</b> (you shared it before the release, for example on SoundCloud) and <b>Published</b> (official release through a distributor: DistroKid, Ditto, TuneCore…). "
+          "By default the folder decides it; «↺ By folder» goes back to automatic. If you choose a phase that differs from the folder, it asks «Also move the folder?» and shows you from where to where: "
+          "<b>Yes, move the folder</b> (it goes to <i>unreleased</i>, <i>prereleased</i> or <i>published/Singles</i>, with its artwork) or <b>Only change the status</b>. It never overwrites: if a folder with that name already exists, it is not moved. "
+          "Every move goes to the journal and can be undone; the song keeps its stars, notes, registrations and uploads."),
+    ("p", "Each song's <b>Published on</b> section notes where it is published: platform, type (Pre-release or Release), date, link, UPC, ISRC, the store or distributor ID, notes "
+          "and numbers (plays, likes, comments) with their date, so you can see them grow. On an album, the <b>Publication</b> tab → <b>Mark this album as published</b> asks for the details once, "
+          "copies them to all its songs and then, in one step, sets their phase to Published and can move their folders to <i>published/Álbumes</i> in their order. The list of platforms is edited in the "
+          "<b>Publications</b> section of the menu. <b>Phase and registrations are different things</b>: the phase says whether it is out; registrations (Rights section) protect the work."),
+
     ("h2", "Rights"),
-    ("p", "On each song's page, the <b>Rights</b> section has two things. The <b>release status</b> (Unreleased, Pre-released or Published): by default the folder decides it, "
-          "but you can choose it with one click without moving anything; «By folder» goes back to automatic. And its <b>registrations</b> with collecting societies: <b>+ Add registration</b> stores the society, the code or number, "
+    ("p", "On each song's page, the <b>Rights</b> section keeps its <b>registrations</b>: the protection of the work with collecting societies (or Safe Creative). <b>+ Add registration</b> stores the society, the code or number, "
           "the date, the status (pending, sent, registered), the author and publisher percentages and notes. They are your own notes: the manager does not connect to any society."),
     ("p", "The <b>Rights</b> section of the menu sums up what is published without a registration (also a Pending card and a Songs filter), lets you edit the list of societies "
           "(SGAE, SACEM, GEMA, ASCAP, BMI, SESAC, PRS, SIAE, SADAIC, SPA… and your own; those from your country come first) and offers the <b>registration sheet</b>: download it as CSV, fill it in with Excel "
           "and import it again (CSV or .xlsx). Before applying you see what is created, what changes and any warnings (unknown songs or societies); importing never deletes anything."),
+
+    ("h2", "SoundCloud"),
+    ("p", "Upload an album or a song to <b>your</b> SoundCloud account. You connect once, in the <b>SoundCloud</b> section of the menu, in three steps: create an app at "
+          "<font name='Courier'>soundcloud.com/you/apps</font> (you need Artist Pro), set the Redirect URI to exactly <font name='Courier'>http://127.0.0.1:8765/soundcloud/callback</font> "
+          "and paste the Client ID and the Client Secret; <b>Connect</b> opens SoundCloud so you can authorize. The keys are stored only in your <i>datos</i> folder (if the manager is not using port 8765 it warns you)."),
+    ("p", "To upload, open an album and go to its <b>SoundCloud</b> tab (or press <b>Upload to SoundCloud</b> on a song). You see a table with each song, the file that will be uploaded "
+          "(the master if there is one), its size, the title and the privacy (private by default), plus the info: genre, tags, description (it can include the lyrics), artwork, date, label and license. "
+          "Nothing is uploaded until you confirm. Tracks go up one by one with their progress; then the album (set) is created in the same order. If one fails, the others carry on and you can retry just that one. "
+          "What is already uploaded is marked «Already uploaded»: you can skip it or update its info."),
+    ("p", "Every upload is noted automatically under <b>Published on</b> (SoundCloud · Pre-release, with its link); if you upload it as <b>public</b> it offers to set the song to the Pre-release phase. "
+          "<b>Update SoundCloud numbers</b> (in the SoundCloud section) reads the plays, likes, comments and reposts of your tracks and keeps them with their date (one per day); "
+          "when you open a song they are updated automatically once a day."),
 
     ("h1", "5. Optional program: ffmpeg"),
     ("p", "It is not bundled because of its license. Without it everything works except MP3 mixtapes."),

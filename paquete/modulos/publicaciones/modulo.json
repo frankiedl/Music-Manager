@@ -1,0 +1,12 @@
+{
+  "id": "publicaciones",
+  "nombre": "Publicaciones",
+  "descripcion": "La fase de cada canción (sin publicar, adelanto o publicada) arriba en su página, y dónde está publicada: plataforma, fecha, enlace, códigos y números. Puede mover la carpeta de la canción a la de su fase.",
+  "js": [
+    "modulo.js"
+  ],
+  "css": [
+    "modulo.css"
+  ],
+  "distribuir": true
+}

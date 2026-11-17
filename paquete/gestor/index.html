@@ -548,6 +548,8 @@ function fillCols(){
   const ord=k=>k.startsWith('Álbum')?0:k.startsWith('Singles')?1:k.startsWith('Pre-')?2:k.startsWith('Proyecto')?3:4;
   f.innerHTML='<option value="all">Todas las colecciones</option>'+Object.entries(c).sort((a,b)=>ord(a[0])-ord(b[0])||a[0].localeCompare(b[0],'es')).map(([k,n])=>`<option value="${esc(k)}">${esc(k)} (${n})</option>`).join('');
   f.value=c[colf]?colf:'all';if(!c[colf])colf='all'}
+// search order: titles that start with the text, then titles that contain it, then folder/tags, then lyrics only (stable)
+function rankByTitle(L){if(!query)return L;const q=nrm(query),rk=x=>{const t=nrm(x.title);return t.startsWith(q)?0:t.includes(q)?1:2};return L.map((x,i)=>[rk(x),i,x]).sort((a,b)=>a[0]-b[0]||a[1]-b[1]).map(x=>x[2])}
 function match(s){
   if(isDraft(s)&&filt!=='draft')return false; // sketches are only visible in «Bocetos» (Sketches)
   if(colf!=='all'&&!colsOf(s).includes(colf))return false;
@@ -717,7 +719,7 @@ function lyricPanel(){
    <div class="lyrics">${hl(lines.join('\n').trim(),query)}</div>`}
 function renderLyrics(){
   const q=query?nrm(query):'';
-  let L=SONGS.filter(s=>LET[s.id]&&match(s));
+  let L=rankByTitle(SONGS.filter(s=>LET[s.id]&&match(s)));
   if(lonly==='free')L=L.filter(s=>!isPub(s)&&!isPre(s));
   if(lonly==='nomusic')L=L.filter(s=>!s.versions.length);
   if(lonly==='draft')L=L.filter(isDraft);
@@ -939,7 +941,8 @@ function renderSong(){
   const finV=rest.find(v=>v.p===fin),others=rest.filter(v=>v.p!==fin);
   const sug=!fin&&s.versions.find(v=>v.prop);
   const where='';
-  $('#main').innerHTML=`<button class="back" data-act="back">‹ Atrás</button>
+  const tops=GM.songTops().length;
+  $('#main').innerHTML=`<button class="back" data-act="back">‹ Atrás</button><div id="gm-songtop"></div>
    <div class="sgrid">
     <div class="sc1">${c?`<img class="scov" src="/thumb?f=${encodeURIComponent(c.t)}"><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px"><button class="chip" data-act="addcover">Cambiar portada</button><button class="chip" data-act="cropcover">✂ Recortar</button></div>`:'<div class="nocov scov" data-act="addcover" style="display:grid;place-items:center;cursor:pointer;line-height:1.4;text-align:center">＋ Cargar portada<br><span class="meta">Elige una imagen</span></div>'}<input type="file" id="upcover" accept="image/*" hidden>
      <h1 class="stitle">${esc(clean(s.title))} <button class="chip" data-act="rename" title="Cambiar el nombre de la canción" style="vertical-align:middle;font-size:12px">✎ Renombrar</button></h1>
@@ -952,7 +955,7 @@ function renderSong(){
      <div class="meta" style="margin-top:6px">Con borde punteado: detectadas solas leyendo la letra. En rosa: las pones tú.</div></div>
     <div class="sc2">
      <div class="shd" style="margin-top:0">Dónde está publicada</div>
-     <div style="display:flex;flex-wrap:wrap;gap:7px">${isPub(s)?`<span class="b ok">${s.sc.length?LOGO.sc:LOGO.sp}Publicada${where?' · '+where:''}</span>`:isPre(s)?'<span class="b warn">Pre-released</span>':'<span class="b">Sin publicar</span>'}
+     <div style="display:flex;flex-wrap:wrap;gap:7px">${tops?'':isPub(s)?`<span class="b ok">${s.sc.length?LOGO.sc:LOGO.sp}Publicada${where?' · '+where:''}</span>`:isPre(s)?'<span class="b warn">Pre-released</span>':'<span class="b">Sin publicar</span>'}
       ${s.letra?`<span class="b ok">${LOGO.lt}Con letra</span>`:`<span class="b warn">${LOGO.lt}Sin letra</span>`}</div>
      <div class="shd">Lo que hay ahora</div>
      <div class="snow">
@@ -989,7 +992,13 @@ function renderSong(){
   $('#note').oninput=e=>{ST.notes[s.id]=e.target.value;save()};
   if(s.letra)fetch('/api/letra?f='+encodeURIComponent(s.letra)).then(r=>r.ok?r.text():'No se pudo leer la letra.').then(t=>{const p=$('#letra');if(p)p.textContent=t});
   songSecs(s);wireMed();wireLyr(s);loadWork(s);const ti=$('#tagin');if(ti)ti.onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();document.querySelector('[data-act="tagadd"]').click()}}}
-function songSecs(s){const box=$('#gm-songsecs');if(!box)return;
+function songSecs(s){
+  const top=$('#gm-songtop');
+  if(top&&GM.songTops().length){const h=document.querySelector('.sc2 .shd');if(h)h.textContent=(window.T||(x=>x))('De un vistazo')}   // the phase is shown in the bar above
+  if(top)GM.songTops().forEach(h=>{const d=document.createElement('div');d.className='gm-songtop';top.appendChild(d);
+    try{h.render(d,s,GM)}catch(e){d.innerHTML='<div class="callout">Este módulo ha fallado: '+esc(e.message)+'</div>'}});
+  GM.emit('cancion',s);   // a song page was drawn (modules may refresh things for it in the background)
+  const box=$('#gm-songsecs');if(!box)return;
   GM.songSections().forEach(h=>{const d=document.createElement('div');d.className='sec gm-songsec';d.innerHTML=`<h2>${esc(h.title||'')}</h2><div></div>`;box.appendChild(d);
     try{h.render(d.lastChild,s,GM)}catch(e){d.lastChild.innerHTML='<div class="callout">Este módulo ha fallado: '+esc(e.message)+'</div>'}})}
 async function loadWork(s){
@@ -1575,6 +1584,30 @@ let SIG=null;
 async function checkSig(){
   try{const r=await fetch('/api/firma').then(r=>r.json());if(SIG===null){SIG=r.firma;return}
     if(r.firma!==SIG&&!$('#newbar')){const b=document.createElement('div');b.id='newbar';b.innerHTML='Hay cambios en tus carpetas <button data-act="refreshall">↻ Actualizar</button>';document.body.appendChild(b)}}catch{}}
+/* Moving song folders to another phase folder (POST /api/mover_cancion). The server keeps each song's id; here the paths saved
+   in your state (final version, lanes, chosen covers, album order, mixtapes, artwork roles) follow the folders that moved. */
+function remapPaths(pairs){
+  const P=pairs.map(([a,b])=>[a.replace(/\\/g,'/'),b.replace(/\\/g,'/')]);
+  const m=p=>{if(typeof p!=='string')return p;const q=p.replace(/\\/g,'/');for(const [a,b] of P){if(q===a)return b;if(q.startsWith(a+'/'))return b+q.slice(a.length)}return p};
+  const keys=o=>{if(!o)return o;const n={};Object.entries(o).forEach(([k,v])=>{n[m(k)]=v});return n};
+  ST.lanes=keys(ST.lanes);ST.coverFor=keys(ST.coverFor);ST.ord=keys(ST.ord);
+  if(ST.coverFor)Object.keys(ST.coverFor).forEach(k=>{ST.coverFor[k]=m(ST.coverFor[k])});
+  Object.keys(ST.final||{}).forEach(k=>{ST.final[k]=m(ST.final[k])});
+  (ST.mixtapes||[]).forEach(x=>(x.items||[]).forEach(it=>{if(it.p)it.p=m(it.p)}));
+  MST=keys(MST)}
+async function moverCanciones(items,o){
+  const r=await fetch('/api/mover_cancion',{method:'POST',body:JSON.stringify({items,simular:!!o.simular,grupo:o.grupo||null})}).then(r=>r.json()).catch(e=>({ok:false,error:String(e)}));
+  if(o.simular||!r||!r.ok)return r;
+  if(r.pares&&r.pares.length){
+    remapPaths(r.pares);
+    const gp=o.grupo&&r.pares.find(p=>p[0]===o.grupo.de);
+    if(gp){const n=o.grupo.de.split('/')[1],nn=gp[1].split('/').pop();   // a project published as an album: it now lives in published/
+      if(ST.albums)delete ST.albums[n];
+      Object.keys(ST.col||{}).forEach(id=>{ST.col[id]=[...new Set(ST.col[id].map(x=>x==='Proyecto · '+n?'Álbum · '+nn:x))]})}
+    save();saveMed();if(r.firma)SIG=r.firma;GM.emit('movidas',r.pares);
+    await reload();try{const m=await fetch('/api/medios').then(r=>r.json());MED={};m.owners.forEach(x=>{MED[x.owner]=x.items})}catch{}
+    coverCache.clear();_projs=null}
+  return r}
 async function refreshAll(){
   const nb=$('#newbar');if(nb)nb.remove();
   const rb=$('#rbtn');rb.classList.add('spin');toast('Actualizando… puede tardar medio minuto');
@@ -1594,7 +1627,8 @@ function syncList(){const f=$('#ffilt');if(f)f.value=filt;fillThemes();renderRow
 function renderRows(){
   {const b=$('#dbadge');if(b){const n=ALL.filter(x=>isDraft(x)&&!ST.hidden[x.id]).length;b.textContent=n||'';b.style.display=n?'':'none'}}
   $('#qx').hidden=!$('#q').value;$('#qr').hidden=!anyFilter();
-  const L=(filt==='hidden'?ALL.filter(x=>ST.hidden[x.id]):SONGS).filter(match),nowId=playing&&songOfPath(playing)&&songOfPath(playing).id;
+  let L=(filt==='hidden'?ALL.filter(x=>ST.hidden[x.id]):SONGS).filter(match);const nowId=playing&&songOfPath(playing)&&songOfPath(playing).id;
+  L=rankByTitle(L);
   rowIds=L.map(s=>s.id);
   $('#scount').textContent=L.length+' de '+DENOM()+' canciones y letras';selInfo();
   $('#srows').innerHTML=L.map(s=>{const c=coverOf(s);

@@ -86,13 +86,35 @@ CONTENIDO = [
     ("p", "In einem Mixtape werden die Master in <i>MIXTAPES/_masters</i> gespeichert (nie in den Ordnern deiner Songs), und du kannst sie in diesem Mixtape verwenden oder zu den Originalversionen zurückkehren. "
           "Das Ergebnis lässt sich als neue Version speichern, ohne etwas zu überschreiben."),
 
+    ("h2", "Phase und Veröffentlichungen"),
+    ("p", "Die <b>Phase</b> ist, wo der Song in seinem Leben steht, und du wählst sie ganz oben auf seiner Seite mit drei großen Knöpfen: <b>Unveröffentlicht</b> (nur du hast ihn), "
+          "<b>Vorab-Release</b> (du hast ihn vor dem Release geteilt, zum Beispiel auf SoundCloud) und <b>Veröffentlicht</b> (offizieller Release über einen Vertrieb: DistroKid, Ditto, TuneCore…). "
+          "Standardmäßig entscheidet der Ordner; «↺ Nach Ordner» stellt wieder auf automatisch. Wählst du eine andere Phase als der Ordner, fragt er «Den Ordner auch verschieben?» und zeigt dir, von wo nach wo: "
+          "<b>Ja, Ordner verschieben</b> (er kommt nach <i>unreleased</i>, <i>prereleased</i> oder <i>published/Singles</i>, mit seinem Artwork) oder <b>Nur den Status ändern</b>. Er überschreibt nie: Gibt es schon einen Ordner mit diesem Namen, wird nicht verschoben. "
+          "Jede Verschiebung steht im Protokoll und lässt sich rückgängig machen; der Song behält Sterne, Notizen, Registrierungen und Uploads."),
+    ("p", "Der Bereich <b>Veröffentlicht auf</b> jedes Songs hält fest, wo er veröffentlicht ist: Plattform, Art (Vorab-Release oder Release), Datum, Link, UPC, ISRC, die ID beim Shop oder Vertrieb, Notizen "
+          "und Zahlen (Wiedergaben, Likes, Kommentare) mit Datum, damit du siehst, wie sie wachsen. Bei einem Album fragt der Tab <b>Veröffentlichung</b> → <b>Dieses Album als veröffentlicht markieren</b> die Daten einmal ab, "
+          "kopiert sie in alle Songs und setzt dann in einem Schritt ihre Phase auf Veröffentlicht; die Ordner kann er in ihrer Reihenfolge nach <i>published/Álbumes</i> verschieben. Die Plattformliste bearbeitest du im "
+          "Menüpunkt <b>Veröffentlichungen</b>. <b>Phase und Registrierungen sind verschiedene Dinge</b>: Die Phase sagt, ob er schon draußen ist; Registrierungen (Bereich Rechte) schützen das Werk."),
+
     ("h2", "Rechte"),
-    ("p", "Auf der Seite jedes Songs hat der Bereich <b>Rechte</b> zwei Teile. Den <b>Veröffentlichungsstatus</b> (Unveröffentlicht, Pre-released oder Veröffentlicht): Standardmäßig entscheidet der Ordner, "
-          "du kannst ihn aber mit einem Klick wählen, ohne etwas zu verschieben; «Nach Ordner» stellt wieder auf automatisch. Und die <b>Registrierungen</b> bei Verwertungsgesellschaften: <b>+ Registrierung hinzufügen</b> speichert Gesellschaft, Code oder Nummer, "
+    ("p", "Auf der Seite jedes Songs speichert der Bereich <b>Rechte</b> seine <b>Registrierungen</b>: den Schutz des Werks bei Verwertungsgesellschaften (oder Safe Creative). <b>+ Registrierung hinzufügen</b> speichert Gesellschaft, Code oder Nummer, "
           "Datum, Status (ausstehend, gesendet, registriert), Urheber- und Verlagsanteil in Prozent und Notizen. Es sind deine eigenen Notizen: Der Manager verbindet sich mit keiner Gesellschaft."),
     ("p", "Der Menüpunkt <b>Rechte</b> fasst zusammen, was ohne Registrierung veröffentlicht ist (auch als Karte in Offen und als Filter in Songs), lässt dich die Liste der Gesellschaften bearbeiten "
           "(SGAE, SACEM, GEMA, ASCAP, BMI, SESAC, PRS, SIAE, SADAIC, SPA… und deine eigenen; die deines Landes stehen oben) und bietet die <b>Registrierungstabelle</b>: als CSV herunterladen, in Excel ausfüllen "
           "und wieder importieren (CSV oder .xlsx). Vor dem Anwenden siehst du, was angelegt wird, was sich ändert und welche Hinweise es gibt (unbekannte Songs oder Gesellschaften); beim Import wird nie etwas gelöscht."),
+
+    ("h2", "SoundCloud"),
+    ("p", "Lade ein Album oder einen Song auf <b>dein</b> SoundCloud-Konto hoch. Du verbindest dich einmal im Menüpunkt <b>SoundCloud</b>, in drei Schritten: Erstelle eine App auf "
+          "<font name='Courier'>soundcloud.com/you/apps</font> (du brauchst Artist Pro), trag als Redirect URI genau <font name='Courier'>http://127.0.0.1:8765/soundcloud/callback</font> ein "
+          "und füg Client ID und Client Secret ein; <b>Verbinden</b> öffnet SoundCloud zum Autorisieren. Die Schlüssel werden nur in deinem Ordner <i>datos</i> gespeichert (benutzt der Manager nicht Port 8765, warnt er dich)."),
+    ("p", "Zum Hochladen öffne ein Album und geh auf seinen Tab <b>SoundCloud</b> (oder drück bei einem Song <b>Auf SoundCloud hochladen</b>). Du siehst eine Tabelle mit jedem Song, der Datei, die hochgeladen wird "
+          "(der Master, falls vorhanden), ihrer Größe, dem Titel und der Sichtbarkeit (standardmäßig privat), dazu die Daten: Genre, Tags, Beschreibung (auch mit Songtext), Cover, Datum, Label und Lizenz. "
+          "Nichts wird hochgeladen, bevor du bestätigst. Die Tracks gehen einzeln mit Fortschritt hoch; danach wird das Album (Set) in derselben Reihenfolge erstellt. Schlägt einer fehl, laufen die anderen weiter und du kannst nur diesen erneut versuchen. "
+          "Schon Hochgeladenes ist als «Schon hochgeladen» markiert: Du kannst es überspringen oder seine Daten aktualisieren."),
+    ("p", "Jeder Upload wird automatisch unter <b>Veröffentlicht auf</b> eingetragen (SoundCloud · Vorab-Release, mit Link); lädst du ihn <b>öffentlich</b> hoch, bietet er an, den Song auf die Phase Vorab-Release zu setzen. "
+          "<b>SoundCloud-Zahlen aktualisieren</b> (im Bereich SoundCloud) liest Wiedergaben, Likes, Kommentare und Reposts deiner Tracks und speichert sie mit Datum (einmal pro Tag); "
+          "wenn du einen Song öffnest, werden sie einmal am Tag automatisch aktualisiert."),
 
     ("h1", "5. Optionales Programm: ffmpeg"),
     ("p", "Es ist wegen seiner Lizenz nicht enthalten. Ohne es funktioniert alles außer den MP3-Mixtapes."),

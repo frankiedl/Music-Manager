@@ -284,6 +284,146 @@ def run_mixtape(jid, data):
         job.update(estado="error", error=str(e))
 
 
+# ---------------------------------------------------------------- moving a song to the folder of another phase
+FASES = {"un": "unreleased", "pre": "prereleased", "pub": "published"}
+
+
+def _norm(x):
+    import re
+    import unicodedata
+    x = "".join(c for c in unicodedata.normalize("NFD", str(x)) if unicodedata.category(c) != "Mn")
+    return re.sub(r"[^a-z0-9]+", "", x.lower())
+
+
+def _sub_published(clave, defecto):
+    """Real on-disk name of published/Singles or published/Álbumes (whatever its accents or case)."""
+    try:
+        for x in (ROOT / "published").iterdir():
+            if x.is_dir() and _norm(x.name) == clave:
+                return x.name
+    except OSError:
+        pass
+    return defecto
+
+
+def destino_fase(d, fase, album="", pista=0):
+    """New folder (relative, with «/») for the song folder `d` in phase `fase`; None = it is already in a folder of that phase.
+    Rules (albums are never invented):
+      published   → published/Singles/<name>; with `album` (album-level publish) → published/Álbumes/<album>/<NN name>
+      prereleased → prereleased/<name> (flat)
+      unreleased  → unreleased/<name>; out of a published album → unreleased/<album>/<folder> (stays together as a project)
+    <name> = the folder name without its track number."""
+    import re
+    p = d.split("/")
+    nombre = p[-1]
+    limpio = re.sub(r"^\d{1,2}[\s.\-_]+", "", nombre).strip() or nombre
+    if fase == "pub":
+        if p[0] == "published":
+            return None
+        if album:
+            alb = safe_name(album, "")
+            if alb:
+                return f"published/{_sub_published('albumes', 'Álbumes')}/{alb}/" + (f"{int(pista):02d} {limpio}" if pista else limpio)
+        return f"published/{_sub_published('singles', 'Singles')}/{limpio}"
+    if fase == "pre":
+        return None if p[0] == "prereleased" else f"prereleased/{limpio}"
+    if fase == "un":
+        if p[0] == "unreleased":
+            return None
+        if p[0] == "published" and len(p) >= 4 and _norm(p[1]) == "albumes":
+            return f"unreleased/{p[2]}/{nombre}"
+        return f"unreleased/{limpio}"
+    return None
+
+
+def _arte_de(rel):
+    """The song's own folder under ARTE (artwork/video), relative with «/», or ''."""
+    import arte_map as am
+    p = rel.split("/")
+    base = am.base_for(p, {p[1]} if len(p) == 3 and p[0] == "unreleased" else set())
+    return "ARTE/" + "/".join(base) if base else ""
+
+
+def _quitar_vacias(d, parar):
+    """Removes the empty folders left in `d` and above it (never the phase folders themselves)."""
+    for dp, _dns, _fns in os.walk(C.lp(d), topdown=False):
+        try:
+            os.rmdir(dp)
+        except OSError:
+            pass
+    cur = Path(d).parent
+    while cur != ROOT and cur not in parar:
+        try:
+            os.rmdir(C.lp(cur))
+        except OSError:
+            break
+        cur = cur.parent
+
+
+def plan_mover(items):
+    """Checks each {id, fase, album?, pista?}: where its folder would go. Nothing is moved here."""
+    songs = {s["id"]: s for s in read_json(DATA, {"songs": []})["songs"]}
+    dirs = {k: (s.get("dir") or "").replace("\n", " ").replace("\\", "/").strip("/") for k, s in songs.items()}
+    out, usados = [], set()
+    for it in items or []:
+        sid = str(it.get("id") or "")
+        s = songs.get(sid)
+        d = dirs.get(sid, "")
+        r = {"id": sid, "titulo": (s or {}).get("title", "").replace("\n", " "), "de": d, "a": ""}
+        out.append(r)
+        if not s or it.get("fase") not in FASES:
+            r["error"] = "Canción no válida"
+            continue
+        src = inside_root(d) if d and len(d.split("/")) >= 2 and d.split("/")[0] in FASES.values() else None
+        if src is None or not src.is_dir():
+            r["error"] = "Esta canción no tiene una carpeta propia que se pueda mover"
+            continue
+        if any(o != sid and x and (x == d or x.startswith(d + "/") or d.startswith(x + "/")) for o, x in dirs.items()):
+            r["error"] = "En esa carpeta hay otras canciones: muévela a mano"
+            continue
+        dest = destino_fase(d, it["fase"], it.get("album") or "", it.get("pista") or 0)
+        if dest is None:
+            r["igual"] = True   # already in a folder of that phase
+            continue
+        if inside_root(dest) is None:
+            r["error"] = "Canción no válida"
+        elif os.path.exists(C.lp(ROOT / dest)) or dest.lower() in usados:
+            r["a"] = dest
+            r["error"] = "Ya hay una carpeta con ese nombre en el destino: no se mueve nada para no mezclar ni sobrescribir"
+        else:
+            r["a"] = dest
+            usados.add(dest.lower())
+    return out
+
+
+def mover_carpeta(src_rel, dst_rel, j, nid, titulo, sid, nuevo_dir):
+    """Moves every file of src_rel into dst_rel (never overwrites), one journal line per file. Returns (nid, [(src, dst)])."""
+    import time
+    hechos = []
+    src, dst = ROOT / src_rel, ROOT / dst_rel
+    for dp, dns, fns in os.walk(C.lp(src)):
+        dp = Path(dp.replace("\\\\?\\", ""))
+        for dn in dns:   # empty folders are recreated too
+            os.makedirs(C.lp(dst / (dp / dn).relative_to(src)), exist_ok=True)
+        for f in fns:
+            a = dp / f
+            b = dst / a.relative_to(src)
+            if os.path.exists(C.lp(b)):
+                stem, ext = os.path.splitext(str(b))
+                n = 2
+                while os.path.exists(C.lp(f"{stem} ({n}){ext}")):
+                    n += 1
+                b = Path(f"{stem} ({n}){ext}")
+            os.makedirs(C.lp(b.parent), exist_ok=True)
+            os.rename(C.lp(a), C.lp(b))
+            nid += 1
+            hechos.append((a, b, nid))
+            j.write(json.dumps({"id": nid, "t": time.strftime("%Y-%m-%d %H:%M:%S"), "op": "move", "src": C.posix(a.relative_to(ROOT)),
+                                "dst": C.posix(b.relative_to(ROOT)), "song": titulo, "sid": sid, "dir": nuevo_dir}, ensure_ascii=False) + "\n")
+            j.flush()
+    return nid, hechos
+
+
 def read_json(p, default):
     try:
         return json.loads(p.read_text(encoding="utf-8"))
@@ -337,6 +477,8 @@ class H(SimpleHTTPRequestHandler):
         return self.send_error(HTTPStatus.FORBIDDEN)
 
     def do_GET(self):
+        if REG is not None and hasattr(REG, "publica") and REG.publica(self, "GET", self.path):  # module redirect pages (OAuth); they validate themselves
+            return
         if not self.allowed():
             return self.send_error(HTTPStatus.FORBIDDEN)
         u = urlparse(self.path)
@@ -501,6 +643,74 @@ class H(SimpleHTTPRequestHandler):
         run_script("build_data.py")
         return self.send_json({"ok": True})
 
+    def mover_cancion(self, data):
+        """Moves song folders to the folder of another phase (unreleased/ prereleased/ published/) with their ARTE folder.
+        {items:[{id, fase:'un'|'pre'|'pub', album?, pista?}], simular?: true} (or a single {id, fase}).
+        One journal line per file in datos/diario_movimientos.jsonl (op «move», undoable with deshacer.py), plus «sid»/«dir»
+        so build_data.py keeps the song's id. Never overwrites: if the destination folder exists, that song is not moved.
+        → {ok, plan:[{id, titulo, de, a, error?, igual?}], pares:[[old, new]…] (folders that moved, to remap saved paths)}"""
+        items = data.get("items") or ([data] if data.get("id") else [])
+        plan = plan_mover(items)
+        if data.get("simular"):
+            return self.send_json({"ok": True, "plan": plan})
+        todo = [r for r in plan if r.get("a") and not r.get("error")]
+        pares = []
+        parar = {ROOT / x for x in ("unreleased", "prereleased", "published", "ARTE")}   # folders that are never removed
+        parar |= {p for x in ("published", "ARTE") if (ROOT / x).is_dir() for p in (ROOT / x).iterdir()}
+        DATOS.mkdir(parents=True, exist_ok=True)
+        with LOCK:
+            nid = sum(1 for _ in open(DIARIO, encoding="utf-8")) if DIARIO.exists() else 0
+            with open(DIARIO, "a", encoding="utf-8") as j:
+                for r in todo:
+                    hechos, arte = [], False
+                    try:
+                        nid, h1 = mover_carpeta(r["de"], r["a"], j, nid, r["titulo"], r["id"], r["a"])
+                        hechos += h1
+                        a1, a2 = _arte_de(r["de"]), _arte_de(r["a"])
+                        if a1 and a2 and (ROOT / a1).is_dir():
+                            arte = True
+                            nid, h2 = mover_carpeta(a1, a2, j, nid, r["titulo"], r["id"], r["a"])
+                            hechos += h2
+                    except OSError as ex:   # e.g. a file open in another program: put back what was moved for this song
+                        import time
+                        for a, b, k in reversed(hechos):
+                            try:
+                                os.rename(C.lp(b), C.lp(a))
+                                nid += 1
+                                j.write(json.dumps({"id": nid, "op": "undone", "ref": k, "t": time.strftime("%Y-%m-%d %H:%M:%S")}) + "\n")
+                            except OSError:
+                                pass
+                        j.flush()
+                        r["error"] = "No se pudo mover: algún archivo está abierto en otro programa. No ha cambiado nada."
+                        r["detalle"] = type(ex).__name__
+                        continue
+                    _quitar_vacias(ROOT / r["de"], parar)
+                    pares.append([r["de"], r["a"]])
+                    if arte:
+                        _quitar_vacias(ROOT / a1, parar)
+                        pares.append([a1, a2])
+                    r["movida"] = True
+                # album-level publish of a project (unreleased/<project>): its album artwork goes with it
+                g = data.get("grupo") or {}
+                gde, alb = str(g.get("de") or "").strip("/"), safe_name(g.get("album") or "", "")
+                if pares and alb and gde.startswith("unreleased/") and gde.count("/") == 1 and any(r.get("movida") for r in plan):
+                    import arte_map as am
+                    gdst = f"published/{_sub_published('albumes', 'Álbumes')}/{alb}"
+                    pares.append([gde, gdst])
+                    for sub in am.ALB.values():
+                        s1, s2 = f"ARTE/Proyectos/{gde.split('/')[1]}/{sub}", f"ARTE/{am.ALBUMES}/{alb}/{sub}"
+                        if (ROOT / s1).is_dir():
+                            try:
+                                nid, _h = mover_carpeta(s1, s2, j, nid, alb, "", "")
+                                _quitar_vacias(ROOT / s1, parar)
+                                pares.append([s1, s2])
+                            except OSError:
+                                pass
+        if pares:
+            for sc in ("build_data.py", "build_medios.py"):
+                run_script(sc)
+        return self.send_json({"ok": True, "plan": plan, "pares": pares, "firma": folder_signature()})
+
     def _song(self, sid):
         return {x["id"]: x for x in read_json(DATA, {"songs": []})["songs"]}.get(sid)
 
@@ -512,7 +722,7 @@ class H(SimpleHTTPRequestHandler):
         if not song or not texto or not song.get("dir"):
             return self.send_json({"ok": False, "error": "falta la canción o el texto"}, 400)
         title = song["title"].replace("\n", " ")
-        if not texto.lower().startswith(title.lower()):
+        if not song.get("letra") and not texto.lower().startswith(title.lower()):  # title line only for a brand-new lyric; never re-add one the user deleted
             texto = f"{title}\n\n{texto}"
         stamp = time.strftime("%Y%m%d-%H%M%S")
         with LOCK:
@@ -709,7 +919,7 @@ class H(SimpleHTTPRequestHandler):
         if path == "/api/subir":
             return self.subir()
         route = {"/api/refrescar": self.refrescar, "/api/mixtape": self.mixtape, "/api/album_crear": self.album_crear, "/api/album_borrar": self.album_borrar, "/api/mix_convertir": self.mix_convertir, "/api/mix_borrar": self.mix_borrar, "/api/letra_guardar": self.letra_guardar,
-                 "/api/abrir": self.abrir, "/api/mover_version": self.mover_version, "/api/unir": self.unir}.get(path)
+                 "/api/abrir": self.abrir, "/api/mover_version": self.mover_version, "/api/unir": self.unir, "/api/mover_cancion": self.mover_cancion}.get(path)
         if route:
             n = int(self.headers.get("Content-Length", 0))
             try:

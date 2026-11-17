@@ -1,6 +1,6 @@
-/* «derechos» (Rights) module.
-   - Release status per song (Unreleased / Pre-released / Published), stored in the core state (ST.release via GM.setRelease);
-     it overrides the folder-based deduction, folders are never moved.
+/* «derechos» (Rights) module: REGISTRATIONS only (protection of the work). The PHASE of a song (unreleased / pre-release /
+   published) is chosen in the «publicaciones» module's bar at the top of the song page (stored in ST.release via GM.setRelease);
+   here it is only read (CSV column) and can be set by importing a sheet.
    - Registrations with collecting societies: GM.state('derechos').reg[songId] = [{id,soc,cod,fecha,est,au,ed,notas}]
      (est: 'pend' | 'env' | 'reg'; au/ed = author/publisher %). Only the user's own notes: no connection to any society.
    - Editable society list with per-country presets (state.socs, state.pais).
@@ -45,18 +45,14 @@ function regRow(s,e){
     ${e.notas?`<div class="meta">${E(e.notas)}</div>`:''}${e.ro?'<div class="meta">Importado de tus datos · solo lectura</div>':''}</div>
     ${e.ro?'':`<div class="der-acts"><button class="chip" data-der="edit" data-i="${E(e.id)}" title="Editar">✎</button><button class="chip" data-der="del" data-i="${E(e.id)}" title="Borrar">✕</button></div>`}</div>`}
 function songSec(el,s){
-  const r=GM.release(s.id),eff=relOf(s),regs=regsOf(s);
-  el.innerHTML=`<div class="der-rel"><div class="der-lbl">Estado de publicación</div>
-    <div class="der-seg">${REL.map(([k,n])=>`<button class="chip${eff===k?' on':''}" data-rel="${k}">${n}</button>`).join('')}${r?'<button class="chip" data-rel="" title="Volver a decidirlo por la carpeta">↺ Según la carpeta</button>':''}</div>
-    <div class="der-help">${REL.find(x=>x[0]===eff)[2]}</div>
-    <div class="meta">${r?'Elegido por ti: la carpeta no se mueve.':'Deducido de la carpeta donde está la canción.'}</div></div>
+  const eff=relOf(s),regs=regsOf(s);
+  el.innerHTML=`${GM.mods.publicaciones?'<div class="der-help">Registros = la protección de la obra (sociedad de autores, Safe Creative…). No es lo mismo que la fase: si está sin publicar, en adelanto o publicada se elige arriba, en «Fase».</div>':''}
    <div class="der-lbl">Registros en sociedades de autores</div>
    <div class="der-regs">${regs.length?regs.map(e=>regRow(s,e)).join(''):'<div class="meta">Sin registros todavía.</div>'}</div>
    ${eff==='pub'&&!regs.length?'<div class="callout">Está publicada y no tiene ningún registro: dala de alta en tu sociedad de autores para cobrar derechos.</div>':''}
    <div style="margin-top:10px"><button class="chip pri" data-der="add">＋ Añadir registro</button></div>`;
   el.onclick=async ev=>{
     const b=ev.target.closest('button');if(!b)return;
-    if(b.dataset.rel!==undefined){setRel(s,b.dataset.rel);GM.ui.refresh();return}
     const k=b.dataset.der;if(!k)return;
     if(k==='add')return form(s,null);
     const e=own(s).find(x=>x.id===b.dataset.i);if(!e)return;
@@ -97,7 +93,8 @@ function render(el){
   const P=pubSongs(),miss=P.filter(sinReg),all=GM.songs.filter(s=>!GM.isDraft(s));
   const rows=all.flatMap(s=>regsOf(s).map(e=>({s,e}))).sort((a,b)=>GM.title(a.s).localeCompare(GM.title(b.s),'es'));
   const pais=S().pais||'';
-  el.innerHTML=`<h1>Derechos</h1><p class="lead">Aquí llevas el estado de publicación de tus canciones y su registro en las sociedades de autores (SGAE, SACEM, GEMA, ASCAP…). Son tus propias anotaciones: el gestor no se conecta con ninguna sociedad.</p>
+  el.innerHTML=`<h1>Derechos</h1><p class="lead">Aquí llevas el registro de tus canciones en las sociedades de autores (SGAE, SACEM, GEMA, ASCAP…). Son tus propias anotaciones: el gestor no se conecta con ninguna sociedad.</p>
+   <div class="callout">Registros y fase son cosas distintas. Registro = proteger la obra y cobrar derechos. Fase = dónde está la canción en su vida (sin publicar, adelanto o publicada): se elige arriba en la página de cada canción.</div>
    <div class="tiles"><div class="tile"><div class="n">${P.length}</div><div class="l">publicadas</div></div><div class="tile"><div class="n">${P.length-miss.length}</div><div class="l">con algún registro</div></div><div class="tile der-click" data-der="miss"><div class="n">${miss.length}</div><div class="l">publicadas sin registro</div></div><div class="tile"><div class="n">${rows.length}</div><div class="l">registros en total</div></div></div>
    ${miss.length?`<h2>Publicadas sin registro</h2><div class="der-list">${miss.map(s=>`<button class="chip" data-song="${E(s.id)}">${E(GM.title(s))}</button>`).join('')}</div>`:''}
    <h2>Hoja de registro (Excel / CSV)</h2>
