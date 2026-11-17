@@ -131,10 +131,15 @@ function seccion(el,s){
   el.innerHTML=`<div class="pub-help">Dónde la has publicado: plataforma, fecha, enlace, códigos y números. Lo apuntas tú; al subirla a SoundCloud desde el gestor se apunta sola.</div>
    <div class="pub-list">${L.length?L.map(e=>fila(e)).join(''):'<div class="meta">Todavía no hay ninguna publicación apuntada.</div>'}</div>
    ${A.map(({k,L})=>{const g=G.find(x=>x.key===k);return `<div class="pub-help" style="margin-top:10px">${E(`Del álbum «${g?g.title:k.split('/').pop()}»`)}</div><div class="pub-list">${L.map(e=>fila(e,'',true)).join('')}</div>`}).join('')}
-   <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap"><button class="chip pri" data-x="add">＋ Añadir publicación</button></div>`;
+   <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap"><button class="chip pri" data-x="add">＋ Añadir publicación</button><button class="chip" data-x="limpio" title="Hace una copia del audio sin ninguna etiqueta (título, artista, comentarios, datos de Suno…) en la carpeta _para_subir">🧼 Copia sin etiquetas para distribuidora</button></div>`;
   el.onclick=async ev=>{
     const b=ev.target.closest('button[data-x]');if(!b)return;const k=b.dataset.x;
     if(k==='add')return form(s,null);
+    if(k==='limpio'){const v=GM.bestVersion(s);if(!v)return GM.ui.toast('Esta canción no tiene archivos de audio');
+      const r=await GM.api(ID,'limpio',{p:v,nombre:GM.title(s)}).catch(()=>({ok:false}));
+      if(!r.ok)return GM.ui.toast(r.error||'No se pudo hacer la copia');
+      GM.ui.toast('Copia sin etiquetas creada: _para_subir/'+r.nombre);
+      fetch('/api/abrir',{method:'POST',body:JSON.stringify({p:r.p})}).catch(()=>{});return}
     const e=own(s).find(x=>x.id===b.dataset.i);if(!e)return;
     if(k==='edit')return form(s,e);
     if(k==='del'&&await GM.ui.ask('¿Borrar esta publicación?','Solo se borra tu anotación en el gestor; no cambia nada en la plataforma.','Borrar')){

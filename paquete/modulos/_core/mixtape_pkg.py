@@ -171,7 +171,7 @@ def construir(job, *, ff, lang, tr, songs, items, base, name, nombre, artist, ow
             cached = convertir(it)
             cmd = [ff, "-y", "-i", str(cached)] + (["-i", str(cover)] if cover else [])
             cmd += (["-map", "0:a", "-map", "1:v", "-c:v", "copy", "-metadata:s:v", "title=Album cover", "-metadata:s:v", "comment=Cover (front)"] if cover else ["-vn"])
-            cmd += ["-map_metadata", "-1", "-codec:a", "copy", "-id3v2_version", "3", *meta]
+            cmd += ["-map_metadata", "-1", "-fflags", "+bitexact", "-codec:a", "copy", "-id3v2_version", "3", *meta]
             if notice:
                 cmd += ["-metadata", f"copyright={notice}", "-metadata", f"date={year}"]
             cmd.append(str(out))

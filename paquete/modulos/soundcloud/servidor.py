@@ -37,7 +37,9 @@ import mimetypes
 import os
 import re
 import secrets
+import shutil
 import ssl
+import tempfile
 import threading
 import time
 from pathlib import Path
@@ -590,13 +592,21 @@ def preparar(req, ctx):
 
 def _trabajo_subir(ctx, job, d, lang):
     J = JOBS[job]
+    tmpd = None
     try:
         p, n = _ruta(ctx, d.get("p"), AUDIO, MAX_AUDIO)
+        # what goes up is a CLEAN copy (no tags: title, comments, Suno data, cover…); the original stays as it is
+        import limpiar_tags
+        tmpd = tempfile.mkdtemp(prefix="gm_limpio_")
+        try:
+            limpio = limpiar_tags.limpiar_copia(p, Path(tmpd) / p.name, ctx.ffmpeg() if callable(getattr(ctx, "ffmpeg", None)) else None)
+        except (ValueError, OSError):
+            raise ScError("archivo")
         titulo = str(d.get("titulo") or "").strip()[:250]
         campos = [("track[title]", titulo)] + _campos(d, "track", " ")
         if str(d.get("isrc") or "").strip():
             campos.append(("track[isrc]", re.sub(r"[^A-Za-z0-9]", "", str(d["isrc"])).upper()[:12]))
-        archivos = [("track[asset_data]", p, p.name)]
+        archivos = [("track[asset_data]", limpio, p.name)]
         img = None
         if d.get("portada"):
             try:
@@ -626,6 +636,9 @@ def _trabajo_subir(ctx, job, d, lang):
         J.update(estado="error", **_fallo_dict(ex, lang))
     except Exception as ex:  # noqa: BLE001
         J.update(estado="error", codigo="otro", error=traducir(MSG["otro"], lang), detalle=type(ex).__name__)
+    finally:
+        if tmpd:
+            shutil.rmtree(tmpd, ignore_errors=True)
 
 
 def subir(req, ctx):

@@ -532,6 +532,17 @@
 "¿Pasar las canciones del álbum a «Adelanto»?": "Passar as músicas do álbum para «Pré-lançamento»?",
 "¿Pasar las canciones del álbum a «Publicada»?": "Passar as músicas do álbum para «Publicada»?",
 "¿Quitar esta plataforma de la lista?": "Remover esta plataforma da lista?",
+"Archivo no válido": "Arquivo inválido",
+"Copia sin etiquetas creada: _para_subir/": "Cópia sem etiquetas criada: _para_subir/",
+"Copia sin etiquetas para distribuidora": "🧼 Cópia sem etiquetas para a distribuidora",
+"Esta canción no tiene archivos de audio": "Esta música não tem arquivos de áudio",
+"FLAC sin STREAMINFO": "FLAC sem STREAMINFO",
+"Hace una copia del audio sin ninguna etiqueta (título, artista, comentarios, datos de Suno…) en la carpeta _para_subir": "Faz uma cópia do áudio sem nenhuma etiqueta (título, artista, comentários, dados do Suno…) na pasta _para_subir",
+"No se pudo hacer la copia": "Não foi possível fazer a cópia",
+"No se pudo limpiar el archivo": "Não foi possível limpar o arquivo",
+"ffmpeg no pudo limpiar el archivo": "O ffmpeg não conseguiu limpar o arquivo",
+"formato sin soporte (hace falta ffmpeg)": "Formato sem suporte (é necessário o ffmpeg)",
+"no es FLAC": "Não é um arquivo FLAC",
 "% igual": "% igual",
 "0 dB · sin techo": "0 dB · sem teto",
 "1 · ¿Dónde está tu música?": "1 · Onde está a sua música?",
@@ -2288,6 +2299,14 @@
 [
 "¿Pasar a «{a}»?",
 "Passar para «{a}»?"
+],
+[
+"No se pudo limpiar el archivo: {b}",
+"Não foi possível limpar o arquivo: {b}"
+],
+[
+"ffmpeg no pudo limpiar el archivo: {b}",
+"O ffmpeg não conseguiu limpar o arquivo: {b}"
 ],
 [
 "Avisos ({a})",

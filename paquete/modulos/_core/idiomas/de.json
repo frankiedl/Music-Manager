@@ -1974,6 +1974,17 @@
 "¿Pasar las canciones del álbum a «Adelanto»?": "Die Songs des Albums auf «Vorab-Release» setzen?",
 "¿Pasar las canciones del álbum a «Publicada»?": "Die Songs des Albums auf «Veröffentlicht» setzen?",
 "¿Quitar esta plataforma de la lista?": "Diese Plattform aus der Liste entfernen?",
+"Archivo no válido": "Ungültige Datei",
+"Copia sin etiquetas creada: _para_subir/": "Kopie ohne Tags erstellt: _para_subir/",
+"Copia sin etiquetas para distribuidora": "🧼 Kopie ohne Tags für einen Vertrieb",
+"Esta canción no tiene archivos de audio": "Dieser Song hat keine Audiodateien",
+"FLAC sin STREAMINFO": "FLAC ohne STREAMINFO",
+"Hace una copia del audio sin ninguna etiqueta (título, artista, comentarios, datos de Suno…) en la carpeta _para_subir": "Erstellt eine Kopie des Audios ganz ohne Tags (Titel, Künstler, Kommentare, Suno-Daten…) im Ordner _para_subir",
+"No se pudo hacer la copia": "Die Kopie konnte nicht erstellt werden",
+"No se pudo limpiar el archivo": "Die Datei konnte nicht bereinigt werden",
+"ffmpeg no pudo limpiar el archivo": "ffmpeg konnte die Datei nicht bereinigen",
+"formato sin soporte (hace falta ffmpeg)": "Nicht unterstütztes Format (ffmpeg wird benötigt)",
+"no es FLAC": "Keine FLAC-Datei",
 "Por ejemplo: D:\\Mis proyectos de música · /Users/yo/Música": "Zum Beispiel: D:\\Meine Musikprojekte · /Users/ich/Musik"
 },
 "patrones": [
@@ -3264,6 +3275,14 @@
 [
 "¿Pasar a «{a}»?",
 "Auf «{a}» setzen?"
+],
+[
+"No se pudo limpiar el archivo: {b}",
+"Die Datei konnte nicht bereinigt werden: {b}"
+],
+[
+"ffmpeg no pudo limpiar el archivo: {b}",
+"ffmpeg konnte die Datei nicht bereinigen: {b}"
 ]
 ]
 }

@@ -1974,6 +1974,17 @@
 "¿Pasar las canciones del álbum a «Adelanto»?": "Set the album's songs to «Pre-release»?",
 "¿Pasar las canciones del álbum a «Publicada»?": "Set the album's songs to «Published»?",
 "¿Quitar esta plataforma de la lista?": "Remove this platform from the list?",
+"Archivo no válido": "Invalid file",
+"Copia sin etiquetas creada: _para_subir/": "Copy without tags created: _para_subir/",
+"Copia sin etiquetas para distribuidora": "🧼 Copy without tags for a distributor",
+"Esta canción no tiene archivos de audio": "This song has no audio files",
+"FLAC sin STREAMINFO": "FLAC without STREAMINFO",
+"Hace una copia del audio sin ninguna etiqueta (título, artista, comentarios, datos de Suno…) en la carpeta _para_subir": "Makes a copy of the audio with no tags at all (title, artist, comments, Suno data…) in the _para_subir folder",
+"No se pudo hacer la copia": "The copy could not be made",
+"No se pudo limpiar el archivo": "The file could not be cleaned",
+"ffmpeg no pudo limpiar el archivo": "ffmpeg could not clean the file",
+"formato sin soporte (hace falta ffmpeg)": "Unsupported format (ffmpeg is needed)",
+"no es FLAC": "Not a FLAC file",
 "Por ejemplo: D:\\Mis proyectos de música · /Users/yo/Música": "For example: D:\\My music projects · /Users/me/Music"
 },
 "patrones": [
@@ -3264,6 +3275,14 @@
 [
 "¿Pasar a «{a}»?",
 "Set to «{a}»?"
+],
+[
+"No se pudo limpiar el archivo: {b}",
+"The file could not be cleaned: {b}"
+],
+[
+"ffmpeg no pudo limpiar el archivo: {b}",
+"ffmpeg could not clean the file: {b}"
 ]
 ]
 }
