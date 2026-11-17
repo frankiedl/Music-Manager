@@ -22,8 +22,8 @@ try:
 except ImportError:  # the manager works the same, large covers just won't get a thumbnail
     Image = None
 
-THUMBS = C.DATOS / "thumbs"
-OUT = C.DATOS / "medios.json"
+THUMBS = C.LOCAL / "thumbs"
+OUT = C.LOCAL / "medios.json"
 IMG = {".jpg", ".jpeg", ".png", ".webp", ".gif", ".tif", ".tiff"}
 SRC_ART = {".psd", ".ai"}
 VID = {".mp4", ".mov", ".mkv", ".avi", ".webm", ".m4v"}

@@ -264,9 +264,11 @@ def main():
             newmap.setdefault(k, e)
     lst.sort(key=lambda o: o["title"].lower())
     for name, obj in (("letras.json", letras), ("data.json", {"songs": lst}), ("ids.json", newmap)):
-        tmp = C.DATOS / (name + ".tmp")
+        dest = C.DATOS if name == "ids.json" else C.LOCAL   # ids are shared (same ids on every computer); the rest is rebuilt locally
+        dest.mkdir(parents=True, exist_ok=True)
+        tmp = dest / (name + ".tmp")
         tmp.write_text(json.dumps(obj, ensure_ascii=False), encoding="utf-8")
-        os.replace(tmp, C.DATOS / name)
+        os.replace(tmp, dest / name)
     nv = sum(len(o["versions"]) for o in lst)
     print(f"datos/data.json: {len(lst)} canciones, {nv} versiones de audio, {len(letras)} letras")
     return 0

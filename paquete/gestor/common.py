@@ -18,7 +18,8 @@ else:
     CODE = Path(__file__).resolve().parent      # .../GestorMusica/gestor
     APP = CODE.parent                           # .../GestorMusica
     RES = APP
-DATOS = APP / "datos"                           # your state, move journal and generated data (created automatically)
+LOCAL = APP / "datos"                           # per-computer files: generated data, thumbnails, access token
+DATOS = LOCAL                                  # shared files (stars, notes, journal…): moved into the library folder by usar_biblioteca()
 CONFIG = APP / "config.json"
 RESERVED = {"stems", "versiones", "master", "sesiones", "otros", "docs", "midi", "arte", "video"}
 AUDIO = {".wav", ".mp3", ".m4a", ".flac", ".aif", ".aiff"}
@@ -57,3 +58,34 @@ def posix(p):
 def layout_dirs(r):
     for d in ("unreleased", "prereleased", "published/Singles", "published/Álbumes", "ARTE"):
         (r / d).mkdir(parents=True, exist_ok=True)
+
+
+SHARED_FILES = ("estado.json", "medios_estado.json", "decisiones.csv", "diario_movimientos.jsonl", "ids.json")
+
+
+def usar_biblioteca():
+    """Your own data (stars, notes, rights, journal…) lives INSIDE the music folder (<library>/_GestorMusica/datos), so
+    every computer that opens the same Dropbox folder sees the same things; only the path of the library is per computer.
+    Generated data and thumbnails stay local. Data already next to the program is copied there the first time."""
+    global DATOS
+    r = root()
+    LOCAL.mkdir(parents=True, exist_ok=True)
+    if not r or not r.is_dir():
+        DATOS = LOCAL
+        return DATOS
+    d = r / "_GestorMusica" / "datos"
+    try:
+        d.mkdir(parents=True, exist_ok=True)
+        import shutil
+        for n in SHARED_FILES:
+            if not (d / n).exists() and (LOCAL / n).exists():
+                shutil.copy2(LOCAL / n, d / n)
+        if not (d / "modulos").exists() and (LOCAL / "modulos").is_dir():
+            shutil.copytree(LOCAL / "modulos", d / "modulos")
+        DATOS = d
+    except OSError:
+        DATOS = LOCAL
+    return DATOS
+
+
+usar_biblioteca()

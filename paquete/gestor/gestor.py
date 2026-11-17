@@ -28,10 +28,10 @@ HERE = C.CODE
 DATOS = C.DATOS
 STATE = DATOS / "estado.json"
 MSTATE = DATOS / "medios_estado.json"
-DATA = DATOS / "data.json"
-LETRAS = DATOS / "letras.json"
-MEDIOS = DATOS / "medios.json"
-THUMBS = DATOS / "thumbs"
+DATA = C.LOCAL / "data.json"
+LETRAS = C.LOCAL / "letras.json"
+MEDIOS = C.LOCAL / "medios.json"
+THUMBS = C.LOCAL / "thumbs"
 DECISIONES = DATOS / "decisiones.csv"
 DIARIO = DATOS / "diario_movimientos.jsonl"
 AUDIO_EXT = C.AUDIO
@@ -1052,6 +1052,16 @@ def setup(force=False):
     return cfg
 
 
+def repoint():
+    """Shared data (stars, notes, journal…) lives inside the library: point the paths at it."""
+    global DATOS, STATE, MSTATE, DECISIONES, DIARIO
+    DATOS = C.usar_biblioteca()
+    STATE, MSTATE = DATOS / "estado.json", DATOS / "medios_estado.json"
+    DECISIONES, DIARIO = DATOS / "decisiones.csv", DATOS / "diario_movimientos.jsonl"
+    if REG is not None:
+        REG.ctx_base["datos"] = DATOS
+
+
 def cambiar_biblioteca(ruta):
     """Switches the library folder live: saved in config.json and everything is re-read."""
     global ROOT
@@ -1061,6 +1071,7 @@ def cambiar_biblioteca(ruta):
     CFG["biblioteca"] = str(p)
     C.save_config(CFG)
     ROOT = p
+    repoint()
     C.layout_dirs(ROOT)
     if REG is not None:
         REG.ctx_base["root"] = ROOT
@@ -1074,13 +1085,14 @@ def main():
     CFG = setup(force="--setup" in sys.argv)
     ROOT = C.root()
     C.layout_dirs(ROOT)
+    repoint()
     DATOS.mkdir(parents=True, exist_ok=True)
     if not DATA.exists():
         print("Leyendo tu biblioteca…")
         run_script("build_data.py")
         run_script("build_medios.py")
     if modulos_core:
-        AGENTE = acceso.cargar(DATOS)
+        AGENTE = acceso.cargar(C.LOCAL)
 
         def songs():
             return read_json(DATA, {"songs": []})["songs"]
