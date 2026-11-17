@@ -126,7 +126,7 @@ CONTENIDO = [
     ("h1", "6. Backups e desfazer"),
     ("li", ["Faça backup de <b>duas coisas</b>: a sua pasta de biblioteca, e a pasta <b>datos</b> junto com o <i>config.json</i> (estão junto ao executável).",
             "Para passar o programa a outro computador: copie a pasta do programa com <i>datos</i> e <i>config.json</i>, e em Configurações aponte para a biblioteca nova.",
-            "O gerenciador <b>nunca apaga</b> os seus arquivos. Quando move algo (unificar, mover uma versão, importar) anota em <i>datos/diario_movimientos.jsonl</i>, e isso pode ser desfeito. "
+            "O gerenciador <b>nunca apaga</b> os seus arquivos. Quando move algo (unificar, mover uma versão, importar) anota em <i>_GestorMusica/datos/diario_movimientos.jsonl</i> (dentro da sua pasta de música: todos os computadores que usam essa pasta veem o mesmo; não abra o programa em dois computadores ao mesmo tempo), e isso pode ser desfeito. "
             "A seção Importar tem o seu próprio desfazer. Para o diário geral, abra um terminal na pasta do programa e digite:"]),
     ("cod", "Windows:  GestorMusica.exe --run-script deshacer.py            (só simula)\n          GestorMusica.exe --run-script deshacer.py --apply    (desfaz)\n"
             "Mac:      GestorMusica.app/Contents/MacOS/GestorMusica --run-script deshacer.py --apply"),
@@ -148,6 +148,6 @@ CONTENIDO = [
                ["Uma música não aparece", "Verifique se a sua pasta não começa por _ ou . e se tem áudio ou letra."],
                ["Mixtapes: «Não encontro o ffmpeg»", "Instale o ffmpeg (seção 5) e reinicie o gerenciador."],
                ["Mac: não salva dados ou pede permissões", "Mova a pasta para Documentos (não para Aplicativos) e conceda acesso a pastas se o macOS pedir."],
-               ["Algo estranho depois de atualizar", "Feche o programa, apague datos/thumbs e abra-o de novo (é regenerado). Não apague o resto de datos."],
+               ["Algo estranho depois de atualizar", "Feche o programa, apague datos/thumbs e abra-o de novo (é regenerado). Não apague a pasta _GestorMusica da sua biblioteca (suas estrelas, notas e direitos estão lá)."],
                ["Quero começar do zero", "Feche o programa e renomeie a pasta datos; a sua música não é tocada."]]),
 ]

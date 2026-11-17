@@ -126,7 +126,7 @@ CONTENIDO = [
     ("h1", "6. Backups and undo"),
     ("li", ["Back up <b>two things</b>: your library folder, and the <b>datos</b> folder together with <i>config.json</i> (they are next to the executable).",
             "To move the program to another computer: copy the program folder with <i>datos</i> and <i>config.json</i>, and in Settings point to the new library.",
-            "The manager <b>never deletes</b> your files. When it moves something (merge, move a version, import) it notes it in <i>datos/diario_movimientos.jsonl</i>, and it can be undone. "
+            "The manager <b>never deletes</b> your files. When it moves something (merge, move a version, import) it notes it in <i>_GestorMusica/datos/diario_movimientos.jsonl</i> (inside your music folder, so every computer using that folder sees the same; do not open the program on two computers at once), and it can be undone. "
             "The Import section has its own undo. For the general journal, open a terminal in the program folder and type:"]),
     ("cod", "Windows:  GestorMusica.exe --run-script deshacer.py            (simulation only)\n          GestorMusica.exe --run-script deshacer.py --apply    (undoes)\n"
             "Mac:      GestorMusica.app/Contents/MacOS/GestorMusica --run-script deshacer.py --apply"),
@@ -148,6 +148,6 @@ CONTENIDO = [
                ["A song does not appear", "Check that its folder does not start with _ or . and that it has audio or lyrics."],
                ["Mixtapes: \"I can't find ffmpeg\"", "Install ffmpeg (section 5) and restart the manager."],
                ["Mac: it does not save data or asks for permissions", "Move the folder to Documents (not Applications) and grant folder access if macOS asks."],
-               ["Something odd after updating", "Close the program, delete datos/thumbs and open it again (it is regenerated). Do not delete the rest of datos."],
+               ["Something odd after updating", "Close the program, delete datos/thumbs and open it again (it is regenerated). Do not delete the _GestorMusica folder in your library (your stars, notes and rights are there)."],
                ["I want to start from scratch", "Close the program and rename the datos folder; your music is not touched."]]),
 ]

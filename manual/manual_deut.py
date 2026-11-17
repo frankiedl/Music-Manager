@@ -126,7 +126,7 @@ CONTENIDO = [
     ("h1", "6. Sicherungen und Rückgängig"),
     ("li", ["Sichere <b>zwei Dinge</b>: deinen Bibliotheksordner und den Ordner <b>datos</b> zusammen mit <i>config.json</i> (sie liegen neben der ausführbaren Datei).",
             "Um das Programm auf einen anderen Computer zu übertragen: Kopiere den Programmordner mit <i>datos</i> und <i>config.json</i> und verweise in den Einstellungen auf die neue Bibliothek.",
-            "Der Manager <b>löscht nie</b> deine Dateien. Wenn er etwas verschiebt (zusammenführen, eine Version verschieben, importieren), trägt er es in <i>datos/diario_movimientos.jsonl</i> ein, und es lässt sich rückgängig machen. "
+            "Der Manager <b>löscht nie</b> deine Dateien. Wenn er etwas verschiebt (zusammenführen, eine Version verschieben, importieren), trägt er es in <i>_GestorMusica/datos/diario_movimientos.jsonl</i> (in deinem Musikordner, daher sehen alle Computer, die diesen Ordner nutzen, dasselbe; öffne das Programm nicht auf zwei Computern gleichzeitig) ein, und es lässt sich rückgängig machen. "
             "Der Bereich Importieren hat sein eigenes Rückgängig. Für das allgemeine Protokoll öffne ein Terminal im Programmordner und gib ein:"]),
     ("cod", "Windows:  GestorMusica.exe --run-script deshacer.py            (nur Simulation)\n          GestorMusica.exe --run-script deshacer.py --apply    (macht rückgängig)\n"
             "Mac:      GestorMusica.app/Contents/MacOS/GestorMusica --run-script deshacer.py --apply"),
@@ -148,6 +148,6 @@ CONTENIDO = [
                ["Ein Song erscheint nicht", "Prüfe, dass sein Ordner nicht mit _ oder . beginnt und dass er Audio oder Songtext hat."],
                ["Mixtapes: «Ich finde ffmpeg nicht»", "Installiere ffmpeg (Abschnitt 5) und starte den Manager neu."],
                ["Mac: speichert keine Daten oder fragt nach Berechtigungen", "Verschiebe den Ordner nach Dokumente (nicht Programme) und erlaube den Ordnerzugriff, wenn macOS fragt."],
-               ["Etwas Seltsames nach dem Aktualisieren", "Schließe das Programm, lösche datos/thumbs und öffne es erneut (es wird neu erzeugt). Lösche nicht den Rest von datos."],
+               ["Etwas Seltsames nach dem Aktualisieren", "Schließe das Programm, lösche datos/thumbs und öffne es erneut (es wird neu erzeugt). Lösche nicht den Ordner _GestorMusica in deiner Bibliothek (dort sind deine Sterne, Notizen und Rechte)."],
                ["Ich will bei null anfangen", "Schließe das Programm und benenne den Ordner datos um; deine Musik bleibt unberührt."]]),
 ]

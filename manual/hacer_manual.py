@@ -147,7 +147,7 @@ CONTENIDO = [
     ("h1", "6. Copias de seguridad y deshacer"),
     ("li", ["Haz copia de seguridad de <b>dos cosas</b>: tu carpeta de biblioteca, y la carpeta <b>datos</b> junto con <i>config.json</i> (están junto al ejecutable).",
             "Para pasar el programa a otro ordenador: copia la carpeta del programa con <i>datos</i> y <i>config.json</i>, y en Ajustes apunta a la biblioteca nueva.",
-            "El gestor <b>nunca borra</b> tus archivos. Cuando mueve algo (fusionar, mover una versión, importar) lo anota en <i>datos/diario_movimientos.jsonl</i>, y se puede deshacer. "
+            "El gestor <b>nunca borra</b> tus archivos. Cuando mueve algo (fusionar, mover una versión, importar) lo anota en <i>_GestorMusica/datos/diario_movimientos.jsonl</i> (dentro de tu carpeta de música: todos los ordenadores que usen esa carpeta ven lo mismo; no abras el programa en dos ordenadores a la vez), y se puede deshacer. "
             "La sección Importar tiene su propio deshacer. Para el diario general, abre una terminal en la carpeta del programa y escribe:"]),
     ("cod", "Windows:  GestorMusica.exe --run-script deshacer.py            (solo simula)\n          GestorMusica.exe --run-script deshacer.py --apply    (deshace)\n"
             "Mac:      GestorMusica.app/Contents/MacOS/GestorMusica --run-script deshacer.py --apply"),
@@ -169,7 +169,7 @@ CONTENIDO = [
                ["Una canción no aparece", "Revisa que su carpeta no empiece por _ o . y que tenga audio o letra."],
                ["Mixtapes: «No encuentro ffmpeg»", "Instala ffmpeg (sección 5) y reinicia el gestor."],
                ["Mac: no guarda datos o pide permisos", "Mueve la carpeta a Documentos (no a Aplicaciones) y concede el acceso a carpetas si macOS lo pide."],
-               ["Algo raro tras actualizar", "Cierra el programa, borra datos/thumbs y ábrelo de nuevo (se regenera). No borres el resto de datos."],
+               ["Algo raro tras actualizar", "Cierra el programa, borra datos/thumbs y ábrelo de nuevo (se regenera). No borres la carpeta _GestorMusica de tu biblioteca (ahí están tus estrellas, notas y derechos)."],
                ["Quiero empezar de cero", "Cierra el programa y renombra la carpeta datos; tu música no se toca."]]),
 
 ]
