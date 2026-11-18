@@ -623,7 +623,13 @@ function pickCover(owner,title){
 function coverOf(x){
   if(!x)return null;if(coverCache.has(x.id))return coverCache.get(x.id);
   const own=pickCover(D(x),x.title),par=pickCover(D(x).split('/').slice(0,-1).join('/'),x.title);
-  const c=(own&&!/\/V[ií]deo/.test(own.p))?own:(par||own);coverCache.set(x.id,c);return c}
+  const c=(own&&!/\/V[ií]deo/.test(own.p))?own:(par||own)||albumCoverFor(x);coverCache.set(x.id,c);return c}
+/* A song added to an album (ST.col) that has no cover of its own uses the album's cover */
+function albumCoverFor(x){
+  for(const n of ((ST.col&&ST.col[x.id])||[])){
+    const key=n.startsWith('Proyecto · ')?'unreleased/'+n.slice(11):n.startsWith('Álbum · ')?'published/Álbumes/'+n.slice(8):null;
+    if(key){const it=pickCover(key,key.split('/').pop());if(it)return it}}
+  return null}
 function groups(){
   const G={};const add=(key,title,kind,s)=>{(G[key]=G[key]||{key,title,kind,songs:[]}).songs.push(s)};
   SONGS.forEach(s=>{const p=D(s).split('/');if(p.length<2)return;
@@ -929,7 +935,7 @@ function albAdd(g,ids,before){
   ids.forEach(id=>{const x=ALL.find(z=>z.id===id);if(!x||isDraft(x))return;if(!g.songs.some(z=>z.id===id)){(ST.col[id]=ST.col[id]||[]);if(!ST.col[id].includes(nm))ST.col[id].push(nm);n++}});
   const base=groupOrder(g).map(x=>x.id).filter(i=>!ids.includes(i)),at=before?base.indexOf(before):-1,mine=ids.filter(i=>ALL.some(z=>z.id===i&&!isDraft(z)));
   if(!ST.ord)ST.ord={};ST.ord[g.key]=at<0?[...base,...mine]:[...base.slice(0,at),...mine,...base.slice(at)];
-  save();fillCols();refresh();toast(n?n+(n>1?' canciones añadidas':' canción añadida')+' a «'+g.album.name+'»':'Ya estaban en el álbum')}
+  coverCache.clear();  save();fillCols();refresh();toast(n?n+(n>1?' canciones añadidas':' canción añadida')+' a «'+g.album.name+'»':'Ya estaban en el álbum')}
 function albMove(g,ids,before){
   if(before&&ids.includes(before))return;
   const base=groupOrder(g).map(x=>x.id).filter(i=>!ids.includes(i)),at=before?base.indexOf(before):-1;
@@ -937,7 +943,7 @@ function albMove(g,ids,before){
 function albRemove(key,id){
   const g=groups().find(x=>x.key===key);if(!g||!g.album)return;
   ST.col[id]=(ST.col[id]||[]).filter(x=>x!==albCol(g));if(ST.ord&&ST.ord[key])ST.ord[key]=ST.ord[key].filter(i=>i!==id);
-  save();fillCols();refresh();toast('Quitada del álbum «'+g.album.name+'»')}
+  coverCache.clear();save();fillCols();refresh();toast('Quitada del álbum «'+g.album.name+'»')}
 async function albDelete(key){
   const g=groups().find(x=>x.key===key),a=g&&g.album;if(!a)return;
   if(!await ask('Eliminar álbum','¿Eliminar el álbum «'+esc(a.name)+'»? Sus '+g.songs.length+' canciones no se borran ni se mueven: solo dejan de estar en este álbum.','Eliminar'))return;
