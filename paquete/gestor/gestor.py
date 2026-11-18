@@ -528,6 +528,25 @@ class H(SimpleHTTPRequestHandler):
                         if len(out) >= 800:
                             break
             return self.send_json(sorted(out, key=lambda x: (x["role"], x["n"].lower())))
+        if u.path == "/api/diario":
+            out = []
+            if DIARIO.exists():
+                rows = []
+                for l in open(DIARIO, encoding="utf-8", errors="ignore"):
+                    try:
+                        rows.append(json.loads(l))
+                    except ValueError:
+                        pass
+                undone = {e.get("ref") for e in rows if e.get("op") == "undone"}
+                for e in reversed(rows):
+                    if e.get("op") not in ("move", "copy"):
+                        continue
+                    nm = str(e.get("src", "")).replace("\\", "/").split("/")[-1]
+                    dst = "/".join(str(e.get("dst", "")).replace("\\", "/").split("/")[-3:-1])
+                    out.append({"t": e.get("t", ""), "txt": ("(deshecho) " if e.get("id") in undone else "") + ("Movido" if e["op"] == "move" else "Copiado") + " «" + nm + "» → " + dst + (" · " + str(e["song"]) if e.get("song") else "")})
+                    if len(out) >= 40:
+                        break
+            return self.send_json(out)
         if u.path == "/api/letras":
             return self.send_json(read_json(LETRAS, {}))
         if u.path == "/api/medios":

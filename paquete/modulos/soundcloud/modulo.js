@@ -182,7 +182,9 @@ async function panel(el,g,dlg){
   if(!r||!r.ok){el.innerHTML=`<div class="callout">${errHtml(r)}</div>`;return}
   P.portada=r.portada;P.setPrev=r.set;P.setAccion=r.set?'actualizar':'nuevo';
   r.items.forEach((it,i)=>{const x=P.rows[i];x.info=it;if(it.subida){x.accion='saltar';x.res=it.subida}if(!it.ok)x.sel=false});
-  P.el=el;P.dlg=dlg;dibujar(P)}
+  P.el=el;P.dlg=dlg;
+  try{P.pend=!!(GM.mods&&GM.mods.masterizado&&GM.mods.masterizado.pendiente&&g.songs.length>1&&GM.mods.masterizado.pendiente(g))}catch(e){P.pend=false}
+  dibujar(P)}
 
 async function info(P,x){   // re-reads one row after choosing another file
   const r=await GM.api(ID,'preparar',{key:P.g.key,items:[{id:x.s.id,p:x.p}]}).catch(()=>null);
@@ -217,6 +219,7 @@ function dibujar(P){
   P.el.innerHTML=`<div class="sc-panel">
    <div class="sc-top"><div><b>${uno?'Subir esta canción a SoundCloud':'Subir este álbum a SoundCloud'}</b><div class="meta"><span>Cuenta</span> <span class="notr">${E(user)}</span>${EST.prueba?' · <span>modo de prueba</span>':''}</div></div>
      ${EST.puerto_ok?'':'<span class="b warn" title="La Redirect URI necesita el puerto 8765">Puerto distinto de 8765</span>'}</div>
+   ${P.pend?`<div class="callout"><b>Tu masterizado tiene cambios que aún no están guardados.</b> Si subes ahora, saldrían los archivos anteriores. <div style="margin-top:8px"><button class="chip pri" data-x="masterizar"${P.busy?' disabled':''}>Aplicar mi masterizado y guardar los másters</button></div></div>`:''}
    <div class="sc-scroll"><table class="sc-tab"><thead><tr><th><input type="checkbox" data-f="todas"${P.busy?' disabled':''} title="Todas"></th><th>#</th><th>Título en SoundCloud</th><th>Archivo</th><th>Tamaño</th><th>Privacidad</th><th>Estado</th></tr></thead>
    <tbody>${P.rows.map((x,i)=>filaHtml(P,x,i)).join('')}</tbody></table></div>
    <details class="sc-det-box"${P.busy?'':' open'}><summary>Datos que se envían</summary><div class="sc-grid">
@@ -245,6 +248,8 @@ function dibujar(P){
   const all=P.el.querySelector('[data-f="todas"]');if(all){const ok=P.rows.filter(x=>x.info&&x.info.ok);all.checked=ok.length&&ok.every(x=>x.sel)}
   P.el.onchange=ev=>{if(!ev.target.matches('input[type=text],input:not([type]),textarea'))cambio(P,ev)};P.el.oninput=ev=>{if(ev.target.matches('input[type=text],input:not([type]),textarea'))cambio(P,ev,true)};
   P.el.onclick=ev=>{const b=ev.target.closest('[data-x]');if(!b||P.busy)return;
+    if(b.dataset.x==='masterizar'){b.disabled=true;b.textContent='Masterizando… puede tardar unos minutos';
+      return GM.mods.masterizado.aplicar(P.g).then(r=>{if(r&&r.ok){GM.ui.toast('Másters guardados: '+r.guardados);if(P.dlg)P.dlg.remove();GM.ui.reload()}else{GM.ui.toast('No se pudo masterizar'+(r&&r.error?': '+r.error:''));b.disabled=false;b.textContent='Aplicar mi masterizado y guardar los másters'}})}
     if(b.dataset.x==='subir')return confirmar(P,false);
     if(b.dataset.x==='reintentar')return confirmar(P,true);
     if(b.dataset.x==='cerrar'&&P.dlg)P.dlg.remove()}}

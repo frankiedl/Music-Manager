@@ -1,6 +1,7 @@
 /* «Importar» module: 4-step wizard to organize scattered music by COPYING it into the library (the source is never touched). */
 GM.register({
   id:'importar',
+  nav:{label:'Importar',icon:'📥'},
   render(el,GM){ IMP.montar(el,GM) },
 });
 

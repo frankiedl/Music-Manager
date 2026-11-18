@@ -75,6 +75,7 @@ window.GM=(()=>{
     cfg:{artista:'',titular:''},        // artist name and copyright owner, if the manager knows them (filled in on load)
     lyrics:id=>(typeof LET!=='undefined'&&LET[id])?LET[id].t:'',
     tags:s=>typeof tagsOf==='function'?tagsOf(s):[],   // the song's themes/tags (from its lyrics and the ones you added)
+    bar:{claim:o=>barClaim(o),info:(o,i)=>barInfo(o,i),release:o=>barRelease(o)},   // bottom player: a module that plays its own audio takes it over (o = {parar, step(d), toggle}) and describes what plays
     ui:{
       toast:m=>toast(m),modal:(h,f)=>modal(h,f),ask:(t,x,o)=>ask(t,x,o),esc:s=>esc(s),
       go:(v,a)=>go(v,a),refresh:()=>refresh(),

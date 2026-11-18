@@ -166,6 +166,7 @@ EST.pintar=async()=>{
 
 GM.register({
   id:'estado',
+  nav:{label:'Estado',icon:'📊'},
   home:{title:'Estado de tu música',render(el){EST.el=el;EST.pintar()}},   // goes inside Home
   render(el){EST.el=el;EST.pintar()},
 });

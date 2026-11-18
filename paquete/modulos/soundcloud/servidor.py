@@ -396,6 +396,60 @@ def _ruta(ctx, rel, tipos, maximo):
     return p, n
 
 
+LADO_PORTADA = 3500
+
+
+def _portada(ctx, rel):
+    """The cover for SoundCloud: the file itself when it is JPG/PNG/GIF, at most 8 MB and at most 3500 px; otherwise a lighter
+    JPEG copy (largest side 3500 px, quality lowered until it is under 8 MB) made with Pillow. The original is never touched."""
+    p, n = _ruta_img(ctx, rel)
+    try:
+        from PIL import Image
+        with Image.open(p) as im:
+            w, h = im.size
+            if n <= MAX_IMAGEN and max(w, h) <= LADO_PORTADA:
+                return p, n
+            import hashlib
+            st = p.stat()
+            clave = hashlib.md5(f"{p}|{st.st_size}|{st.st_mtime_ns}|{LADO_PORTADA}".encode("utf-8", "ignore")).hexdigest()[:16]
+            d = Path(tempfile.gettempdir()) / "gm_sc_portadas"
+            d.mkdir(exist_ok=True)
+            dst = d / (clave + ".jpg")
+            if not dst.exists() or dst.stat().st_size > MAX_IMAGEN:
+                im.load()
+                x = im.convert("RGB")
+                x.thumbnail((LADO_PORTADA, LADO_PORTADA))
+                for q in (92, 85, 78, 70, 60):
+                    x.save(dst, "JPEG", quality=q, optimize=True)
+                    if dst.stat().st_size <= MAX_IMAGEN:
+                        break
+        if dst.stat().st_size > MAX_IMAGEN or dst.stat().st_size == 0:
+            raise ScError("portada")
+        return dst, dst.stat().st_size
+    except ScError:
+        raise
+    except Exception:
+        if n <= MAX_IMAGEN:
+            return p, n        # no Pillow / unreadable by Pillow: the original if SoundCloud accepts its size
+        raise ScError("portada")
+
+
+def _ruta_img(ctx, rel):
+    """The library image (any size) → (Path, size); ScError if it is outside the library or not JPG/PNG/GIF."""
+    rel = str(rel or "").replace("\\", "/").strip("/")
+    raiz = Path(ctx.root).resolve()
+    p = (raiz / rel).resolve() if rel else None
+    if p is None or not p.is_file():
+        raise ScError("archivo")
+    try:
+        p.relative_to(raiz)
+    except ValueError:
+        raise ScError("archivo")
+    if p.suffix.lower() not in IMAGEN or p.stat().st_size == 0:
+        raise ScError("portada")
+    return p, p.stat().st_size
+
+
 def _tag_list(tags, sep):
     out = []
     for t in tags or []:
@@ -583,7 +637,7 @@ def preparar(req, ctx):
     portada = None
     if d.get("portada"):
         try:
-            p, n = _ruta(ctx, d["portada"], IMAGEN, MAX_IMAGEN)
+            p, n = _portada(ctx, d["portada"])
             portada = {"ok": True, "bytes": n, "nombre": p.name}
         except ScError:
             portada = {"ok": False, "error": traducir(MSG["portada"], lang)}
@@ -610,7 +664,7 @@ def _trabajo_subir(ctx, job, d, lang):
         img = None
         if d.get("portada"):
             try:
-                img, _ = _ruta(ctx, d["portada"], IMAGEN, MAX_IMAGEN)
+                img, _ = _portada(ctx, d["portada"])
             except ScError:
                 J["sin_caratula"] = True
         intento_img = img is not None
@@ -720,7 +774,7 @@ def crear_set(req, ctx):
             img = None
             if d.get("portada"):
                 try:
-                    img, _ = _ruta(ctx, d["portada"], IMAGEN, MAX_IMAGEN)
+                    img, _ = _portada(ctx, d["portada"])
                 except ScError:
                     sin_caratula = True
             j = None
