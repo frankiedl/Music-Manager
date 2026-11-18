@@ -2067,7 +2067,8 @@ async function init(){
   ALL=r.songs;ST=Object.assign({lanes:{},stars:{},notes:{},final:{},tags:{},hidden:{}},r.state||{});if(!ST.final)ST.final={};if(!ST.tags)ST.tags={};if(!ST.hidden)ST.hidden={};if(!ST.col)ST.col={};if(!ST.nodup)ST.nodup={};if(!ST.draft)ST.draft={};if(!ST.names)ST.names={};applyNames();mixMigrate();SONGS=ALL.filter(x=>!ST.hidden[x.id]);
   if(!ST.mod)ST.mod={};modNav();
   buildKinds();await loadLetras();fillThemes();mixBadge();checkSig();
-  render();}
+  render();
+  {const af=()=>{try{const m=GM.mods.publicaciones;if(m&&m.autoFecha)m.autoFecha()}catch(e){}};af();setInterval(af,3600000)}}   // release date reached → «Publicada»
 init();
 </script>
 </body>

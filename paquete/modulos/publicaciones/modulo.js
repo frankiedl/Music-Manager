@@ -280,8 +280,26 @@ GM.on('movidas',pares=>{   // a project published as an album changes its key: i
   const st=S();pares.forEach(([a,b])=>{if(st.albs[a]){st.albs[b]=[...(st.albs[b]||[]),...st.albs[a]];delete st.albs[a]}
     Object.values(st.pubs).forEach(L=>L.forEach(e=>{if(e.alb===a)e.alb=b}))})});
 
+/* Release date reached → the album and its songs pass to «Publicada» by themselves (only the status: no folder is moved, nothing is deleted).
+   The date is the one set in the SoundCloud tab of the album (or, if there is none, the album's planned release date).
+   It is applied once per album and date: if you later put a song back to another phase it is not forced again, unless you change the date. */
+function autoFecha(){
+  try{
+    const sc=GM.state('soundcloud')||{},st=S();if(!st.auto)st.auto={};
+    const h=hoy(),hechas=[];
+    GM.groups().forEach(g=>{
+      const f=((sc.alb&&sc.alb[g.key]&&sc.alb[g.key].fecha)||(g.album&&g.album.date)||'').slice(0,10);
+      if(!/^\d{4}-\d{2}-\d{2}$/.test(f)||f>h||st.auto[g.key]===f)return;
+      const L=g.songs.filter(x=>!GM.isDraft(x)&&!GM.isPub(x));
+      st.auto[g.key]=f;if(!L.length)return;
+      fijar(L,'pub');hechas.push([g,L.length,f])});
+    if(hechas.length){GM.save();GM.ui.refresh();
+      hechas.forEach(([g,n,f])=>GM.ui.toast(`«${g.title}»: ${n} ${n===1?'canción pasa':'canciones pasan'} a Publicada (fecha de lanzamiento ${f})`))}
+  }catch(e){console.error('publicaciones: fecha de lanzamiento',e)}}
+
 GM.register({
   id:ID,
+  init(G){G.mods.publicaciones.autoFecha=autoFecha},
   nav:{label:'Publicaciones',icon:'🚀'},
   render(el){render(el)},
   songTop:{render(el,s){barra(el,s)}},
