@@ -34,6 +34,9 @@ async function render(el){
     <label class="meta">Nombre artístico</label><input class="mxin" id="aj-art" value="${esc(st.artista)}" placeholder="Tu nombre artístico">
     <label class="meta">Titular del copyright (para los mixtapes y los másters)</label><input class="mxin" id="aj-tit" value="${esc(st.titular)}" placeholder="Nombre que aparecerá en © …">
     <button class="chip pri" id="aj-guardar">Guardar</button></div>
+   <div class="panel"><h2>Apariencia</h2><div class="meta" style="margin-bottom:8px">Colores y tamaño de la letra. Se recuerdan en este ordenador.</div>
+    <label class="meta">Tema</label><div class="chips" id="aj-tema">${[['oscuro','Oscuro'],['claro','Claro'],['auto','Automático (según tu sistema)']].map(([k,n])=>`<button class="chip" data-v="${k}">${n}</button>`).join('')}</div>
+    <label class="meta">Tamaño de la letra</label><div class="chips" id="aj-fs">${[['p','Pequeña'],['m','Media'],['g','Grande']].map(([k,n])=>`<button class="chip" data-v="${k}">${n}</button>`).join('')}</div></div>
    <div class="panel"><h2>Idioma</h2><div class="meta" style="margin-bottom:6px">Idioma de la interfaz. Se recuerda en este navegador.</div>
     <select class="mxin" id="aj-idioma">${Object.entries(GM.idiomas||{es:'Español'}).map(([k,v])=>`<option value="${k}"${k===GM.idioma?' selected':''}>${v}</option>`).join('')}</select></div>
    <div class="panel"><h2>Sobre el gestor</h2><div class="meta">Tus datos (estrellas, notas, ajustes…) están en: ${esc(st.datos)}<br>Haz copia de seguridad de esa carpeta y de tu música.</div></div>`;
@@ -41,6 +44,9 @@ async function render(el){
     const r=await api('guardar',{artista:el.querySelector('#aj-art').value,titular:el.querySelector('#aj-tit').value});
     if(r.ok){Object.assign(GM.cfg,{artista:el.querySelector('#aj-art').value.trim(),titular:el.querySelector('#aj-tit').value.trim()});GM.ui.toast(msg||'Guardado ✓')}else GM.ui.toast(r.error||'No se pudo guardar')};
   el.querySelector('#aj-guardar').onclick=()=>guardar();
+  {const A=window.mmApariencia;if(A){const pint=()=>{const g=A.get();el.querySelectorAll('#aj-tema .chip').forEach(b=>b.classList.toggle('on',b.dataset.v===g.tema));el.querySelectorAll('#aj-fs .chip').forEach(b=>b.classList.toggle('on',b.dataset.v===g.fs))};
+    el.querySelector('#aj-tema').onclick=e=>{const b=e.target.closest('.chip');if(b){A(b.dataset.v,null);pint()}};
+    el.querySelector('#aj-fs').onclick=e=>{const b=e.target.closest('.chip');if(b){A(null,b.dataset.v);pint()}};pint()}}
   const idi=el.querySelector('#aj-idioma');if(idi)idi.onchange=()=>GM.setIdioma&&GM.setIdioma(idi.value);
   const b=el.querySelector('#aj-cambiar');
   if(b)b.onclick=async()=>{
