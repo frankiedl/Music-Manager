@@ -170,7 +170,7 @@ def _clasificar(R, fam, decl, deriv, sel, caratula_nueva):
     for i in R.items:
         clave, norm, b = i["clave_original"], i["clave_normalizada"], i["bloque"]
         tipo_b = tipos.get(b, "")
-        a = {"tipo": "etiqueta", "bloque": b, "clave": clave, "valor": i["valor"] if i["tipo_valor"] != "binario" else None, "accion": "quitar"}
+        a = {"tipo": "etiqueta", "bloque": b, "clave": clave, "valor": i["valor"] if i["tipo_valor"] != "binario" else None, "accion": "quitar", "como": "etiqueta"}
         marcada = (b, clave) in sel["etiqueta"]
         if clave in ("IPLS", "TIPL", "TMCL"):
             a.update(accion="regenerar" if deriv["ipls"] else "quitar", motivo="la lista de colaboradores se genera desde los créditos")
@@ -178,6 +178,7 @@ def _clasificar(R, fam, decl, deriv, sel, caratula_nueva):
             a["motivo"] = "se escribe vacío (sin rastro de programa)"
         elif tipo_b.startswith(("RIFF bext", "RIFF iXML", "RIFF axml")):
             a["accion"] = "conservar" if b in sel["bloque"] else "quitar"
+            a["como"] = "bloque"
             a["motivo"] = "forma parte del bloque «%s»: se conserva o se quita entero" % tipo_b
         elif i["tipo_valor"] == "binario":
             a["motivo"] = "contenido binario: no se puede reescribir" if marcada else None
@@ -194,7 +195,8 @@ def _clasificar(R, fam, decl, deriv, sel, caratula_nueva):
         a["conservable"] = a.get("conservable", True) if clave not in ("IPLS", "TIPL", "TMCL", "VENDOR") else False
         acc.append(a)
     for d in R.binarios:
-        a = {"tipo": "binario", "bloque": d["bloque"], "id": d["id"], "propietario": d["propietario"], "bytes": d["bytes"], "accion": "quitar", "conservable": True}
+        a = {"tipo": "binario", "bloque": d["bloque"], "id": d["id"], "propietario": d["propietario"], "bytes": d["bytes"], "accion": "quitar", "conservable": True,
+             "como": "binario" if "_cuerpo" in d else "bloque"}
         if d["id"] == "SEEKTABLE":
             a.update(accion="conservar", conservable=False, motivo="estructural (índice de búsqueda), no es una etiqueta")
             keep["bloques"].append(next(x for x in R.bloques if x["id"] == d["bloque"]))
@@ -209,7 +211,7 @@ def _clasificar(R, fam, decl, deriv, sel, caratula_nueva):
             keep["bloques"].append(next(x for x in R.bloques if x["id"] == d["bloque"]))
         acc.append(a)
     for n, c in enumerate(R.caratulas):
-        a = {"tipo": "caratula", "indice": n, "clave": c["origen"], "bytes": c["bytes"], "accion": "quitar", "conservable": True}
+        a = {"tipo": "caratula", "indice": n, "clave": c["origen"], "bytes": c["bytes"], "accion": "quitar", "conservable": True, "como": "caratula"}
         if n in sel["caratula"]:
             a["accion"] = "sustituir" if caratula_nueva else "conservar"
             if caratula_nueva:
@@ -670,7 +672,7 @@ def etiquetar(src, dst, poner=None, creditos=None, conservar=None, caratula=None
     se_escribira = _destinos(fam, deriv, decl, cara, keep) if soporte["escritor"] else []
     for d in se_escribira:
         if d["estado"] != "ok":
-            avisos.append({"codigo": "campo_" + d["estado"], "nivel": "aviso", "mensaje": "%s: %s" % (d["campo"], d.get("motivo", ""))})
+            avisos.append({"codigo": "campo_" + d["estado"], "nivel": "aviso", "campo": d["campo"], "mensaje": d.get("motivo", "")})
     plan = {"formato": fam, "soporte": soporte, "acciones": acciones, "se_escribira": se_escribira, "caratula": cara and {"mime": cara[1], "bytes": len(cara[0]), "ancho": cara[2][0], "alto": cara[2][1]},
             "avisos": avisos, "sha256_audio_origen": antes["archivo"]["sha256_audio"], "puede_aplicarse": bool(soporte["escritor"])}
     if simular:

@@ -277,6 +277,32 @@ class TestConservar(Base):
         it = self.clave(dst)["LYRICS"]
         self.assertEqual(it["caracteres"], len(larga.strip()))
 
+    def test_cada_elemento_dice_como_se_marca_y_esa_marca_funciona(self):
+        """The UI builds `conservar` from the plan alone: {como, bloque, clave|id+propietario|indice}."""
+        for fam, src in self.muestras().items():
+            plan = E.etiquetar(src, None, {}, [], simular=True)["plan"]
+            self.assertTrue(plan["acciones"], fam)
+            self.assertTrue(all(a["como"] in ("etiqueta", "binario", "bloque", "caratula") for a in plan["acciones"]), fam)
+            cons = []
+            for a in plan["acciones"]:
+                if not a["conservable"] or a["accion"] != "quitar":
+                    continue
+                e = {"tipo": a["como"], "bloque": a.get("bloque")}
+                if a["como"] == "etiqueta":
+                    e["clave"] = a["clave"]
+                elif a["como"] == "binario":
+                    e.update(id=a["id"], propietario=a["propietario"])
+                elif a["como"] == "caratula":
+                    e["indice"] = a["indice"]
+                cons.append(e)
+            self.assertTrue(cons, fam)
+            r, dst = self.aplicar(src, poner={}, creditos=[], conservar=cons)
+            self.assertTrue(r["ok"], (fam, r.get("error")))
+            self.assertTrue(r["verificacion"]["ok"], fam)
+            self.assertEqual(r["verificacion"]["etiquetas_inesperadas"], [], fam)
+            kept = E.etiquetar(src, None, {}, [], cons, simular=True)["plan"]
+            self.assertFalse([a for a in kept["acciones"] if a["conservable"] and a["accion"] == "quitar" and a["como"] != "etiqueta"], fam)
+
     def test_lo_no_conservable_se_marca(self):
         p = self.plan(self.muestras()["mp3"])
         self.assertFalse(self.elegir(p, clave="IPLS")["conservable"] if any(a.get("clave") == "IPLS" for a in p["acciones"]) else False)

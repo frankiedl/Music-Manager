@@ -308,7 +308,8 @@ def _bandas(Pm, res, nyq):
 
 
 def _corte(S, res, nyq):
-    """Frequency of the steepest sustained drop of the spectrum above 8 kHz (typical of a low-pass), or (None, None)."""
+    """Steepest sustained drop of the spectrum above 8 kHz → (corte_hz | None, caida_db | None, mejor_caida_db | None, frecuencia_de_esa_caida).
+    The cut-off counts (first two values) only if the drop reaches CORTE_MIN_CAIDA_DB and is not the natural fall at Nyquist."""
     cw = max(1, int(round(250.0 / res)))
     C = [sum(S[i:i + cw]) / len(S[i:i + cw]) for i in range(1, len(S) - cw + 1, cw)]
     f0 = int(8000 / (cw * res))
@@ -320,12 +321,13 @@ def _corte(S, res, nyq):
         caida = sum(a) / len(a) - sum(b) / len(b)
         if caida > mejor:
             mejor, mi = caida, i
-    if mi is None or mejor < CORTE_MIN_CAIDA_DB:
-        return None, None
+    if mi is None:
+        return None, None, None, None
     f = (1 + (mi + 1) * cw) * res
-    if f > nyq - 500:
-        return None, None
-    return int(round(f / 50.0) * 50), round(mejor, 1)
+    hz = int(round(f / 50.0) * 50)
+    if mejor < CORTE_MIN_CAIDA_DB or f > nyq - 500:
+        return None, None, round(mejor, 1), hz
+    return hz, round(mejor, 1), round(mejor, 1), hz
 
 
 def _picos(Pm, Pf, res):
@@ -368,14 +370,14 @@ def _espectro_y_indicios(A, sr, nyq):
     res = sr / N
     if not A.frames:
         _aviso(avisos, "espectro_sin_frames", "aviso", "Audio demasiado corto o demasiado silencioso para calcular el espectro.")
-        return None, indicios, avisos
+        return None, indicios, avisos, []
     Pf = _espectros(A.frames, N)
     nf = len(Pf)
     Pm = [sum(P[k] for P in Pf) / nf for k in range(N // 2 + 1)]
     S = [_db(p) for p in Pm]
     bandas = _bandas(Pm, res, nyq)
     por = {b["id"]: b for b in bandas}
-    corte, caida = _corte(S, res, nyq)
+    corte, caida, mejor_caida, f_caida = _corte(S, res, nyq)
     todos, picos = _picos(Pm, Pf, res)
     alta = por["alta"]
     piso_hf = None
@@ -393,8 +395,8 @@ def _espectro_y_indicios(A, sr, nyq):
           and p["nivel_db"] >= HF_MIN_NIVEL_DB and p["persistencia_pct"] >= HF_MIN_PERSISTENCIA * 100]
     for p in hf:
         indicios.append({"codigo": "pico_tonal_hf", "tipo": "indicio_tecnico", "zona": p["zona"],
-                         "descripcion": "Pico tonal estrecho y estacionario a %.0f Hz (zona %s), %.0f dB por encima del piso vecino. Puede deberse al "
-                                        "códec, al dither, a un oscilador u otros procesos." % (p["frecuencia_hz"], p["zona"], p["prominencia_db"]),
+                         "descripcion": "Pico tonal estrecho y estacionario a %.0f Hz, %.0f dB por encima del piso vecino. Puede deberse al "
+                                        "códec, al dither, a un oscilador u otros procesos." % (p["frecuencia_hz"], p["prominencia_db"]),
                          "evidencia": {k: p[k] for k in ("frecuencia_hz", "nivel_db", "prominencia_db", "persistencia_pct")}})
     hf_p = sorted(p["frecuencia_hz"] for p in todos if p["frecuencia_hz"] >= ZONA_ALTA_HZ and p["persistencia_pct"] >= 50)
     if len(hf_p) >= 3:
@@ -411,7 +413,23 @@ def _espectro_y_indicios(A, sr, nyq):
                          "descripcion": "Hay energía apreciable por encima de 20 kHz (poco habitual en material pasado por un códec con pérdida). "
                                         "Puede ser ruido, dither con modelado o una fuente de alta resolución.",
                          "evidencia": {"ultrasonica_db": ul["nivel_medio_bin_db"], "medios_db": me["nivel_medio_bin_db"]}})
-    return esp, indicios, avisos
+    cod = {i["codigo"] for i in indicios}
+    delta = round(ul["nivel_medio_bin_db"] - me["nivel_medio_bin_db"], 1) if ul["disponible"] and me["disponible"] else None
+    mejor_hf = max((p for p in todos if p["frecuencia_hz"] >= ZONA_ALTA_HZ), key=lambda p: p["prominencia_db"], default=None)
+    marg = lambda v, u: None if v is None else round(v - u, 1)  # noqa: E731  positive = at or above the threshold (the trait is present)
+    rasgos = [
+        {"id": "corte_espectral", "valor": mejor_caida, "unidad": "dB", "umbral": CORTE_MIN_CAIDA_DB, "margen": marg(mejor_caida, CORTE_MIN_CAIDA_DB),
+         "dispara": "corte_espectral" in cod, "detalle": {"frecuencia_hz": f_caida}},
+        {"id": "energia_ultrasonica", "valor": delta, "unidad": "dB", "umbral": ULTRA_VS_MEDIOS_DB, "margen": marg(delta, ULTRA_VS_MEDIOS_DB),
+         "dispara": "energia_ultrasonica_notable" in cod, "detalle": {"disponible": bool(ul["disponible"] and me["disponible"])}},
+        {"id": "pico_tonal_hf", "valor": mejor_hf and mejor_hf["prominencia_db"], "unidad": "dB", "umbral": HF_MIN_PROMINENCIA_DB,
+         "margen": marg(mejor_hf and mejor_hf["prominencia_db"], HF_MIN_PROMINENCIA_DB), "dispara": "pico_tonal_hf" in cod,
+         "detalle": mejor_hf and {"frecuencia_hz": mejor_hf["frecuencia_hz"], "persistencia_pct": mejor_hf["persistencia_pct"], "nivel_db": mejor_hf["nivel_db"],
+                                  "nivel_minimo_db": HF_MIN_NIVEL_DB, "persistencia_minima_pct": HF_MIN_PERSISTENCIA * 100}},
+        {"id": "picos_equiespaciados_hf", "valor": len(hf_p), "unidad": "picos", "umbral": 3, "margen": len(hf_p) - 3, "dispara": "picos_equiespaciados_hf" in cod,
+         "detalle": {"separacion_regular": "picos_equiespaciados_hf" in cod}},
+    ]
+    return esp, indicios, avisos, rasgos
 
 
 # ---------------------------------------------------------------------------------------------- sonoridad (ffmpeg ebur128)
@@ -440,7 +458,7 @@ def _sonoridad(ffmpeg, ruta, avisos):
 # ---------------------------------------------------------------------------------------------- API
 def _vacia(avisos):
     return {"version": VERSION, "solicitada": True, "disponible": False, "nota_interpretacion": NOTA, "fuente_decodificacion": None,
-            "analizado": None, "niveles": None, "sonoridad": None, "espectro": None, "indicios": [], "avisos": avisos}
+            "analizado": None, "niveles": None, "sonoridad": None, "espectro": None, "rasgos": [], "indicios": [], "avisos": avisos}
 
 
 def fallo(codigo, mensaje):
@@ -492,7 +510,7 @@ def analizar(ruta, tasa_hz, canales, duracion_s=None, ffmpeg=None, wav=None):
         _aviso(avisos, "silencios_recortados", "info", "Hay más de %d silencios; se listan los primeros." % MAX_SILENCIOS)
     if niv["rms_dbfs"] is None:
         _aviso(avisos, "senal_silencio_digital", "aviso", "Todas las muestras son cero: el archivo es silencio digital.")
-    esp, ind, av2 = _espectro_y_indicios(A, sr, nyq)
+    esp, ind, av2, rasgos = _espectro_y_indicios(A, sr, nyq)
     avisos += av2
     son = None
     if ffmpeg:
@@ -502,4 +520,4 @@ def analizar(ruta, tasa_hz, canales, duracion_s=None, ffmpeg=None, wav=None):
     return {"version": VERSION, "solicitada": True, "disponible": True, "nota_interpretacion": NOTA, "fuente_decodificacion": fuente,
             "analizado": {"segundos": round(A.frames_tot / sr, 2), "ventanas": len(A.rms), "tasa_muestreo_hz": sr, "canales_analizados": A.C,
                           "recortado": bool(estado["recortado"] or (duracion_s and duracion_s > MAX_S))},
-            "niveles": niv, "sonoridad": son, "espectro": esp, "indicios": ind, "avisos": avisos}
+            "niveles": niv, "sonoridad": son, "espectro": esp, "rasgos": rasgos, "indicios": ind, "avisos": avisos}

@@ -1,7 +1,7 @@
 {
   "id": "huella",
   "nombre": "Huella",
-  "descripcion": "Comprueba si un máster ya suena a algo conocido antes de publicarlo, con el reconocimiento de audio de AudD y tu propio token. Solo envía tres fragmentos de 12 segundos por canción, nunca la canción entera, y solo cuando lo confirmas. El token se guarda solo en tu carpeta datos.",
+  "descripcion": "Comprueba si un máster ya suena a algo conocido antes de publicarlo, con el reconocimiento de audio de AudD y tu propio token. Solo envía tres fragmentos de 12 segundos por canción, nunca la canción entera, y solo cuando lo confirmas. El token se guarda solo en tu carpeta datos. En la página de cada canción también inspecciona un archivo (etiquetas, bloques, huellas y señal) y escribe tus propios créditos en una copia segura, sin tocar el audio; todo eso es local.",
   "js": ["modulo.js"],
   "css": ["modulo.css"],
   "py": "servidor.py",

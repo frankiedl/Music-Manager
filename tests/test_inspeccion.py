@@ -384,6 +384,40 @@ class TestSenal(Base):
         self.assertLessEqual(len(picos), 12)
         self.assertTrue(any(abs(p["frecuencia_hz"] - 19000) < 60 for p in picos), "the HF tone must be listed too")
 
+    def test_rasgos_dan_valor_umbral_y_margen(self):
+        r, s = self.senal(M.ruido_y_tono(4, 19000, 0.04))
+        ras = {x["id"]: x for x in s["rasgos"]}
+        self.assertEqual(set(ras), {"corte_espectral", "energia_ultrasonica", "pico_tonal_hf", "picos_equiespaciados_hf"})
+        hf = ras["pico_tonal_hf"]
+        self.assertTrue(hf["dispara"])
+        self.assertEqual(hf["umbral"], 20.0)
+        self.assertAlmostEqual(hf["margen"], hf["valor"] - 20.0, places=1)
+        self.assertGreater(hf["margen"], 0)
+        self.assertAlmostEqual(hf["detalle"]["frecuencia_hz"], 19000, delta=60)
+        self.assertEqual(hf["detalle"]["nivel_minimo_db"], -85.0)
+        for x in s["rasgos"]:                                    # a trait that fires is never below its threshold
+            if x["dispara"]:
+                self.assertGreaterEqual(x["margen"], 0, x["id"])
+        self.assertEqual({i["codigo"] for i in s["indicios"]}, {x["id"] if x["id"] != "energia_ultrasonica" else "energia_ultrasonica_notable" for x in s["rasgos"] if x["dispara"]})
+
+    def test_rasgos_tambien_para_lo_que_no_dispara(self):
+        r, s = self.senal(M.seno(1000, 0.5, 3))
+        ras = {x["id"]: x for x in s["rasgos"]}
+        self.assertFalse(any(x["dispara"] for x in s["rasgos"]))
+        u = ras["energia_ultrasonica"]
+        self.assertLess(u["valor"], u["umbral"])                 # far below: the UI can show «−N dB under the threshold»
+        self.assertAlmostEqual(u["margen"], u["valor"] - u["umbral"], places=1)
+        self.assertLess(u["margen"], 0)
+
+    def test_rasgos_sin_espectro_o_sin_banda(self):
+        self.assertEqual(self.senal(M.silencio(2))[1]["rasgos"], [])
+        r, s = self.senal(M.seno(500, 0.5, 3, sr=16000), sr=16000)
+        u = {x["id"]: x for x in s["rasgos"]}["energia_ultrasonica"]
+        self.assertIsNone(u["valor"])
+        self.assertIsNone(u["margen"])
+        self.assertFalse(u["detalle"]["disponible"])
+        self.assertEqual(self.insp("v.mp3", M.mp3(), senal=True)["senal"]["rasgos"], [])
+
     def test_ruido_sin_tono_no_da_pico_tonal(self):
         r, s = self.senal(M.ruido_y_tono(4, 19000, 0.0))
         self.assertEqual([i for i in s["indicios"] if i["codigo"] == "pico_tonal_hf"], [])
