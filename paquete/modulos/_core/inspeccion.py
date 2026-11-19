@@ -65,6 +65,7 @@ class _R:
         s.items, s.bloques, s.caratulas, s.letras, s.binarios, s.noaudio, s.avisos = [], [], [], [], [], [], []
         s.tech, s.audio, s.rangos, s.familia, s.padding, s.wav = {}, {}, [], None, 0, None
         s._n = 0
+        s.capturar = False      # True (escribir_tags.py): also keep raw bytes under keys starting with «_» (never in the public result)
 
     def bloque(s, tipo, offset, nbytes):
         s._n += 1
@@ -75,20 +76,24 @@ class _R:
     def aviso(s, cod, nivel, msg):
         s.avisos.append({"codigo": cod, "nivel": nivel, "mensaje": msg})
 
-    def item(s, bloque, orig, valor, norm=None, tipo="texto", desc=None, idioma=None, categoria=None, editable=True, estandar=None, **extra):
+    def item(s, bloque, orig, valor, norm=None, tipo="texto", desc=None, idioma=None, categoria=None, editable=True, estandar=None, completo=None, **extra):
         d = {"bloque": bloque, "clave_original": orig, "clave_normalizada": norm, "valor": valor, "tipo_valor": tipo, "descripcion": desc,
              "idioma": idioma, "categoria": categoria or (CAT.get(norm) if norm else "personalizado"),
              "estandar": (norm is not None) if estandar is None else estandar, "editable": editable, "origen": "python"}
         d.update(extra)
+        if completo is not None and s.capturar:
+            d["_completo"] = completo
         s.items.append(d)
         return d
 
-    def binario(s, ident, bloque, datos=None, n=None, sha=None, propietario=None, descripcion=None, mime=None, nombre=None, clave=None):
+    def binario(s, ident, bloque, datos=None, n=None, sha=None, propietario=None, descripcion=None, mime=None, nombre=None, clave=None, cuerpo=None, fid=None):
         """Opaque block → incrustados.bloques_binarios. Also copied to `etiquetas` (as non-editable text) only if it carries readable text."""
         texto = _legible(datos) if datos is not None else None
         d = {"id": ident, "bloque": bloque, "propietario": propietario, "descripcion": descripcion, "mime": mime, "nombre_archivo": nombre,
              "bytes": len(datos) if datos is not None else n, "sha256": _sha(datos) if datos is not None else sha,
              "texto_legible": texto is not None, "editable": False}
+        if s.capturar and cuerpo is not None:
+            d["_cuerpo"], d["_fid"] = cuerpo, fid
         s.binarios.append(d)
         if texto is not None and clave:
             s.item(bloque, clave, _extracto(texto, 200), None, "texto", desc=descripcion or propietario, categoria="personalizado",
@@ -172,6 +177,8 @@ def _caratula(R, origen, tipo_img, mime, data, stream_index=None, desc=None):
     w, h, m2 = _img_info(data)
     R.caratulas.append({"origen": origen, "stream_index": stream_index, "tipo_imagen": tipo_img, "mime": mime or m2, "ancho": w, "alto": h,
                         "bytes": len(data), "sha256": _sha(data), "descripcion": desc})
+    if R.capturar:
+        R.caratulas[-1]["_datos"] = data
 
 
 def _letra(R, origen, texto, sincronizada=False, idioma=None, desc=None):
@@ -210,6 +217,17 @@ def _corta(enc, b):
         return b, b""
     i = b.find(b"\0")
     return (b, b"") if i < 0 else (b[:i], b[i + 1:])
+
+
+def _cadenas(enc, b):
+    """All the strings of a list frame (IPLS/TIPL/TMCL), split at the terminator of the encoding."""
+    out = []
+    while b:
+        c, b = _corta(enc, b)
+        out.append(_dec(enc, c, "le"))
+    while out and not out[-1]:
+        out.pop()
+    return out
 
 
 def _id3v2(R, f, off, tam):
@@ -287,7 +305,7 @@ def _frame(R, bid, fid, body, opaco):
         t = _dec(enc, v, "be" if body[4:6] == b"\xfe\xff" else "le")
         if fid == "USLT":
             _letra(R, "USLT", t, False, lang, desc or None)
-            R.item(bid, "USLT:%s" % desc if desc else "USLT", _extracto(t), "lyrics", desc=desc or None, idioma=lang, caracteres=len(t))
+            R.item(bid, "USLT:%s" % desc if desc else "USLT", _extracto(t), "lyrics", desc=desc or None, idioma=lang, caracteres=len(t), completo=t)
         else:
             R.item(bid, "COMM:%s" % desc if desc else "COMM", t, "comment", desc=desc or None, idioma=lang)
     elif fid == "SYLT":
@@ -303,18 +321,21 @@ def _frame(R, bid, fid, body, opaco):
     elif fid == "PRIV":
         own, data = _corta(0, body)
         o = own.decode("latin-1")
-        R.binario("PRIV", bid, data, propietario=o, clave="PRIV:" + o)
+        R.binario("PRIV", bid, data, propietario=o, clave="PRIV:" + o, cuerpo=body, fid=fid)
     elif fid == "GEOB":
         mime_b, r = _corta(0, body[1:])
         fn, r = _corta(enc, r)
         d, data = _corta(enc, r)
         desc = _dec(enc, d)
-        R.binario("GEOB", bid, data, descripcion=desc or None, mime=mime_b.decode("latin-1") or None, nombre=_dec(enc, fn) or None, clave="GEOB:" + desc)
+        R.binario("GEOB", bid, data, descripcion=desc or None, mime=mime_b.decode("latin-1") or None, nombre=_dec(enc, fn) or None, clave="GEOB:" + desc, cuerpo=body, fid=fid)
     elif fid == "UFID":
         own, data = _corta(0, body)
         R.item(bid, "UFID:%s" % own.decode("latin-1"), data.decode("latin-1", "replace"), None, desc=own.decode("latin-1"))
+    elif fid in ("IPLS", "TIPL", "TMCL"):
+        ps = _cadenas(enc, body[1:])
+        R.item(bid, fid, "; ".join("%s: %s" % (ps[i], ps[i + 1]) for i in range(0, len(ps) - 1, 2)), None, categoria="produccion", estandar=True)
     else:
-        R.binario(fid, bid, body, clave=fid)
+        R.binario(fid, bid, body, clave=fid, cuerpo=body, fid=fid)
 
 
 def _id3v1(R, f, tam):
@@ -576,7 +597,7 @@ def _vorbis(R, bid, body):
         p += 4 + ln
         k, _, val = c.partition("=")
         nrm = NORM_VORBIS.get(k.upper())
-        R.item(bid, k, _extracto(val) if nrm == "lyrics" else val, nrm, **({"caracteres": len(val)} if nrm == "lyrics" else {}))
+        R.item(bid, k, _extracto(val) if nrm == "lyrics" else val, nrm, completo=val if nrm == "lyrics" else None, **({"caracteres": len(val)} if nrm == "lyrics" else {}))
         if nrm == "lyrics":
             _letra(R, k.upper(), val)
 
@@ -715,7 +736,7 @@ def _ilst_item(R, f, bid, tipo, ini, fin):
             t = v.decode("utf-8", "replace")
             if nrm == "lyrics":
                 _letra(R, "©lyr", t)
-                R.item(bid, orig, _extracto(t), nrm, caracteres=len(t))
+                R.item(bid, orig, _extracto(t), nrm, caracteres=len(t), completo=t)
             else:
                 R.item(bid, orig, t, nrm, estandar=bool(nrm) or tipo != b"----" and clave[0] == "©")
         elif tipo in (b"trkn", b"disk") and len(v) >= 6:
@@ -802,6 +823,32 @@ def _identifica(cab, ext):
     return None
 
 
+# ---------------------------------------------------------------------------------------------- recorrido
+def _recorrer(R, f, tam, ext):
+    """Layer-A walk of the container into R (avisos included). May raise struct/Index/Value/OSError on structural surprises."""
+    f.seek(0)
+    cab = f.read(12)
+    fam = _identifica(cab, ext)
+    esperada = EXT_FAMILIA.get(ext)
+    if tam == 0:
+        R.aviso("archivo_vacio", "error", "El archivo está vacío (0 bytes).")
+    elif fam in ("wav", "flac", "mp4", "mp3"):
+        if esperada and esperada != fam and esperada not in SIN_RECORRIDO:
+            R.aviso("extension_no_coincide", "aviso", "La extensión «%s» no coincide con el contenido, que parece %s." % (ext, NOMBRE_FAMILIA[fam]))
+        {"wav": _wav, "flac": _flac, "mp4": _mp4, "mp3": _mp3}[fam](R, f, tam)
+    elif fam in SIN_RECORRIDO:
+        R.aviso("formato_sin_recorrido", "aviso", "%s no tiene recorrido propio: las etiquetas y los datos técnicos solo salen de ffprobe." % NOMBRE_FAMILIA[fam])
+    elif esperada == "mp3":
+        _mp3(R, f, tam)
+    elif esperada:
+        R.aviso("cabecera_no_coincide", "error", "La extensión «%s» dice %s pero el contenido no lo es (empieza por %r): el archivo está corrupto, "
+                "incompleto o tiene otra extensión." % (ext, NOMBRE_FAMILIA[esperada], bytes(cab[:4])))
+    elif ext in EXT_SIN_RECORRIDO:
+        R.aviso("formato_sin_recorrido", "aviso", "Los archivos «%s» no tienen recorrido propio: solo se usa ffprobe." % ext)
+    else:
+        R.aviso("formato_desconocido", "aviso", "No reconozco el formato (extensión «%s», empieza por %r)." % (ext, bytes(cab[:4])))
+
+
 # ---------------------------------------------------------------------------------------------- API
 def inspeccionar(ruta, ffprobe="auto", raiz=None, senal=False, ffmpeg="auto"):
     """Inspection of one file → dict (schema huella.inspeccion/1). ffprobe/ffmpeg: "auto", a path, or None/False to not use them."""
@@ -820,27 +867,8 @@ def inspeccionar(ruta, ffprobe="auto", raiz=None, senal=False, ffmpeg="auto"):
     except OSError as e:
         return {"schema": SCHEMA, "ok": False, "errores": [str(e)]}
     with f:
-        cab = f.read(12)
-        fam = _identifica(cab, ext)
-        esperada = EXT_FAMILIA.get(ext)
         try:
-            if tam == 0:
-                R.aviso("archivo_vacio", "error", "El archivo está vacío (0 bytes).")
-            elif fam in ("wav", "flac", "mp4", "mp3"):
-                if esperada and esperada != fam and esperada not in SIN_RECORRIDO:
-                    R.aviso("extension_no_coincide", "aviso", "La extensión «%s» no coincide con el contenido, que parece %s." % (ext, NOMBRE_FAMILIA[fam]))
-                {"wav": _wav, "flac": _flac, "mp4": _mp4, "mp3": _mp3}[fam](R, f, tam)
-            elif fam in SIN_RECORRIDO:
-                R.aviso("formato_sin_recorrido", "aviso", "%s no tiene recorrido propio: las etiquetas y los datos técnicos solo salen de ffprobe." % NOMBRE_FAMILIA[fam])
-            elif esperada == "mp3":
-                _mp3(R, f, tam)
-            elif esperada:
-                R.aviso("cabecera_no_coincide", "error", "La extensión «%s» dice %s pero el contenido no lo es (empieza por %r): el archivo está corrupto, "
-                        "incompleto o tiene otra extensión." % (ext, NOMBRE_FAMILIA[esperada], bytes(cab[:4])))
-            elif ext in EXT_SIN_RECORRIDO:
-                R.aviso("formato_sin_recorrido", "aviso", "Los archivos «%s» no tienen recorrido propio: solo se usa ffprobe." % ext)
-            else:
-                R.aviso("formato_desconocido", "aviso", "No reconozco el formato (extensión «%s», empieza por %r)." % (ext, bytes(cab[:4])))
+            _recorrer(R, f, tam, ext)
         except (struct.error, IndexError, ValueError, OSError) as e:
             errores.append("recorrido_python: %s: %s" % (type(e).__name__, e))
         h = hashlib.sha256()
