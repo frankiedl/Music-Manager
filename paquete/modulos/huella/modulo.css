@@ -1,0 +1,12 @@
+/* «huella» module. Only the manager's variables, so it looks right in light and dark mode. */
+.hf-row{display:grid;grid-template-columns:24px minmax(0,1.4fr) minmax(0,1fr) minmax(0,1.6fr);gap:10px;align-items:center;padding:8px 6px;border-bottom:1px solid var(--line)}
+.hf-row:hover{background:var(--panel2)}
+.hf-row .hf-t{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hf-row .meta{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hf-det{padding:6px 6px 10px 40px;border-bottom:1px solid var(--line);font-size:12px;color:var(--muted)}
+.hf-det a{color:var(--accent)}
+.hf-bar{height:6px;border-radius:99px;background:var(--line);overflow:hidden;margin:8px 0}
+.hf-bar i{display:block;height:100%;background:var(--accent);transform-origin:left;transform:scaleX(var(--v,0))}
+.hf-tok{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.hf-tok input{flex:1;min-width:220px}
+@media(max-width:700px){.hf-row{grid-template-columns:24px minmax(0,1fr)}.hf-row .meta{display:none}}
