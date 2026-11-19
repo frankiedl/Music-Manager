@@ -13,7 +13,16 @@ Routes (/api/mod/huella/…):
   POST comprobar       {items:[{id, p}]}  → {job}: cuts 3 clips per song and asks AudD (a thread)
   GET  progreso?job=…  {estado, hechos, total, resultados}
   GET  resultados      the saved results
+  POST inspeccionar    {p, senal?: bool}  technical inspection of one file of the library (tags, hashes, embedded art/lyrics/blocks,
+                       codec data; with senal=true also levels, loudness and spectrum). Local only: nothing is sent anywhere.
+                       Returns the huella.inspeccion/1 document built by _core/inspeccion.py (+ _core/senal.py).
+  POST etiquetar       {p, poner?, creditos?, conservar?, caratula?, nombre?, simular?: true}  clean copy with the author's OWN metadata. The
+                       sound is never altered. simular (default true) returns only the plan; simular=false writes <library>/_etiquetados/
+                       (never overwrites: «name (2)») after a strict verification (sha256 of the audio, decoded-audio MD5, read-back of the
+                       declared fields) and records it (diario_movimientos.jsonl op «etiquetar», hashes.json, etiquetado/<id>.json).
+                       Logic in _core/escribir_tags.py. The original file is never touched.
 Tests: GESTOR_HUELLA_API=http://127.0.0.1:PORT points to a local fake server instead of https://api.audd.io.
+       python3 -m unittest discover -s tests   (repository root) covers the inspection and this route.
 """
 import http.client
 import json
@@ -245,6 +254,95 @@ def resultados(req, ctx):
     req.send({"ok": True, "resultados": _resultados(ctx)})
 
 
+def _inspeccion():
+    """_core/inspeccion.py: it is on sys.path inside the manager; otherwise it is loaded by path (it sits next to this module's folder)."""
+    try:
+        import inspeccion
+        return inspeccion
+    except ImportError:
+        import importlib.util
+        sp = importlib.util.spec_from_file_location("inspeccion", Path(__file__).resolve().parent.parent / "_core" / "inspeccion.py")
+        m = importlib.util.module_from_spec(sp)
+        sp.loader.exec_module(m)
+        return m
+
+
+def inspeccionar(req, ctx):
+    d = req.json() or {}
+    try:
+        p = _ruta(ctx, d.get("p"))
+    except HError as ex:
+        return req.send({"ok": False, "error": str(ex)})
+    try:
+        r = _inspeccion().inspeccionar(p, ffprobe="auto", raiz=Path(ctx.root).resolve(), senal=bool(d.get("senal")), ffmpeg=_ffmpeg(ctx))
+    except Exception:  # noqa: BLE001
+        return req.send({"ok": False, "error": "No pude inspeccionar este archivo."})
+    req.send(r)
+
+
+def _escribir_tags():
+    try:
+        import escribir_tags
+        return escribir_tags
+    except ImportError:
+        import importlib.util
+        sp = importlib.util.spec_from_file_location("escribir_tags", Path(__file__).resolve().parent.parent / "_core" / "escribir_tags.py")
+        m = importlib.util.module_from_spec(sp)
+        sp.loader.exec_module(m)
+        return m
+
+
+def _imagen(ctx, rel):
+    """A cover image chosen from the library (JPEG/PNG, up to 8 MB) → bytes."""
+    rel = str(rel or "").replace("\\", "/").strip("/")
+    raiz = Path(ctx.root).resolve()
+    p = (raiz / rel).resolve() if rel else None
+    if p is None or not p.is_file() or p.suffix.lower() not in (".jpg", ".jpeg", ".png"):
+        raise HError("No encuentro la carátula (debe ser un JPEG o PNG de la biblioteca).")
+    try:
+        p.relative_to(raiz)
+    except ValueError:
+        raise HError("La carátula está fuera de la biblioteca.")
+    if p.stat().st_size > 8 << 20:
+        raise HError("La carátula pesa más de 8 MB.")
+    return p.read_bytes()
+
+
+def etiquetar(req, ctx):
+    d = req.json() or {}
+    try:
+        p = _ruta(ctx, d.get("p"))
+        cara = _imagen(ctx, d["caratula"]) if d.get("caratula") else None
+    except HError as ex:
+        return req.send({"ok": False, "error": str(ex)})
+    poner = d.get("poner") if isinstance(d.get("poner"), dict) else {}
+    creditos = d.get("creditos") if isinstance(d.get("creditos"), list) else []
+    conservar = d.get("conservar") if isinstance(d.get("conservar"), list) else []
+    E, ffm = _escribir_tags(), _ffmpeg(ctx)
+    try:
+        if d.get("simular", True) is not False:                    # default: only the plan, nothing is written
+            return req.send(E.etiquetar(p, None, poner, creditos, conservar, cara, ffm, simular=True))
+        raiz = Path(ctx.root).resolve()
+        nombre = re.sub(r'[<>:"/\\|?*\x00-\x1f]', "_", str(d.get("nombre") or p.stem)).strip(" .") or p.stem
+        with LOCK:
+            dst, n = raiz / "_etiquetados" / (nombre + p.suffix.lower()), 2
+            while dst.exists():
+                dst = raiz / "_etiquetados" / f"{nombre} ({n}){p.suffix.lower()}"
+                n += 1
+            res = E.etiquetar(p, dst, poner, creditos, conservar, cara, ffm, simular=False)
+            inf = res.pop("_informe", None)
+            if res.get("ok"):
+                rel_dst = dst.relative_to(raiz).as_posix()
+                res["copia"] = {"p": rel_dst, "nombre": dst.name, "bytes": dst.stat().st_size}
+                try:
+                    res["registro"] = {"ok": True, "id": E.registrar(ctx.datos, p.relative_to(raiz).as_posix(), rel_dst, {**res, "_informe": inf})}
+                except OSError:
+                    res["registro"] = {"ok": False, "error": "La copia está hecha, pero no pude anotarla en el registro."}
+    except Exception:  # noqa: BLE001
+        return req.send({"ok": False, "error": "No pude etiquetar este archivo."})
+    req.send(res)
+
+
 ROUTES = {
     "GET estado": estado,
     "POST token": token,
@@ -252,4 +350,6 @@ ROUTES = {
     "POST comprobar": comprobar,
     "GET progreso": progreso,
     "GET resultados": resultados,
+    "POST inspeccionar": inspeccionar,
+    "POST etiquetar": etiquetar,
 }

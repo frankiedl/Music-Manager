@@ -4,6 +4,8 @@
 "0 dB · sin techo": "0 dB · sin techo",
 "1 · ¿Dónde está tu música?": "1 · ¿Dónde está tu música?",
 "1,0 dB · recomendado para distribuir": "1,0 dB · recomendado para distribuir",
+"1. Inspección y señal": "1. Inspección y señal",
+"1. Simular plan": "1. Simular plan",
 "12 LUFS · Más fuerte": "12 LUFS · Más fuerte",
 "128 kbps (ligero)": "128 kbps (ligero)",
 "16 LUFS · Más suave (podcast)": "16 LUFS · Más suave (podcast)",
@@ -11,6 +13,9 @@
 "192 kbps": "192 kbps",
 "2 · Buscando tus canciones": "2 · Buscando tus canciones",
 "2 · Qué columna es qué": "2 · Qué columna es qué",
+"2. Aplicar en _etiquetados/": "2. Aplicar en _etiquetados/",
+"2. Limpiar y etiquetar en copia segura": "2. Limpiar y etiquetar en copia segura",
+"2026 Tu nombre": "2026 Tu nombre",
 "23 LUFS · Radio y TV (EBU R128)": "23 LUFS · Radio y TV (EBU R128)",
 "24 bits": "24 bits",
 "24 bits) en su carpeta": "24 bits) en su carpeta",
@@ -22,6 +27,7 @@
 "9 LUFS · Lo más fuerte posible": "9 LUFS · Lo más fuerte posible",
 "? Se borran sus versiones MP3 de trabajo. Tu música original y los ZIP que ya hayas creado no se tocan": "? Se borran sus versiones MP3 de trabajo. Tu música original y los ZIP que ya hayas creado no se tocan",
 "A esta canción": "A esta canción",
+"AAAA o AAAA-MM-DD": "AAAA o AAAA-MM-DD",
 "ARTE": "ARTE",
 "Abre Ajustes en el menú": "Abre Ajustes en el menú",
 "Abrir aparte": "Abrir aparte",
@@ -74,14 +80,21 @@
 "Arrastra el recuadro para moverlo y usa «Tamaño» para acercarte. Se guardan archivos nuevos en el arte; el original no se toca": "Arrastra el recuadro para moverlo y usa «Tamaño» para acercarte. Se guardan archivos nuevos en el arte; el original no se toca",
 "Arrastra las marcas de los extremos para recortar · haz clic en la onda para ir a ese punto": "Arrastra las marcas de los extremos para recortar · haz clic en la onda para ir a ese punto",
 "Arrastra una carpeta o archivos aquí, o pulsa para elegirlos": "Arrastra una carpeta o archivos aquí, o pulsa para elegirlos",
+"Arreglos": "Arreglos",
 "Arte y vídeo": "Arte y vídeo",
 "Artista": "Artista",
 "Artista de esta canción (si es distinto)": "Artista de esta canción (si es distinto)",
 "Asegúrate de tener sitio (arriba verás el espacio": "Asegúrate de tener sitio (arriba verás el espacio",
+"Asistencia": "Asistencia",
 "Atrás": "Atrás",
+"Audio decodificado (MD5) idéntico": "Audio decodificado (MD5) idéntico",
+"Audio decodificado (MD5): no comprobado (hace falta ffmpeg)": "Audio decodificado (MD5): no comprobado (hace falta ffmpeg)",
+"Audio demasiado corto o demasiado silencioso para calcular el espectro.": "Audio demasiado corto o demasiado silencioso para calcular el espectro.",
+"Autoría de la letra": "Autoría de la letra",
 "Avanzar 5 s": "Avanzar 5 s",
 "Aviso de copyright": "Aviso de copyright",
 "Avisos": "Avisos",
+"Avisos del formato": "Avisos del formato",
 "Añade ambiente, como si sonara en una sala": "Añade ambiente, como si sonara en una sala",
 "Añade «calor» y armónicos; con valores altos suena sucio": "Añade «calor» y armónicos; con valores altos suena sucio",
 "Añadida a «": "Añadida a «",
@@ -108,6 +121,7 @@
 "Aún no hay fechas de archivos para dibujar la actividad": "Aún no hay fechas de archivos para dibujar la actividad",
 "Aún no hay imágenes ni vídeos aquí. Ábrela desde la canción o el álbum y usa «Añadir arte o vídeo», o suelta los archivos en su carpeta ARTE": "Aún no hay imágenes ni vídeos aquí. Ábrela desde la canción o el álbum y usa «Añadir arte o vídeo», o suelta los archivos en su carpeta ARTE",
 "Aún no hay álbumes, singles ni proyectos": "Aún no hay álbumes, singles ni proyectos",
+"Aún no se ha medido la señal. Pulsa «Inspeccionar con señal».": "Aún no se ha medido la señal. Pulsa «Inspeccionar con señal».",
 "Aún sin publicar": "Aún sin publicar",
 "Aún sin publicar. Cuando tengas clara la versión buena, pulsa «★ Hacer final» en ella": "Aún sin publicar. Cuando tengas clara la versión buena, pulsa «★ Hacer final» en ella",
 "BOCETO · no se comparte": "BOCETO · no se comparte",
@@ -116,6 +130,7 @@
 "Banda sonora": "Banda sonora",
 "Biblioteca actualizada": "Biblioteca actualizada",
 "Biblioteca cambiada ✓": "Biblioteca cambiada ✓",
+"Bloques y carátulas conservados idénticos": "Bloques y carátulas conservados idénticos",
 "Bocetos": "Bocetos",
 "Borrar": "Borrar",
 "Borrar búsqueda": "Borrar búsqueda",
@@ -137,6 +152,7 @@
 "Cada archivo se copia, se vuelve a leer y se compara con el original antes de darlo por bueno. No cierres el gestor mientras tanto": "Cada archivo se copia, se vuelve a leer y se compara con el original antes de darlo por bueno. No cierres el gestor mientras tanto",
 "Cada canción al mismo volumen": "Cada canción al mismo volumen",
 "Cada canción se mide en LUFS y se sube o baja hasta el objetivo; un limitador evita que los picos pasen del techo. El limitador vigila el pico de las muestras y deja 0,3 dB extra de margen para el pico real entre muestras": "Cada canción se mide en LUFS y se sube o baja hasta el objetivo; un limitador evita que los picos pasen del techo. El limitador vigila el pico de las muestras y deja 0,3 dB extra de margen para el pico real entre muestras",
+"Cada crédito lleva un rol, un nombre, si es una persona o una herramienta, y una nota opcional.": "Cada crédito lleva un rol, un nombre, si es una persona o una herramienta, y una nota opcional.",
 "Cada plataforma exporta sus columnas a su manera y casi ninguna publica el formato exacto, así que no doy por bueno ningún formato concreto: en el siguiente paso eliges tú «qué columna es qué» y se guarda como perfil para la próxima vez. Si tu plataforma solo ofrece Excel (.xlsx), ábrelo y usa «Guardar como… CSV»": "Cada plataforma exporta sus columnas a su manera y casi ninguna publica el formato exacto, así que no doy por bueno ningún formato concreto: en el siguiente paso eliges tú «qué columna es qué» y se guarda como perfil para la próxima vez. Si tu plataforma solo ofrece Excel (.xlsx), ábrelo y usa «Guardar como… CSV»",
 "Cadena de efectos": "Cadena de efectos",
 "Cadena propia para esta pista": "Cadena propia para esta pista",
@@ -151,6 +167,7 @@
 "Cambiar la carpeta de mi música": "Cambiar la carpeta de mi música",
 "Cambiar portada": "Cambiar portada",
 "Cambiaste la cadena: vuelve a preparar la vista previa": "Cambiaste la cadena: vuelve a preparar la vista previa",
+"Canales": "Canales",
 "Cancelar": "Cancelar",
 "Cancelar (lo ya copiado se queda y se puede deshacer)": "Cancelar (lo ya copiado se queda y se puede deshacer)",
 "Canciones": "Canciones",
@@ -180,6 +197,7 @@
 "Casi listas para publicar": "Casi listas para publicar",
 "Catalogando": "Catalogando",
 "Catalán": "Catalán",
+"Caída más brusca del espectro por encima de 8 kHz": "Caída más brusca del espectro por encima de 8 kHz",
 "Cerrar": "Cerrar",
 "Cerrar editor": "Cerrar editor",
 "Cerrar todas": "Cerrar todas",
@@ -205,25 +223,33 @@
 "Conexiones": "Conexiones",
 "Conexión": "Conexión",
 "Configurar": "Configurar",
+"Conservar": "Conservar",
 "Consultando Spotify… puede tardar un minuto": "Consultando Spotify… puede tardar un minuto",
+"Contenedor RIFF que no es WAVE.": "Contenedor RIFF que no es WAVE.",
 "Contiene": "Contiene",
 "Convirtiendo a MP3": "Convirtiendo a MP3",
+"Copia guardada en:": "Copia guardada en:",
+"Copia lista · verificación estricta superada": "Copia lista · verificación estricta superada",
 "Copiar": "Copiar",
 "Copiar a mi biblioteca": "Copiar a mi biblioteca",
 "Copiar el proyecto (es una sola «carpeta-archivo»; sin ella la sesión no abre)": "Copiar el proyecto (es una sola «carpeta-archivo»; sin ella la sesión no abre)",
 "Copiar ruta": "Copiar ruta",
 "Copiar también": "Copiar también",
 "Corta los picos más altos de golpe (más agresivo que un limitador)": "Corta los picos más altos de golpe (más agresivo que un limitador)",
+"Corte espectral": "Corte espectral",
 "Crea primero un mixtape y vuelve a arrastrarlas": "Crea primero un mixtape y vuelve a arrastrarlas",
 "Crea un WAV nuevo en la carpeta «versiones» de la canción. No sobrescribe nada": "Crea un WAV nuevo en la carpeta «versiones» de la canción. No sobrescribe nada",
 "Crea un mixtape con su nombre, su calidad y su aviso de copyright. Después arrastra canciones encima, o usa «Añadir a un mixtape…» (＋) en cualquier canción. Al crear el ZIP se convierten a MP3 con su letra y su portada de casete": "Crea un mixtape con su nombre, su calidad y su aviso de copyright. Después arrastra canciones encima, o usa «Añadir a un mixtape…» (＋) en cualquier canción. Al crear el ZIP se convierten a MP3 con su letra y su portada de casete",
 "Creando el MP3 a": "Creando el MP3 a",
 "Creando las versiones MP3 a": "Creando las versiones MP3 a",
 "Crear": "Crear",
+"Crear copia": "Crear copia",
 "Crear y añadir": "Crear y añadir",
 "Crear álbum": "Crear álbum",
+"Créditos": "Créditos",
 "Cuando tengan una versión de audio en su carpeta, pulsa «Actualizar» en el gestor": "Cuando tengan una versión de audio en su carpeta, pulsa «Actualizar» en el gestor",
 "Cuántas de tus": "Cuántas de tus",
+"Códec": "Códec",
 "Cómo igualar el volumen": "Cómo igualar el volumen",
 "Cómo me llamo": "Cómo me llamo",
 "Danés": "Danés",
@@ -232,6 +258,7 @@
 "Decimales": "Decimales",
 "Del álbum o carpeta": "Del álbum o carpeta",
 "Del álbum o proyecto": "Del álbum o proyecto",
+"Demasiados créditos (máximo 30).": "Demasiados créditos (máximo 30).",
 "Demasiados efectos (máximo": "Demasiados efectos (máximo",
 "Desactiva todos los filtros y la búsqueda": "Desactiva todos los filtros y la búsqueda",
 "Descarga el informe (CSV) que ofrece tu plataforma o tu distribuidora, impórtalo aquí y verás tus reproducciones e ingresos por canción, por álbum y por mes. El archivo se lee en tu equipo y no sale de él": "Descarga el informe (CSV) que ofrece tu plataforma o tu distribuidora, impórtalo aquí y verás tus reproducciones e ingresos por canción, por álbum y por mes. El archivo se lee en tu equipo y no sale de él",
@@ -246,6 +273,7 @@
 "Deshacer esta importación": "Deshacer esta importación",
 "Después de importar podrás asignarlos a mano": "Después de importar podrás asignarlos a mano",
 "Después podrás elegir «Usar en este mixtape» para que sus MP3 salgan de estos másters": "Después podrás elegir «Usar en este mixtape» para que sus MP3 salgan de estos másters",
+"Destino:": "Destino:",
 "Detalle por carpeta": "Detalle por carpeta",
 "Detalles": "Detalles",
 "Detectada automáticamente · clic para ver canciones parecidas": "Detectada automáticamente · clic para ver canciones parecidas",
@@ -268,14 +296,25 @@
 "Efectos quitados": "Efectos quitados",
 "Efectos · antes del limitador": "Efectos · antes del limitador",
 "Ej. Compositor": "Ej. Compositor",
+"El FLAC está truncado: los bloques de metadatos no terminan dentro del archivo. Las etiquetas pueden faltar o estar incompletas y no se puede calcular el hash del audio.": "El FLAC está truncado: los bloques de metadatos no terminan dentro del archivo. Las etiquetas pueden faltar o estar incompletas y no se puede calcular el hash del audio.",
+"El ISRC no tiene el formato CC-XXX-AA-NNNNN.": "El ISRC no tiene el formato CC-XXX-AA-NNNNN.",
+"El WAV no tiene chunk 'data': no contiene audio (archivo corrupto o incompleto).": "El WAV no tiene chunk 'data': no contiene audio (archivo corrupto o incompleto).",
+"El WAV no tiene chunk 'fmt ': no se puede saber cómo está codificado el audio (archivo corrupto o incompleto).": "El WAV no tiene chunk 'fmt ': no se puede saber cómo está codificado el audio (archivo corrupto o incompleto).",
 "El ZIP lleva un HTML para abrir con doble clic (reproductor y letras), las carpetas de canciones y letras, la portada y el aviso de copyright. «Todo en un solo HTML» mete el audio dentro del HTML: solo para mixtapes pequeños (hasta unos 25 MB)": "El ZIP lleva un HTML para abrir con doble clic (reproductor y letras), las carpetas de canciones y letras, la portada y el aviso de copyright. «Todo en un solo HTML» mete el audio dentro del HTML: solo para mixtapes pequeños (hasta unos 25 MB)",
 "El ZIP supera los 4 GB; guarda los másters en la biblioteca en su lugar": "El ZIP supera los 4 GB; guarda los másters en la biblioteca en su lugar",
+"El archivo está vacío (0 bytes).": "El archivo está vacío (0 bytes).",
+"El archivo está vacío: no hay señal que analizar.": "El archivo está vacío: no hay señal que analizar.",
+"El archivo lleva ID3v1 e ID3v2 a la vez.": "El archivo lleva ID3v1 e ID3v2 a la vez.",
 "El archivo no contiene ningún plugin": "El archivo no contiene ningún plugin",
 "El archivo recibido no es un WAV válido (tamaño)": "El archivo recibido no es un WAV válido (tamaño)",
 "El archivo subido ya no está. Súbelo otra vez": "El archivo subido ya no está. Súbelo otra vez",
+"El archivo temporal se borró y el original no se tocó.": "El archivo temporal se borró y el original no se tocó.",
+"El audio decodificado no coincide.": "El audio decodificado no coincide.",
 "El aviso queda en la etiqueta del MP3, al final de cada letra y en un archivo COPYRIGHT.txt dentro del ZIP. La letra también va en la etiqueta del MP3. La portada del casete va en el ZIP y dentro de cada MP3. Revisa el año de cada canción abajo": "El aviso queda en la etiqueta del MP3, al final de cada letra y en un archivo COPYRIGHT.txt dentro del ZIP. La letra también va en la etiqueta del MP3. La portada del casete va en el ZIP y dentro de cada MP3. Revisa el año de cada canción abajo",
+"El destino ya existe: no se sobrescribe nada.": "El destino ya existe: no se sobrescribe nada.",
 "El estado guardado del plugin no es válido": "El estado guardado del plugin no es válido",
 "El gestor ha reconocido": "El gestor ha reconocido",
+"El idioma debe ser un código de 3 letras (por ejemplo spa).": "El idioma debe ser un código de 3 letras (por ejemplo spa).",
 "El informe es demasiado grande": "El informe es demasiado grande",
 "El mixtape al que añaden las canciones con el botón ＋ (y el que se marca en la lista)": "El mixtape al que añaden las canciones con el botón ＋ (y el que se marca en la lista)",
 "El mixtape está vacío": "El mixtape está vacío",
@@ -286,10 +325,14 @@
 "El motor de escucha no está en marcha": "El motor de escucha no está en marcha",
 "El motor de escucha se ha cerrado": "El motor de escucha se ha cerrado",
 "El módulo de efectos no está instalado en este gestor. La masterización funciona igual, sin efectos": "El módulo de efectos no está instalado en este gestor. La masterización funciona igual, sin efectos",
+"El número de carátulas no es el esperado.": "El número de carátulas no es el esperado.",
 "El original no se modifica y, si ya existiera un archivo con ese nombre, se añade « (2)». Puede tardar un poco": "El original no se modifica y, si ya existiera un archivo con ese nombre, se añade « (2)». Puede tardar un poco",
 "El plugin «": "El plugin «",
+"El primer bloque del FLAC no es STREAMINFO: archivo corrupto.": "El primer bloque del FLAC no es STREAMINFO: archivo corrupto.",
 "El servidor no respondió. ¿Sigue abierto el gestor?": "El servidor no respondió. ¿Sigue abierto el gestor?",
+"El sha256 del audio no coincide: la onda NO está intacta.": "El sha256 del audio no coincide: la onda NO está intacta.",
 "El soporte de plugins usa «pedalboard», una librería libre de Spotify con licencia GPL-3.0. No viene incluida en este gestor: se descarga de internet (pypi.org) e instala solo si tú lo pides, y se queda en tu equipo. Para uso personal no tiene ninguna consecuencia. Si algún día compartieras o vendieras un programa que la incluya, las condiciones de la GPL se aplicarían a ese programa": "El soporte de plugins usa «pedalboard», una librería libre de Spotify con licencia GPL-3.0. No viene incluida en este gestor: se descarga de internet (pypi.org) e instala solo si tú lo pides, y se queda en tu equipo. Para uso personal no tiene ninguna consecuencia. Si algún día compartieras o vendieras un programa que la incluya, las condiciones de la GPL se aplicarían a ese programa",
+"El tag ID3v2 declara más bytes de los que tiene el archivo: el archivo está cortado o el tag es incorrecto.": "El tag ID3v2 declara más bytes de los que tiene el archivo: el archivo está cortado o el tag es incorrecto.",
 "Electrónica": "Electrónica",
 "Elegir": "Elegir",
 "Elegir archivo": "Elegir archivo",
@@ -299,11 +342,13 @@
 "Elegir otra carpeta": "Elegir otra carpeta",
 "Elegir portada": "Elegir portada",
 "Elegir una carpeta": "Elegir una carpeta",
+"Elemento": "Elemento",
 "Elige a qué canción tuya corresponde cada título del informe. Lo que dejes en «ignorar» no se contará (por ejemplo, canciones de otra persona o que no tienes en el gestor). Se recuerda para los próximos informes": "Elige a qué canción tuya corresponde cada título del informe. Lo que dejes en «ignorar» no se contará (por ejemplo, canciones de otra persona o que no tienes en el gestor). Se recuerda para los próximos informes",
 "Elige idioma —": "Elige idioma —",
 "Elige la carpeta de tu música": "Elige la carpeta de tu música",
 "Elige primero un preset": "Elige primero un preset",
 "Elige primero una canción": "Elige primero una canción",
+"Elige un archivo y pulsa «Inspeccionar con señal» para ver qué lleva dentro, además del audio.": "Elige un archivo y pulsa «Inspeccionar con señal» para ver qué lleva dentro, además del audio.",
 "Elige una canción, escucha un fragmento con y sin efectos y, si te gusta, guárdalo como versión nueva": "Elige una canción, escucha un fragmento con y sin efectos y, si te gusta, guárdalo como versión nueva",
 "Elige una imagen": "Elige una imagen",
 "Elige una imagen para «": "Elige una imagen para «",
@@ -325,6 +370,7 @@
 "Encontradas en Spotify": "Encontradas en Spotify",
 "Encontrados": "Encontrados",
 "Encontré": "Encontré",
+"Energía ultrasónica": "Energía ultrasónica",
 "Ensancha y «dobla» el sonido con una ligera variación": "Ensancha y «dobla» el sonido con una ligera variación",
 "Entendido": "Entendido",
 "Entradas de catálogo sin ningún archivo de audio": "Entradas de catálogo sin ningún archivo de audio",
@@ -347,11 +393,14 @@
 "Escribe aquí lo que quieras recordar de esta canción": "Escribe aquí lo que quieras recordar de esta canción",
 "Escribe el nombre de la etiqueta (por ejemplo Compositor)": "Escribe el nombre de la etiqueta (por ejemplo Compositor)",
 "Escribe o pega aquí la letra de «": "Escribe o pega aquí la letra de «",
+"Escribe o pega aquí la letra…": "Escribe o pega aquí la letra…",
 "Escribe o pega la letra para no perderla": "Escribe o pega la letra para no perderla",
 "Escribe o pega la ruta de la carpeta, o búscala con el explorador. Puede estar en un disco externo o en Dropbox": "Escribe o pega la ruta de la carpeta, o búscala con el explorador. Puede estar en un disco externo o en Dropbox",
 "Escribe parte del título o una frase de la letra": "Escribe parte del título o una frase de la letra",
 "Escribe un nombre para el preset": "Escribe un nombre para el preset",
+"Escribiendo y verificando…": "Escribiendo y verificando…",
 "Escribir o pegar la letra": "Escribir o pegar la letra",
+"Escritor:": "Escritor:",
 "Escucha las versiones y pulsa «★ Hacer final» en la que se publicó": "Escucha las versiones y pulsa «★ Hacer final» en la que se publicó",
 "Escuchar": "Escuchar",
 "Escuchar para comprobar": "Escuchar para comprobar",
@@ -360,6 +409,7 @@
 "Español": "Español",
 "Espera a que termine lo que se está haciendo": "Espera a que termine lo que se está haciendo",
 "Esta canción está publicada, pero no sé cuál de estas versiones es la que salió": "Esta canción está publicada, pero no sé cuál de estas versiones es la que salió",
+"Esta canción no tiene archivos de audio.": "Esta canción no tiene archivos de audio.",
 "Esta canción no tiene audio": "Esta canción no tiene audio",
 "Esta canción no tiene audio en tus carpetas": "Esta canción no tiene audio en tus carpetas",
 "Esta canción no tiene audio todavía. Arrastra aquí un archivo WAV": "Esta canción no tiene audio todavía. Arrastra aquí un archivo WAV",
@@ -378,10 +428,14 @@
 "Estado de tu música": "Estado de tu música",
 "Estado del catálogo": "Estado del catálogo",
 "Estas entradas tienen la misma letra. Se queda la": "Estas entradas tienen la misma letra. Se queda la",
+"Este MP4 lleva pistas de vídeo u otras: de momento solo se escriben M4A de audio.": "Este MP4 lleva pistas de vídeo u otras: de momento solo se escriben M4A de audio.",
+"Este archivo no lleva etiquetas ni bloques ajenos al audio.": "Este archivo no lleva etiquetas ni bloques ajenos al audio.",
 "Este archivo no pertenece a ninguna canción del catálogo": "Este archivo no pertenece a ninguna canción del catálogo",
+"Este archivo no se puede etiquetar": "Este archivo no se puede etiquetar",
 "Este efecto no tiene ventana propia (usa sus mandos)": "Este efecto no tiene ventana propia (usa sus mandos)",
 "Este equipo": "Este equipo",
 "Este es el estado de tu catálogo": "Este es el estado de tu catálogo",
+"Este formato es de solo lectura: no hay escritor seguro (se pueden inspeccionar sus etiquetas, no cambiarlas).": "Este formato es de solo lectura: no hay escritor seguro (se pueden inspeccionar sus etiquetas, no cambiarlas).",
 "Este mismo archivo ya lo importaste (": "Este mismo archivo ya lo importaste (",
 "Este mixtape no tiene canciones todavía. Añade canciones al mixtape o arrastra aquí archivos WAV": "Este mixtape no tiene canciones todavía. Añade canciones al mixtape o arrastra aquí archivos WAV",
 "Este módulo ha fallado": "Este módulo ha fallado",
@@ -394,6 +448,7 @@
 "Etiqueta para todas las canciones": "Etiqueta para todas las canciones",
 "Etiqueta «": "Etiqueta «",
 "Etiquetas": "Etiquetas",
+"Etiquetas y bloques encontrados": "Etiquetas y bloques encontrados",
 "Evolución": "Evolución",
 "Exportación": "Exportación",
 "Falta el soporte de plugins (se instala desde la masterización)": "Falta el soporte de plugins (se instala desde la masterización)",
@@ -406,10 +461,12 @@
 "Filtrar por nombre": "Filtrar por nombre",
 "Filtros desactivados": "Filtros desactivados",
 "Finés": "Finés",
+"Formato": "Formato",
 "Formato WAV no compatible": "Formato WAV no compatible",
 "Formato no admitido. Usa WAV, FLAC, MP3, OGG o AIFF": "Formato no admitido. Usa WAV, FLAC, MP3, OGG o AIFF",
 "Forzar UTF-8": "Forzar UTF-8",
 "Forzar Windows (ANSI)": "Forzar Windows (ANSI)",
+"Frame ID3 con identificador no ASCII: se detiene la lectura de ese tag.": "Frame ID3 con identificador no ASCII: se detiene la lectura de ese tag.",
 "Francés": "Francés",
 "Fundido de entrada": "Fundido de entrada",
 "Fundido de salida": "Fundido de salida",
@@ -421,6 +478,7 @@
 "Fusionar con otra canción": "Fusionar con otra canción",
 "GB. Pulsa una imagen para verla grande; los vídeos se reproducen aquí mismo": "GB. Pulsa una imagen para verla grande; los vídeos se reproducen aquí mismo",
 "Gestor de música · Masterización": "Gestor de música · Masterización",
+"Grabación": "Grabación",
 "Guardado": "Guardado",
 "Guardados": "Guardados",
 "Guardando": "Guardando",
@@ -449,7 +507,10 @@
 "Hay": "Hay",
 "Hay cambios en tus carpetas": "Hay cambios en tus carpetas",
 "Hay cambios sin aplicar": "Hay cambios sin aplicar",
+"Hay datos que corregir.": "Hay datos que corregir.",
+"Hay energía apreciable por encima de 20 kHz (poco habitual en material pasado por un códec con pérdida). Puede ser ruido, dither con modelado o una fuente de alta resolución.": "Hay energía apreciable por encima de 20 kHz (poco habitual en material pasado por un códec con pérdida). Puede ser ruido, dither con modelado o una fuente de alta resolución.",
 "Hay otra tarea en marcha. Espera a que termine": "Hay otra tarea en marcha. Espera a que termine",
+"Hay un tag APEv2 al final: se excluye del audio pero su contenido no se analiza.": "Hay un tag APEv2 al final: se excluye del audio pero su contenido no se analiza.",
 "Haz clic en el que quieras": "Haz clic en el que quieras",
 "Haz clic en la imagen que debe ser la portada": "Haz clic en la imagen que debe ser la portada",
 "Haz clic en un álbum para ver sus canciones. Para elegir la portada, abre una canción del álbum → Arte y vídeo → botón derecho en la imagen": "Haz clic en un álbum para ver sus canciones. Para elegir la portada, abre una canción del álbum → Arte y vídeo → botón derecho en la imagen",
@@ -457,10 +518,13 @@
 "Haz doble clic en una canción": "Haz doble clic en una canción",
 "Haz doble clic en una canción para escucharla": "Haz doble clic en una canción para escucharla",
 "Hecho: sin más repetidas": "Hecho: sin más repetidas",
+"Herramienta": "Herramienta",
 "Hip Hop": "Hip Hop",
 "Hola": "Hola",
+"Huella · inspección y etiquetado": "Huella · inspección y etiquetado",
 "Húngaro": "Húngaro",
 "ID de cliente": "ID de cliente",
+"ID3v2 de más de 64 MB: no se lee.": "ID3v2 de más de 64 MB: no se lee.",
 "ISRC (si viene)": "ISRC (si viene)",
 "Identificador no válido": "Identificador no válido",
 "Idioma": "Idioma",
@@ -483,6 +547,7 @@
 "Indica el nombre de tu artista en Spotify": "Indica el nombre de tu artista en Spotify",
 "Indica qué columna es la canción": "Indica qué columna es la canción",
 "Indica qué columna son las reproducciones o los ingresos": "Indica qué columna son las reproducciones o los ingresos",
+"Indicio activo": "Indicio activo",
 "Informe": "Informe",
 "Informe importado": "Informe importado",
 "Informe no válido": "Informe no válido",
@@ -492,10 +557,15 @@
 "Inglés": "Inglés",
 "Ingresos": "Ingresos",
 "Inicio": "Inicio",
+"Inspeccionando…": "Inspeccionando…",
+"Inspeccionar con señal": "Inspeccionar con señal",
+"Inspeccionar la copia": "Inspeccionar la copia",
+"Inspeccionar sin señal": "Inspeccionar sin señal",
 "Instalar soporte de plugins": "Instalar soporte de plugins",
 "Instrumental (sin letra)": "Instrumental (sin letra)",
 "Ir a la canción": "Ir a la canción",
 "Japonés": "Japonés",
+"LUFS, rango de sonoridad y pico real necesitan ffmpeg (filtro ebur128).": "LUFS, rango de sonoridad y pico real necesitan ffmpeg (filtro ebur128).",
 "La API de Apple es de catálogo, exige el programa de pago de Apple Developer y no da analítica de artista. No se ofrece conexión": "La API de Apple es de catálogo, exige el programa de pago de Apple Developer y no da analítica de artista. No se ofrece conexión",
 "La API pública NO da reproducciones por canción de tu música. Sirve para datos públicos de catálogo (ver abajo)": "La API pública NO da reproducciones por canción de tu música. Sirve para datos públicos de catálogo (ver abajo)",
 "La cadena de efectos está vacía": "La cadena de efectos está vacía",
@@ -505,8 +575,13 @@
 "La cadena está vacía: añade algún efecto": "La cadena está vacía: añade algún efecto",
 "La canción no se mueve de su carpeta: solo aparecerá también en esa colección": "La canción no se mueve de su carpeta: solo aparecerá también en esa colección",
 "La canción original nunca se toca": "La canción original nunca se toca",
+"La carátula debe ser JPEG o PNG de menos de 8 MB.": "La carátula debe ser JPEG o PNG de menos de 8 MB.",
+"La carátula está fuera de la biblioteca.": "La carátula está fuera de la biblioteca.",
+"La carátula pesa más de 8 MB.": "La carátula pesa más de 8 MB.",
 "La conexión con Spotify está desactivada": "La conexión con Spotify está desactivada",
+"La copia está hecha, pero no pude anotarla en el registro.": "La copia está hecha, pero no pude anotarla en el registro.",
 "La detecté yo por la carpeta master. Si no es esta, pulsa «★ Hacer final» en la correcta": "La detecté yo por la carpeta master. Si no es esta, pulsa «★ Hacer final» en la correcta",
+"La fecha debe ser AAAA, AAAA-MM o AAAA-MM-DD.": "La fecha debe ser AAAA, AAAA-MM o AAAA-MM-DD.",
 "La importación se detuvo": "La importación se detuvo",
 "La letra de «": "La letra de «",
 "La letra está vacía": "La letra está vacía",
@@ -517,6 +592,7 @@
 "Las liquidaciones se descargan desde la Sede Electrónica. Formato y columnas no verificados": "Las liquidaciones se descargan desde la Sede Electrónica. Formato y columnas no verificados",
 "Latín": "Latín",
 "Letra": "Letra",
+"Letra completa (opcional)": "Letra completa (opcional)",
 "Letra guardada automáticamente ✓": "Letra guardada automáticamente ✓",
 "Letra guardada ✓": "Letra guardada ✓",
 "Letra que vas a asignar": "Letra que vas a asignar",
@@ -528,15 +604,22 @@
 "Leyendo la carpeta": "Leyendo la carpeta",
 "Listo": "Listo",
 "Listo para distribuir": "Listo para distribuir",
+"Lo escrito no se lee de vuelta igual (faltan o difieren campos).": "Lo escrito no se lee de vuelta igual (faltan o difieren campos).",
+"Lo escrito se lee de vuelta igual": "Lo escrito se lee de vuelta igual",
 "Lo que falta": "Lo que falta",
 "Lo que falta por resolver en tu catálogo. Haz clic en una tarjeta para ver las canciones afectadas": "Lo que falta por resolver en tu catálogo. Haz clic en una tarjeta para ver las canciones afectadas",
 "Lo que hay ahora": "Lo que hay ahora",
 "Lo que ya se copió se queda en tu biblioteca (podrás deshacerlo). El archivo que se esté copiando ahora se descarta": "Lo que ya se copió se queda en tu biblioteca (podrás deshacerlo). El archivo que se esté copiando ahora se descarta",
 "Los archivos": "Los archivos",
 "Los archivos internos de los proyectos (samples, audio dentro de la sesión…) no se listan uno a uno: viajan con «la sesión completa» si la marcas": "Los archivos internos de los proyectos (samples, audio dentro de la sesión…) no se listan uno a uno: viajan con «la sesión completa» si la marcas",
+"Los datos de señal son mediciones e indicios técnicos, no una prueba legal ni un veredicto definitivo sobre el origen del audio.": "Los datos de señal son mediciones e indicios técnicos, no una prueba legal ni un veredicto definitivo sobre el origen del audio.",
 "Los efectos se aplican de arriba abajo, en orden. Prueba, por ejemplo: ecualizador → compresor → limitador": "Los efectos se aplican de arriba abajo, en orden. Prueba, por ejemplo: ecualizador → compresor → limitador",
 "Los efectos se aplican en el equipo (no en el navegador) a cada canción antes de medir el volumen; después sigue el mismo proceso. Tus originales no se tocan": "Los efectos se aplican en el equipo (no en el navegador) a cada canción antes de medir el volumen; después sigue el mismo proceso. Tus originales no se tocan",
 "Los puntos son, por orden": "Los puntos son, por orden",
+"M4A v1: los créditos viajan como texto en el comentario": "M4A v1: los créditos viajan como texto en el comentario",
+"M4A v1: solo campos estándar (los átomos libres llegan en v2)": "M4A v1: solo campos estándar (los átomos libres llegan en v2)",
+"M4A v1: solo campos estándar (átomos libres en v2)": "M4A v1: solo campos estándar (átomos libres en v2)",
+"M4A v1: solo campos estándar; la autoría de la letra se añade al comentario": "M4A v1: solo campos estándar; la autoría de la letra se añade al comentario",
 "MB · se está descargando": "MB · se está descargando",
 "MIXTAPES/_masters": "MIXTAPES/_masters",
 "Marca archivos para moverlos a otra canción": "Marca archivos para moverlos a otra canción",
@@ -554,9 +637,12 @@
 "Marcar para fundir con otras": "Marcar para fundir con otras",
 "Marcar todos": "Marcar todos",
 "Marcar «para redes»": "Marcar «para redes»",
+"Margen": "Margen",
 "Masterización": "Masterización",
 "Masterizar": "Masterizar",
+"Medición": "Medición",
 "Medición terminada": "Medición terminada",
+"Medidas técnicas del audio. Los «indicios» describen rasgos observables de la señal (un corte espectral, un pico tonal estrecho…) que pueden tener muchas causas (códec, dither, ruido de un oscilador, efectos, la propia música) y no son un diagnóstico de autoría, de origen ni de ninguna marca propietaria.": "Medidas técnicas del audio. Los «indicios» describen rasgos observables de la señal (un corte espectral, un pico tonal estrecho…) que pueden tener muchas causas (códec, dither, ruido de un oscilador, efectos, la propia música) y no son un diagnóstico de autoría, de origen ni de ninguna marca propietaria.",
 "Medir volumen": "Medir volumen",
 "Mencionar «Registrado en Safe Creative»": "Mencionar «Registrado en Safe Creative»",
 "Mes de todo el archivo": "Mes de todo el archivo",
@@ -568,6 +654,7 @@
 "Midiendo antes de exportar": "Midiendo antes de exportar",
 "Midiendo la sonoridad de cada canción (LUFS)": "Midiendo la sonoridad de cada canción (LUFS)",
 "Mientras no lo instales, el resto del gestor funciona igual": "Mientras no lo instales, el resto del gestor funciona igual",
+"Mira primero qué lleva tu archivo, limpia lo ajeno y pon lo tuyo en una copia. El audio no cambia: se comprueba con su huella (sha256_audio). Nada sale de tu ordenador.": "Mira primero qué lleva tu archivo, limpia lo ajeno y pon lo tuyo en una copia. El audio no cambia: se comprueba con su huella (sha256_audio). Nada sale de tu ordenador.",
 "Mis presets": "Mis presets",
 "Mixtape": "Mixtape",
 "Mixtape activo · clic para quitar": "Mixtape activo · clic para quitar",
@@ -578,6 +665,7 @@
 "Moneda de los ingresos": "Moneda de los ingresos",
 "Mostrar": "Mostrar",
 "Mostrar el ZIP": "Mostrar el ZIP",
+"Mostrar en el explorador": "Mostrar en el explorador",
 "Mostrar los": "Mostrar los",
 "Motor «pedalboard»": "Motor «pedalboard»",
 "Mover a otra canción": "Mover a otra canción",
@@ -585,10 +673,12 @@
 "Mover los": "Mover los",
 "Más detalle, condiciones y fuentes (con fecha de consulta) en": "Más detalle, condiciones y fuentes (con fecha de consulta) en",
 "Más opciones": "Más opciones",
+"Más rápido: solo etiquetas, bloques y datos del contenedor": "Más rápido: solo etiquetas, bloques y datos del contenedor",
 "Máster": "Máster",
 "Máster de": "Máster de",
 "Másters del mixtape guardados": "Másters del mixtape guardados",
 "Máximo": "Máximo",
+"Música / melodía": "Música / melodía",
 "Música del mundo": "Música del mundo",
 "Nada sonando": "Nada sonando",
 "Neerlandés": "Neerlandés",
@@ -596,7 +686,9 @@
 "Ninguna imagen de portada para estas": "Ninguna imagen de portada para estas",
 "Ninguna imagen de portada para estas canciones": "Ninguna imagen de portada para estas canciones",
 "Ninguno coincide": "Ninguno coincide",
+"Nivel por encima de 20 kHz frente a los medios": "Nivel por encima de 20 kHz frente a los medios",
 "No cabe: quita sesiones completas o libera espacio": "No cabe: quita sesiones completas o libera espacio",
+"No conservas nada: se limpia todo lo ajeno.": "No conservas nada: se limpia todo lo ajeno.",
 "No copiar la sesión": "No copiar la sesión",
 "No copiaré": "No copiaré",
 "No copio cachés de Audition (.pkf) ni sus copias de seguridad. Tus originales no se tocan: se copian": "No copio cachés de Audition (.pkf) ni sus copias de seguridad. Tus originales no se tocan: se copian",
@@ -608,7 +700,10 @@
 "No encuentro ffmpeg en este equipo": "No encuentro ffmpeg en este equipo",
 "No encuentro ffmpeg en este equipo. Instálalo (ver LEEME) y vuelve a intentarlo": "No encuentro ffmpeg en este equipo. Instálalo (ver LEEME) y vuelve a intentarlo",
 "No encuentro la carpeta de destino en la biblioteca": "No encuentro la carpeta de destino en la biblioteca",
+"No encuentro la carátula (debe ser un JPEG o PNG de la biblioteca).": "No encuentro la carátula (debe ser un JPEG o PNG de la biblioteca).",
+"No encuentro la marca fLaC: el archivo no es un FLAC válido.": "No encuentro la marca fLaC: el archivo no es un FLAC válido.",
 "No encuentro ninguna": "No encuentro ninguna",
+"No encuentro ningún frame MPEG en los primeros 64 KB tras las etiquetas: el archivo no parece un MP3 válido.": "No encuentro ningún frame MPEG en los primeros 64 KB tras las etiquetas: el archivo no parece un MP3 válido.",
 "No es relevante · ocultar": "No es relevante · ocultar",
 "No es un WAV": "No es un WAV",
 "No existe ese preset": "No existe ese preset",
@@ -620,6 +715,7 @@
 "No hay canciones repetidas por la letra ✓": "No hay canciones repetidas por la letra ✓",
 "No hay columna de fecha: elige el mes al que corresponde todo el archivo": "No hay columna de fecha: elige el mes al que corresponde todo el archivo",
 "No hay espacio suficiente: hacen falta": "No hay espacio suficiente: hacen falta",
+"No hay espectro que medir (audio demasiado corto o en silencio).": "No hay espectro que medir (audio demasiado corto o en silencio).",
 "No hay filas con ese filtro": "No hay filas con ese filtro",
 "No hay letras con ese filtro": "No hay letras con ese filtro",
 "No hay más versiones": "No hay más versiones",
@@ -627,28 +723,39 @@
 "No hay otras imágenes guardadas. Usa «Reemplazar portada» para subir una": "No hay otras imágenes guardadas. Usa «Reemplazar portada» para subir una",
 "No hay subcarpetas aquí": "No hay subcarpetas aquí",
 "No hay ventana abierta": "No hay ventana abierta",
+"No hay átomo «mdat»: el archivo no contiene audio.": "No hay átomo «mdat»: el archivo no contiene audio.",
+"No hay átomo «moov» (el índice del archivo): casi seguro que está cortado o incompleto. No se pueden leer etiquetas ni datos técnicos del audio.": "No hay átomo «moov» (el índice del archivo): casi seguro que está cortado o incompleto. No se pueden leer etiquetas ni datos técnicos del audio.",
 "No he conseguido leer ninguna fila con esos ajustes. Revisa la fila de títulos, la fecha y el separador": "No he conseguido leer ninguna fila con esos ajustes. Revisa la fila de títulos, la fecha y el separador",
 "No incluir en el máster": "No incluir en el máster",
 "No pude consultar las carpetas": "No pude consultar las carpetas",
 "No pude dibujar esta vista": "No pude dibujar esta vista",
+"No pude etiquetar este archivo.": "No pude etiquetar este archivo.",
 "No pude hablar con el gestor": "No pude hablar con el gestor",
+"No pude inspeccionar este archivo.": "No pude inspeccionar este archivo.",
 "No pude leer el archivo": "No pude leer el archivo",
 "No pude leer la carpeta": "No pude leer la carpeta",
 "No pude recibir la propuesta": "No pude recibir la propuesta",
 "No puedo abrir esa carpeta": "No puedo abrir esa carpeta",
 "No queda nada por resolver": "No queda nada por resolver",
+"No queda ninguna etiqueta ajena": "No queda ninguna etiqueta ajena",
 "No se borra ni se sobrescribe nada": "No se borra ni se sobrescribe nada",
+"No se conoce la tasa de muestreo o los canales: no se puede analizar la señal.": "No se conoce la tasa de muestreo o los canales: no se puede analizar la señal.",
+"No se entregó ninguna copia": "No se entregó ninguna copia",
 "No se ha encontrado API pública verificada para artistas": "No se ha encontrado API pública verificada para artistas",
 "No se indicó plataforma": "No se indicó plataforma",
+"No se pudieron leer etiquetas de este archivo: mira los avisos de arriba.": "No se pudieron leer etiquetas de este archivo: mira los avisos de arriba.",
 "No se pudieron leer los ajustes": "No se pudieron leer los ajustes",
 "No se pudieron leer los datos": "No se pudieron leer los datos",
 "No se pudo": "No se pudo",
 "No se pudo abrir": "No se pudo abrir",
 "No se pudo actualizar": "No se pudo actualizar",
+"No se pudo analizar la señal.": "No se pudo analizar la señal.",
+"No se pudo anotar en el registro.": "No se pudo anotar en el registro.",
 "No se pudo arrancar el motor": "No se pudo arrancar el motor",
 "No se pudo cambiar": "No se pudo cambiar",
 "No se pudo consultar el estado": "No se pudo consultar el estado",
 "No se pudo contactar con Spotify": "No se pudo contactar con Spotify",
+"No se pudo copiar": "No se pudo copiar",
 "No se pudo crear el ZIP": "No se pudo crear el ZIP",
 "No se pudo crear el mixtape": "No se pudo crear el mixtape",
 "No se pudo crear la carpeta del álbum": "No se pudo crear la carpeta del álbum",
@@ -659,6 +766,8 @@
 "No se pudo guardar": "No se pudo guardar",
 "No se pudo guardar la letra": "No se pudo guardar la letra",
 "No se pudo hablar con el gestor": "No se pudo hablar con el gestor",
+"No se pudo hablar con el gestor.": "No se pudo hablar con el gestor.",
+"No se pudo inspeccionar el archivo.": "No se pudo inspeccionar el archivo.",
 "No se pudo instalar": "No se pudo instalar",
 "No se pudo leer": "No se pudo leer",
 "No se pudo leer la letra": "No se pudo leer la letra",
@@ -666,9 +775,13 @@
 "No se pudo procesar": "No se pudo procesar",
 "No se pudo quitar": "No se pudo quitar",
 "No se pudo reproducir «": "No se pudo reproducir «",
+"No se pudo simular.": "No se pudo simular.",
 "No se pudo subir": "No se pudo subir",
 "No se pudo unir": "No se pudo unir",
 "No se pudo usar la ventana del plugin": "No se pudo usar la ventana del plugin",
+"No se puede abrir el archivo.": "No se puede abrir el archivo.",
+"No se puede conservar en este formato": "No se puede conservar en este formato",
+"No se puede leer la copia escrita.": "No se puede leer la copia escrita.",
 "No se sobrescribe nada y tus carpetas originales no se tocan": "No se sobrescribe nada y tus carpetas originales no se tocan",
 "No se toca ninguna carpeta master de tus canciones": "No se toca ninguna carpeta master de tus canciones",
 "No son la misma": "No son la misma",
@@ -681,12 +794,15 @@
 "No trae reproducciones": "No trae reproducciones",
 "Nombre": "Nombre",
 "Nombre artístico": "Nombre artístico",
+"Nombre de la copia": "Nombre de la copia",
 "Nombre de tu artista en Spotify": "Nombre de tu artista en Spotify",
 "Nombre del artista": "Nombre del artista",
 "Nombre del álbum": "Nombre del álbum",
 "Nombre en el ©": "Nombre en el ©",
 "Nombre que aparecerá en ©": "Nombre que aparecerá en ©",
 "Nombre, p. ej. Master suave": "Nombre, p. ej. Master suave",
+"Nota": "Nota",
+"Nota (opcional)": "Nota (opcional)",
 "Notas": "Notas",
 "Nuevo mixtape": "Nuevo mixtape",
 "Nuevo álbum": "Nuevo álbum",
@@ -697,6 +813,7 @@
 "Olvidar claves y datos": "Olvidar claves y datos",
 "Omitir carpetas Freeze, Backup y cachés (ahorra": "Omitir carpetas Freeze, Backup y cachés (ahorra",
 "Orden desconocida": "Orden desconocida",
+"Origen": "Origen",
 "Original": "Original",
 "Otra cinta": "Otra cinta",
 "Otras versiones": "Otras versiones",
@@ -705,6 +822,7 @@
 "Oír esta canción ya igualada al volumen objetivo": "Oír esta canción ya igualada al volumen objetivo",
 "Oír igualada": "Oír igualada",
 "Oír todas las canciones ya igualadas al volumen objetivo": "Oír todas las canciones ya igualadas al volumen objetivo",
+"Para M4A hace falta ffmpeg (en v1 solo se escribe con ffmpeg).": "Para M4A hace falta ffmpeg (en v1 solo se escribe con ffmpeg).",
 "Para añadir otras carpetas, ve a": "Para añadir otras carpetas, ve a",
 "Para cargar plugins hace falta instalar una pequeña librería llamada «pedalboard». No viene incluida: se descarga de internet solo si tú quieres": "Para cargar plugins hace falta instalar una pequeña librería llamada «pedalboard». No viene incluida: se descarga de internet solo si tú quieres",
 "Para escuchar con efectos en directo falta «sounddevice». Puedes instalarlo desde aquí; mientras tanto, la escucha comparará «Original» y «Con efectos» procesando la canción antes": "Para escuchar con efectos en directo falta «sounddevice». Puedes instalarlo desde aquí; mientras tanto, la escucha comparará «Original» y «Con efectos» procesando la canción antes",
@@ -718,18 +836,25 @@
 "Pendientes": "Pendientes",
 "Perdí la conexión con el gestor": "Perdí la conexión con el gestor",
 "Perfiles no válidos": "Perfiles no válidos",
+"Persona": "Persona",
+"Pico": "Pico",
 "Pico más alto": "Pico más alto",
+"Pico real": "Pico real",
+"Pico tonal en alta frecuencia": "Pico tonal en alta frecuencia",
+"Picos equiespaciados en alta frecuencia": "Picos equiespaciados en alta frecuencia",
 "Plataforma": "Plataforma",
 "Plataformas": "Plataformas",
 "Plugin VST3": "Plugin VST3",
 "Plugins de efectos (VST3)": "Plugins de efectos (VST3)",
 "Plugins que no se han podido abrir": "Plugins que no se han podido abrir",
+"Política: se limpia todo lo ajeno (salvo lo que marques en «Conservar») y solo se escribe lo que declares aquí. La onda de audio no se toca.": "Política: se limpia todo lo ajeno (salvo lo que marques en «Conservar») y solo se escribe lo que declares aquí. La onda de audio no se toca.",
 "Pone un techo: el sonido no pasa de ese nivel": "Pone un techo: el sonido no pasa de ese nivel",
 "Ponla con «Cambiar portada» y se incrustará aquí": "Ponla con «Cambiar portada» y se incrustará aquí",
 "Ponle un nombre al álbum": "Ponle un nombre al álbum",
 "Pop rock": "Pop rock",
 "Pop, Rock": "Pop, Rock",
 "Por canción": "Por canción",
+"Por defecto no se conserva nada: se limpia todo lo ajeno. Marca «Conservar» solo lo que quieras mantener.": "Por defecto no se conserva nada: se limpia todo lo ajeno. Marca «Conservar» solo lo que quieras mantener.",
 "Por ejemplo si en realidad son los stems o una versión de otra canción. Se unirá a la que elijas y sus archivos se moverán a su carpeta": "Por ejemplo si en realidad son los stems o una versión de otra canción. Se unirá a la que elijas y sus archivos se moverán a su carpeta",
 "Por país": "Por país",
 "Por plataforma": "Por plataforma",
@@ -758,6 +883,7 @@
 "Probar y guardar": "Probar y guardar",
 "Procesado en": "Procesado en",
 "Procesando": "Procesando",
+"Producción": "Producción",
 "Profundidad no compatible": "Profundidad no compatible",
 "Proyecto de": "Proyecto de",
 "Proyecto en preparación": "Proyecto en preparación",
@@ -772,8 +898,10 @@
 "Puede tardar unos minutos; puedes seguir viendo la página mientras tanto": "Puede tardar unos minutos; puedes seguir viendo la página mientras tanto",
 "Puedes cambiar el nombre de la canción": "Puedes cambiar el nombre de la canción",
 "Puedes deshacerlo con el diario": "Puedes deshacerlo con el diario",
+"Puedes inspeccionarlo, pero no se escribe nada en él.": "Puedes inspeccionarlo, pero no se escribe nada en él.",
 "Pulsa": "Pulsa",
 "Pulsa en una canción de la lista para abrirla": "Pulsa en una canción de la lista para abrirla",
+"Pulsa para copiar": "Pulsa para copiar",
 "Pulsa para ver o quitar alguno": "Pulsa para ver o quitar alguno",
 "Pulsa «Actualizar la biblioteca» para que el gestor lea las carpetas nuevas": "Pulsa «Actualizar la biblioteca» para que el gestor lea las carpetas nuevas",
 "Punto y coma ( ; )": "Punto y coma ( ; )",
@@ -785,6 +913,7 @@
 "Quitada la marca de boceto a": "Quitada la marca de boceto a",
 "Quitar": "Quitar",
 "Quitar canciones": "Quitar canciones",
+"Quitar crédito": "Quitar crédito",
 "Quitar de bocetos": "Quitar de bocetos",
 "Quitar de «": "Quitar de «",
 "Quitar del álbum (la canción no se borra)": "Quitar del álbum (la canción no se borra)",
@@ -801,13 +930,17 @@
 "Quitar «versión final»": "Quitar «versión final»",
 "Quitaste todas las canciones del máster. Pulsa «Recuperar las quitadas» para volver a verlas": "Quitaste todas las canciones del máster. Pulsa «Recuperar las quitadas» para volver a verlas",
 "Quité las marcas de sección ([Verse], [Chorus]…)": "Quité las marcas de sección ([Verse], [Chorus]…)",
+"Qué cambió:": "Qué cambió:",
 "Qué sale de tu equipo si lo activas": "Qué sale de tu equipo si lo activas",
+"Rango de sonoridad": "Rango de sonoridad",
+"Rasgo": "Rasgo",
 "Recomendación: empieza por los CSV": "Recomendación: empieza por los CSV",
 "Recortar": "Recortar",
 "Recortar portada": "Recortar portada",
 "Recorte": "Recorte",
 "Recuperar las quitadas": "Recuperar las quitadas",
 "Registrado en Safe Creative": "Registrado en Safe Creative",
+"Registro anotado en:": "Registro anotado en:",
 "Renombrar": "Renombrar",
 "Renombrar canción": "Renombrar canción",
 "Reparto por estado": "Reparto por estado",
@@ -816,6 +949,7 @@
 "Reproducir": "Reproducir",
 "Reproducir / pausa": "Reproducir / pausa",
 "Requisitos de Spotify (2026)": "Requisitos de Spotify (2026)",
+"Resetear": "Resetear",
 "Resolver los no casados": "Resolver los no casados",
 "Respetar las diferencias": "Respetar las diferencias",
 "Resumen": "Resumen",
@@ -823,17 +957,24 @@
 "Revisa el texto y pulsa «Guardar letra»": "Revisa el texto y pulsa «Guardar letra»",
 "Revisa los nombres (puedes cambiarlos). Cada una se crea con su carpeta y sus archivos clasificados": "Revisa los nombres (puedes cambiarlos). Cada una se crea con su carpeta y sus archivos clasificados",
 "Revisar": "Revisar",
+"Rol": "Rol",
 "Ruta copiada": "Ruta copiada",
+"SHA-256 del archivo": "SHA-256 del archivo",
 "Safe Creative": "Safe Creative",
+"Saturadas": "Saturadas",
 "Se": "Se",
 "Se borra «": "Se borra «",
 "Se borran tus claves y los datos traídos, solo de este módulo": "Se borran tus claves y los datos traídos, solo de este módulo",
+"Se conserva": "Se conserva",
+"Se conservará:": "Se conservará:",
 "Se copian a tu biblioteca; lo original no se toca.": "Se copian a tu biblioteca; lo original no se toca.",
 "Se copiarán": "Se copiarán",
+"Se creará una copia en _etiquetados/ con lo que has declarado. El original no se toca y el audio no cambia: si la verificación falla, no se entrega nada.": "Se creará una copia en _etiquetados/ con lo que has declarado. El original no se toca y el audio no cambia: si la verificación falla, no se entrega nada.",
 "Se crearán": "Se crearán",
 "Se detuvo la fusión": "Se detuvo la fusión",
 "Se detuvo tras guardar": "Se detuvo tras guardar",
 "Se enviará a Spotify el título de cada canción tuya (hasta 120) junto con el nombre de artista «": "Se enviará a Spotify el título de cada canción tuya (hasta 120) junto con el nombre de artista «",
+"Se escribe": "Se escribe",
 "Se grabaron y se separaron, pero falta sacar el máster": "Se grabaron y se separaron, pero falta sacar el máster",
 "Se guarda como letra.txt junto a la canción. La anterior queda de copia": "Se guarda como letra.txt junto a la canción. La anterior queda de copia",
 "Se guarda con todos sus ajustes para volver a usarla en otras canciones": "Se guarda con todos sus ajustes para volver a usarla en otras canciones",
@@ -842,6 +983,7 @@
 "Se lee en tu equipo. No se sube a ningún sitio. Funciona con coma o punto y coma, con tildes, y con decimales con coma (12,5) o con punto (12.5)": "Se lee en tu equipo. No se sube a ningún sitio. Funciona con coma o punto y coma, con tildes, y con decimales con coma (12,5) o con punto (12.5)",
 "Se mantiene la frecuencia de muestreo del archivo (sin remuestrear). El WAV lleva solo formato, etiquetas (ID3 + RIFF) y audio. Las canciones que no son WAV se decodifican a 44,1 kHz": "Se mantiene la frecuencia de muestreo del archivo (sin remuestrear). El WAV lleva solo formato, etiquetas (ID3 + RIFF) y audio. Las canciones que no son WAV se decodifican a 44,1 kHz",
 "Se marcará como boceto en el gestor al terminar": "Se marcará como boceto en el gestor al terminar",
+"Se quita": "Se quita",
 "Se quitarán de tu biblioteca": "Se quitarán de tu biblioteca",
 "Se quitarán todas las canciones de la lista y se borrarán sus versiones MP3 creadas para este mixtape. Tu música original no se toca": "Se quitarán todas las canciones de la lista y se borrarán sus versiones MP3 creadas para este mixtape. Tu música original no se toca",
 "Se sube todo": "Se sube todo",
@@ -857,6 +999,7 @@
 "Seleccionar todas": "Seleccionar todas",
 "Separador": "Separador",
 "Sesiones y proyectos": "Sesiones y proyectos",
+"Señal: mediciones e indicios técnicos": "Señal: mediciones e indicios técnicos",
 "Si algún archivo no está donde debería, ábrelo con «⋯» o botón derecho y muévelo": "Si algún archivo no está donde debería, ábrelo con «⋯» o botón derecho y muévelo",
 "Si en realidad es una canción que ya existe con otro título, búscala y asígnala. Si es una canción solo con letra, déjala así. Si no es una canción (una nota, un apunte), ocúltala": "Si en realidad es una canción que ya existe con otro título, búscala y asígnala. Si es una canción solo con letra, déjala así. Si no es una canción (una nota, un apunte), ocúltala",
 "Si no te interesa, déjalo sin activar": "Si no te interesa, déjalo sin activar",
@@ -867,8 +1010,13 @@
 "Silencia lo que suena muy bajito (ruido de fondo) entre las notas": "Silencia lo que suena muy bajito (ruido de fondo) entre las notas",
 "Silencio al final (s)": "Silencio al final (s)",
 "Silencio al principio (s)": "Silencio al principio (s)",
+"Silencios": "Silencios",
+"Simulación lista · no se ha escrito ningún archivo": "Simulación lista · no se ha escrito ningún archivo",
+"Simulando…": "Simulando…",
+"Simular no escribe nada. Para aplicar, simula primero y no cambies nada después.": "Simular no escribe nada. Para aplicar, simula primero y no cambies nada después.",
 "Sin asignar": "Sin asignar",
 "Sin audio": "Sin audio",
+"Sin cabecera Xing/Info: duración estimada por tamaño/bitrate (solo exacta en CBR).": "Sin cabecera Xing/Info: duración estimada por tamaño/bitrate (solo exacta en CBR).",
 "Sin carpeta": "Sin carpeta",
 "Sin carátula": "Sin carátula",
 "Sin carátula elegida": "Sin carátula elegida",
@@ -877,6 +1025,9 @@
 "Sin datos casados con álbumes": "Sin datos casados con álbumes",
 "Sin datos para este filtro": "Sin datos para este filtro",
 "Sin efectos (el audio pasa tal cual)": "Sin efectos (el audio pasa tal cual)",
+"Sin ffmpeg no se compara el audio decodificado; sí se exige el sha256 del audio.": "Sin ffmpeg no se compara el audio decodificado; sí se exige el sha256 del audio.",
+"Sin ffmpeg solo se puede analizar la señal de archivos WAV PCM/float. Instala ffmpeg para el resto de formatos.": "Sin ffmpeg solo se puede analizar la señal de archivos WAV PCM/float. Instala ffmpeg para el resto de formatos.",
+"Sin indicio": "Sin indicio",
 "Sin letra": "Sin letra",
 "Sin letra todavía": "Sin letra todavía",
 "Sin máster": "Sin máster",
@@ -901,6 +1052,7 @@
 "Solo puedes añadir canciones a los álbumes que tú creas": "Solo puedes añadir canciones a los álbumes que tú creas",
 "Solo se pueden añadir archivos WAV a mano": "Solo se pueden añadir archivos WAV a mano",
 "Son muchas canciones: ábrelas de una en una": "Son muchas canciones: ábrelas de una en una",
+"Sonoridad": "Sonoridad",
 "Soporte de plugins activado": "Soporte de plugins activado",
 "Soporte de plugins instalado": "Soporte de plugins instalado",
 "Soporte de plugins instalado ✓": "Soporte de plugins instalado ✓",
@@ -931,6 +1083,7 @@
 "Sí, cancelar": "Sí, cancelar",
 "Sí, deshacer": "Sí, deshacer",
 "Tamaño": "Tamaño",
+"Tasa de muestreo": "Tasa de muestreo",
 "Techo de picos": "Techo de picos",
 "Temática y palabras clave": "Temática y palabras clave",
 "Terminar aquí": "Terminar aquí",
@@ -951,6 +1104,7 @@
 "Todas": "Todas",
 "Todas las canciones quedan con el mismo volumen (recomendado para singles y listas)": "Todas las canciones quedan con el mismo volumen (recomendado para singles y listas)",
 "Todas las colecciones": "Todas las colecciones",
+"Todas las muestras son cero: el archivo es silencio digital.": "Todas las muestras son cero: el archivo es silencio digital.",
 "Todas las obras de este envío son de su titular. No se permite su uso, copia ni distribución sin su autorización.": "Todas las obras de este envío son de su titular. No se permite su uso, copia ni distribución sin su autorización.",
 "Todas las pistas": "Todas las pistas",
 "Todas las temáticas": "Todas las temáticas",
@@ -960,6 +1114,7 @@
 "Todavía no hay canciones": "Todavía no hay canciones",
 "Todavía no hay canciones en el gestor. Cuando las haya, aquí verás en qué punto está cada una": "Todavía no hay canciones en el gestor. Cuando las haya, aquí verás en qué punto está cada una",
 "Todavía no hay canciones. Arrástralas aquí o usa «Añadir a un mixtape…» en cualquier canción": "Todavía no hay canciones. Arrástralas aquí o usa «Añadir a un mixtape…» en cualquier canción",
+"Todavía no hay créditos.": "Todavía no hay créditos.",
 "Todavía no hay otras imágenes guardadas para elegir. Sube una nueva": "Todavía no hay otras imágenes guardadas para elegir. Sube una nueva",
 "Todavía no tienes ningún mixtape. Pulsa «Nuevo mixtape» para crear el primero": "Todavía no tienes ningún mixtape. Pulsa «Nuevo mixtape» para crear el primero",
 "Todavía sin imágenes ni vídeos": "Todavía sin imágenes ni vídeos",
@@ -969,8 +1124,10 @@
 "Todo el arte y el vídeo está en la carpeta": "Todo el arte y el vídeo está en la carpeta",
 "Todo en un solo HTML": "Todo en un solo HTML",
 "Todo está al día 🎉": "Todo está al día 🎉",
+"Todo listo: el plan coincide con lo que ves.": "Todo listo: el plan coincide con lo que ves.",
 "Todos": "Todos",
 "Todos los archivos y sesiones se juntarán. ¿Qué nombre llevará?": "Todos los archivos y sesiones se juntarán. ¿Qué nombre llevará?",
+"Tono estrecho y estable por encima de 16 kHz": "Tono estrecho y estable por encima de 16 kHz",
 "Traer datos de mis canciones": "Traer datos de mis canciones",
 "Trip Hop": "Trip Hop",
 "Tu biblioteca está vacía": "Tu biblioteca está vacía",
@@ -984,6 +1141,8 @@
 "Título original restaurado": "Título original restaurado",
 "Título que se escribirá en el WAV": "Título que se escribirá en el WAV",
 "Títulos que no he podido casar": "Títulos que no he podido casar",
+"Umbral": "Umbral",
+"Un bloque conservado no quedó idéntico.": "Un bloque conservado no quedó idéntico.",
 "Una canción no tiene": "Una canción no tiene",
 "Una canción nueva": "Una canción nueva",
 "Una canción puede estar en varias colecciones (por ejemplo una serie) sin moverla de su carpeta": "Una canción puede estar en varias colecciones (por ejemplo una serie) sin moverla de su carpeta",
@@ -1001,6 +1160,8 @@
 "VST2 (plugins antiguos .dll) no se admite. Audio Units solo existe en Mac": "VST2 (plugins antiguos .dll) no se admite. Audio Units solo existe en Mac",
 "Vaciar mixtape": "Vaciar mixtape",
 "Valor": "Valor",
+"Valor / resumen": "Valor / resumen",
+"Varios picos separados de forma regular": "Varios picos separados de forma regular",
 "Ver": "Ver",
 "Ver MP3 y letras": "Ver MP3 y letras",
 "Ver arte y vídeo": "Ver arte y vídeo",
@@ -1088,6 +1249,7 @@
 "arriba, a la izquierda) y arrastra una carpeta con una canción y su letra, varias carpetas o archivos sueltos: yo la creo, clasifico cada archivo y la catalogo. También puedes copiar tus carpetas dentro de": "arriba, a la izquierda) y arrastra una carpeta con una canción y su letra, varias carpetas o archivos sueltos: yo la creo, clasifico cada archivo y la catalogo. También puedes copiar tus carpetas dentro de",
 "audio": "audio",
 "avance medio de las canciones (sin bocetos)": "avance medio de las canciones (sin bocetos)",
+"aviso": "aviso",
 "añadida": "añadida",
 "añadidas": "añadidas",
 "boceto": "boceto",
@@ -1095,6 +1257,7 @@
 "byte a byte (huella SHA-256 completa)": "byte a byte (huella SHA-256 completa)",
 "cada canción al mismo volumen": "cada canción al mismo volumen",
 "cada uno en la carpeta": "cada uno en la carpeta",
+"cambia si cambian las etiquetas o el contenedor": "cambia si cambian las etiquetas o el contenedor",
 "canciones": "canciones",
 "canciones (con letra y música). Un clic abre la canción, un doble clic (o ▶) la reproduce": "canciones (con letra y música). Un clic abre la canción, un doble clic (o ▶) la reproduce",
 "canciones (las demás no tienen audio ni letra que catalogar": "canciones (las demás no tienen audio ni letra que catalogar",
@@ -1139,6 +1302,9 @@
 "con su música y su letra), varias carpetas, o": "con su música y su letra), varias carpetas, o",
 "con sus audios, samples": "con sus audios, samples",
 "conservados porque habían cambiado": "conservados porque habían cambiado",
+"contenido binario": "contenido binario",
+"contenido binario: no se puede reescribir": "contenido binario: no se puede reescribir",
+"contiene texto legible": "contiene texto legible",
 "copiados": "copiados",
 "copio": "copio",
 "cosas pendientes": "cosas pendientes",
@@ -1160,6 +1326,7 @@
 "dmy": "dmy",
 "déjalo vacío para conservarlo": "déjalo vacío para conservarlo",
 "día/mes/año": "día/mes/año",
+"editable": "editable",
 "efecto(s) y se guardará un": "efecto(s) y se guardará un",
 "efectos (FX1…FX": "efectos (FX1…FX",
 "el anterior para no contar dos veces": "el anterior para no contar dos veces",
@@ -1187,6 +1354,7 @@
 "enlaces/accesos directos se han saltado (no los sigo": "enlaces/accesos directos se han saltado (no los sigo",
 "entradas en una sola. Los archivos de audio de las demás pasan a la carpeta de la que se queda, y sus letras se conservan si la que se queda no tiene. Puedes deshacerlo con el diario de movimientos": "entradas en una sola. Los archivos de audio de las demás pasan a la carpeta de la que se queda, y sus letras se conservan si la que se queda no tiene. Puedes deshacerlo con el diario de movimientos",
 "entradas ocultas · las recuperas en el filtro «Ocultas»": "entradas ocultas · las recuperas en el filtro «Ocultas»",
+"error": "error",
 "es un boceto": "es un boceto",
 "esa carpeta no existe": "esa carpeta no existe",
 "escaneo no terminado": "escaneo no terminado",
@@ -1195,11 +1363,15 @@
 "esta canción no tiene audio": "esta canción no tiene audio",
 "esta entrada no tiene música": "esta entrada no tiene música",
 "este efecto no tiene ventana propia": "este efecto no tiene ventana propia",
+"estructural": "estructural",
+"estructural (índice de búsqueda), no es una etiqueta": "estructural (índice de búsqueda), no es una etiqueta",
 "estéreo": "estéreo",
 "existe": "existe",
 "falta la canción o el texto": "falta la canción o el texto",
 "ffmpeg falló": "ffmpeg falló",
 "ffmpeg no pudo leer ese audio": "ffmpeg no pudo leer ese audio",
+"ffmpeg no pudo medir la sonoridad (ebur128).": "ffmpeg no pudo medir la sonoridad (ebur128).",
+"ffprobe no disponible: los datos técnicos salen solo del recorrido Python.": "ffprobe no disponible: los datos técnicos salen solo del recorrido Python.",
 "filas": "filas",
 "filas casadas con claridad · 🔎": "filas casadas con claridad · 🔎",
 "filas de datos": "filas de datos",
@@ -1217,9 +1389,11 @@
 "hacen falta": "hacen falta",
 "he reconocido tu perfil «": "he reconocido tu perfil «",
 "ignoradas por ti": "ignoradas por ti",
+"imagen incrustada": "imagen incrustada",
 "importar": "importar",
 "imágenes": "imágenes",
 "incluir": "incluir",
+"info": "info",
 "ingresos": "ingresos",
 "instrumentos (no sirven como efecto": "instrumentos (no sirven como efecto",
 "la canción": "la canción",
@@ -1228,7 +1402,10 @@
 "la carpeta master de cada canción": "la carpeta master de cada canción",
 "la carpeta master de la canción": "la carpeta master de la canción",
 "la carpeta que elijas (no abro ni cambio nada). Luego te enseño cómo la ordenaría y tú decides. Al final": "la carpeta que elijas (no abro ni cambio nada). Luego te enseño cómo la ordenaría y tú decides. Al final",
+"la carátula nueva la reemplaza": "la carátula nueva la reemplaza",
 "la creaste tú": "la creaste tú",
+"la huella del sonido: debe quedar idéntica al etiquetar": "la huella del sonido: debe quedar idéntica al etiquetar",
+"la lista de colaboradores se genera desde los créditos": "la lista de colaboradores se genera desde los créditos",
 "la mejor versión": "la mejor versión",
 "la otra se funde en ella (sus archivos pasan a su carpeta y su letra se conserva). Se puede deshacer con el diario de movimientos": "la otra se funde en ella (sus archivos pasan a su carpeta y su letra se conserva). Se puede deshacer con el diario de movimientos",
 "la separaste tú de «": "la separaste tú de «",
@@ -1242,6 +1419,7 @@
 "leídas": "leídas",
 "libre en tu biblioteca": "libre en tu biblioteca",
 "libres en el disco de la biblioteca": "libres en el disco de la biblioteca",
+"lo declarado lo reemplaza": "lo declarado lo reemplaza",
 "lo mismo, de modo que la canción más fuerte llega al objetivo y las demás conservan su diferencia (recomendado para discos con canciones suaves y fuertes a propósito": "lo mismo, de modo que la canción más fuerte llega al objetivo y las demás conservan su diferencia (recomendado para discos con canciones suaves y fuertes a propósito",
 "los archivos se añadirán a esa canción": "los archivos se añadirán a esa canción",
 "los he agrupado en": "los he agrupado en",
@@ -1266,17 +1444,23 @@
 "másters en la carpeta master de sus canciones": "másters en la carpeta master de sus canciones",
 "másters; hubo un problema con el siguiente": "másters; hubo un problema con el siguiente",
 "módulos": "módulos",
+"nada": "nada",
+"nada: la copia queda limpia, solo con el audio": "nada: la copia queda limpia, solo con el audio",
 "necesitan ffmpeg y no está instalado. Usa un WAV, FLAC o MP3": "necesitan ffmpeg y no está instalado. Usa un WAV, FLAC o MP3",
 "ni se sobrescribe nada (si un nombre coincide, el nuevo lleva « (2)»)": "ni se sobrescribe nada (si un nombre coincide, el nuevo lleva « (2)»)",
 "ninguna —": "ninguna —",
+"ninguno": "ninguno",
+"no cuenta: no están separados de forma regular": "no cuenta: no están separados de forma regular",
 "no encuentro el audio de la canción": "no encuentro el audio de la canción",
 "no existe": "no existe",
 "no existe)": "no existe)",
 "no hay columna de fecha)": "no hay columna de fecha)",
 "no se han podido abrir": "no se han podido abrir",
 "no se pudo": "no se pudo",
+"no se pudo calcular": "no se pudo calcular",
 "no se pudo crear": "no se pudo crear",
 "no se tocan": "no se tocan",
+"no soportado en este formato": "no soportado en este formato",
 "no sé dónde guardarlo": "no sé dónde guardarlo",
 "nombre de la cancion": "nombre de la cancion",
 "nuevo": "nuevo",
@@ -1288,6 +1472,7 @@
 "o, si ninguna lo está, la que tiene": "o, si ninguna lo está, la que tiene",
 "omitidos": "omitidos",
 "omitidos / avisos": "omitidos / avisos",
+"opaco · solo lectura": "opaco · solo lectura",
 "opcional · desactivado por defecto": "opcional · desactivado por defecto",
 "organizado por álbum, single y proyecto. Haz clic en uno para ver sus imágenes y vídeos aquí mismo, sin salir del gestor": "organizado por álbum, single y proyecto. Haz clic en uno para ver sus imágenes y vídeos aquí mismo, sin salir del gestor",
 "otro programa los estaba usando) y los dejé sin copiar. Ciérralos y vuelve a importar solo esos": "otro programa los estaba usando) y los dejé sin copiar. Ciérralos y vuelve a importar solo esos",
@@ -1302,6 +1487,7 @@
 "pista(s) añadidas a mano no se guardan aquí (no son de ninguna canción": "pista(s) añadidas a mano no se guardan aquí (no son de ninguna canción",
 "pista(s) con cadena propia": "pista(s) con cadena propia",
 "plataforma sin indicar": "plataforma sin indicar",
+"plegado en el comentario": "plegado en el comentario",
 "plugin no encontrado: vuelve a buscar plugins": "plugin no encontrado: vuelve a buscar plugins",
 "plugin sin ruta": "plugin sin ruta",
 "plugins": "plugins",
@@ -1329,9 +1515,12 @@
 "restantes": "restantes",
 "ruta no válida": "ruta no válida",
 "saltada(s) porque ya habían cambiado": "saltada(s) porque ya habían cambiado",
+"se escribe vacío (sin rastro de programa)": "se escribe vacío (sin rastro de programa)",
+"se mantiene": "se mantiene",
 "se queda": "se queda",
 "seleccionadas · botón derecho para fusionarlas": "seleccionadas · botón derecho para fusionarlas",
 "separador": "separador",
+"sha256_audio idéntico": "sha256_audio idéntico",
 "si algún nombre coincide, el nuevo llevará « (2)» al final": "si algún nombre coincide, el nuevo llevará « (2)» al final",
 "si el archivo no la dice)": "si el archivo no la dice)",
 "sin ISRC": "sin ISRC",
@@ -1341,7 +1530,9 @@
 "sin casar · resolver": "sin casar · resolver",
 "sin conexión": "sin conexión",
 "sin conexión con el gestor": "sin conexión con el gestor",
+"sin dato": "sin dato",
 "sin indicar)": "sin indicar)",
+"sin inspeccionar": "sin inspeccionar",
 "sin letra": "sin letra",
 "sin música": "sin música",
 "sin portada elegida a mano": "sin portada elegida a mano",
@@ -1350,6 +1541,7 @@
 "sin vista previa": "sin vista previa",
 "singles": "singles",
 "solo datos públicos": "solo datos públicos",
+"solo lectura": "solo lectura",
 "solo letra": "solo letra",
 "solo los archivos que esta importación copió": "solo los archivos que esta importación copió",
 "src": "src",
@@ -1387,6 +1579,7 @@
 "ya existía uno con ese nombre: se añadió « (n)»": "ya existía uno con ese nombre: se añadió « (n)»",
 "ya hay": "ya hay",
 "ya no estaban": "ya no estaban",
+"©cmt (comentario)": "©cmt (comentario)",
 "» (lo pediste tú": "» (lo pediste tú",
 "» (mismo nombre y tamaño), la dejo sin marcar": "» (mismo nombre y tamaño), la dejo sin marcar",
 "» a una colección": "» a una colección",
@@ -1415,6 +1608,7 @@
 "¿Cancelar la copia?": "¿Cancelar la copia?",
 "¿Consultar Spotify?": "¿Consultar Spotify?",
 "¿Copiar a tu biblioteca?": "¿Copiar a tu biblioteca?",
+"¿Crear la copia etiquetada?": "¿Crear la copia etiquetada?",
 "¿Cuál se queda (con su nombre y su carpeta)?": "¿Cuál se queda (con su nombre y su carpeta)?",
 "¿Deshacer esta importación?": "¿Deshacer esta importación?",
 "¿Eliminar el álbum «": "¿Eliminar el álbum «",
@@ -1444,12 +1638,25 @@
 "álbumes": "álbumes",
 "álbumes en preparación": "álbumes en preparación",
 "última búsqueda": "última búsqueda",
-"últimos 3 meses frente a los 3 anteriores": "últimos 3 meses frente a los 3 anteriores"
+"últimos 3 meses frente a los 3 anteriores": "últimos 3 meses frente a los 3 anteriores",
+"＋ Arreglos": "＋ Arreglos",
+"＋ Asistencia u otros": "＋ Asistencia u otros",
+"＋ Letra": "＋ Letra",
+"＋ Mezcla": "＋ Mezcla",
+"＋ Música / melodía": "＋ Música / melodía"
 },
 "patrones": [
 [
 "Artista {g}",
 "Artista {g}"
+],
+[
+"Atención · {a} problema de integridad",
+"Atención · {a} problema de integridad"
+],
+[
+"Atención · {a} problemas de integridad",
+"Atención · {a} problemas de integridad"
 ],
 [
 "Avisos ({a})",
@@ -1500,6 +1707,22 @@
 "Cambia el título que ves en el gestor. No toca tus archivos ni carpetas. Déjalo vacío para volver al título original («{a}»)"
 ],
 [
+"Campo desconocido: «{a}».",
+"Campo desconocido: «{a}»."
+],
+[
+"Campo propio: {a}",
+"Campo propio: {a}"
+],
+[
+"Carátula ({a})",
+"Carátula ({a})"
+],
+[
+"Chunk bext de {a} bytes (mínimo 602).",
+"Chunk bext de {a} bytes (mínimo 602)."
+],
+[
 "Colocando {a} de {b}",
 "Colocando {a} de {b}"
 ],
@@ -1508,12 +1731,20 @@
 "Convirtiendo a MP3 · {a} de {b}"
 ],
 [
+"Copia creada: {a}",
+"Copia creada: {a}"
+],
+[
 "Creando el MP3 a {a} kbps",
 "Creando el MP3 a {a} kbps"
 ],
 [
 "Creando las versiones MP3 a {a} kbps",
 "Creando las versiones MP3 a {a} kbps"
+],
+[
+"Crédito no válido (nombre vacío o demasiado largo): «{a}».",
+"Crédito no válido (nombre vacío o demasiado largo): «{a}»."
 ],
 [
 "Cuántas de tus {a} canciones (sin bocetos) han llegado a cada paso.",
@@ -1540,6 +1771,26 @@
 "Efectos activos: {a} paso(s) en la cadena general{b}"
 ],
 [
+"El análisis de señal falló ({a}).",
+"El análisis de señal falló ({a})."
+],
+[
+"El archivo está dañado o incompleto ({a}): no se escribe sobre él.",
+"El archivo está dañado o incompleto ({a}): no se escribe sobre él."
+],
+[
+"El archivo tiene {a} canales; se analiza una mezcla a estéreo.",
+"El archivo tiene {a} canales; se analiza una mezcla a estéreo."
+],
+[
+"El chunk {a} declara {b} bytes pero el archivo termina antes: archivo cortado.",
+"El chunk {a} declara {b} bytes pero el archivo termina antes: archivo cortado."
+],
+[
+"El frame {a} está comprimido o cifrado: no se puede leer su contenido.",
+"El frame {a} está comprimido o cifrado: no se puede leer su contenido."
+],
+[
 "El gestor ha reconocido {a} de {b} canciones (las demás no tienen audio ni letra que catalogar)",
 "El gestor ha reconocido {a} de {b} canciones (las demás no tienen audio ni letra que catalogar)"
 ],
@@ -1552,8 +1803,16 @@
 "El mixtape ya los usa ({a})"
 ],
 [
+"El nivel cae de forma brusca por encima de {a} kHz. Es típico de un filtro paso bajo (códec con pérdida, antialiasing…); por sí solo no indica cuál.",
+"El nivel cae de forma brusca por encima de {a} kHz. Es típico de un filtro paso bajo (códec con pérdida, antialiasing…); por sí solo no indica cuál."
+],
+[
 "El plugin «{a}» ya no está en las carpetas de plugins. Vuelve a buscar plugins",
 "El plugin «{a}» ya no está en las carpetas de plugins. Vuelve a buscar plugins"
+],
+[
+"El átomo «{a}» declara {b} bytes pero el archivo termina antes: archivo cortado o subida interrumpida.",
+"El átomo «{a}» declara {b} bytes pero el archivo termina antes: archivo cortado o subida interrumpida."
 ],
 [
 "Elige una imagen para «{b}»",
@@ -1604,6 +1863,10 @@
 "Etiqueta «{a}» puesta en {b} canción(es)"
 ],
 [
+"Fallo al leer la copia con las herramientas estándar: {a}",
+"Fallo al leer la copia con las herramientas estándar: {a}"
+],
+[
 "Fundir {a} canciones en una",
 "Fundir {a} canciones en una"
 ],
@@ -1640,8 +1903,24 @@
 "Guardando {a} másters en la biblioteca · {b}"
 ],
 [
+"Hay más de {a} silencios; se listan los primeros.",
+"Hay más de {a} silencios; se listan los primeros."
+],
+[
+"Hay {a} bytes de chunks detrás de 'data'.",
+"Hay {a} bytes de chunks detrás de 'data'."
+],
+[
+"Hay {a} bytes de relleno (padding).",
+"Hay {a} bytes de relleno (padding)."
+],
+[
 "Hay {a} canciones sin",
 "Hay {a} canciones sin"
+],
+[
+"Hay {a} tags ID3v2 consecutivos; los lectores suelen mostrar solo el primero.",
+"Hay {a} tags ID3v2 consecutivos; los lectores suelen mostrar solo el primero."
 ],
 [
 "Hay {a} título{b} ({c} reproducciones) que no se han podido unir a ninguna canción y por eso no aparecen en «Por canción». Pulsa «resolver» arriba para asignarlos",
@@ -1652,8 +1931,24 @@
 "Hola{a}"
 ],
 [
+"ID3v2.{a} no se analiza (solo 2.3 y 2.4).",
+"ID3v2.{a} no se analiza (solo 2.3 y 2.4)."
+],
+[
 "Ingresos{b}",
 "Ingresos{b}"
+],
+[
+"La copia tiene avisos graves nuevos: {a}",
+"La copia tiene avisos graves nuevos: {a}"
+],
+[
+"La extensión «{a}» dice {b} pero el contenido no lo es (empieza por {c}): el archivo está corrupto, incompleto o tiene otra extensión.",
+"La extensión «{a}» dice {b} pero el contenido no lo es (empieza por {c}): el archivo está corrupto, incompleto o tiene otra extensión."
+],
+[
+"La extensión «{a}» no coincide con el contenido, que parece {b}.",
+"La extensión «{a}» no coincide con el contenido, que parece {b}."
 ],
 [
 "La letra de «{a}» se conserva (ya tenía una)",
@@ -1662,6 +1957,10 @@
 [
 "La ventana de «{a}» se está abriendo en tu ordenador",
 "La ventana de «{a}» se está abriendo en tu ordenador"
+],
+[
+"La verificación falló; no se entrega ninguna copia: {a}",
+"La verificación falló; no se entrega ninguna copia: {a}"
 ],
 [
 "Letra que vas a asignar{a}",
@@ -1678,6 +1977,10 @@
 [
 "Los archivos {a} necesitan ffmpeg y no está instalado. Usa un WAV, FLAC o MP3",
 "Los archivos {a} necesitan ffmpeg y no está instalado. Usa un WAV, FLAC o MP3"
+],
+[
+"Los archivos «{a}» no tienen recorrido propio: solo se usa ffprobe.",
+"Los archivos «{a}» no tienen recorrido propio: solo se usa ffprobe."
 ],
 [
 "Los puntos son, por orden: {j}",
@@ -1740,6 +2043,10 @@
 "No puedo abrir esa carpeta ({a})"
 ],
 [
+"No reconozco el formato (extensión «{a}», empieza por {b}).",
+"No reconozco el formato (extensión «{a}», empieza por {b})."
+],
+[
 "No se pudieron leer los ajustes: {a}",
 "No se pudieron leer los ajustes: {a}"
 ],
@@ -1756,8 +2063,16 @@
 "No se pudo contactar con Spotify ({a}). ¿Hay conexión a Internet?"
 ],
 [
+"No se pudo decodificar el audio con {a}.",
+"No se pudo decodificar el audio con {a}."
+],
+[
 "No se pudo empezar: {a}",
 "No se pudo empezar: {a}"
+],
+[
+"No se pudo escribir la copia: {a}",
+"No se pudo escribir la copia: {a}"
 ],
 [
 "No se pudo leer: {a}",
@@ -1776,8 +2091,20 @@
 "No tengo permiso para abrir esa carpeta ({a})"
 ],
 [
+"Nombre de campo propio no válido: «{a}» (letras, números, espacio, _ y -).",
+"Nombre de campo propio no válido: «{a}» (letras, números, espacio, _ y -)."
+],
+[
+"OK · Con avisos ({a})",
+"OK · Con avisos ({a})"
+],
+[
 "Omitir carpetas Freeze, Backup y cachés (ahorra {d})",
 "Omitir carpetas Freeze, Backup y cachés (ahorra {d})"
+],
+[
+"Pico tonal estrecho y estacionario a {a} Hz, {b} dB por encima del piso vecino. Puede deberse al códec, al dither, a un oscilador u otros procesos.",
+"Pico tonal estrecho y estacionario a {a} Hz, {b} dB por encima del piso vecino. Puede deberse al códec, al dither, a un oscilador u otros procesos."
 ],
 [
 "Plugins que no se han podido abrir ({a}) — ¿por qué?",
@@ -1816,6 +2143,10 @@
 "Publicadas {j}"
 ],
 [
+"Quedan etiquetas que nadie declaró: {a}",
+"Quedan etiquetas que nadie declaró: {a}"
+],
+[
 "Quitada de «{a}»",
 "Quitada de «{a}»"
 ],
@@ -1842,6 +2173,14 @@
 [
 "Revisar {a} casado{b} por parecido",
 "Revisar {a} casado{b} por parecido"
+],
+[
+"Rol de crédito no válido: «{a}».",
+"Rol de crédito no válido: «{a}»."
+],
+[
+"Se analizó solo la parte inicial (máx. {a} s o el tiempo disponible).",
+"Se analizó solo la parte inicial (máx. {a} s o el tiempo disponible)."
 ],
 [
 "Se borra «{a}» solo de este módulo. El archivo CSV original no se toca",
@@ -1912,6 +2251,10 @@
 "Tus datos (estrellas, notas, ajustes…) están en: {j}"
 ],
 [
+"Varios picos tonales por encima de 16 kHz separados de forma regular (~{a} Hz). Patrón atípico del piso de señal; puede tener causas técnicas diversas.",
+"Varios picos tonales por encima de 16 kHz separados de forma regular (~{a} Hz). Patrón atípico del piso de señal; puede tener causas técnicas diversas."
+],
+[
 "Verificación: {g} archivos comparados",
 "Verificación: {g} archivos comparados"
 ],
@@ -1926,6 +2269,10 @@
 [
 "Ya existe «{a}» ({b}): los archivos se añadirán a esa canción",
 "Ya existe «{a}» ({b}): los archivos se añadirán a esa canción"
+],
+[
+"a {a} Hz · persistencia {b} %",
+"a {a} Hz · persistencia {b} %"
 ],
 [
 "actualizado {b}",
@@ -1946,6 +2293,10 @@
 [
 "canción: {a}",
 "canción: {a}"
+],
+[
+"cerca de {a} Hz",
+"cerca de {a} Hz"
 ],
 [
 "con sus audios, samples…) · {f}",
@@ -1988,6 +2339,10 @@
 "filas útiles (de {d} leídas)"
 ],
 [
+"forma parte del bloque «{a}»: se conserva o se quita entero",
+"forma parte del bloque «{a}»: se conserva o se quita entero"
+],
+[
 "fundida con «{a}» (lo pediste tú)",
 "fundida con «{a}» (lo pediste tú)"
 ],
@@ -2014,6 +2369,14 @@
 [
 "meses ({e} → {f})",
 "meses ({e} → {f})"
+],
+[
+"no cuenta: aparece en el {a} % del tiempo (mínimo {b} %)",
+"no cuenta: aparece en el {a} % del tiempo (mínimo {b} %)"
+],
+[
+"no cuenta: su nivel ({a} dBFS) está por debajo del mínimo ({b} dBFS)",
+"no cuenta: su nivel ({a} dBFS) está por debajo del mínimo ({b} dBFS)"
 ],
 [
 "o usa un arte que ya tienes ({a}). Haz clic en el que quieras",
@@ -2124,12 +2487,24 @@
 "{a} canción{b} marcada{c} como boceto"
 ],
 [
+"{a} caracteres",
+"{a} caracteres"
+],
+[
 "{a} conservados porque habían cambiado",
 "{a} conservados porque habían cambiado"
 ],
 [
 "{a} cosas pendientes",
 "{a} cosas pendientes"
+],
+[
+"{a} dB bajo el umbral",
+"{a} dB bajo el umbral"
+],
+[
+"{a} dB sobre el umbral",
+"{a} dB sobre el umbral"
 ],
 [
 "{a} de trabajo",
@@ -2158,6 +2533,10 @@
 [
 "{a} enlaces/accesos directos se han saltado (no los sigo)",
 "{a} enlaces/accesos directos se han saltado (no los sigo)"
+],
+[
+"{a} etiquetas quitadas · {b} escritas",
+"{a} etiquetas quitadas · {b} escritas"
 ],
 [
 "{a} filas de «Total» se han saltado",
@@ -2198,6 +2577,34 @@
 [
 "{a} no se han podido abrir",
 "{a} no se han podido abrir"
+],
+[
+"{a} no tiene recorrido propio: las etiquetas y los datos técnicos solo salen de ffprobe.",
+"{a} no tiene recorrido propio: las etiquetas y los datos técnicos solo salen de ffprobe."
+],
+[
+"{a} pico",
+"{a} pico"
+],
+[
+"{a} pico bajo el umbral",
+"{a} pico bajo el umbral"
+],
+[
+"{a} pico sobre el umbral",
+"{a} pico sobre el umbral"
+],
+[
+"{a} picos",
+"{a} picos"
+],
+[
+"{a} picos bajo el umbral",
+"{a} picos bajo el umbral"
+],
+[
+"{a} picos sobre el umbral",
+"{a} picos sobre el umbral"
 ],
 [
 "{a} pista(s) añadidas a mano no se guardan aquí (no son de ninguna canción)",
@@ -2368,6 +2775,18 @@
 "«{a}» añadido a la cadena (paso 2)"
 ],
 [
+"«{a}» debe ser N o N/M.",
+"«{a}» debe ser N o N/M."
+],
+[
+"«{a}» es demasiado largo.",
+"«{a}» es demasiado largo."
+],
+[
+"«{a}» es un campo reservado: usa su campo propio.",
+"«{a}» es un campo reservado: usa su campo propio."
+],
+[
 "«{a}» está oculta del gestor",
 "«{a}» está oculta del gestor"
 ],
@@ -2382,6 +2801,10 @@
 [
 "«{a}» se moverá a la carpeta de «{b}». Puedes deshacerlo después con el diario de movimientos",
 "«{a}» se moverá a la carpeta de «{b}». Puedes deshacerlo después con el diario de movimientos"
+],
+[
+"«{a}» tiene valores distintos en el mismo archivo: {b}",
+"«{a}» tiene valores distintos en el mismo archivo: {b}"
 ],
 [
 "«{e}» · {f} · {g}% igual",
@@ -2414,6 +2837,14 @@
 [
 "álbumes · {g} singles · {h} proyectos",
 "álbumes · {g} singles · {h} proyectos"
+],
+[
+"≥ {a} pico",
+"≥ {a} pico"
+],
+[
+"≥ {a} picos",
+"≥ {a} picos"
 ]
 ]
 }
