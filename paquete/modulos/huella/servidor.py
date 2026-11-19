@@ -13,7 +13,11 @@ Routes (/api/mod/huella/…):
   POST comprobar       {items:[{id, p}]}  → {job}: cuts 3 clips per song and asks AudD (a thread)
   GET  progreso?job=…  {estado, hechos, total, resultados}
   GET  resultados      the saved results
+  POST inspeccionar    {p, senal?: bool}  technical inspection of one file of the library (tags, hashes, embedded art/lyrics/blocks,
+                       codec data; with senal=true also levels, loudness and spectrum). Local only: nothing is sent anywhere.
+                       Returns the huella.inspeccion/1 document built by _core/inspeccion.py (+ _core/senal.py).
 Tests: GESTOR_HUELLA_API=http://127.0.0.1:PORT points to a local fake server instead of https://api.audd.io.
+       python3 -m unittest discover -s tests   (repository root) covers the inspection and this route.
 """
 import http.client
 import json
@@ -245,6 +249,32 @@ def resultados(req, ctx):
     req.send({"ok": True, "resultados": _resultados(ctx)})
 
 
+def _inspeccion():
+    """_core/inspeccion.py: it is on sys.path inside the manager; otherwise it is loaded by path (it sits next to this module's folder)."""
+    try:
+        import inspeccion
+        return inspeccion
+    except ImportError:
+        import importlib.util
+        sp = importlib.util.spec_from_file_location("inspeccion", Path(__file__).resolve().parent.parent / "_core" / "inspeccion.py")
+        m = importlib.util.module_from_spec(sp)
+        sp.loader.exec_module(m)
+        return m
+
+
+def inspeccionar(req, ctx):
+    d = req.json() or {}
+    try:
+        p = _ruta(ctx, d.get("p"))
+    except HError as ex:
+        return req.send({"ok": False, "error": str(ex)})
+    try:
+        r = _inspeccion().inspeccionar(p, ffprobe="auto", raiz=Path(ctx.root).resolve(), senal=bool(d.get("senal")), ffmpeg=_ffmpeg(ctx))
+    except Exception:  # noqa: BLE001
+        return req.send({"ok": False, "error": "No pude inspeccionar este archivo."})
+    req.send(r)
+
+
 ROUTES = {
     "GET estado": estado,
     "POST token": token,
@@ -252,4 +282,5 @@ ROUTES = {
     "POST comprobar": comprobar,
     "GET progreso": progreso,
     "GET resultados": resultados,
+    "POST inspeccionar": inspeccionar,
 }
