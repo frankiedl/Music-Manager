@@ -373,6 +373,17 @@ class TestSenal(Base):
         p = next(x for x in s["espectro"]["picos_tonales"] if abs(x["frecuencia_hz"] - 19000) < 60)
         self.assertEqual(p["zona"], "alta")
 
+    def test_tono_hf_no_se_pierde_en_un_espectro_con_muchos_picos(self):
+        # 20 strong partials (6x more prominent than the HF tone) must not push the 19 kHz tone out of the analysis
+        tonos = [(300 * k, 0.02) for k in range(1, 21)] + [(19000, 0.005)]
+        r, s = self.senal(M.tonos(4, tonos))
+        hf = [i for i in s["indicios"] if i["codigo"] == "pico_tonal_hf"]
+        self.assertEqual(len(hf), 1, [i["codigo"] for i in s["indicios"]])
+        self.assertAlmostEqual(hf[0]["evidencia"]["frecuencia_hz"], 19000, delta=60)
+        picos = s["espectro"]["picos_tonales"]
+        self.assertLessEqual(len(picos), 12)
+        self.assertTrue(any(abs(p["frecuencia_hz"] - 19000) < 60 for p in picos), "the HF tone must be listed too")
+
     def test_ruido_sin_tono_no_da_pico_tonal(self):
         r, s = self.senal(M.ruido_y_tono(4, 19000, 0.0))
         self.assertEqual([i for i in s["indicios"] if i["codigo"] == "pico_tonal_hf"], [])
@@ -503,6 +514,52 @@ class TestConFfprobe(Base):
 
     def test_ffprobe_se_encuentra_junto_a_ffmpeg(self):
         self.assertEqual(Path(I.buscar_ffprobe(FFMPEG or "/no/existe/ffmpeg")).name.lower().split(".")[0], "ffprobe")
+
+
+class TestBuscarFfprobe(Base):
+    """Where ffprobe is looked for (PATH emptied): next to ffmpeg, also through a symlink; nothing invented when it is missing."""
+    def setUp(self):
+        super().setUp()
+        import os
+        self._path = os.environ.get("PATH")
+        os.environ["PATH"] = ""
+
+    def tearDown(self):
+        import os
+        os.environ["PATH"] = self._path or ""
+        super().tearDown()
+
+    def fake(self, ruta):
+        p = self.d / ruta
+        p.parent.mkdir(parents=True, exist_ok=True)
+        p.write_bytes(b"")
+        return p
+
+    def test_windows_ffprobe_exe_junto_a_ffmpeg_exe(self):
+        ff = self.fake("win/bin/ffmpeg.exe")
+        pr = self.fake("win/bin/ffprobe.exe")
+        self.assertEqual(I.buscar_ffprobe(str(ff)), str(pr))
+
+    def test_windows_solo_ffmpeg_exe_no_inventa_ffprobe(self):
+        self.assertIsNone(I.buscar_ffprobe(str(self.fake("win/MusicManager/ffmpeg.exe"))))
+
+    def test_mac_homebrew(self):
+        ff = self.fake("mac/bin/ffmpeg")
+        pr = self.fake("mac/bin/ffprobe")
+        self.assertEqual(I.buscar_ffprobe(str(ff)), str(pr))
+
+    def test_ffmpeg_es_un_symlink_a_otra_carpeta(self):
+        real = self.fake("cellar/bin/ffmpeg")
+        pr = self.fake("cellar/bin/ffprobe")
+        (self.d / "enlace").mkdir()
+        try:
+            (self.d / "enlace" / "ffmpeg").symlink_to(real)
+        except OSError:
+            self.skipTest("este sistema no permite symlinks")
+        self.assertEqual(I.buscar_ffprobe(str(self.d / "enlace" / "ffmpeg")), str(pr))
+
+    def test_sin_ffmpeg(self):
+        self.assertIsNone(I.buscar_ffprobe(None))
 
 
 # ==================================================================================================== ruta POST inspeccionar de Huella

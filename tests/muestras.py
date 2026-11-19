@@ -30,6 +30,16 @@ def ruido_y_tono(seg, tono_hz, tono_amp, ruido_amp=0.1, sr=SR, semilla=1):
     return struct.pack("<%dh" % (n * 2), *[x for x in v for _ in range(2)])
 
 
+def tonos(seg, lista, ruido_amp=0.002, sr=SR, semilla=3):
+    """Several stationary sines [(freq_hz, amp), …] over a very quiet noise floor (stereo, 16 bit)."""
+    r = random.Random(semilla)
+    n = int(seg * sr)
+    w = [2 * math.pi * f / sr for f, _ in lista]
+    a = [x for _, x in lista]
+    v = [int((ruido_amp * r.uniform(-1, 1) + sum(a[k] * math.sin(w[k] * i) for k in range(len(w)))) * 32767) for i in range(n)]
+    return struct.pack("<%dh" % (n * 2), *[x for x in v for _ in range(2)])
+
+
 def saturado(seg, sr=SR):
     """A sine at 3× full scale, hard-clipped."""
     return seno(440, 3.0, seg, sr)

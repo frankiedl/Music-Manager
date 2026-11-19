@@ -342,8 +342,9 @@ def _picos(Pm, Pf, res):
             if prom >= PICO_MIN_PROMINENCIA_DB:
                 cand.append((k, s, prom))
     cand.sort(key=lambda c: -c[2])
+    hf_c = [c for c in cand if c[0] * res >= ZONA_ALTA_HZ][:20]       # high-frequency candidates always get evaluated
     out = []
-    for k, s, prom in cand[:30]:
+    for k, s, prom in cand[:40] + [c for c in hf_c if c not in cand[:40]]:
         cnt = 0
         for P in Pf:
             vec = P[max(1, k - 40):k - 4] + P[k + 5:k + 41]
@@ -355,7 +356,10 @@ def _picos(Pm, Pf, res):
         f = (k + max(-0.5, min(0.5, d))) * res
         out.append({"frecuencia_hz": round(f, 1), "nivel_db": round(s, 2), "prominencia_db": round(prom, 1),
                     "persistencia_pct": round(100.0 * cnt / len(Pf), 1), "zona": _zona(f)})
-    return out[:12]
+    out.sort(key=lambda p: -p["prominencia_db"])
+    vistos = out[:8]                                                    # what is listed: the 8 most prominent + up to 4 above 16 kHz
+    vistos += [p for p in out[8:] if p["frecuencia_hz"] >= ZONA_ALTA_HZ][:4]
+    return out, vistos
 
 
 def _espectro_y_indicios(A, sr, nyq):
@@ -372,7 +376,7 @@ def _espectro_y_indicios(A, sr, nyq):
     bandas = _bandas(Pm, res, nyq)
     por = {b["id"]: b for b in bandas}
     corte, caida = _corte(S, res, nyq)
-    picos = _picos(Pm, Pf, res)
+    todos, picos = _picos(Pm, Pf, res)
     alta = por["alta"]
     piso_hf = None
     if alta["disponible"] or por["ultrasonica"]["disponible"]:
@@ -385,14 +389,14 @@ def _espectro_y_indicios(A, sr, nyq):
                          "descripcion": "El nivel cae de forma brusca por encima de %.1f kHz. Es típico de un filtro paso bajo (códec con pérdida, "
                                         "antialiasing…); por sí solo no indica cuál." % (corte / 1000.0),
                          "evidencia": {"frecuencia_hz": corte, "caida_db": caida}})
-    hf = [p for p in picos if p["frecuencia_hz"] >= ZONA_ALTA_HZ and p["prominencia_db"] >= HF_MIN_PROMINENCIA_DB
+    hf = [p for p in todos if p["frecuencia_hz"] >= ZONA_ALTA_HZ and p["prominencia_db"] >= HF_MIN_PROMINENCIA_DB
           and p["nivel_db"] >= HF_MIN_NIVEL_DB and p["persistencia_pct"] >= HF_MIN_PERSISTENCIA * 100]
     for p in hf:
         indicios.append({"codigo": "pico_tonal_hf", "tipo": "indicio_tecnico", "zona": p["zona"],
                          "descripcion": "Pico tonal estrecho y estacionario a %.0f Hz (zona %s), %.0f dB por encima del piso vecino. Puede deberse al "
                                         "códec, al dither, a un oscilador u otros procesos." % (p["frecuencia_hz"], p["zona"], p["prominencia_db"]),
                          "evidencia": {k: p[k] for k in ("frecuencia_hz", "nivel_db", "prominencia_db", "persistencia_pct")}})
-    hf_p = sorted(p["frecuencia_hz"] for p in picos if p["frecuencia_hz"] >= ZONA_ALTA_HZ and p["persistencia_pct"] >= 50)
+    hf_p = sorted(p["frecuencia_hz"] for p in todos if p["frecuencia_hz"] >= ZONA_ALTA_HZ and p["persistencia_pct"] >= 50)
     if len(hf_p) >= 3:
         d = [b - a for a, b in zip(hf_p, hf_p[1:])]
         m = _med(d)

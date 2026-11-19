@@ -733,15 +733,16 @@ def buscar_ffmpeg():
 
 
 def buscar_ffprobe(ffmpeg=None):
-    """ffprobe in the PATH or next to ffmpeg (same folder). None if it does not exist."""
+    """ffprobe in the PATH or next to ffmpeg (same folder, or the one its symlink points to). None if it does not exist."""
     p = shutil.which("ffprobe")
     if p:
         return p
     if ffmpeg:
-        d = Path(ffmpeg).parent
-        for n in ("ffprobe", "ffprobe.exe"):
-            if (d / n).is_file():
-                return str(d / n)
+        p = Path(ffmpeg)
+        for d in (p.parent, p.resolve().parent):          # the folder as given, then the one the symlink points to
+            for n in ("ffprobe", "ffprobe.exe"):
+                if (d / n).is_file():
+                    return str(d / n)
     return None
 
 
