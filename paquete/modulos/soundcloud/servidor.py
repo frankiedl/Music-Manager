@@ -898,6 +898,80 @@ def numeros(req, ctx):
     req.send({"ok": True, "job": job})
 
 
+def isrcs(req, ctx):
+    """GET: reads (read-only) the ISRC that SoundCloud holds for each track uploaded from here → {isrcs:{songId:{isrc, titulo, fuente}}}.
+    Changes nothing, neither on SoundCloud nor here: assigning them is up to the user."""
+    out, errores = {}, []
+    for sid, s in list(_subidas(ctx)["songs"].items()):
+        urn = str(s.get("urn") or "")
+        if not urn.startswith("soundcloud:tracks:"):
+            continue
+        try:
+            j = _api(ctx, "GET", _ruta_urn("tracks", urn))
+        except ScError as ex:
+            errores.append({"id": sid, "error": str(ex)})
+            continue
+        pm = j.get("publisher_metadata") if isinstance(j.get("publisher_metadata"), dict) else {}
+        for fuente, v in (("isrc", j.get("isrc")), ("publisher_metadata.isrc", pm.get("isrc"))):
+            if str(v or "").strip():
+                out[sid] = {"isrc": re.sub(r"[^A-Za-z0-9]", "", str(v)).upper(), "titulo": s.get("titulo", ""), "fuente": fuente}
+                break
+        else:
+            out[sid] = {"isrc": "", "titulo": s.get("titulo", ""), "fuente": "", "claves": sorted(j.keys())[:60]}
+    req.send({"ok": True, "isrcs": out, "errores": errores})
+
+
+def catalogo(req, ctx):
+    """GET: reads (read-only) EVERY track of the connected account, with the ISRC SoundCloud holds → {pistas:[{urn,titulo,isrc,url,sharing}]}."""
+    pistas, ruta, n = [], "/me/tracks?limit=200&linked_partitioning=true", 0
+    try:
+        while ruta and n < 20:
+            j = _api(ctx, "GET", ruta)
+            n += 1
+            lista = j.get("collection") if isinstance(j, dict) else j
+            for t in lista or []:
+                if not isinstance(t, dict):
+                    continue
+                pm = t.get("publisher_metadata") if isinstance(t.get("publisher_metadata"), dict) else {}
+                isrc = re.sub(r"[^A-Za-z0-9]", "", str(t.get("isrc") or pm.get("isrc") or "")).upper()
+                pistas.append({"urn": _urn(t, "tracks"), "titulo": t.get("title", ""), "isrc": isrc,
+                               "url": t.get("permalink_url", ""), "sharing": t.get("sharing", ""),
+                               "reproducciones": t.get("playback_count"), "likes": t.get("favoritings_count"), "comentarios": t.get("comment_count"),
+                               "reposts": t.get("reposts_count"), "duracion": t.get("duration"), "genero": t.get("genre"), "etiquetas": t.get("tag_list"),
+                               "fecha": t.get("created_at"), "licencia": t.get("license"), "lanzamiento": t.get("release_date") or t.get("release")})
+            nxt = j.get("next_href") if isinstance(j, dict) else None
+            ruta = nxt[len(API):] if nxt and nxt.startswith(API) else None
+    except ScError as ex:
+        return _error(req, ex)
+    req.send({"ok": True, "pistas": pistas})
+
+
+def disponible(req, ctx):
+    """POST {isrcs:[…]} → {res:{isrc:{ok, titulo, artista, url}}}. Asks Deezer's public catalogue (no account, no keys) whether each ISRC is
+    on sale there. Only the ISRCs leave this computer (they are public catalogue identifiers). Read-only."""
+    d = req.json()
+    isrcs = [re.sub(r"[^A-Za-z0-9]", "", str(i)).upper() for i in (d.get("isrcs") or [])][:40]
+    res = {}
+    for i in isrcs:
+        if len(i) != 12 or i in res:
+            continue
+        try:
+            c = http.client.HTTPSConnection("api.deezer.com", timeout=12, context=ssl.create_default_context())
+            c.request("GET", "/track/isrc:" + i, headers={"Accept": "application/json", "User-Agent": "MusicManager"})
+            r = c.getresponse()
+            j = json.loads(r.read().decode("utf-8") or "{}")
+            c.close()
+        except (OSError, http.client.HTTPException, ValueError):
+            res[i] = {"ok": None, "error": "red"}
+            continue
+        if isinstance(j, dict) and j.get("id") and not j.get("error"):
+            res[i] = {"ok": True, "titulo": j.get("title", ""), "artista": (j.get("artist") or {}).get("name", ""), "url": j.get("link", ""), "segundos": j.get("duration")}
+        else:
+            res[i] = {"ok": None if (j.get("error") or {}).get("code") == 4 else False}   # 4 = quota: we do not know
+        time.sleep(0.15)
+    req.send({"ok": True, "res": res})
+
+
 def numeros_guardados(req, ctx):
     req.send({"ok": True, "numeros": _leer(Path(ctx.datos) / "numeros.json", {})})
 
@@ -931,6 +1005,9 @@ ROUTES = {
     "GET subidas": subidas,
     "POST numeros": numeros,
     "GET numeros": numeros_guardados,
+    "GET isrcs": isrcs,
+    "GET catalogo": catalogo,
+    "POST disponible": disponible,
     "POST claves": claves,
 }
 PUBLIC_ROUTES = {"GET callback": callback}

@@ -35,7 +35,7 @@ async function render(el){
     <label class="meta">Titular del copyright (para los mixtapes y los másters)</label><input class="mxin" id="aj-tit" value="${esc(st.titular)}" placeholder="Nombre que aparecerá en © …">
     <button class="chip pri" id="aj-guardar">Guardar</button></div>
    <div class="panel"><h2>Apariencia</h2><div class="meta" style="margin-bottom:8px">Colores y tamaño de la letra. Se recuerdan en este ordenador.</div>
-    <label class="meta">Tema</label><div class="chips" id="aj-tema">${[['oscuro','Oscuro'],['claro','Claro'],['auto','Automático (según tu sistema)']].map(([k,n])=>`<button class="chip" data-v="${k}">${n}</button>`).join('')}</div>
+    <label class="meta">Tema</label><div class="chips" id="aj-tema">${[['oscuro','Oscuro'],['claro','Claro'],['primavera','Primavera'],['auto','Automático (según tu sistema)']].map(([k,n])=>`<button class="chip" data-v="${k}">${n}</button>`).join('')}</div>
     <label class="meta">Tamaño de la letra</label><div class="chips" id="aj-fs">${[['p','Pequeña'],['m','Media'],['g','Grande']].map(([k,n])=>`<button class="chip" data-v="${k}">${n}</button>`).join('')}</div></div>
    <div class="panel"><h2>Idioma</h2><div class="meta" style="margin-bottom:6px">Idioma de la interfaz. Se recuerda en este navegador.</div>
     <select class="mxin" id="aj-idioma">${Object.entries(GM.idiomas||{es:'Español'}).map(([k,v])=>`<option value="${k}"${k===GM.idioma?' selected':''}>${v}</option>`).join('')}</select></div>

@@ -1,0 +1,13 @@
+{
+  "id": "sgae",
+  "nombre": "SGAE",
+  "descripcion": "Para socios de SGAE: abre una ventana de Chrome aparte donde tú inicias sesión en la Sede de SGAE (el código te llega a tu correo y lo escribes tú), lee qué obras tienes validadas, en proceso y rechazadas, y prepara altas desde tus carpetas. La contraseña no pasa por el gestor ni se guarda. Opcional y bajo tu responsabilidad: no es una herramienta oficial de SGAE.",
+  "js": [
+    "modulo.js"
+  ],
+  "css": [
+    "modulo.css"
+  ],
+  "py": "servidor.py",
+  "distribuir": true
+}

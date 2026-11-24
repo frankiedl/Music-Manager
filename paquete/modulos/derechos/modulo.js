@@ -89,24 +89,47 @@ function form(s,e){
 function addSoc(n){if(!socs().some(x=>nrm(x.n)===nrm(n)))socsMine().push({n,c:''})}
 
 /* ---------- section of its own: summary, sheet, societies ---------- */
+/* ---------- complete works: what a society asks for (ISRC, ISWC, society code, author, IPI) ---------- */
+const datoObra=s=>{const R=regsOf(s),i=R.find(e=>String(e.soc).toLowerCase()==='isrc'&&e.cod),r=R.find(e=>String(e.soc).toLowerCase()!=='isrc'&&e.cod&&e.est==='reg'),w=R.map(e=>String(e.notas||'').match(/T-?[0-9.]{9,13}-?[0-9]/)).find(Boolean);return{s,t:GM.title(s),isrc:i?String(i.cod).toUpperCase():'',iswc:w?w[0]:'',cod:r?String(r.cod):''}};
+function completas(P){
+  const L=P.map(datoObra),falta=L.filter(o=>!(o.isrc&&o.iswc&&o.cod)),m=v=>v?'<span style="color:var(--good)">✓</span>':'<span style="color:var(--warn)">falta</span>',st=S();
+  return `<h3>Obras completas <span class="meta">${L.length-falta.length} de ${L.length}</span></h3><div class="panel">
+   <p class="meta">Para que una sociedad encuentre cada obra necesita ISRC, ISWC y el código de tu sociedad. Aquí salen las que aún no los tienen todos.</p>
+   ${falta.slice(0,200).map(o=>`<div class="der-trow" data-song="${E(o.s.id)}"><span class="der-t">${E(o.t)}</span><span>ISRC ${m(o.isrc)}</span><span>ISWC ${m(o.iswc)}</span><span>Registro ${m(o.cod)}</span></div>`).join('')||'<p class="meta">'+(L.length?'No falta nada.':'Aún no hay obras publicadas.')+'</p>'}
+   <p class="meta" style="margin-top:14px">Hoja para un administrador editorial: título, ISRC, ISWC, código, autor e IPI (tu IPI está en tu ficha de socio).</p>
+   <div class="der-list"><label>Autor <input id="der-aut" type="text" value="${E(st.autor||'')}"></label> <label>IPI <input id="der-ipi" type="text" value="${E(st.ipi||'')}"></label> <button class="chip pri" id="der-adm"${L.length?'':' disabled'}>⬇ Descargar hoja para administrador</button></div></div>`}
+function completasUI(el,P){
+  const st=S(),a=el.querySelector('#der-aut'),i=el.querySelector('#der-ipi'),d=el.querySelector('#der-adm');if(!a)return;
+  a.onchange=()=>{st.autor=a.value.trim();GM.save()};i.onchange=()=>{st.ipi=i.value.replace(/\D/g,'');i.value=st.ipi;GM.save()};
+  d.onclick=()=>{const q=v=>'"'+String(v).replace(/"/g,'""')+'"',L=P.map(datoObra);
+    const t='\ufeff'+[['Título','ISRC','ISWC','Código de la sociedad','Autor','IPI','Reparto autor %']].concat(L.map(o=>[o.t,o.isrc,o.iswc,o.cod,st.autor||'',st.ipi||'',100])).map(r=>r.map(q).join(';')).join('\r\n');
+    const x=document.createElement('a');x.href=URL.createObjectURL(new Blob([t],{type:'text/csv;charset=utf-8'}));x.download='obras-para-administrador.csv';x.click();setTimeout(()=>URL.revokeObjectURL(x.href),4000)};
+}
 function render(el){
   const P=pubSongs(),miss=P.filter(sinReg),all=GM.songs.filter(s=>!GM.isDraft(s));
   const rows=all.flatMap(s=>regsOf(s).map(e=>({s,e}))).sort((a,b)=>GM.title(a.s).localeCompare(GM.title(b.s),'es'));
   const pais=S().pais||'';
-  el.innerHTML=`<h1>Derechos</h1><p class="lead">Aquí llevas el registro de tus canciones en las sociedades de autores (SGAE, SACEM, GEMA, ASCAP…). Son tus propias anotaciones: el gestor no se conecta con ninguna sociedad.</p>
+  el.innerHTML=`<h1>Derechos de autor</h1><p class="lead">Aquí llevas el registro de tus canciones en las sociedades de autores (SGAE, SACEM, GEMA, ASCAP…). Son tus propias anotaciones: el gestor no se conecta con ninguna sociedad.</p><ol class="flowbar"><li>Mira qué obras faltan</li><li>Registra o importa la hoja</li><li>Revisa tus registros</li></ol>
    <div class="callout">Registros y fase son cosas distintas. Registro = proteger la obra y cobrar derechos. Fase = dónde está la canción en su vida (sin publicar, adelanto o publicada): se elige arriba en la página de cada canción.</div>
    <div class="tiles"><div class="tile"><div class="n">${P.length}</div><div class="l">publicadas</div></div><div class="tile"><div class="n">${P.length-miss.length}</div><div class="l">con algún registro</div></div><div class="tile der-click" data-der="miss"><div class="n">${miss.length}</div><div class="l">publicadas sin registro</div></div><div class="tile"><div class="n">${rows.length}</div><div class="l">registros en total</div></div></div>
-   ${miss.length?`<h2>Publicadas sin registro</h2><div class="der-list">${miss.map(s=>`<button class="chip" data-song="${E(s.id)}">${E(GM.title(s))}</button>`).join('')}</div>`:''}
-   <h2>Hoja de registro (Excel / CSV)</h2>
+   <section class="step"><header><b class="sn">1</b><div><h2>Mira qué falta</h2><p>Qué obras publicadas aún no están registradas o no tienen todos sus datos.</p></div></header>
+   ${miss.length?`<h3>Publicadas sin registro</h3><div class="der-list">${miss.map(s=>`<button class="chip" data-song="${E(s.id)}">${E(GM.title(s))}</button>`).join('')}</div>`:''}
+   ${completas(P)}
+   </section>
+   <section class="step"><header><b class="sn">2</b><div><h2>Registra o importa la hoja</h2><p>Descarga la hoja, rellénala en Excel e impórtala. Antes de aplicar verás qué cambia.</p></div></header>
    <div class="panel"><p class="meta">Descarga una hoja con todas tus canciones y una columna para cada dato del registro. Rellénala en Excel (o en cualquier hoja de cálculo) y vuelve a importarla: antes de aplicar verás qué se crea y qué se cambia. Al importar nunca se borra nada.</p>
     <div class="der-list"><button class="chip pri" data-der="csv">⬇ Descargar la hoja (CSV)</button><label class="chip">⬆ Importar una hoja (CSV o Excel)<input type="file" id="der-file" accept=".csv,.txt,.xlsx,.xls" hidden></label></div></div>
-   <h2>Registros <span class="meta">${rows.length}</span></h2>
+   </section>
+   <section class="step"><header><b class="sn">3</b><div><h2>Revisa tus registros</h2><p>Todos los registros anotados, canción por canción.</p></div></header>
    ${rows.length?`<div class="panel der-tab">${rows.map(({s,e})=>`<div class="der-trow" data-song="${E(s.id)}"><span class="der-t">${E(GM.title(s))}</span><b>${E(e.soc)}</b><span class="b ${estCls(e.est)}">${estOf(e.est)[1]}</span><span class="der-cod">${E(e.cod)}</span><span class="meta">${E(e.fecha)}</span></div>`).join('')}</div>`:'<div class="empty">Todavía no hay registros. Ábrelos desde la página de cada canción (sección Derechos) o importa la hoja.</div>'}
-   <h2>Sociedades</h2>
+   </section>
+   <details class="panel step-adv"><summary>Ajustes: tus sociedades (se hace una vez)</summary>
    <div class="panel"><label class="der-pais"><span>Tu país</span> <select id="der-pais"><option value="">Todos los países</option>${PAISES.map(([c,n])=>`<option value="${c}"${c===pais?' selected':''}>${n}</option>`).join('')}</select></label>
     <div class="meta">Las sociedades de tu país salen las primeras al añadir un registro.</div>
     <div class="der-socs">${socsSorted().map(x=>`<div class="der-soc"><b>${E(x.n)}</b> <span class="meta">${E(x.c)}</span><span class="der-acts"><button class="chip" data-soc="ren" data-n="${E(x.n)}" title="Renombrar">✎</button><button class="chip" data-soc="del" data-n="${E(x.n)}" title="Borrar">✕</button></span></div>`).join('')}</div>
-    <div class="der-list"><button class="chip" data-soc="add">＋ Añadir sociedad</button><button class="chip" data-soc="reset">Restaurar la lista predefinida</button></div></div>`;
+    <div class="der-list"><button class="chip" data-soc="add">＋ Añadir sociedad</button><button class="chip" data-soc="reset">Restaurar la lista predefinida</button></div></div>
+   </details>`;
+  completasUI(el,P);
   el.querySelector('#der-pais').onchange=ev=>{S().pais=ev.target.value;GM.save();render(el)};
   el.querySelector('#der-file').onchange=ev=>{const f=ev.target.files[0];ev.target.value='';if(f)importar(f,()=>render(el))};
   el.onclick=async ev=>{
@@ -148,7 +171,7 @@ function exportar(){
   GM.songs.filter(s=>!GM.isDraft(s)).sort((a,b)=>GM.title(a).localeCompare(GM.title(b),'es')).forEach(s=>{
     const R=regsOf(s);
     (R.length?R:[null]).forEach(e=>L.push([s.id,GM.title(s),relN(s),e?e.soc:'',e?e.cod:'',e?e.fecha:'',e?T(estOf(e.est)[1]):'',e?e.au:'',e?e.ed:'',e?e.notas:''].map(q).join(sep)))});
-  const b=new Blob(['﻿'+L.join('\r\n')+'\r\n'],{type:'text/csv;charset=utf-8'});
+  const b=new Blob(['\ufeff'+L.join('\r\n')+'\r\n'],{type:'text/csv;charset=utf-8'});
   const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=T('Derechos')+'.csv';document.body.appendChild(a);a.click();
   setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1500);GM.ui.toast('Hoja descargada')}
 
@@ -225,7 +248,7 @@ function home(el){
 
 GM.register({
   id:'derechos',
-  nav:{label:'Derechos',icon:'©'},
+  nav:{label:'Derechos de autor',icon:'©'},
   render(el){render(el)},
   songSection:{title:'Derechos',render(el,s){songSec(el,s)}},
   home:{title:'Derechos',render(el){home(el)}},
@@ -235,4 +258,9 @@ GM.register({
   filters:[{k:'pubsinreg',label:'Publicadas sin registro',fn:s=>sinReg(s),pend:true}],
 });
 DER.regsOf=regsOf;DER.relOf=relOf;
+/* Other modules assign a registration (e.g. the ISRC that SoundCloud gives): never overwrites one that already has a different code. → 'nuevo' | 'igual' | 'distinto' */
+DER.asignar=(s,soc,cod,notas,est)=>{const L=S().reg[s.id]=S().reg[s.id]||[],ex=L.find(e=>nrm(e.soc)===nrm(soc));
+  if(ex)return nrm(ex.cod)===nrm(cod)?'igual':'distinto';
+  const ss=socsMine();if(!ss.some(x=>nrm(x.n)===nrm(soc)))ss.push({n:soc,c:''});
+  L.push({id:uid(),soc,cod,fecha:'',est:est||'reg',au:'',ed:'',notas:notas||''});return 'nuevo'};
 })();

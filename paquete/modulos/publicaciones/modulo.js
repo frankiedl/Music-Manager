@@ -237,7 +237,7 @@ function render(el){
   const SS=GM.songs.filter(s=>!GM.isDraft(s)),cnt={un:0,pre:0,pub:0};SS.forEach(s=>cnt[faseDe(s)]++);
   const rows=SS.flatMap(s=>entradas(s).map(e=>({s,e}))).sort((a,b)=>String(b.e.fecha||'').localeCompare(String(a.e.fecha||''))||GM.title(a.s).localeCompare(GM.title(b.s),'es'));
   const con=SS.filter(s=>entradas(s).length).length;
-  el.innerHTML=`<h1>Publicaciones</h1><p class="lead">La fase de cada canción y dónde está publicada. Son tus propias anotaciones (salvo SoundCloud, que se apunta solo al subir desde el gestor).</p>
+  el.innerHTML=`<h1>Publicaciones</h1><p class="lead">La fase de cada canción y dónde está publicada. Son tus propias anotaciones (salvo SoundCloud, que se apunta solo al subir desde el gestor).</p><ol class="flowbar"><li>Elige la fase de cada canción, en su página</li><li>Apunta dónde la has publicado</li><li>Revisa la lista de abajo</li></ol>
    <div class="callout"><b>Fase</b> = dónde está la canción en su vida: sin publicar, adelanto (por ejemplo en SoundCloud) o publicada (lanzamiento oficial con una distribuidora). Se elige arriba en la página de cada canción.${GM.mods.derechos?' <b>Registros</b> (sección Derechos) = proteger la obra en una sociedad de autores o en Safe Creative: es otra cosa.':''}</div>
    <div class="tiles"><div class="tile"><div class="n">${cnt.un}</div><div class="l">sin publicar</div></div><div class="tile"><div class="n">${cnt.pre}</div><div class="l">adelantos</div></div><div class="tile"><div class="n">${cnt.pub}</div><div class="l">publicadas</div></div><div class="tile"><div class="n">${con}</div><div class="l">con alguna publicación apuntada</div></div></div>
    <h2>Publicaciones apuntadas <span class="meta">${rows.length}</span></h2>

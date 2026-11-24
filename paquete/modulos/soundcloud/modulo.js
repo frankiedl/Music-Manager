@@ -81,16 +81,19 @@ async function render(el){
 function pintar(el){
   const st=EST||{};
   const prueba=st.prueba?'<div class="callout">Modo de prueba: el gestor está usando un servidor de SoundCloud simulado, no el de verdad.</div>':'';
-  const puerto=st.ok&&!st.puerto_ok?`<div class="callout sc-warn"><b>El gestor no está usando el puerto 8765.</b> <span>SoundCloud solo vuelve a la dirección exacta que registres.</span> <span>Cierra el otro programa que usa el puerto 8765 y vuelve a abrir el gestor, o registra también esta dirección:</span> <code class="notr">${E(st.redirect_uri)}</code></div>`:'';
+  const puerto=st.ok&&!st.puerto_ok?`<div class="callout sc-warn"><b>Otro programa usa el puerto 8765</b><ol class="sc-opc"><li>Cierra el otro programa y vuelve a abrir el gestor.</li><li>O registra también esta dirección en SoundCloud:</li></ol><div class="sc-url"><code class="notr">${E(st.redirect_uri)}</code><button class="chip" data-sc="copiar" data-u="${E(st.redirect_uri)}">Copiar</button></div></div>`:'';
   el.innerHTML=`<h1>SoundCloud</h1><p class="lead">Sube un álbum o una canción a tu cuenta de SoundCloud con sus datos. Antes de subir verás siempre una vista previa: no se sube nada sin que lo confirmes.</p>${prueba}
    ${!st.ok?'<div class="callout">No se pudo leer el estado de SoundCloud.</div>':st.conectado?conectadoHtml(st):pasosHtml(st)}${puerto}
-   ${st.conectado?`<h2>Cómo subir</h2><div class="panel"><p class="meta">Abre un álbum y entra en su pestaña «SoundCloud», o en la página de una canción pulsa «Subir a SoundCloud». Las pistas se suben privadas salvo que elijas otra cosa.</p>${GM.pub?'<p class="meta">Cada subida se apunta sola en «Publicado en» de la canción (SoundCloud · Adelanto) con su enlace.</p>':''}</div>
-     <h2>Números</h2><div class="panel"><p class="meta">Reproducciones, me gusta, comentarios y reposts de tus pistas en SoundCloud. Se guardan con su fecha (uno por día) para ver cómo crecen. Al abrir una canción se actualizan solos una vez al día.</p>
-      <div class="sc-acts"><button class="chip pri" data-sc="numeros">↻ Actualizar números de SoundCloud</button><span id="sc-num" class="meta"></span></div></div>`:''}
-   ${listaSubidas()}`;
+   ${st.conectado?'<ol class="flowbar"><li>Abre un álbum o una canción</li><li>Pulsa «Subir a SoundCloud»</li><li>Revisa la vista previa y confirma</li></ol>':''}
+   ${listaSubidas()}
+   ${st.conectado?`<div class="sc-cols"><div class="panel"><h3>Números</h3><p class="meta">Reproducciones, me gusta, comentarios y reposts de tus pistas. Se guardan con su fecha (uno por día) para ver cómo crecen. Al abrir una canción se actualizan solos una vez al día.</p>
+      <div class="sc-acts"><button class="chip pri" data-sc="numeros">↻ Actualizar números</button><span id="sc-num" class="meta"></span></div></div>
+     <div class="panel"><h3>ISRC</h3><p class="meta">Si SoundCloud ya ha asignado un ISRC a tus pistas (por ejemplo al activar la monetización), puedes traerlos aquí y guardarlos como registro «ISRC» de cada canción. No se cambia nada sin que lo confirmes.</p>
+      <div class="sc-acts"><button class="chip pri" data-sc="isrc">⇩ Traer los ISRC</button></div></div></div>
+     <details class="panel sc-how"><summary>Cómo subir</summary><p class="meta">Abre un álbum y entra en su pestaña «SoundCloud», o en la página de una canción pulsa «Subir a SoundCloud». Las pistas se suben privadas salvo que elijas otra cosa.</p>${GM.pub?'<p class="meta">Cada subida se apunta sola en «Publicado en» de la canción (SoundCloud · Adelanto) con su enlace.</p>':''}</details>`:''}`;
   sincronizar();
   el.onclick=async ev=>{
-    const b=ev.target.closest('[data-sc]');if(!b)return;const k=b.dataset.sc;
+    const b=ev.target.closest('[data-sc]');if(!b)return;const k=b.dataset.sc;if(k==='copiar'){try{navigator.clipboard.writeText(b.dataset.u||'');GM.ui.toast('Dirección copiada')}catch(e){GM.ui.toast('No se pudo copiar')}return}
     if(k==='numeros'){if(b.disabled)return;const items=todosUrns(),m=el.querySelector('#sc-num');
       if(!items.length)return GM.ui.toast('No hay ninguna pista de SoundCloud con su identificador');
       b.disabled=true;if(m)m.textContent=T('Leyendo…');
@@ -99,6 +102,7 @@ function pintar(el){
       if(!q||!q.ok||q.estado==='error'){if(m)m.innerHTML=`<span class="sc-err">${errHtml(q)}</span>`;return}
       const n=Object.keys(q.resultados||{}).length,mal=(q.errores||[]).length;
       pintar(el);GM.ui.toast(mal?`Números actualizados: ${n} canciones · ${mal} no se pudieron leer`:`Números actualizados: ${n} canciones`);return}
+    if(k==='isrc')return traerIsrc(b);
     if(k==='copiar'){try{await navigator.clipboard.writeText(b.dataset.v);GM.ui.toast('Copiado')}catch(e){GM.ui.toast('No se pudo copiar')}return}
     if(k==='song')return GM.ui.go('song',b.dataset.id);
     if(k==='conectar')return conectar(el);
@@ -106,6 +110,39 @@ function pintar(el){
       await GM.api(ID,'desconectar',{}).catch(()=>{});GM.ui.toast('SoundCloud desconectado');await estado();return pintar(el)}
     if(k==='olvidar'){if(!await GM.ui.ask('¿Borrar las credenciales?','Se borran de este ordenador el Client ID, el Client Secret y las claves de acceso. Para volver a conectar tendrás que pegarlos otra vez.','Borrar'))return;
       await GM.api(ID,'borrar_credenciales',{}).catch(()=>{});GM.ui.toast('Credenciales borradas');await estado();return pintar(el)}}}
+async function traerIsrc(b){
+  if(!window.DER||!DER.asignar)return GM.ui.toast('Para guardar los ISRC hace falta el módulo Derechos');
+  b.disabled=true;const r=await GM.api(ID,'catalogo').catch(()=>null);b.disabled=false;
+  if(!r||!r.ok)return GM.ui.toast('No se pudo leer tu catálogo de SoundCloud');
+  /* each SoundCloud track → its song: first by the upload recorded here (urn), then by the exact title (without accents or case) */
+  const nr=x=>String(x||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'');
+  const porUrn=new Map(Object.entries((SUB&&SUB.songs)||{}).map(([id,v])=>[v.urn,id])),porTit=new Map();
+  GM.songs.forEach(s=>{if(GM.isDraft(s))return;const k=nr(GM.title(s));if(k)porTit.set(k,porTit.has(k)?null:s.id)}); // null = two songs with the same title: ambiguous
+  const M=new Map(),sin=[];
+  (r.pistas||[]).forEach(p=>{const id=porUrn.get(p.urn)||porTit.get(nr(p.titulo));if(!id||!GM.song(id))return sin.push(p.titulo);
+    const a=M.get(id)||{v:{isrc:''},n:0,isrcs:new Set()};a.n++;if(p.isrc){a.isrcs.add(p.isrc);a.v=p}else if(!a.v.isrc)a.v=p;M.set(id,a)});
+  const rows=[...M.entries()].map(([id,a])=>{const s=GM.song(id),v={isrc:[...a.isrcs][0]||''};
+    const ex=DER.regsOf(s).find(e=>String(e.soc).toLowerCase()==='isrc'&&e.cod);
+    const st=a.isrcs.size>1?'ambiguo':!v.isrc?'vacio':!ex?'nuevo':String(ex.cod).toUpperCase()===v.isrc?'igual':'distinto';return {s,v,ex,st}})
+    .sort((x,y)=>({nuevo:0,distinto:1,ambiguo:2,vacio:3,igual:4}[x.st]-{nuevo:0,distinto:1,ambiguo:2,vacio:3,igual:4}[y.st])||GM.title(x.s).localeCompare(GM.title(y.s),'es'));
+  const nuevos=rows.filter(x=>x.st==='nuevo'),tag={nuevo:'se asignará',igual:'ya lo tiene',distinto:'tiene otro distinto: no se toca',vacio:'SoundCloud aún no tiene ISRC',ambiguo:'SoundCloud tiene varios ISRC para ella: revísalo'};
+  const mal=sin;
+  const o=GM.ui.modal(`<h3>ISRC de SoundCloud</h3><div style="max-height:55vh;overflow:auto">${rows.map(x=>`<div class="meta" style="display:flex;gap:12px;justify-content:space-between;padding:5px 0"><span>${E(GM.title(x.s))}</span><span><b class="notr">${E(x.v.isrc||'—')}</b> · ${E(T(tag[x.st]))}${x.st==='distinto'?` (<span class="notr">${E(x.ex.cod)}</span>)`:''}</span></div>`).join('')||'<div class="meta">No hay pistas subidas desde aquí.</div>'}</div>
+   ${mal.length?`<p class="meta">${E(T('Pistas de SoundCloud que no coinciden con ninguna canción (no se tocan)'))}: ${E(mal.join(', '))}</p>`:''}
+   <div class="sc-acts" style="margin-top:14px"><button class="chip pri" id="isrc-ok"${nuevos.length?'':' disabled'}>Asignar ${nuevos.length} ISRC</button><button class="chip" id="isrc-chk" title="Pregunta al catálogo público de Deezer (sin cuenta) si cada ISRC está a la venta. Solo salen de aquí los ISRC.">🔎 Comprobar cuáles están publicados</button><button class="chip" id="isrc-no">Cerrar</button></div><div id="isrc-res"></div>`);
+  o.querySelector('#isrc-no').onclick=()=>o.remove();
+  o.querySelector('#isrc-chk').onclick=async ev=>{
+    const btn=ev.target,L=rows.filter(x=>x.v.isrc),res={};btn.disabled=true;
+    for(let i=0;i<L.length;i+=30){btn.textContent=`Comprobando ${Math.min(i+30,L.length)} / ${L.length}…`;
+      const q=await GM.api(ID,'disponible',{isrcs:L.slice(i,i+30).map(x=>x.v.isrc)}).catch(()=>null);if(q&&q.ok)Object.assign(res,q.res)}
+    btn.textContent='🔎 Comprobar cuáles están publicados';btn.disabled=false;
+    const g=x=>res[x.v.isrc]||{},si=L.filter(x=>g(x).ok===true),no=L.filter(x=>g(x).ok===false),dudas=L.filter(x=>g(x).ok==null),aPub=si.filter(x=>!GM.isPub(x.s));
+    o.querySelector('#isrc-res').innerHTML=`<div class="callout" style="margin-top:12px"><div><b>${si.length}</b> disponibles en Deezer · <b>${no.length}</b> no encontradas${dudas.length?` · ${dudas.length} sin poder comprobar (inténtalo de nuevo)`:''}.</div>
+      ${no.length?`<div class="meta" style="margin-top:6px">${E(T('No encontradas'))}: ${E(no.map(x=>GM.title(x.s)).join(', '))}</div>`:''}
+      <div class="meta" style="margin-top:6px">${aPub.length?`${aPub.length} de las disponibles no figuran aquí como «Publicada».`:'Todas las disponibles ya figuran como «Publicada».'}</div>
+      ${aPub.length&&GM.pub?`<button class="chip pri" id="isrc-pub" style="margin-top:8px">Pasar ${aPub.length} a «Publicada»…</button>`:''}</div>`;
+    const bp=o.querySelector('#isrc-pub');if(bp)bp.onclick=()=>{o.remove();GM.pub.fase(aPub.map(x=>x.s.id),'pub',{preguntar:true,titulo:`¿Pasar ${aPub.length} canciones a «Publicada»?`})}};
+  o.querySelector('#isrc-ok').onclick=()=>{let n=0;nuevos.forEach(x=>{if(DER.asignar(x.s,'ISRC',x.v.isrc,'Asignado por SoundCloud')==='nuevo')n++});GM.save();o.remove();GM.ui.toast(n+' ISRC guardados')}}
 function conectadoHtml(st){
   const u=st.usuario||{};
   return `<div class="panel sc-cuenta"><div class="sc-dot ok"></div><div class="sc-grow"><b>Conectado</b> <span>a la cuenta</span> ${u.permalink_url?`<a class="notr" href="${E(u.permalink_url)}" target="_blank" rel="noopener">${E(u.username||u.permalink_url)}</a>`:`<span class="notr">${E(u.username||'')}</span>`}

@@ -30,3 +30,4 @@
 .der-donut{width:112px;height:112px;border-radius:50%;display:grid;place-items:center;flex:none}
 .der-donut i{width:70px;height:70px;border-radius:50%;background:var(--panel)}
 @media (max-width:600px){.der-trow{grid-template-columns:1fr auto}.der-trow .der-cod,.der-trow .meta{display:none}}
+.step-adv{margin-top:8px}.step-adv>summary{cursor:pointer;font-weight:500}
