@@ -154,6 +154,42 @@ def limpiar_copia(src, dst, ff=None):
         tmp.unlink(missing_ok=True)
 
 
+def etiquetar(path, tags, ff):
+    """Removes every tag of the file and writes only `tags` ({title, artist, lyricist}); the audio is copied bit for bit (ffmpeg -c copy).
+    The file is replaced only if ffmpeg succeeds. Returns True/False. WAV cannot hold a «lyricist» field: it goes in the comment."""
+    path = Path(path)
+    if not ff or not path.is_file():
+        return False
+    t = {k: str(v).strip() for k, v in (tags or {}).items() if v and str(v).strip()}
+    if not t:
+        return False
+    ext = path.suffix.lower()
+    meta = []
+    for k in ("title", "artist"):
+        if t.get(k):
+            meta += ["-metadata", f"{k}={t[k]}"]
+    if t.get("artist"):
+        meta += ["-metadata", f"album_artist={t['artist']}"] if ext != ".wav" else []
+    if t.get("lyricist"):
+        meta += ["-metadata", (f"comment=Lyrics: {t['lyricist']}" if ext in (".wav", ".aif", ".aiff") else f"lyricist={t['lyricist']}")]
+    tmp = path.with_name(path.stem + ".etq" + ext)
+    cmd = [ff, "-y", "-i", str(path), "-map", "0:a", "-map_metadata", "-1", "-c", "copy", "-fflags", "+bitexact"]
+    if ext == ".mp3":
+        cmd += ["-id3v2_version", "3"]
+    cmd += meta + [str(tmp)]
+    try:
+        r = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8", errors="ignore",
+                           creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0))
+        if r.returncode or not tmp.exists() or tmp.stat().st_size < 100:
+            tmp.unlink(missing_ok=True)
+            return False
+        os.replace(tmp, path)
+        return True
+    except OSError:
+        tmp.unlink(missing_ok=True)
+        return False
+
+
 def etiquetas_restantes(path):
     """Names of the tag blocks found in a WAV/AIFF/MP3/FLAC file (empty list = clean)."""
     path = Path(path)

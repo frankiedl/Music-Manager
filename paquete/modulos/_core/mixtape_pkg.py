@@ -5,6 +5,7 @@ HTML: a single file, no libraries or Internet; lyrics embedded as JSON; audio th
       (or base64 inside the HTML itself with the "everything in a single HTML" option).
 The lyrics also go into the MP3 tag (USLT, unsynchronized lyrics)."""
 import base64
+import zlib
 import datetime
 import html as _html
 import json
@@ -42,6 +43,20 @@ UI = {
                prev="Anterior", next="Próxima", vol="Volume", seek="Posição", noaudio="Não foi possível tocar este áudio.",
                peso="Pesa {mb} MB e o limite para um único HTML é {lim} MB. Use o ZIP normal (desmarque «Tudo em um único HTML»)."),
 }
+
+
+_EXTRA = {
+    "es": dict(story="Su historia", dl="Descargar seleccionadas", todas="Seleccionar todas", ninguna="Quitar selección",
+               dlnota="Se descarga el MP3 y un texto con la historia y la letra."),
+    "en": dict(story="The story behind it", dl="Download selected", todas="Select all", ninguna="Clear selection",
+               dlnota="Downloads the MP3 and a text file with the story and the lyrics."),
+    "de": dict(story="Die Geschichte dazu", dl="Auswahl herunterladen", todas="Alle auswählen", ninguna="Auswahl aufheben",
+               dlnota="Lädt die MP3 und eine Textdatei mit Geschichte und Liedtext herunter."),
+    "pt": dict(story="A história por trás", dl="Baixar selecionadas", todas="Selecionar todas", ninguna="Limpar seleção",
+               dlnota="Baixa o MP3 e um texto com a história e a letra."),
+}
+for _k, _v in _EXTRA.items():
+    UI[_k].update(_v)
 
 
 ISO3 = {"es": "spa", "en": "eng", "de": "deu", "pt": "por"}
@@ -97,14 +112,16 @@ def _json_seguro(obj):
     return s
 
 
-def html_reproductor(lang, nombre, artist, tracks, portada, audios=None):
+def html_reproductor(lang, nombre, artist, tracks, portada, audios=None, contacto=None):
     """tracks: [{n,title,file,lyrics,notice}]; portada (cover): relative path or data URI ('' if none);
     audios: list of base64 strings (all-in-one mode) or None."""
     plantilla = (Path(__file__).parent / "mixtape_plantilla.html").read_text(encoding="utf-8")
     ui = UI.get(lang, UI["en"])
     carpeta = NOMBRES.get(lang, NOMBRES["en"])[1]
-    datos = {"lang": lang, "name": nombre, "artist": artist, "cover": portada, "dir": carpeta, "ui": {k: v for k, v in ui.items() if k != "peso"},
-             "tracks": [{k: t[k] for k in ("n", "title", "file", "lyrics", "notice")} for t in tracks], "inline": audios is not None}
+    h = zlib.crc32(str(nombre).encode("utf-8"))
+    copia = next((str(t.get("notice") or "").split(" · ")[0] for t in tracks if t.get("notice")), "")
+    datos = {"cinta": h % 12, "walk": (h >> 7) % 9, "copy": copia, "lang": lang, "name": nombre, "artist": artist, "cover": portada, "dir": carpeta, "ui": {k: v for k, v in ui.items() if k != "peso"},
+             "tracks": [{k: t.get(k, "") for k in ("n", "title", "file", "lyrics", "notice", "story", "url", "year")} for t in tracks], "inline": audios is not None, "contact": list(contacto or [])}
     bloques = ""
     if audios is not None:
         bloques = "".join(f'<script type="text/plain" id="a{i}">{b}</script>\n' for i, b in enumerate(audios))
@@ -113,13 +130,37 @@ def html_reproductor(lang, nombre, artist, tracks, portada, audios=None):
             .replace("%%AUDIOS%%", bloques).replace("%%DATA%%", _json_seguro(datos)))
 
 
+def vista(lang, tr, songs, items, nombre, artist, owner, con_copy, con_safe, letras, ruta_letra, portada="", contacto=None):
+    """HTML of the player page as it will look, without converting anything: each track plays the original file (it["url"])."""
+    pistas = []
+    for i, it in enumerate(items, 1):
+        song = songs.get(it.get("id"))
+        if not song:
+            continue
+        title = song["title"].replace("\n", " ")
+        year = int(it.get("year") or song.get("anio") or datetime.date.today().year)
+        notice = ""
+        if con_copy:
+            notice = f"© {year} {owner}"
+            if con_safe:
+                notice += f" · {tr('Registrado en Safe Creative')}" + (f" {tr('nº')} {song['safe']}" if song.get("safe") else "")
+        body = ""
+        if letras and song.get("letra"):
+            lf = ruta_letra(song)
+            if lf and lf.is_file():
+                body = _cuerpo_letra(lf.read_text(encoding="utf-8", errors="ignore").replace("\r\n", "\n").strip(), title)
+        pistas.append({"n": i, "title": title, "file": f"{i:02d}.mp3", "url": it.get("url", ""), "lyrics": (body + ("\n\n" + notice if notice and body else "")),
+                       "notice": notice, "story": str(it.get("h") or "").strip(), "year": year})
+    return html_reproductor(lang, nombre, artist, pistas, portada or "", None, contacto)
+
+
 def _cuerpo_letra(txt, title):
     lineas = txt.split("\n")
     return "\n".join(lineas[1:]).strip() if lineas and lineas[0].strip().lower() == title.lower() else txt
 
 
 def construir(job, *, ff, lang, tr, songs, items, base, name, nombre, artist, owner, con_copy, con_safe, letras, kbps,
-              cover_bytes, root, safe_name, convertir, ruta_letra, onefile=False):
+              cover_bytes, root, safe_name, convertir, ruta_letra, onefile=False, contacto=None):
     """Builds the package. convertir(it) → Path of the already converted MP3; ruta_letra(song) → Path|None.
     Returns a dict with zip (deliverable), carpeta (folder) and mb."""
     nom_html, d_can, d_let = NOMBRES.get(lang, NOMBRES["en"])
@@ -150,6 +191,7 @@ def construir(job, *, ff, lang, tr, songs, items, base, name, nombre, artist, ow
                 raise RuntimeError(f"No encuentro el audio de la canción {i}")
             title = song["title"].replace("\n", " ")
             year = int(it.get("year") or song.get("anio") or datetime.date.today().year)
+            story = str(it.get("h") or "").strip()
             notice = ""
             if con_copy:
                 notice = f"© {year} {owner}"
@@ -163,11 +205,13 @@ def construir(job, *, ff, lang, tr, songs, items, base, name, nombre, artist, ow
                 lf = ruta_letra(song)
                 if lf and lf.is_file():
                     txt = lf.read_text(encoding="utf-8", errors="ignore").replace("\r\n", "\n").strip()
-                    (folder / d_let / (stem + ".txt")).write_text(txt + ("\n\n" + notice if notice else "") + "\n", encoding="utf-8")
+                    (folder / d_let / (stem + ".txt")).write_text((UI.get(lang, UI["en"])["story"] + "\n" + story + "\n\n" if story else "") + txt + ("\n\n" + notice if notice else "") + "\n", encoding="utf-8")
                     body = _cuerpo_letra(txt, title)
             meta = ["-metadata", f"title={title}", "-metadata", f"album={nombre}", "-metadata", f"track={i}/{len(items)}"]
             if artist:
                 meta += ["-metadata", f"artist={artist}"]
+            if story:
+                meta += ["-metadata", f"comment={story}"]
             cached = convertir(it)
             cmd = [ff, "-y", "-i", str(cached)] + (["-i", str(cover)] if cover else [])
             cmd += (["-map", "0:a", "-map", "1:v", "-c:v", "copy", "-metadata:s:v", "title=Album cover", "-metadata:s:v", "comment=Cover (front)"] if cover else ["-vn"])
@@ -181,7 +225,7 @@ def construir(job, *, ff, lang, tr, songs, items, base, name, nombre, artist, ow
                 raise RuntimeError(f"ffmpeg falló con «{title}»: {r.stderr[-200:]}")
             if body:
                 poner_uslt(out, body, lang)
-            pistas.append({"n": i, "title": title, "file": out.name, "lyrics": (body + ("\n\n" + notice if notice and body else "")), "notice": notice})
+            pistas.append({"n": i, "title": title, "file": out.name, "lyrics": (body + ("\n\n" + notice if notice and body else "")), "notice": notice, "story": story, "year": year})
             job["done"] = i
         head = nombre + (f" — {artist}" if artist else "")
         if con_copy:
@@ -194,7 +238,7 @@ def construir(job, *, ff, lang, tr, songs, items, base, name, nombre, artist, ow
         if onefile:
             audios = [base64.b64encode((folder / d_can / p["file"]).read_bytes()).decode("ascii") for p in pistas]
             portada = ("data:image/jpeg;base64," + base64.b64encode(cover_bytes).decode("ascii")) if cover_bytes else ""
-            doc = html_reproductor(lang, nombre, artist, pistas, portada, audios)
+            doc = html_reproductor(lang, nombre, artist, pistas, portada, audios, contacto)
             peso = len(doc.encode("utf-8"))
             if peso > LIMITE_UNICO:
                 raise RuntimeError(ui["peso"].format(mb=round(peso / 1048576, 1), lim=25))
@@ -206,7 +250,7 @@ def construir(job, *, ff, lang, tr, songs, items, base, name, nombre, artist, ow
             base.mkdir(parents=True, exist_ok=True)
             destino.write_text(doc, encoding="utf-8")
             return dict(zip=destino.relative_to(root).as_posix(), carpeta=base.relative_to(root).as_posix(), mb=round(destino.stat().st_size / 1e6, 1))
-        (folder / nom_html).write_text(html_reproductor(lang, nombre, artist, pistas, PORTADA.get(lang, "Cover.jpg") if cover_bytes else ""), encoding="utf-8")
+        (folder / nom_html).write_text(html_reproductor(lang, nombre, artist, pistas, PORTADA.get(lang, "Cover.jpg") if cover_bytes else "", None, contacto), encoding="utf-8")
         zp = base / (folder.name + ".zip")
         archivos = [f for f in folder.rglob("*") if f.is_file()]
         archivos.sort(key=lambda f: (f.parent != folder, f.name != nom_html, str(f.relative_to(folder)).lower()))

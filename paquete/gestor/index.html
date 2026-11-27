@@ -670,6 +670,10 @@ input[type=checkbox],input[type=radio],input[type=range]{accent-color:var(--acce
 /* small windows: the menu scrolls and its footer never covers it */
 #nav .nmain{flex:1;min-height:0;overflow:auto}#nav .nfoot,#nav .ntop{flex:none}
 .nrow{flex-wrap:nowrap}.lcl{min-width:0;overflow:hidden;text-overflow:ellipsis}.rfs{white-space:nowrap}.hbtn span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mxwide{width:min(1000px,94vw)!important;max-width:none!important}.mxprev{width:100%;height:72vh;border:1px solid var(--line);border-radius:12px;background:#fff;margin:10px 0}
+.mnote{margin:-4px 12px 12px 74px;display:grid;gap:4px}
+.mnote textarea{width:100%;box-sizing:border-box;min-height:54px;padding:9px 12px;border-radius:10px;border:1px solid var(--line);background:var(--panel2);color:var(--txt);font:inherit;font-size:13.5px;line-height:1.5;resize:vertical}
+.mnote textarea:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 html[data-fs=m]{zoom:1.12}html[data-fs=g]{zoom:1.26}
 html[data-fs=m] body{height:calc(100vh / 1.12)}html[data-fs=g] body{height:calc(100vh / 1.26)}
 </style>
@@ -1949,6 +1953,7 @@ function renderMixList(){
    ${L.length?`<div class="mxwall">${L.map(m=>`<div class="mxcard${ST.mixSel===m.id?' act':''}" data-act="mixopen" data-id="${m.id}" data-mxdrop="${m.id}"><button class="mxs${ST.mixSel===m.id?' on':''}" data-act="mixsel" data-id="${m.id}" title="Usar este mixtape para añadir canciones con el botón ＋">${ST.mixSel===m.id?'✓ Activo':'Elegir'}</button><button class="mxx" data-act="mixdelc" data-id="${m.id}" title="Eliminar este mixtape" aria-label="Eliminar este mixtape">✕</button><img data-mc="${m.id}" alt=""><div class="vt" style="margin-top:8px">${esc(m.name)}</div><div class="meta">${m.items.length} canciones · ${m.kbps} kbps</div></div>`).join('')}</div>`
     :'<div class="empty">Todavía no tienes ningún mixtape. Pulsa «Nuevo mixtape» para crear el primero.</div>'}`;
   mixFillCovers()}
+const mixNota=(it,s)=>it.nota!==undefined?it.nota:((((ST.mod||{}).historias||{}).t||{})[s.id]||'');
 function renderMixDetail(m){
   const rows=m.items.map(it=>({it,s:ALL.find(x=>x.id===it.id)})).filter(r=>r.s);
   $('#main').innerHTML=`<button class="back" data-act="mixlist">‹ Mixtapes</button><h1>${esc(m.name)}</h1>
@@ -1967,7 +1972,7 @@ function renderMixDetail(m){
        <div style="min-width:0"><div class="vt">${esc(clean(s.title))}</div><div class="meta">${s.letra?'con letra':'sin letra'}${finalPath(s)===cur?' · versión publicada/final':''}${s.safe?' · Safe Creative '+s.safe:''}</div><div class="meta mst" data-mst="${s.id}">${mixStatus(m,it)}</div></div>
        <label class="meta" style="display:flex;gap:6px;align-items:center;justify-self:end">© <input type="number" min="1990" max="2100" data-act="mixyear" data-id="${s.id}" value="${it.year||s.anio||new Date().getFullYear()}" style="width:74px;border:0;background:var(--panel2);color:var(--txt);border-radius:8px;padding:5px 8px;font:inherit"></label>
        <select data-act="mixver" data-id="${s.id}">${(vs.length?vs:s.versions).map(v=>`<option value="${esc(v.p)}"${v.p===cur?' selected':''}>${esc((VN[v.p]?VN[v.p]+' · ':'')+v.p.split('/').pop())}</option>`).join('')}</select>
-       <div class="mb"><button class="pbtn" data-act="mixplay" data-id="${s.id}" title="Escuchar">▶</button><button class="chip" data-act="mixrm" data-id="${s.id}" title="Quitar">✕</button></div></div>`}).join('')||'<div class="empty">Todavía no hay canciones. Arrástralas aquí o usa «Añadir a un mixtape…» en cualquier canción.</div>'}</section>
+       <div class="mb"><button class="pbtn" data-act="mixplay" data-id="${s.id}" title="Escuchar">▶</button><button class="chip" data-act="mixrm" data-id="${s.id}" title="Quitar">✕</button></div></div><div class="mnote"><label class="meta" for="mn-${s.id}">Nota para esta canción: sale en la web del mixtape, en la hoja de libreta</label><textarea class="mxnota" id="mn-${s.id}" data-id="${s.id}" rows="2" maxlength="1200" placeholder="Qué pensabas al escribirla, de qué trata… (si la dejas vacía, no sale nota)">${esc(mixNota(it,s))}</textarea></div>`}).join('')||'<div class="empty">Todavía no hay canciones. Arrástralas aquí o usa «Añadir a un mixtape…» en cualquier canción.</div>'}</section>
    <section class="step"><header><b class="sn">3</b><div><h2>Elige cómo se exporta</h2><p>Calidad, letras y aviso de copyright. Si no estás seguro, déjalo como está.</p></div></header><div class="panel">
     <div class="mxsec"><h3>Exportación</h3><div class="mxopts">
      <label class="fld">Calidad <select id="mxk"><option value="128"${m.kbps==128?' selected':''}>128 kbps (ligero)</option><option value="192"${m.kbps==192?' selected':''}>192 kbps</option><option value="320"${m.kbps==320?' selected':''}>320 kbps (máxima)</option></select></label>
@@ -1982,14 +1987,23 @@ function renderMixDetail(m){
 </div></section>
    <div id="mixres"></div>
    <div class="mxdock"><div class="mxsum"><b>${rows.length}</b> canciones<span class="meta">${m.kbps||192} kbps${m.letras!==false?', con letras':''}</span></div>
-   <div class="mxgo"><button class="bigplay" data-act="mixgo"${rows.length?'':' disabled style="opacity:.5"'}>${ICO.zip}Paso 4. Crear el ZIP y descargarlo</button>
+   <div class="mxgo"><button class="chip" data-act="mixprev"${rows.length?'':' disabled'}>Ver la web</button><button class="bigplay" data-act="mixgo"${rows.length?'':' disabled style="opacity:.5"'}>${ICO.zip}Paso 4. Crear el ZIP y descargarlo</button>
    <details class="mxmore"><summary class="chip">Más acciones</summary><div class="mxmenu"><button class="chip${ST.mixSel===m.id?' pri':''}" data-act="mixsel" data-id="${m.id}">${ST.mixSel===m.id?ICO.check+'Mixtape activo, clic para quitar':ICO.plus+'Usar para añadir canciones'}</button>${rows.length?'<button class="chip" data-act="mixclear">Vaciar mixtape</button>':''}${GM.mixtapeActions().map(a=>`<button class="chip" data-act="modmix" data-k="${esc(a.mod)}">${a.icon==='🎚'?ICO.sliders:(a.icon||'')} ${esc(a.label)}</button>`).join('')}<button class="chip danger" data-act="mixdel">${ICO.trash}Eliminar este mixtape</button></div></details></div></div>`;
   mixCover();mixEnqueue(m)}
 function mixMove(id,d){const m=curMix();if(!m)return;const a=m.items,k=a.findIndex(i=>i.id===id),n=k+d;if(k<0||n<0||n>=a.length)return;[a[k],a[n]]=[a[n],a[k]];save();refresh()}
 function mixDownload(p){const a=document.createElement('a');a.href='/descargar?p='+encodeURIComponent(p);a.download='';document.body.appendChild(a);a.click();a.remove()}
+async function mixPrev(){
+  const m=curMix();if(!m)return;
+  const items=m.items.map(it=>{const s=ALL.find(x=>x.id===it.id);return s&&!isDraft(s)&&{id:s.id,p:it.p||bestVersion(s),year:it.year||s.anio||new Date().getFullYear(),h:mixNota(it,s)}}).filter(x=>x&&x.p);
+  if(!items.length)return toast('Añade canciones al mixtape para ver su web');
+  let portada='';try{portada=(await cintaCanvas(m.cinta==null?0:m.cinta,mixLabel(m),mixCopy(m),600)).toDataURL('image/jpeg',.85)}catch{}
+  const r=await fetch('/api/mixtape_vista',{method:'POST',body:JSON.stringify({nombre:m.name,items,letras:m.letras!==false,copyright:m.copy!==false,titular:m.owner||mixOwnerDef(),safe:!!m.safe,portada})}).then(r=>r.json()).catch(()=>({ok:false,error:'sin conexión'}));
+  if(!r.ok)return toast('No se pudo preparar la vista previa: '+(r.error||''));
+  const o=modal('<h3>Así se verá la web del mixtape</h3><p class="meta">Es una vista previa: suena el audio original. Al crear el ZIP se convierte a MP3.</p><iframe class="mxprev" title="Vista previa"></iframe><div class="acts"><button class="chip pri" data-r="1">Cerrar</button></div>');
+  o.querySelector('.dlg').classList.add('mxwide');o.querySelector('iframe').srcdoc=r.html;o.querySelector('[data-r]').onclick=()=>o.remove()}
 async function mixGo(){
   const m=curMix();if(!m)return;
-  const items=m.items.map(it=>{const s=ALL.find(x=>x.id===it.id);return s&&!isDraft(s)&&{id:s.id,p:it.p||bestVersion(s),year:it.year||s.anio||new Date().getFullYear()}}).filter(x=>x&&x.p);
+  const items=m.items.map(it=>{const s=ALL.find(x=>x.id===it.id);return s&&!isDraft(s)&&{id:s.id,p:it.p||bestVersion(s),year:it.year||s.anio||new Date().getFullYear(),h:mixNota(it,s)}}).filter(x=>x&&x.p);
   const box=$('#mixres');box.innerHTML='<div class="meta" style="margin-top:12px">Preparando…</div>';
   let portada='';try{portada=(await cintaCanvas(m.cinta==null?0:m.cinta,mixLabel(m),mixCopy(m),1200)).toDataURL('image/jpeg',.9)}catch{}
   const r=await fetch('/api/mixtape',{method:'POST',body:JSON.stringify({id:m.id,portada,nombre:m.name,items,letras:m.letras!==false,kbps:m.kbps,copyright:m.copy!==false,titular:m.owner||mixOwnerDef(),safe:!!m.safe,onefile:!!m.onefile})}).then(r=>r.json()).catch(()=>({ok:false}));
@@ -2092,6 +2106,7 @@ async function onAct(e){
       if(!await ask('Quitar canciones','¿Quitar '+n+(n>1?' canciones':' canción')+' de «'+esc(mm.name)+'»? Solo se borra la versión MP3 creada para este mixtape; tu música original no se toca.','Quitar'))return;
       [...mixSel].forEach(id=>mixDrop(mm.id,id));mm.items=mm.items.filter(i=>!mixSel.has(i.id));mixSel.clear();save();mixBadge();renderRows();refresh();toast(n+(n>1?' quitadas':' quitada')+' del mixtape');return}
     case 'mixgo':return mixGo();
+    case 'mixprev':return mixPrev();
     case 'mixplay':{const it=(curMix()||{items:[]}).items.find(i=>i.id===t.dataset.id),x=ALL.find(z=>z.id===t.dataset.id);return playOrToggle(t.dataset.id,()=>play((it&&it.p)||bestVersion(x)))}
     case 'cropcover':{const gt=view==='group'?groups().find(x=>x.key===curG):null,sg=gt?null:ALL.find(x=>x.id===cur),cv=gt?gt.cover:coverOf(sg);
       if(!cv)return toast('Primero carga una portada');return openCropper(cv,gt?groupTarget(gt):coverTarget(sg))}
@@ -2243,7 +2258,9 @@ addEventListener('keydown',e=>{
     if(a.src)a.paused?a.play():a.pause()}});
 
 document.addEventListener('input',e=>{
-  const t=e.target,m=curMix();if(!m||view!=='mixtape'||!t.id)return;
+  const t=e.target,m=curMix();if(!m||view!=='mixtape')return;
+  if(t.classList&&t.classList.contains('mxnota')){const it=m.items.find(i=>i.id===t.dataset.id);if(it){it.nota=t.value;save()}return}
+  if(!t.id)return;
   const f={mxname:()=>{m.name=t.value},mxlabel:()=>{m.label=t.value},mxcname:()=>{m.cname=t.value},mxyear:()=>{m.year=+t.value||undefined},mxo:()=>{m.owner=t.value}}[t.id];
   if(!f)return;f();save();if(t.id!=='mxo'){clearTimeout(_mcT);_mcT=setTimeout(mixCover,180)}});
 document.addEventListener('change',e=>{

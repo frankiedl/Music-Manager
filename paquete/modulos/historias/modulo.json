@@ -1,0 +1,8 @@
+{
+  "id": "historias",
+  "nombre": "Historias",
+  "descripcion": "Para cada canción, una pequeña explicación de qué pensabas al escribirla o de qué trata. Sale al lado de la canción en los álbumes y en los mixtapes, y se puede descargar con el MP3 y la letra.",
+  "js": ["modulo.js"],
+  "css": ["modulo.css"],
+  "distribuir": true
+}

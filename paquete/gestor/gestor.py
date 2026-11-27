@@ -245,6 +245,15 @@ def mix_convert(mixid, sid, rel, kbps):
     return out
 
 
+def _contacto():
+    """Optional contact lines for the mixtape page (ajustes.json of the library, key contacto: text or list)."""
+    try:
+        c = json.loads((DATOS / "ajustes.json").read_text(encoding="utf-8")).get("contacto") or []
+    except (OSError, ValueError):
+        return []
+    return [str(x).strip() for x in ([c] if isinstance(c, str) else c) if str(x).strip()]
+
+
 def run_mixtape(jid, data):
     """Converts each song to MP3 (with lyrics in the tag) and builds the ZIP (HTML + Canciones/ + Letras/) or a single HTML."""
     import base64
@@ -278,7 +287,7 @@ def run_mixtape(jid, data):
             artist=artist, owner=owner, con_copy=bool(data.get("copyright", True)) and bool(owner), con_safe=bool(data.get("safe", False)),
             letras=bool(data.get("letras", True)), kbps=kbps, cover_bytes=cover, root=ROOT, safe_name=safe_name,
             convertir=lambda it: mix_convert(data.get("id"), it.get("id"), it.get("p", ""), kbps),
-            ruta_letra=lambda song: inside_root(song["letra"]), onefile=bool(data.get("onefile", False)))
+            ruta_letra=lambda song: inside_root(song["letra"]), onefile=bool(data.get("onefile", False)), contacto=_contacto())
         job.update(estado="listo", **res)
     except Exception as e:  # noqa: BLE001
         job.update(estado="error", error=str(e))
@@ -847,6 +856,21 @@ class H(SimpleHTTPRequestHandler):
                 pass
         return self.send_json({"ok": True})
 
+    def mixtape_vista(self, data):
+        from urllib.parse import quote
+        import mixtape_pkg
+        lang = modulos_core.idioma_de(self) if modulos_core else "es"
+        T = (lambda x: modulos_core.traducir(x, lang)) if modulos_core else (lambda x: x)
+        try:
+            songs = {x["id"]: x for x in json.loads(DATA.read_text(encoding="utf-8"))["songs"]}
+            items = [dict(it, url="/audio?p=" + quote(it.get("p", ""), safe="")) for it in (data.get("items") or [])]
+            html = mixtape_pkg.vista(lang, T, songs, items, data.get("nombre") or "Mixtape", CFG.get("artista") or "", (data.get("titular") or "").strip(),
+                                     bool(data.get("copyright", True)), bool(data.get("safe", True)), bool(data.get("letras", True)),
+                                     lambda song: inside_root(song["letra"]), data.get("portada") or "", _contacto())
+        except Exception as e:  # noqa: BLE001
+            return self.send_json({"ok": False, "error": str(e)}, 500)
+        return self.send_json({"ok": True, "html": html})
+
     def mixtape(self, data):
         import uuid
         if not data.get("items"):
@@ -937,7 +961,7 @@ class H(SimpleHTTPRequestHandler):
             return self.soltar()
         if path == "/api/subir":
             return self.subir()
-        route = {"/api/refrescar": self.refrescar, "/api/mixtape": self.mixtape, "/api/album_crear": self.album_crear, "/api/album_borrar": self.album_borrar, "/api/mix_convertir": self.mix_convertir, "/api/mix_borrar": self.mix_borrar, "/api/letra_guardar": self.letra_guardar,
+        route = {"/api/refrescar": self.refrescar, "/api/mixtape": self.mixtape, "/api/mixtape_vista": self.mixtape_vista, "/api/album_crear": self.album_crear, "/api/album_borrar": self.album_borrar, "/api/mix_convertir": self.mix_convertir, "/api/mix_borrar": self.mix_borrar, "/api/letra_guardar": self.letra_guardar,
                  "/api/abrir": self.abrir, "/api/mover_version": self.mover_version, "/api/unir": self.unir, "/api/mover_cancion": self.mover_cancion}.get(path)
         if route:
             n = int(self.headers.get("Content-Length", 0))
